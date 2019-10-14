@@ -1,0 +1,38 @@
+<svg id="asdhfgh" xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #434343;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #313131;
+      }
+
+      .cls-3 {
+        fill: #0086a5;
+      }
+
+      .cls-4 {
+        fill: #626262;
+      }
+
+      .cls-5, .cls-6 {
+        fill: #a0a0a0;
+      }
+    </style>
+  </defs>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_1" data-name="Yuvarlak Köşeli Dikdörtgen 1" class="cls-1" d="M267.389,248.642H422.057a10,10,0,0,1,10,10V342a10,10,0,0,1-10,10H267.389a10,10,0,0,1-10-10V258.642A10,10,0,0,1,267.389,248.642ZM237.981,128.058L84.877,89.3v73.212l133.7,34.453"/>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_9" data-name="Yuvarlak Köşeli Dikdörtgen 9" class="cls-2" d="M73.626,69.92H87.5a6,6,0,0,1,6,6V218.956a6,6,0,0,1-6,6H73.626a6,6,0,0,1-6-6V75.92A6,6,0,0,1,73.626,69.92Z"/>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_7" data-name="Yuvarlak Köşeli Dikdörtgen 7" class="cls-3" d="M230.73,57H504a10,10,0,0,1,10,10V251.562a10,10,0,0,1-10,10H230.73a10,10,0,0,1-10-10V67A10,10,0,0,1,230.73,57ZM194.853,175.431L74.095,145.285l2.156,146.423,118.6-32.3"/>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_2" data-name="Yuvarlak Köşeli Dikdörtgen 2" class="cls-4" d="M196.227,108.679H491.062a10,10,0,0,1,10,10V309.7a10,10,0,0,1-10,10H196.227a10,10,0,0,1-10-10V118.679A10,10,0,0,1,196.227,108.679Z"/>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_3" data-name="Yuvarlak Köşeli Dikdörtgen 3" class="cls-2" d="M327.768,231.416h133.1a10,10,0,0,1,10,10V273.1a10,10,0,0,1-10,10h-133.1a10,10,0,0,1-10-10V241.416A10,10,0,0,1,327.768,231.416Z"/>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_4" data-name="Yuvarlak Köşeli Dikdörtgen 4" class="cls-2" d="M323.268,181.89h144.26a5.5,5.5,0,0,1,5.5,5.5v12.687a5.5,5.5,0,0,1-5.5,5.5H323.268a5.5,5.5,0,0,1-5.5-5.5V187.39A5.5,5.5,0,0,1,323.268,181.89Z"/>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_5" data-name="Yuvarlak Köşeli Dikdörtgen 5" class="cls-5" d="M269.358,246.489h12.72a5.5,5.5,0,0,1,5.5,5.5v14.839a5.5,5.5,0,0,1-5.5,5.5h-12.72a5.5,5.5,0,0,1-5.5-5.5V251.989A5.5,5.5,0,0,1,269.358,246.489Z"/>
+  <path id="Yuvarlak_Köşeli_Dikdörtgen_6" data-name="Yuvarlak Köşeli Dikdörtgen 6" class="cls-5" d="M222.417,153.9h13.877a6,6,0,0,1,6,6V274.942a6,6,0,0,1-6,6H222.417a6,6,0,0,1-6-6V159.9A6,6,0,0,1,222.417,153.9Z"/>
+  <rect id="Yuvarlak_Köşeli_Dikdörtgen_8" data-name="Yuvarlak Köşeli Dikdörtgen 8" class="cls-6" x="59" y="128.063" width="25.875" height="176.562" rx="6" ry="6"/>
+</svg>

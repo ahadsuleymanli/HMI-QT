@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 0 1052.3622"
+   height="46mm"
+   width="312mm">
+  <defs
+     id="defs4">
+    <filter
+       height="1.5"
+       width="1.5"
+       y="-0.25"
+       x="-0.25"
+       id="filter4138"
+       style="color-interpolation-filters:sRGB">
+      <feOffset
+         id="feOffset4140"
+         dx="3"
+         dy="3" />
+      <feGaussianBlur
+         id="feGaussianBlur4142"
+         result="blur"
+         stdDeviation="3" />
+      <feFlood
+         id="feFlood4144"
+         result="flood"
+         flood-opacity="1"
+         flood-color="rgb(0,0,0)" />
+      <feComposite
+         id="feComposite4146"
+         result="composite"
+         operator="in"
+         in2="SourceGraphic"
+         in="flood" />
+      <feBlend
+         result="fbSourceGraphic"
+         id="feBlend4148"
+         mode="normal"
+         in2="composite"
+         in="blur" />
+      <feColorMatrix
+         id="feColorMatrix4150"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         stdDeviation="4"
+         in="fbSourceGraphicAlpha"
+         result="result0"
+         id="feGaussianBlur4152" />
+      <feOffset
+         result="result4"
+         dy="5"
+         dx="5"
+         id="feOffset4154" />
+      <feComposite
+         result="fbSourceGraphic"
+         operator="xor"
+         in="fbSourceGraphic"
+         in2="result4"
+         id="feComposite4156" />
+      <feColorMatrix
+         id="feColorMatrix4158"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         in="fbSourceGraphic"
+         result="result10"
+         stdDeviation="3"
+         id="feGaussianBlur4160" />
+      <feBlend
+         in="result10"
+         mode="multiply"
+         result="result5"
+         in2="fbSourceGraphic"
+         id="feBlend4162" />
+      <feComposite
+         operator="over"
+         result="fbSourceGraphic"
+         in="result5"
+         in2="fbSourceGraphic"
+         id="feComposite4164" />
+      <feGaussianBlur
+         stdDeviation="5"
+         result="result9"
+         id="feGaussianBlur4166" />
+      <feSpecularLighting
+         specularExponent="45"
+         specularConstant="2.20000005"
+         surfaceScale="1"
+         lighting-color="#ffffff"
+         result="result1"
+         in="result9"
+         id="feSpecularLighting4168">
+        <fePointLight
+           z="20000"
+           y="-10000"
+           x="-5000"
+           id="fePointLight4170" />
+      </feSpecularLighting>
+      <feComposite
+         operator="in"
+         result="result2"
+         in="result1"
+         in2="fbSourceGraphic"
+         id="feComposite4172" />
+      <feComposite
+         k4="0"
+         k1="0"
+         k3="0.8"
+         k2="2"
+         operator="arithmetic"
+         result="result4"
+         in="result2"
+         in2="fbSourceGraphic"
+         id="feComposite4174" />
+      <feBlend
+         result="fbSourceGraphic"
+         mode="multiply"
+         in="result4"
+         in2="result4"
+         id="feBlend4176" />
+      <feColorMatrix
+         id="feColorMatrix4178"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         in="fbSourceGraphic"
+         result="fbSourceGraphicAlpha" />
+      <feGaussianBlur
+         in="fbSourceGraphic"
+         result="result1"
+         stdDeviation="1"
+         id="feGaussianBlur4180" />
+      <feComposite
+         operator="in"
+         result="result4"
+         in="result1"
+         in2="result1"
+         id="feComposite4182" />
+      <feGaussianBlur
+         in="result4"
+         result="result6"
+         stdDeviation="7"
+         id="feGaussianBlur4184" />
+      <feComposite
+         result="result8"
+         in="result6"
+         operator="over"
+         in2="result4"
+         id="feComposite4186" />
+      <feComposite
+         in="result6"
+         result="fbSourceGraphic"
+         operator="in"
+         in2="result8"
+         id="feComposite4188" />
+      <feSpecularLighting
+         in="fbSourceGraphic"
+         result="result1"
+         lighting-color="#ffffff"
+         surfaceScale="2.5"
+         specularConstant="2"
+         specularExponent="45"
+         id="feSpecularLighting4190">
+        <fePointLight
+           x="-5000"
+           y="-10000"
+           z="20000"
+           id="fePointLight4192" />
+      </feSpecularLighting>
+      <feComposite
+         in="result1"
+         result="result2"
+         operator="in"
+         in2="fbSourceGraphic"
+         id="feComposite4194" />
+      <feComposite
+         k4="0"
+         k1="0"
+         in="fbSourceGraphic"
+         result="result4"
+         operator="arithmetic"
+         k2="1.2"
+         k3="1.5"
+         in2="result2"
+         id="feComposite4196" />
+      <feComposite
+         result="result9"
+         in="result9"
+         operator="over"
+         in2="result4"
+         id="feComposite4198" />
+      <feBlend
+         mode="screen"
+         in2="result9"
+         id="feBlend4200" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-889.37008)"
+     id="layer1">
+    <rect
+       transform="matrix(0.38419585,0,0,0.33035355,18.935366,834.72616)"
+       y="198.07648"
+       x="85.714287"
+       height="91.428574"
+       width="540"
+       id="rect4136"
+       style="fill:#ffffff;fill-opacity:1;filter:url(#filter4138)" />
+  </g>
+</svg>

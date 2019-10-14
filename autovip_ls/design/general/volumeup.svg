@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="46"
+   height="46"
+   viewBox="0 0 46 46"
+   version="1.1"
+   id="svg22"
+   sodipodi:docname="volumeup.svg"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
+  <metadata
+     id="metadata28">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs26" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     id="namedview24"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="7.0404541"
+     inkscape:cx="47.491437"
+     inkscape:cy="39.965145"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg22" />
+  <path
+     inkscape:connector-curvature="0"
+     id="XMLID_7_"
+     class="st0"
+     d="m 23.3,0.48257604 c -0.5,0 -1.1,0.1 -1.8,0.5 0,0 -11.8000003,10.20000096 -12.2000003,10.70000096 H 2.9 c -1.6,0 -2.9,1.3 -2.9,2.9 v 17.2 c 0,1.6 1.3,2.9 2.9,2.9 h 6.3999997 c 0.4,0.4 12.2000003,10.3 12.2000003,10.3 0.7,0.5 1.3,0.6 1.8,0.5 1,-0.1 1.7,-0.9 1.9,-1.9 0,-0.1 0,-41.100001 0,-41.100001 -0.1,-1.1 -0.9,-1.89999996 -1.9,-1.99999996 z"
+     style="fill:#ffffff" />
+  <g
+     id="g845"
+     transform="translate(0.7425882,0.89760637)">
+    <rect
+       y="19.794304"
+       x="28.123188"
+       height="4.6161795"
+       width="15.979083"
+       id="rect822"
+       style="fill:#ffffff;fill-opacity:1" />
+    <rect
+       transform="rotate(90)"
+       y="-38.420818"
+       x="14.112852"
+       height="4.6161795"
+       width="15.979083"
+       id="rect822-3"
+       style="fill:#ffffff;fill-opacity:1" />
+  </g>
+</svg>

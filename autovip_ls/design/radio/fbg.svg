@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 320 300" style="enable-background:new 0 0 320 300;" xml:space="preserve">
+<style type="text/css">
+	
+		.st0{fill:url(#ana_cerceve_1_);stroke:#F9F9F9;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{clip-path:url(#kutu_2_);fill:url(#isik_1_);}
+	.st2{fill:url(#isiklar2_1_);}
+	.st3{fill:url(#isiklar1_1_);}
+	.st4{opacity:0.5;fill:url(#golge_1_);}
+</style>
+<g id="XMLID_1_">
+	<linearGradient id="ana_cerceve_1_" gradientUnits="userSpaceOnUse" x1="159.9998" y1="14.3382" x2="159.9998" y2="266.91">
+		<stop  offset="0" style="stop-color:#919396"/>
+		<stop  offset="0.2201" style="stop-color:#656668"/>
+		<stop  offset="0.4678" style="stop-color:#393A3B"/>
+		<stop  offset="0.6894" style="stop-color:#1A1A1B"/>
+		<stop  offset="0.8743" style="stop-color:#070707"/>
+		<stop  offset="1" style="stop-color:#000000"/>
+	</linearGradient>
+	<path id="ana_cerceve" class="st0" d="M286.3,227.2c0,21.9-17.8,39.7-39.7,39.7H73.4c-21.9,0-39.7-17.8-39.7-39.7V54.1
+		c0-21.9,17.8-39.7,39.7-39.7h173.1c21.9,0,39.7,17.8,39.7,39.7V227.2z"/>
+	<g>
+		<defs>
+			<path id="kutu_1_" d="M286.3,227.2c0,21.9-17.8,39.7-39.7,39.7H73.4c-21.9,0-39.7-17.8-39.7-39.7V54.1
+				c0-21.9,17.8-39.7,39.7-39.7h173.1c21.9,0,39.7,17.8,39.7,39.7V227.2z"/>
+		</defs>
+		<clipPath id="kutu_2_">
+			<use xlink:href="#kutu_1_"  style="overflow:visible;"/>
+		</clipPath>
+		
+			<linearGradient id="isik_1_" gradientUnits="userSpaceOnUse" x1="-109.9014" y1="107.0333" x2="83.5769" y2="-263.4093" gradientTransform="matrix(0.8859 0.4639 -0.4639 0.8859 108.653 132.8357)">
+			<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+			<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0.3"/>
+		</linearGradient>
+		<path id="isik" class="st1" d="M382.1,33.6c-25.4-30-62.1-55-105.2-75.3C178.2-88,24.8-51.8-16.8,31.3
+			c-36.6,73.1-32.8,167.9,54.1,227.6C164.8,199.2,244.8,79.3,382.1,33.6z"/>
+	</g>
+	
+		<radialGradient id="isiklar2_1_" cx="1201.1616" cy="444.8146" r="15.301" gradientTransform="matrix(0.4883 0.3577 -1.7318 1.5939 451.8072 -888.7486)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFFFFF"/>
+		<stop  offset="1.252675e-002" style="stop-color:#FFFFFF;stop-opacity:0.9875"/>
+		<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	</radialGradient>
+	<path id="isiklar2" class="st2" d="M280.2,258.8c-18.8,17.3-39.5,27.4-46.2,22.4c-6.7-4.9,3.1-23,21.9-40.3
+		c18.8-17.3,39.5-27.4,46.2-22.4C308.8,223.5,299,241.5,280.2,258.8z"/>
+	
+		<radialGradient id="isiklar1_1_" cx="945.7907" cy="542.0013" r="10.0319" gradientTransform="matrix(0.6608 0.4474 -1.804 1.8491 400.0597 -1395.9326)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFFFFF"/>
+		<stop  offset="1.252675e-002" style="stop-color:#FFFFFF;stop-opacity:0.9875"/>
+		<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	</radialGradient>
+	<path id="isiklar1" class="st3" d="M58.1,36.8C45.2,49.9,30,57.3,24,53.3c-6-4-0.4-18,12.4-31.2C49.3,8.9,64.5,1.5,70.5,5.6
+		C76.5,9.6,70.9,23.6,58.1,36.8z"/>
+	
+		<radialGradient id="golge_1_" cx="204.0922" cy="263.0463" r="88.8536" gradientTransform="matrix(1.6733 0 0 8.097392e-002 -181.5075 266.9767)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#231F20"/>
+		<stop  offset="0.1065" style="stop-color:#292526;stop-opacity:0.8935"/>
+		<stop  offset="0.2692" style="stop-color:#3B3636;stop-opacity:0.7308"/>
+		<stop  offset="0.4677" style="stop-color:#585252;stop-opacity:0.5323"/>
+		<stop  offset="0.6946" style="stop-color:#8B8586;stop-opacity:0.3054"/>
+		<stop  offset="0.9423" style="stop-color:#DFDCDC;stop-opacity:5.770123e-002"/>
+		<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	</radialGradient>
+	<ellipse id="golge" class="st4" cx="160" cy="288.3" rx="160" ry="7.2"/>
+</g>
+</svg>
