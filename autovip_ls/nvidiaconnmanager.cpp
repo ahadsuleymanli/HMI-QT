@@ -31,6 +31,24 @@ NvidiaConnManager::NvidiaConnManager(quint16 port, SerialMng *serial_mng,  Setti
     menuReturnTimer = new QTimer();
     menuReturnTimer->setInterval(changePageTimeout);
     connect(menuReturnTimer,&QTimer::timeout,this,&NvidiaConnManager::returnToUsersPage);
+
+    acTargetValueSetter = new IterativeValueChanger(50,[this](int current, int target)-> int{
+//        current -= 15;
+//        target -= 15;
+        if (target > 13) target = 13;
+        else if (target < 0) target = 0;
+        if (current < target){
+            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up");
+            this->serial_mng->setACDeg(current + 1);
+            current += 1;
+        }
+        else if (current > target){
+            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down");
+            this->serial_mng->setACDeg(current - 1);
+            current -= 1;
+        }
+        return current;
+    });
 }
 
 NvidiaConnManager::~NvidiaConnManager()
@@ -113,7 +131,9 @@ void NvidiaConnManager::processMessage(const QString &message)
        int current_acdeg = serial_mng->acdeg();
        if(messageMap["value"].userType() != QMetaType::QString){
            int val = messageMap["value"].toInt();
-           qDebug()<<"implement setting ac degree to" << val;
+           qDebug()<<"setting ac degree from " << current_acdeg <<"to" << val;
+           acTargetValueSetter->start(current_acdeg, val - 15);
+
        }
        else if(messageMap["open_close"] == "open"){
             qDebug()<<"implement turning ac on and off";

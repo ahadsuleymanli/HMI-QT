@@ -10,6 +10,7 @@
 #include <memory>
 #include "serialmng.h"
 #include "settingsmanager.h"
+#include "iterativevaluechanger.h"
 
 class NvidiaConnManager;
 
@@ -28,6 +29,7 @@ class NvidiaConnManager: public QObject
     int changePageTimeout = 2000;
     QString usersLastPage = "Home";
     QMap<QString, QStringList> commandMap;
+    IterativeValueChanger *acTargetValueSetter;
     QStringList menuNames = {"Home", "Lights", "AirConditioner", "LeftCurtain", "RightCurtain"};
 
 private:
