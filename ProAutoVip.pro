@@ -4,9 +4,7 @@ SUBDIRS += \
     AutoUpdater2 \
     autovip_ls \
     VirtualResponder \
-    ServiceManager \
-    tools/before \
-    tools/after
+    ServiceManager
 
 target.path = /home/root/autovip
 INSTALLS += target

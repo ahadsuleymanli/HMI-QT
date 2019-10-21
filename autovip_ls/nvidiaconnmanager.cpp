@@ -98,54 +98,92 @@ bool NvidiaConnManager::commandExists(QString part0, QString part1){
 // TODO: implement specific temperature setting
 // TODO: implement curtains
 // TODO: OO implementation of ui and serialmanager things
+
+
 void NvidiaConnManager::processMessage(const QString &message)
 {
-    QStringList msg_parts = message.split(" ");
-    if (msg_parts[0] == "CeilColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
-    {
-//        if (usersLastPage == "Home")
-//            emit changeQmlPage("Lights");
-        QColor color = QColor(msg_parts[1]);
-        this->serial_mng->setCeilingcolor(color);
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(message.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+    qDebug() << jsonObject;
+    QVariantMap messageMap = jsonObject.toVariantMap();
+
+    QString intent = messageMap["intent"].toString();
+
+    if (intent=="acdeg"){
+       int current_acdeg = serial_mng->acdeg();
+       if(messageMap["value"].userType() != QMetaType::QString){
+           int val = messageMap["value"].toInt();
+           qDebug()<<"implement setting ac degree to" << val;
+       }
+       else if(messageMap["open_close"] == "open"){
+            qDebug()<<"implement turning ac on and off";
+       }
+       else if(messageMap["open_close"] == "close"){
+           qDebug()<<"implement turning ac on and off";
+       }
+       else if(messageMap["increase_decrease"] == "increase"){
+           this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up");
+           if(current_acdeg < 13)
+               this->serial_mng->setACDeg(current_acdeg + 1);
+       }
+       else if (messageMap["increase_decrease"] == "decrease"){
+           this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down");
+           if(current_acdeg > -1 )
+               this->serial_mng->setACDeg(current_acdeg - 1);
+       }
     }
-    else if (msg_parts[0] == "SideColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
+    else if (intent == "change_menu")
     {
-        QColor color = QColor(msg_parts[1]);
-        this->serial_mng->setSidecolor(color);
+        QString menuName = messageMap["menu_name"].toString();
+        if ( this->menuNames.contains(menuName) )
+            emit changeQmlPage(menuName);
     }
-    else if (msg_parts[0] == "InsideColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
-    {
-        QColor color = QColor(msg_parts[1]);
-        this->serial_mng->setInsidecolor(color);
-    }
-    else if (msg_parts[0] == "fandeg" && msg_parts.length()==2)
-    {
-        if(msg_parts[1]=="up"){
-            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_up");
-        }
-        else if (msg_parts[1]=="down"){
-            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_down");
-        }
-    }
-    else if (msg_parts[0] == "acdeg" && msg_parts.length()==2)
-    {
-        int current_acdeg = serial_mng->acdeg();
-        if(msg_parts[1]=="up"){
-            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up");
-            if(current_acdeg < 13)
-                this->serial_mng->setACDeg(current_acdeg + 1);
-        }
-        else if (msg_parts[1]=="down"){
-            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down");
-            if(current_acdeg > -1 )
-                this->serial_mng->setACDeg(current_acdeg - 1);
-        }
-    }
-    else if (msg_parts[0] == "ChangeMenu" && msg_parts.length()==2)
-    {
-        if (commandExists(msg_parts[0],msg_parts[1]))
-            emit changeQmlPage(msg_parts[1]);
-    }
+
+//    QStringList msg_parts = message.split(" ");
+//    QString intentName = msg_parts[0];
+//    if (msg_parts[0] == "CeilColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
+//    {
+//        QColor color = QColor(msg_parts[1]);
+//        this->serial_mng->setCeilingcolor(color);
+//    }
+//    else if (msg_parts[0] == "SideColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
+//    {
+//        QColor color = QColor(msg_parts[1]);
+//        this->serial_mng->setSidecolor(color);
+//    }
+//    else if (msg_parts[0] == "InsideColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
+//    {
+//        QColor color = QColor(msg_parts[1]);
+//        this->serial_mng->setInsidecolor(color);
+//    }
+//    else if (msg_parts[0] == "fandeg" && msg_parts.length()==2)
+//    {
+//        if(msg_parts[1]=="up"){
+//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_up");
+//        }
+//        else if (msg_parts[1]=="down"){
+//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_down");
+//        }
+//    }
+//    else if (msg_parts[0] == "acdeg" && msg_parts.length()==2)
+//    {
+//        int current_acdeg = serial_mng->acdeg();
+//        if(msg_parts[1]=="up"){
+//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up");
+//            if(current_acdeg < 13)
+//                this->serial_mng->setACDeg(current_acdeg + 1);
+//        }
+//        else if (msg_parts[1]=="down"){
+//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down");
+//            if(current_acdeg > -1 )
+//                this->serial_mng->setACDeg(current_acdeg - 1);
+//        }
+//    }
+//    else if (msg_parts[0] == "ChangeMenu" && msg_parts.length()==2)
+//    {
+//        if (commandExists(msg_parts[0],msg_parts[1]))
+//            emit changeQmlPage(msg_parts[1]);
+//    }
 }
 
 

@@ -28,6 +28,7 @@ class NvidiaConnManager: public QObject
     int changePageTimeout = 2000;
     QString usersLastPage = "Home";
     QMap<QString, QStringList> commandMap;
+    QStringList menuNames = {"Home", "Lights", "AirConditioner", "LeftCurtain", "RightCurtain"};
 
 private:
     void initializeStateObject();
