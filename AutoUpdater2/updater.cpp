@@ -42,7 +42,7 @@ Updater::Updater(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(signalClose(QString)), this, SLOT(closeApp(QString)));
     //shell process finished signal
     connect(&unzipProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),this,&Updater::unzipFinished);
-
+    deleteOldFiles();
     ftpCurrentState = "connect and login failed";
     ftpOperationsTimeoutTimer.stop();
     ftpOperationsTimeoutTimer.start();
@@ -52,7 +52,17 @@ Updater::Updater(QObject *parent) : QObject(parent)
 }
 
 void Updater::deleteOldFiles(){
-
+    QDir directory(QDir::currentPath());
+    QStringList zipFiles = directory.entryList(QStringList() << "update*.zip" ,QDir::Files);
+    for (int i = 0 ; i<zipFiles.length() ; i++){
+        qDebug()<<"deleting"<<zipFiles[i];
+        QFile::remove(QString("%1/%2").arg(QDir::currentPath()).arg(zipFiles[i]));
+    }
+    QString pathToFolderToDelete = QString("%1/update_%2_%3").arg(QDir::currentPath()).arg(major_version).arg(minor_version);
+    if (QFileInfo::exists(pathToFolderToDelete)){
+        QDir dir(pathToFolderToDelete);
+        dir.removeRecursively();
+    }
 }
 
 void Updater::unzipSuccessful(){
@@ -85,10 +95,10 @@ void Updater::unzipSuccessful(){
 }
 void Updater::communicateFail(QString ftpCurrentState){
     if (ftpCurrentState == "downloading"){
-        out << "fail/downloadtimedout"<<'\n';
+        out << "info/downloadtimedout"<<'\n';
     }
     if (ftpCurrentState == "listing"){
-        out << "fail/noupdatefound"<<'\n';
+        out << "info/noupdatefound"<<'\n';
     }
 }
 
