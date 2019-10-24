@@ -4,20 +4,32 @@
 #include <QObject>
 #include <QTimer>
 #include <functional>
+#include <iostream>
+#include <QTextStream>
+
 class IterativeValueChanger : public QObject
 {
     Q_OBJECT
     QTimer delayTimer;
 //    using voidCallback = void(*)();
-    using voidCallback = std::function<int(int current, int target)>;
-    voidCallback callback_ptr;
-    voidCallback endCallback_ptr;
+    using singleIterationCallback = std::function<int(int current, int target)>;
+    singleIterationCallback callback1_ptr = nullptr;
+    singleIterationCallback callback2_ptr = nullptr;
+    singleIterationCallback turnOffCallback_ptr = nullptr;
     int current;
     int target;
+    int min = 0;
+    int max = 0;
+    int turnOnDefault;
+    QString name;
 
 public:
-    IterativeValueChanger(int increment_delay_ms, voidCallback callback_ptr, voidCallback endCallback_ptr = nullptr);
-    void start(int start, int target);
+    IterativeValueChanger(QString name, int increment_delay_ms, singleIterationCallback callback1_ptr, singleIterationCallback callback2_ptr = nullptr);
+    void setMinMax(int min, int max, int turnOnDefault);
+    void setOffFunction(int turnOnDefault, singleIterationCallback turnOffCallback_ptr = nullptr);
+    void changeVal(int changeVal, int target, int min_=0, int max_=0);
+    void turnOn(int current);
+    void turnOff(int current);
 
 signals:
     void singleIncrementFinished();

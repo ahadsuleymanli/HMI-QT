@@ -7,6 +7,11 @@
 #include <QObject>
 #include <QProcess>
 #include <QTimer>
+#include <iostream>
+#include <QDir>
+#include <QFileInfo>
+#include <QSettings>
+#include <QTimer>
 
 class Updater : public QObject
 {
@@ -23,13 +28,15 @@ class Updater : public QObject
     bool TEST_MODE = false;                  // is intended to be used during debugging only
     QProcess unzipProcess;
     QTimer listingDoneTimer;
-    QTimer ftpOperationsGracePeriod;
+    QTimer ftpOperationsTimeoutTimer;
     QString ftpCurrentState;
+//    QSettings *setting_ini;
 
 public:
 //    QCoreApplication* app;
     explicit Updater(QObject *parent = nullptr);
     void deleteFile(QString filename);
+    void deleteOldFiles();
 
 signals:
     void signalClose(QString closeReason);
@@ -39,6 +46,8 @@ signals:
 //    void quitSignal();
 
 public slots:
+    void communicateFail(QString ftpCurrentState);
+    void unzipSuccessful();
     void loginDone();
     void doListing(const QUrlInfo& inf);
     void download();

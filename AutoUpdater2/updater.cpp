@@ -1,17 +1,14 @@
 #include "updater.h"
 
-#include <QDir>
-#include <QFileInfo>
-#include <QProcess>
-#include <QSettings>
-#include <QTimer>
+
+QTextStream out(stdout);
 
 Updater::Updater(QObject *parent) : QObject(parent)
 {
     listingDoneTimer.setInterval(500);
     listingDoneTimer.stop();
-    ftpOperationsGracePeriod.setInterval(5500);
-    ftpOperationsGracePeriod.stop();
+    ftpOperationsTimeoutTimer.setInterval(5500);
+    ftpOperationsTimeoutTimer.stop();
     QString setfileLocation = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
     assert(QFileInfo::exists(setfileLocation));
     QSettings setting_ini(setfileLocation,QSettings::IniFormat);
@@ -25,7 +22,9 @@ Updater::Updater(QObject *parent) : QObject(parent)
     connect(&listingDoneTimer,&QTimer::timeout,this,&Updater::download);
 
     //if the listing event doesn't start for one second, means empty directory
-    connect(&ftpOperationsGracePeriod,&QTimer::timeout,this,[this](){this->closeApp("while ftp operations: " + ftpCurrentState);});
+    connect(&ftpOperationsTimeoutTimer,&QTimer::timeout,this,[this](){this->closeApp("while ftp operations: " + ftpCurrentState);
+            this->communicateFail(ftpCurrentState);
+    });
     connect(&qftpController,&QFtp::dataTransferProgress,this,&Updater::downloadProgress);
 
     connect(&qftpController,&QFtp::commandFinished,[this](int id, bool err){
@@ -45,34 +44,75 @@ Updater::Updater(QObject *parent) : QObject(parent)
     connect(&unzipProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),this,&Updater::unzipFinished);
 
     ftpCurrentState = "connect and login failed";
-    ftpOperationsGracePeriod.stop();
-    ftpOperationsGracePeriod.start();
+    ftpOperationsTimeoutTimer.stop();
+    ftpOperationsTimeoutTimer.start();
     qftpController.connectToHost(update_server);
     current_action_name="login";
     qftpController.login(username,password);
 }
 
+void Updater::deleteOldFiles(){
+
+}
+
+void Updater::unzipSuccessful(){
+    QString version = QString::number(major_version) + "." + QString::number(minor_version);
+    qDebug()<<version;
+    QString setfileLocation = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
+    assert(QFileInfo::exists(setfileLocation));
+    QSettings setting_ini(setfileLocation,QSettings::IniFormat);
+    setting_ini.setValue("update/lastdownloadedversion",version);
+    std::cout << "success/" + downloadFileName.toStdString()<<'\n'<<std::flush;
+    emit signalClose("successfully download and unzip");
+//    QString line;
+//    QTextStream in(stdin);
+//    forever {
+//        qDebug()<<"waiting for stdin";
+//        line = in.readLine();
+//        if (!line.isNull())
+//            break;
+//    }
+//    if (line == "applyupdate"){
+//        qDebug()<<"applying update...";
+//    }
+//    else if (line == "deferupdate"){
+//        qDebug()<<"deferring update...";
+//        emit signalClose("updater is closing after deferring the update");
+//    }
+//    else{
+//        emit signalClose("updater was told to exit");
+//    }
+}
+void Updater::communicateFail(QString ftpCurrentState){
+    if (ftpCurrentState == "downloading"){
+        out << "fail/downloadtimedout"<<'\n';
+    }
+    if (ftpCurrentState == "listing"){
+        out << "fail/noupdatefound"<<'\n';
+    }
+}
 
 void Updater::loginDone(){
     qDebug()<<"login"<<"done";
     ftpCurrentState = "list couldn't be acquired or the ftp directory is empty";
-    ftpOperationsGracePeriod.stop();
-    ftpOperationsGracePeriod.start();
+    ftpOperationsTimeoutTimer.stop();
+    ftpOperationsTimeoutTimer.start();
     qftpController.list();
 
 }
 //TODO: server'da hiç update yoksa freeze
 void Updater::doListing(const QUrlInfo& inf){
-    ftpCurrentState = "listing timed out or no valid update file found";
-    ftpOperationsGracePeriod.stop();
-    ftpOperationsGracePeriod.start();
-    QString setfileLocation = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
-    assert(QFileInfo::exists(setfileLocation));
-    QSettings setting_ini(setfileLocation,QSettings::IniFormat);
+    ftpCurrentState = "trying to list";
+    ftpOperationsTimeoutTimer.stop();
+    ftpOperationsTimeoutTimer.start();
+//    QString setfileLocation = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
+//    assert(QFileInfo::exists(setfileLocation));
+//    QSettings setting_ini(setfileLocation,QSettings::IniFormat);
     QString filename = inf.name();
     QString listingString = "listing: " + filename;
     QStringList parts = filename.split("_");
     if (parts.length() == 3 && parts[0] == "update"){
+        ftpCurrentState = "listing";
         QStringList temp = parts[2].split(".");
         bool ok = true;
         if (temp.length() == 2 && temp[1] == "zip"){
@@ -85,7 +125,6 @@ void Updater::doListing(const QUrlInfo& inf){
                     major_version = temp_major;
                     minor_version = temp_minor;
                     downloadFileName = parts[0] + "_" + parts[1] + "_" + parts[2] + ".zip";
-                    setting_ini.setValue("update/lastversion",parts[1]+"."+parts[2]);
                 }else {
                 }
             }else {
@@ -105,8 +144,8 @@ void Updater::doListing(const QUrlInfo& inf){
 
 void Updater::download(){
     ftpCurrentState = "downloading";
-    ftpOperationsGracePeriod.stop();
-    ftpOperationsGracePeriod.start();
+    ftpOperationsTimeoutTimer.stop();
+    ftpOperationsTimeoutTimer.start();
     listingDoneTimer.stop();
     if (downloadFileName == ""){
         emit signalClose("no update found, exiting.");
@@ -124,8 +163,8 @@ void Updater::download(){
 
 
 void Updater::downloadProgress(qint64 p1, qint64 p2){
-    ftpOperationsGracePeriod.stop();
-    ftpOperationsGracePeriod.start();
+    ftpOperationsTimeoutTimer.stop();
+    ftpOperationsTimeoutTimer.start();
     qDebug()<<"Progress : "<<p1<<" "<<p2;
 }
 
@@ -134,7 +173,7 @@ void Updater::downloadProgress(qint64 p1, qint64 p2){
 void Updater::downloadDone(){
     ftpCurrentState = "ftp operations done. no ftp issues should arise at this point";
     downloadFile.close();
-    ftpOperationsGracePeriod.stop();
+    ftpOperationsTimeoutTimer.stop();
     QString path;
     try{
         QStringList args;
@@ -149,13 +188,15 @@ void Updater::downloadDone(){
             qDebug()<<"unzipping"<< downloadFileName;
 
 
-            bool waitResult = unzipProcess.waitForFinished(15000);
+            bool waitResult = unzipProcess.waitForFinished(100000);
             if (!waitResult){
                 qDebug()<<"unzipping could not complete, killing the process.";
                 unzipProcess.kill();
+                emit closeApp("unzip unsure");
             }
             else {
                 qDebug()<<"unzipping successful.";
+                unzipSuccessful();
             }
             return;
         }else{
@@ -188,16 +229,16 @@ void Updater::deleteFile(QString filename){
             qDebug()<<"deleted successfully.";
         }
     }
-
-
 }
 
 void Updater::unzipFinished(){
-    closeApp("--- after the unzipping process ---");
+
+//    closeApp("--- after the unzipping process ---");
 }
 
 void Updater::closeApp(QString closeReason){
     qDebug()<<closeReason;
+//    this->setting_ini->deleteLater();
     qDebug()<<"closing up";
     qftpController.close();
     qDebug()<<"closing up is done. quitting...";

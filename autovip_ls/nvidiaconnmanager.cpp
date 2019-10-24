@@ -26,34 +26,47 @@ NvidiaConnManager::NvidiaConnManager(quint16 port, SerialMng *serial_mng,  Setti
     }
 
     initializeStateObject();
-    createCommandMap();
     setProtocolBusType();
+    instantiateValueChangers();
     menuReturnTimer = new QTimer();
     menuReturnTimer->setInterval(changePageTimeout);
     connect(menuReturnTimer,&QTimer::timeout,this,&NvidiaConnManager::returnToUsersPage);
 
-    acTargetValueSetter = new IterativeValueChanger(50,[this](int current, int target)-> int{
-//        current -= 15;
-//        target -= 15;
-        if (target > 13) target = 13;
-        else if (target < 0) target = 0;
-        if (current < target){
-            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up");
-            this->serial_mng->setACDeg(current + 1);
-            current += 1;
-        }
-        else if (current > target){
-            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down");
-            this->serial_mng->setACDeg(current - 1);
-            current -= 1;
-        }
-        return current;
-    });
+
 }
 
 NvidiaConnManager::~NvidiaConnManager()
 {
     webSocketServer->close();
+}
+
+void NvidiaConnManager::instantiateValueChangers(){
+    //acdeg------------------------
+    acdegChanger = new IterativeValueChanger("acdeg",50,[this](int current, int target)-> int{
+        if (current < target){
+            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up",true,50);
+            this->serial_mng->setACDeg(current += 1);
+        }
+        else if (current > target){
+            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down",true,50);
+            this->serial_mng->setACDeg(current -= 1);
+        }
+        return current;
+    });
+    acdegChanger->setMinMax(0,13, 20-15);
+    //acfan-------------------------
+    acfanChanger = new IterativeValueChanger("acfan",50,[this](int current, int target)-> int{
+        if (current < target){
+            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_up",true,50);
+            this->serial_mng->setACDeg(current += 1);
+        }
+        else if (current > target){
+            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_down",true,50);
+            this->serial_mng->setACDeg(current -= 1);
+        }
+        return current;
+    });
+    acfanChanger->setMinMax(0,7,2);
 }
 
 void NvidiaConnManager::initializeStateObject(){
@@ -97,20 +110,6 @@ void NvidiaConnManager::onNewConnection()
 
 
 
-void NvidiaConnManager::createCommandMap(){
-    commandMap.insert("ChangeMenu",{"Home", "Lights", "AirConditioner"});
-}
-
-
-bool NvidiaConnManager::commandExists(QString part0, QString part1){
-
-    if (commandMap.contains(part0) && commandMap[part0].contains(part1))
-        return true;
-    else {
-        qDebug()<<"command "<<part0<<part1<<"is not defined";
-        return false;
-    }
-}
 
 // TODO: remove the color string validation
 // TODO: implement specific temperature setting
@@ -122,34 +121,53 @@ void NvidiaConnManager::processMessage(const QString &message)
 {
     QJsonDocument jsonResponse = QJsonDocument::fromJson(message.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
-    qDebug() << jsonObject;
     QVariantMap messageMap = jsonObject.toVariantMap();
+//    qDebug() << jsonObject;
+    QTextStream(stdout) << "msg: "<< message<< "\n";
 
     QString intent = messageMap["intent"].toString();
 
-    if (intent=="acdeg"){
+    if (intent=="acdeg" || intent=="acdeg_followup"){
        int current_acdeg = serial_mng->acdeg();
-       if(messageMap["value"].userType() != QMetaType::QString){
-           int val = messageMap["value"].toInt();
-           qDebug()<<"setting ac degree from " << current_acdeg <<"to" << val;
-           acTargetValueSetter->start(current_acdeg, val - 15);
-
-       }
-       else if(messageMap["open_close"] == "open"){
-            qDebug()<<"implement turning ac on and off";
+       if(messageMap["open_close"] == "open"){
+          if (current_acdeg == -1)
+            acdegChanger->turnOn(current_acdeg);
        }
        else if(messageMap["open_close"] == "close"){
-           qDebug()<<"implement turning ac on and off";
+          if (current_acdeg != -1)
+            acdegChanger->turnOff(current_acdeg);
+       }
+       else if(messageMap["value"].userType() != QMetaType::QString){
+           int val = messageMap["value"].toInt();
+           acdegChanger->changeVal(current_acdeg, val - 15);
        }
        else if(messageMap["increase_decrease"] == "increase"){
-           this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up");
-           if(current_acdeg < 13)
-               this->serial_mng->setACDeg(current_acdeg + 1);
+           acdegChanger->changeVal(current_acdeg, current_acdeg + 1);
        }
        else if (messageMap["increase_decrease"] == "decrease"){
-           this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down");
-           if(current_acdeg > -1 )
-               this->serial_mng->setACDeg(current_acdeg - 1);
+           acdegChanger->changeVal(current_acdeg, current_acdeg - 1);
+       }
+    }
+    if (intent=="acfan" || intent=="acfan_followup"){
+       int current_acdeg = serial_mng->acdeg();
+       if(messageMap["open_close"] == "open"){
+          if (current_acdeg == -1)
+            acdegChanger->turnOn(current_acdeg);
+       }
+       else if(messageMap["open_close"] == "close"){
+          if (current_acdeg != -1)
+            acdegChanger->turnOff(current_acdeg);
+       }
+       else if(messageMap["value"].userType() != QMetaType::QString){
+           int val = messageMap["value"].toInt();
+           acdegChanger->changeVal(current_acdeg, val - 15);
+       }
+       else if(messageMap["increase_decrease"] == "increase"){
+
+           acdegChanger->changeVal(current_acdeg, current_acdeg + 1);
+       }
+       else if (messageMap["increase_decrease"] == "decrease"){
+           acdegChanger->changeVal(current_acdeg, current_acdeg - 1);
        }
     }
     else if (intent == "change_menu")

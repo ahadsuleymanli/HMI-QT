@@ -28,15 +28,13 @@ class NvidiaConnManager: public QObject
     QTimer * menuReturnTimer = nullptr;
     int changePageTimeout = 2000;
     QString usersLastPage = "Home";
-    QMap<QString, QStringList> commandMap;
-    IterativeValueChanger *acTargetValueSetter;
+    IterativeValueChanger *acdegChanger,*acfanChanger;
     QStringList menuNames = {"Home", "Lights", "AirConditioner", "LeftCurtain", "RightCurtain"};
 
 private:
     void initializeStateObject();
     void setProtocolBusType();
-    void createCommandMap();
-    bool commandExists(QString part0, QString part1);
+    void instantiateValueChangers();
 public:
     NvidiaConnManager(quint16 port, SerialMng *serial_mng , SettingsManager *SM, QObject * parent = nullptr);
     virtual ~NvidiaConnManager();
