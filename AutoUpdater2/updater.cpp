@@ -145,6 +145,15 @@ void Updater::doListing(const QUrlInfo& inf){
 void Updater::download(){
     ftpCurrentState = "downloading";
     ftpOperationsTimeoutTimer.stop();
+
+    QString setfileLocation = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
+    assert(QFileInfo::exists(setfileLocation));
+    QSettings setting_ini(setfileLocation,QSettings::IniFormat);
+    QStringList version = (setting_ini.value("update/lastdownloadedversion","").toString()).split(".");
+    if (major_version == version[0].toInt() and minor_version == version[1].toInt() ){
+        unzipSuccessful();
+        return;
+    }
     ftpOperationsTimeoutTimer.start();
     listingDoneTimer.stop();
     if (downloadFileName == ""){
