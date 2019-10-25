@@ -67,6 +67,22 @@ void NvidiaConnManager::instantiateValueChangers(){
         return current;
     });
     acfanChanger->setMinMax(0,7,2);
+
+    toggleCommands = new IterativeValueChanger("toggleCommands",50,nullptr,[this](QString function)-> int{
+        this->serial_mng->sendKey(function,true,50);
+        return 0;
+    });
+    timedToggleCommands["seat_headrest_adjust/up"]="head_up";
+    timedToggleCommands["seat_headrest_adjust/down"]="head_down";
+    timedToggleCommands["seat_headrest_adjust/stop"]="head_stop";
+    timedToggleCommands["seat_back_position/forwards"]="back_forward";
+    timedToggleCommands["seat_back_position/backwards"]="back_backwards";
+    timedToggleCommands["seat_back_position/stop"]="back_stop";
+    timedToggleCommands["seat_position/forwards"]="seat_forward";
+    timedToggleCommands["seat_position/backwards"]="seat_backwards";
+    timedToggleCommands["seat_position/stop"]="seat_stop";
+    seatIntentMajorParameters << "forwards_backwards" << "up_down" << "heating_cooling";
+    //serial_mng.sendKey("first_seat/"+key)
 }
 
 void NvidiaConnManager::initializeStateObject(){
@@ -95,7 +111,7 @@ void NvidiaConnManager::initializeStateObject(){
 
 void NvidiaConnManager::onNewConnection()
 {
-    QTextStream(stdout)  << "InspectionServer::onNewConnection";
+    QTextStream(stdout)  << "InspectionServer::onNewConnection\n";
 
     auto socket_ptr = webSocketServer->nextPendingConnection();
     socket_ptr->setParent(this);
@@ -109,22 +125,20 @@ void NvidiaConnManager::onNewConnection()
 }
 
 
-
-
-// TODO: remove the color string validation
-// TODO: implement specific temperature setting
 // TODO: implement curtains
 // TODO: OO implementation of ui and serialmanager things
-
-
 void NvidiaConnManager::processMessage(const QString &message)
 {
     QJsonDocument jsonResponse = QJsonDocument::fromJson(message.toUtf8());
     QJsonObject jsonObject = jsonResponse.object();
     QVariantMap messageMap = jsonObject.toVariantMap();
 //    qDebug() << jsonObject;
-    QTextStream(stdout) << "msg: "<< message<< "\n";
-
+//    QTextStream(stdout) << "msg: "<< message<< "\n";
+    QStringList parts;
+    for(QVariantMap::const_iterator iter = messageMap.begin(); iter != messageMap.end(); ++iter) {
+      parts.append( iter.key() + ": " + (iter.value()).toString()) ;
+    }
+    QTextStream(stdout) << parts.join(" ") << "\n";
     QString intent = messageMap["intent"].toString();
 
     if (intent=="acdeg" || intent=="acdeg_followup"){
@@ -176,52 +190,63 @@ void NvidiaConnManager::processMessage(const QString &message)
         if ( this->menuNames.contains(menuName) )
             emit changeQmlPage(menuName);
     }
-
-//    QStringList msg_parts = message.split(" ");
-//    QString intentName = msg_parts[0];
-//    if (msg_parts[0] == "CeilColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
-//    {
-//        QColor color = QColor(msg_parts[1]);
-//        this->serial_mng->setCeilingcolor(color);
-//    }
-//    else if (msg_parts[0] == "SideColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
-//    {
-//        QColor color = QColor(msg_parts[1]);
-//        this->serial_mng->setSidecolor(color);
-//    }
-//    else if (msg_parts[0] == "InsideColor" && msg_parts.length()==2 && QColor::isValidColor(msg_parts[1]))
-//    {
-//        QColor color = QColor(msg_parts[1]);
-//        this->serial_mng->setInsidecolor(color);
-//    }
-//    else if (msg_parts[0] == "fandeg" && msg_parts.length()==2)
-//    {
-//        if(msg_parts[1]=="up"){
-//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_up");
-//        }
-//        else if (msg_parts[1]=="down"){
-//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_down");
-//        }
-//    }
-//    else if (msg_parts[0] == "acdeg" && msg_parts.length()==2)
-//    {
-//        int current_acdeg = serial_mng->acdeg();
-//        if(msg_parts[1]=="up"){
-//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_up");
-//            if(current_acdeg < 13)
-//                this->serial_mng->setACDeg(current_acdeg + 1);
-//        }
-//        else if (msg_parts[1]=="down"){
-//            this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_degree_down");
-//            if(current_acdeg > -1 )
-//                this->serial_mng->setACDeg(current_acdeg - 1);
-//        }
-//    }
-//    else if (msg_parts[0] == "ChangeMenu" && msg_parts.length()==2)
-//    {
-//        if (commandExists(msg_parts[0],msg_parts[1]))
-//            emit changeQmlPage(msg_parts[1]);
-//    }
+    else if (intent.contains("seat_")){
+        QString timedToggleCommandKey  = "";
+        timedToggleCommandKey += intent + "/";
+        for(QVariantMap::const_iterator iter = messageMap.begin(); iter != messageMap.end(); ++iter) {
+            if(seatIntentMajorParameters.contains(iter.key()))
+            timedToggleCommandKey += iter.value().toString();
+        }
+        if (timedToggleCommands.contains(timedToggleCommandKey)){
+            QString toggleOnKey = messageMap["seat"].toString() + "/" + timedToggleCommands[timedToggleCommandKey];
+            QString toggleOffKey = messageMap["seat"].toString() + "/" + timedToggleCommands[intent + "/stop"];
+            toggleCommands->toggleKey(toggleOnKey,toggleOffKey,seatMovementDurationMs);
+        }
+        else if (intent == "seat_heating_cooling") {
+            QString key = messageMap["seat"].toString() + "/";
+            if (messageMap["heating_cooling"].toString() == "heating" && messageMap["open_close"].toString() == "open")
+                serial_mng->sendKey(key + "heating");
+            if (messageMap["heating_cooling"].toString() == "cooling" && messageMap["open_close"].toString() == "open")
+                serial_mng->sendKey(key + "cooling");
+        }
+        else if (intent == "seat_massage") {
+            QString key = messageMap["seat"].toString() + "/";
+            serial_mng->sendKey(key + "massage_onoff");
+        }
+    }
+    else if (intent == "change_light_colors"){
+        QMap<QString, QString> colorTranslations;
+        colorTranslations["kırmızı"] = "red";
+        colorTranslations["yeşil"] = "green";
+        colorTranslations["mavi"] = "blue";
+        colorTranslations["gökyüzü mavisi"] = "blue";
+        colorTranslations["sarı"] = "yellow";
+        colorTranslations["siyah"] = "black";
+        colorTranslations["beyaz"] = "white";
+        colorTranslations["mor"] = "violet";
+        colorTranslations["pembe"] = "pink";
+        if (colorTranslations.contains(messageMap["color"].toString())){
+            QColor color = QColor(colorTranslations[messageMap["color"].toString()]);
+            QString key = "lights/";
+            if (messageMap["light_region"].toString() == "default" or messageMap["light_region"].toString() == "ceilingcolor"){
+                key += "ceiling";
+                this->serial_mng->setCeilingcolor(color);
+            }
+            else if (messageMap["light_region"].toString() == "sidecolor"){
+                key += "side";
+                this->serial_mng->setSidecolor(color);
+            }
+            else if (messageMap["light_region"].toString() == "insidecolor"){
+                key += "inside";
+                this->serial_mng->setInsidecolor(color);
+            }
+            if (key != "lights/"){
+                serial_mng->sendKey(key + "_red",false,50,QString(color.red()));
+                serial_mng->sendKey(key + "_green",false,50,QString(color.green()));
+                serial_mng->sendKey(key + "_blue",false,50,QString(color.blue()));
+            }
+        }
+    }
 }
 
 

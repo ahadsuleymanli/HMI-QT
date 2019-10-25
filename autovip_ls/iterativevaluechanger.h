@@ -13,8 +13,9 @@ class IterativeValueChanger : public QObject
     QTimer delayTimer;
 //    using voidCallback = void(*)();
     using singleIterationCallback = std::function<int(int current, int target)>;
+    using toggleKeyCallback = std::function<int(QString function)>;
     singleIterationCallback callback1_ptr = nullptr;
-    singleIterationCallback callback2_ptr = nullptr;
+    toggleKeyCallback toggleKeyCallback_ptr = nullptr;
     singleIterationCallback turnOffCallback_ptr = nullptr;
     int current;
     int target;
@@ -24,12 +25,13 @@ class IterativeValueChanger : public QObject
     QString name;
 
 public:
-    IterativeValueChanger(QString name, int increment_delay_ms, singleIterationCallback callback1_ptr, singleIterationCallback callback2_ptr = nullptr);
+    IterativeValueChanger(QString name, int increment_delay_ms, singleIterationCallback callback1_ptr, toggleKeyCallback toggleKeyCallback_ptr = nullptr);
     void setMinMax(int min, int max, int turnOnDefault);
     void setOffFunction(int turnOnDefault, singleIterationCallback turnOffCallback_ptr = nullptr);
     void changeVal(int changeVal, int target, int min_=0, int max_=0);
     void turnOn(int current);
     void turnOff(int current);
+    void toggleKey(QString onKey, QString offKey, int durationMs);
 
 signals:
     void singleIncrementFinished();

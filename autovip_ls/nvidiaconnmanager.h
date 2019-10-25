@@ -28,8 +28,11 @@ class NvidiaConnManager: public QObject
     QTimer * menuReturnTimer = nullptr;
     int changePageTimeout = 2000;
     QString usersLastPage = "Home";
-    IterativeValueChanger *acdegChanger,*acfanChanger;
+    IterativeValueChanger *acdegChanger,*acfanChanger,*toggleCommands;
     QStringList menuNames = {"Home", "Lights", "AirConditioner", "LeftCurtain", "RightCurtain"};
+    int seatMovementDurationMs = 1000;
+    QMap<QString, QString> timedToggleCommands;
+    QStringList seatIntentMajorParameters = {};
 
 private:
     void initializeStateObject();
