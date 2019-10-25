@@ -924,7 +924,7 @@ void SerialMng::write(const QByteArray &writeData)
 void SerialMng::sendKey(const QString &key,bool wait,int p_delay,QString param)
 {
     QString realCode = m_proto->value(key).toString();
-    std::cout <<"key: " << key.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
+    std::cout <<"key: " << key.toStdString()<<" "<<param.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
    if(!this->m_serial->isOpen()) return;
 
    bool command_arranged = false;

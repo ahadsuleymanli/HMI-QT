@@ -225,6 +225,7 @@ void NvidiaConnManager::processMessage(const QString &message)
         colorTranslations["beyaz"] = "white";
         colorTranslations["mor"] = "violet";
         colorTranslations["pembe"] = "pink";
+        colorTranslations["kahve"] = "brown";
         if (colorTranslations.contains(messageMap["color"].toString())){
             QColor color = QColor(colorTranslations[messageMap["color"].toString()]);
             QString key = "lights/";
@@ -241,16 +242,15 @@ void NvidiaConnManager::processMessage(const QString &message)
                 this->serial_mng->setInsidecolor(color);
             }
             if (key != "lights/"){
-                serial_mng->sendKey(key + "_red",false,50,QString(color.red()));
-                serial_mng->sendKey(key + "_green",false,50,QString(color.green()));
-                serial_mng->sendKey(key + "_blue",false,50,QString(color.blue()));
+//                QTextStream(stdout) << "\n" << QString::number(color.red()) <<QString::number(color.green())<<QString::number(color.blue())<< " \n";
+
+                serial_mng->sendKey(key + "_red",false,50,QString(QString::number(color.red())));
+                serial_mng->sendKey(key + "_green",false,50,QString(QString::number(color.green())));
+                serial_mng->sendKey(key + "_blue",false,50,QString(QString::number(color.blue())));
             }
         }
     }
 }
-
-
-
 
 static QString getIdentifier(QWebSocket *peer)
 {
