@@ -127,7 +127,7 @@ Item {
                             width: 56
                             height: 46
                             property var images: ["qrc:/design/general/auxcable.png",
-                                "qrc:/design/general/audiosource.svg",
+                                "qrc:/design/general/fibercable.png",
                                 "qrc:/design/general/HighLevel.png",
                                 "qrc:/design/general/bluetooth.png"]
                             source: images[serial_mng.soundSource]
@@ -141,7 +141,7 @@ Item {
 
                         }
                         delegate: ItemDelegate {
-                            width: 128
+                            width: 140
                             contentItem: Text {
                                 text: name
                                 color: soundSourcesBox.currentIndex === index ?
@@ -155,9 +155,9 @@ Item {
                             onClicked: serial_mng.sendKey(command)
                         }
                         popup: Popup {
-                            y: soundSourcesBox.height + 38
-                            x: -25
-                            width: 130
+                            y: soundSourcesBox.height + 15
+                            x: -28
+                            width: 140
                             implicitHeight: contentItem.implicitHeight
                             padding: 1
 

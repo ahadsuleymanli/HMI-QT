@@ -493,5 +493,6 @@
         <file>design/general/auxcable.png</file>
         <file>design/general/bluetooth.png</file>
         <file>design/general/HighLevel.png</file>
+        <file>design/general/fibercable.png</file>
     </qresource>
 </RCC>

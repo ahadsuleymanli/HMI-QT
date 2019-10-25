@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 
 Item {
     width: infoLayout.width
-    property alias intercomVisible: btnIntercom.visible
+    property alias intercomVisible: btnIntercomOverlay.visible
     function showVolumeBar(){
         if(generalsettings.volumeCheckBoxChecked) return;
         if(volumeBarHideAnim.running){
@@ -36,6 +36,15 @@ Item {
             Layout.alignment: Qt.AlignHCenter
             visible: false
             source : "qrc:/design/general/Intercom.svg"
+        }
+        ColorOverlay{
+            id: btnIntercomOverlay
+            Layout.alignment: Qt.AlignHCenter
+            width: 46
+            height: 46
+            visible: false
+            source: btnIntercom
+            color: "#ffdf1f1f"
         }
         VolumeBar{
             id: volumeBar
