@@ -280,7 +280,7 @@ void MediaPlayerMng::getItem(int pid)
         }
 
    }else{
-       qDebug()<<result->toString()<<endl;
+       qDebug()<<result->toString()<< "\n";
 
    }
 }
@@ -327,9 +327,9 @@ void MediaPlayerMng::fseek(double p)
    auto result = this->client->call("Player.Seek",this->playerid(),p);
 
    if (result->isSuccess()) {
-        qDebug()<<result->result()<<endl;
+        qDebug()<<result->result()<<"\n";
    }else {
-        qDebug()<<result->toString()<<endl;
+        qDebug()<<result->toString()<<"\n";
    }
 
 }
@@ -346,7 +346,7 @@ void MediaPlayerMng::fgetPlayerProperties()
                mlist
                );
    if (result->isSuccess()) {
-        qDebug()<<result->result()<<endl;
+        qDebug()<<result->result()<<"\n";
         QVariantMap pm1 = result->result().toMap();
         bool ok;
         if(pm1.contains("percentage"))
@@ -407,7 +407,7 @@ void MediaPlayerMng::fgetPlayerProperties()
 
         }
    }else {
-        qDebug()<<result->toString()<<endl;
+        qDebug()<<result->toString()<<"\n";
    }
 }
 
@@ -420,7 +420,7 @@ void MediaPlayerMng::parseNotification(QJsonObject response)
 {
         QJsonDocument doc;
         doc.setObject(response);
-        qDebug()<<doc.toJson()<<endl;
+        qDebug()<<doc.toJson()<<"\n";
         QString method;
         if(!response.contains("method")) return;
         method = response.value("method").toString();

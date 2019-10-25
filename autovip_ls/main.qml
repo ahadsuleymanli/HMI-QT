@@ -11,9 +11,6 @@ import QtQuick.Controls.Material 2.2
 import closx.updater 1.0
 import closx.smanager 1.0
 
-
-
-
 Window {
     id: root
     visible:true
@@ -25,6 +22,7 @@ Window {
     Material.theme: Material.Dark
     Material.accent: Material.Purple
     color: "black"
+
     Intro{
         x:0
         y:0
@@ -40,31 +38,31 @@ Window {
            GSystem.changePage(page,false);
        }
     }
-    Connections {
-        target: update_manager
-        onDoUpdateOverlay: function(){
-            updateOverlayTimer.running = startBtn.visible;
-        }
-    }
+//    Connections {
+//        target: update_manager
+//        onDoUpdateOverlay: function(){
+//            updateOverlayTimer.running = startBtn.visible;
+//        }
+//    }
 
-    Timer{
-        id:updateOverlayTimer
-        running: false
-        repeat: true
-        interval: 100
-        onTriggered: {
-            if(startBtn.visible==false){
-                if(update_manager.checkUnzipped()){
-                    updaterbtn.visible=true;
-                    updater.visible=true;
-                    updateOverlayTimer.running=false;
-                }else{
-                    updateOverlayTimer.running=false;
-                    SM.setLastVersion(SM.version);
-                }
-            }
-        }
-    }
+//    Timer{
+//        id:updateOverlayTimer
+//        running: false
+//        repeat: true
+//        interval: 100
+//        onTriggered: {
+//            if(startBtn.visible==false){
+//                if(update_manager.checkUnzipped()){
+//                    updaterbtn.visible=true;
+//                    updater.visible=true;
+//                    updateOverlayTimer.running=false;
+//                }else{
+//                    updateOverlayTimer.running=false;
+//                    SM.setLastVersion(SM.version);
+//                }
+//            }
+//        }
+//    }
 
 //    AnimatedImage {
 //        x:0
@@ -147,6 +145,8 @@ Window {
             y:690
         }
     }
+
+
     CommandInfo{
         id:info
         z:332
@@ -165,6 +165,7 @@ Window {
         width: root.width
         height: root.height
     }
+
 
     Item{
        id:start
@@ -254,9 +255,9 @@ Window {
 
        ///////////////////////////// UPDATER OVERLAY BAŞLANGICI
 
-       Updater{
-           id:updateMe
-       }
+//       Updater{
+//           id:updateMe
+//       }
 
 
        Rectangle{
@@ -330,6 +331,7 @@ Window {
                           anchors.fill: parent
                           Text {
                               id:updatertext
+                              property string changeLogText: "value"
                               anchors {
                                   left: parent.left
                                   right: parent.right
@@ -380,9 +382,10 @@ Window {
                                       color: "white"
                                   }
                                   MouseArea{
+                                      id: updateMouseArea
                                       anchors.fill: parent
                                       onClicked: {
-                                          updateMe.makeUpdate()
+//                                          updateMe.makeUpdate()
                                       }
                                       onPressed: {
                                           updaterbg.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -421,9 +424,9 @@ Window {
                                       property var myheight: 400
                                       onClicked: {
                                           updaterheadertext.text = qsTr("Change Log of the New Update") + mytrans.emptyString
-                                          console.log(update_manager.dirPath()+"/changelog");
-                                          updatertext.text = update_manager.changeLog();
-                                          console.log(update_manager.changeLog());
+//                                          console.log(update_manager.dirPath()+"/changelog");
+                                          updatertext.text = updatertext.changeLogText
+//                                          console.log(update_manager.changeLog());
                                           updatertext.anchors.verticalCenterOffset = (myheight - updaterbtn.height)/4
                                           updaterbg.visible=false
                                           cancelbg.visible=false
@@ -533,6 +536,7 @@ Window {
                                       onClicked: {
                                           updater.visible=false;
                                           updaterbtn.visible=false;
+                                          SM.autoUpdate = false
                                       }
                                       onPressed: {
                                           cancelbg.color =  Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -552,7 +556,6 @@ Window {
           }
 
          ///////////////////////////// UPDATER OVERLAY BİTİŞİ
-
 
     Component.onCompleted: {
         GSystem.phistory = ["Home"];

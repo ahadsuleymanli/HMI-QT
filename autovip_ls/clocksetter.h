@@ -11,11 +11,12 @@ class ClockSetter : public QObject
 
 public:
     explicit ClockSetter(QObject *parent = nullptr);
-    Q_INVOKABLE void setTheClock();
+    Q_INVOKABLE void setTheClock(QString time);
+    Q_INVOKABLE void setRegion(QString region);
 
 signals:
     void sendKey(QString);
-
+    void regionChanged(QString region);
 public slots:
 };
 

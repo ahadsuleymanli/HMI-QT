@@ -15,6 +15,8 @@
 #include "restarter.h"
 #include <QDir>
 #include <nvidiaconnmanager.h>
+#include "MediaPlayer/tracklist.h"
+#include <QProcess>
 
 bool changeCD()
 {
@@ -35,7 +37,12 @@ int main(int argc, char *argv[])
     qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
 //    qputenv("QSG_INFO", "1"); // INFO
     changeCD();
+
+
+
     QQmlApplicationEngine engine;
+
+
 //    qDebug()<<"apps created"<<endl;
     qmlRegisterType<Restarter>("closx.restarter", 1, 0, "Restarter");
     qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
@@ -59,8 +66,8 @@ int main(int argc, char *argv[])
     // instantiating an NvidiaConnManager object
     NvidiaConnManager nvidiaConnManager(1234, &smng, &sm, &app);
     engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
-    UpdateCheck updatecheck(&app);
-    engine.rootContext()->setContextProperty("update_manager", &updatecheck);
+//    UpdateCheck updatecheck(&app);
+//    engine.rootContext()->setContextProperty("update_manager", &updatecheck);
 
 
     if(imng.init() == false)
@@ -69,9 +76,10 @@ int main(int argc, char *argv[])
          return -1;
     }
 
-//    qDebug()<<"init successful"<<endl;
-//    CronJobs cjobs;
-//    CronJobsMgr cronJobsMgr;
+    TrackList tracks;
+
+    QQmlContext *ctxt = engine.rootContext();
+    ctxt->setContextProperty("trackModel", &tracks);
 
 
     return app.exec();

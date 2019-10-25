@@ -1,4 +1,5 @@
 #include "voiceprotohandler.h"
+#include <QTextStream>
 using namespace voice;
 
 VoiceProtoHandler::VoiceProtoHandler(QSettings * p_proto,QObject *parent) : QObject(parent)
@@ -30,7 +31,7 @@ bool VoiceProtoHandler::parseProto()
 
             if(enable==0)
             {
-//                qDebug()<<"Disabled Macro Name :"<<macroName<<endl;
+//                qDebug()<<"Disabled Macro Name :"<<macroName<<"\n";
                 m_commandMap.insert(id,cp);
                 continue;
             }
@@ -38,7 +39,7 @@ bool VoiceProtoHandler::parseProto()
             int checkSize = parts.length() - 2;
             if(checkSize%2 != 0)
             {
-                qDebug()<<"Incomplete Macro Name :"<<macroName<<endl;
+                qDebug()<<"Incomplete Macro Name :"<<macroName<<"\n";
                 m_commandMap.insert(id,cp);
                 continue;
             }
@@ -82,12 +83,12 @@ bool VoiceProtoHandler::sendVoiceCommand(int id)
     CommandPack * cpack = m_commandMap.value(id);
     if(cpack->enabled==0)
     {
-        qDebug()<<"trying to run pasive macro. Name : "<<cpack->name<<endl;
+        qDebug()<<"trying to run pasive macro. Name : "<<cpack->name<<"\n";
         return false;
     }
     if(cpack->commands == nullptr)
     {
-        qDebug()<<"No commands : "<<cpack->name<<endl;
+        qDebug()<<"No commands : "<<cpack->name<<"\n";
         return false;
 
     }
@@ -101,7 +102,7 @@ bool VoiceProtoHandler::sendVoiceCommand(int id)
                 emit sendKey(obj->params[0]);
                 continue;
             }else{
-               qDebug()<<"Wrong usage : "<<cpack->name<<endl;
+               qDebug()<<"Wrong usage : "<<cpack->name<<"\n";
                return false;
             }
             break;
@@ -111,14 +112,14 @@ bool VoiceProtoHandler::sendVoiceCommand(int id)
                 emit sendCode(obj->params[0]);
                 continue;
             }else{
-               qDebug()<<"Wrong usage : "<<cpack->name<<endl;
+               qDebug()<<"Wrong usage : "<<cpack->name<<"\n";
                return false;
             }
             break;
         case commandType::Wait_key:
             if(obj->params.length()!=1)
             {
-               qDebug()<<"Wrong usage : "<<cpack->name<<endl;
+               qDebug()<<"Wrong usage : "<<cpack->name<<"\n";
                return false;
             }else{
                 QString waitkey = obj->params[0];
@@ -126,7 +127,7 @@ bool VoiceProtoHandler::sendVoiceCommand(int id)
                 int delay = m_proto->value(QString("macro_variables/%1").arg(waitkey)).toInt(&ok);
                 if(!ok || delay < 0)
                 {
-                       qDebug()<<"waitkey not found"<<cpack->name<<endl;
+                       qDebug()<<"waitkey not found"<<cpack->name<<"\n";
                        return false;
                 }
                 emit needDelay(delay);
@@ -137,7 +138,7 @@ bool VoiceProtoHandler::sendVoiceCommand(int id)
         case commandType::Wait:
             if(obj->params.length()!=1)
             {
-               qDebug()<<"Wrong usage : "<<cpack->name<<endl;
+               qDebug()<<"Wrong usage : "<<cpack->name<<"\n";
                return false;
             }else{
                 QString waitvalue = obj->params[0];
@@ -145,7 +146,7 @@ bool VoiceProtoHandler::sendVoiceCommand(int id)
                 int delay = waitvalue.toInt(&ok);
                 if(!ok || delay < 0)
                 {
-                       qDebug()<<"waitvalue not found"<<cpack->name<<endl;
+                       qDebug()<<"waitvalue not found"<<cpack->name<<"\n";
                        return false;
                 }
                 emit needDelay(delay);
@@ -155,7 +156,7 @@ bool VoiceProtoHandler::sendVoiceCommand(int id)
         case commandType::Function:
             if(obj->params.length()!=1)
             {
-               qDebug()<<"Wrong usage : "<<cpack->name<<endl;
+               qDebug()<<"Wrong usage : "<<cpack->name<<"\n";
                return false;
             }
                 QString functionname = obj->params[0];

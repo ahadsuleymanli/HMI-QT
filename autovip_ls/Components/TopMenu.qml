@@ -110,7 +110,6 @@ Image {
                 }
             }
     Component.onCompleted: {
-        topDate.refresh();
         mainmenu.y=0;
     }
 }

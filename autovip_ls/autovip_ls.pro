@@ -21,6 +21,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    MediaPlayer/tracklist.cpp \
     iterativevaluechanger.cpp \
         nvidiaconnmanager.cpp \
         main.cpp \
@@ -59,6 +60,7 @@ SOURCES += \
     voiceprotohandler.cpp
 
 HEADERS += \
+    MediaPlayer/tracklist.h \
     iterativevaluechanger.h \
     nvidiaconnmanager.h \
     restarter.h \
@@ -174,9 +176,11 @@ SOURCES = Pages/Controls/*.qml Pages/Curtains/*.qml Pages/Lights/*.qml Pages/Med
             content/*.js
   }
 
-
 message("HOST" $${QMAKE_HOST.arch})
 message("TARGET ARCH" $${QMAKE_TARGET.arch})
 message("PLATFORM" $${PLATFORM})
 
 DISTFILES +=
+
+#target.path = /home/linaro/
+INSTALLS +=

@@ -9,21 +9,51 @@ BasePage {
     id:root
     caption: qsTr("MEDIA") + mytrans.emptyString
     pageName: "Media"
+    property ListModel mediaModel: GSystem.mediaModel
+
+    AniMedia{
+         anchors{
+             horizontalCenter: parent.horizontalCenter
+             top: parent.top
+             topMargin: 140
+         }
+         width: 140
+         height: 140
+     }
     Item{
-        x:0
-        y:0
-        width:parent.width
-        height:parent.height
-        LeftMenu{
-            id:leftMenu
+        anchors.fill: parent
+        anchors.topMargin: 250
+        anchors.leftMargin: 10
+        anchors.bottomMargin: 120
+
+        GridView{
+            id: mediaView
+            anchors.fill : parent
+            model: root.mediaModel
+            cellWidth: 200
+            cellHeight: 200
+            clip: true
+
+            delegate: Item{
+                width: mediaView.cellWidth
+                height: mediaView.cellHeight
+                LeftButton{
+                   id:wrapper
+                   anchors.fill: parent
+                   bgsource: bg
+                   text :qsTr(name) + mytrans.emptyString
+                   onClicked: {
+                        GSystem.state = name;
+                        GSystem.changePage(st);
+                    }
+                }
+            }
         }
-        }
-   AniMedia{
-            anchors.centerIn: root
-        }
+    }
+
    Component.onCompleted: {
             GSystem.createMediaModel();
-            leftMenu.model = GSystem.mediaModel;
+            root.mediaModel = GSystem.mediaModel;
    }
 
 }

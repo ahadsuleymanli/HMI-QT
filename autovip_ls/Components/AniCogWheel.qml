@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.3
 
 Item {
     id:root
@@ -14,33 +15,32 @@ Item {
 //            sourceSize.width: 200 * root.cscale
 //            sourceSize.height: 200 * root.cscale
 //        }
-        Image{
-            id:cw1
-            x: 140
-            y: 10 * root.cscale
-            sourceSize.width: 140 * root.cscale
-            sourceSize.height: 140 * root.cscale
-            source:"qrc:/design/controls/ani/buyuk.svg"
-        }
-
+    RowLayout{
+        anchors.fill: parent
         Image{
             id:cw2
-            x: 40
-            y: 80
-            sourceSize.width:  100 * root.cscale
-            sourceSize.height: 100 * root.cscale
+            sourceSize.width:  root.width * 0.4
+            sourceSize.height: root.height * 0.4
             source:"qrc:/design/controls/ani/orta.svg"
         }
-        Image{
-            id:cw3
-            x: 140
-            y: 160
-            width: 65
-            height: 65
-            sourceSize.width:  100*root.cscale
-            sourceSize.height: 100*root.cscale
-            source:"qrc:/design/controls/ani/kucuk.svg"
+        ColumnLayout{
+            Image{
+                id:cw1
+                sourceSize.width: root.width * 0.6
+                sourceSize.height: root.height * 0.6
+                source:"qrc:/design/controls/ani/buyuk.svg"
+                fillMode: Image.PreserveAspectFit
+            }
+            Image{
+                id:cw3
+                sourceSize.width:  root.width * 0.3
+                sourceSize.height: root.height * 0.3
+                source:"qrc:/design/controls/ani/kucuk.svg"
+            }
         }
+    }
+
+
 //    }
 
             NumberAnimation {

@@ -6,9 +6,12 @@ Item {
     id:root
     property string message: "info"
     property alias src:icon.source
+    property point position: Qt.point(0,0)
     signal finished
-    width:1024
-    height:768
+    x: position.x
+    y: position.y
+    width:100
+    height:100
     visible: false
     function start()
     {
@@ -16,19 +19,13 @@ Item {
         ani.restart();
     }
     Rectangle{
-        id:bg
-        z:332
-        anchors.fill: root
-        color:"black"
-        opacity: 0
-    }
-    Rectangle{
         id:info
-        z:333
-        anchors.centerIn: parent
-        width:300
-        height:300
+        x:0
+        y:0
+        width:100
+        height:100
         opacity: 0
+        radius: 8
         color:Qt.rgba(0, 0, 0,0.4)
         border.width: 3
         border.color:Qt.rgba(0/255, 108/255, 128/255,0.8)
@@ -39,7 +36,7 @@ Item {
             spacing: 10
             Image{
                 id:icon
-                sourceSize.width: 200
+                sourceSize.width: 80
                 fillMode: Image.PreserveAspectFit
             }
             Text{
@@ -57,16 +54,16 @@ Item {
         ParallelAnimation{
             PropertyAnimation {
                 property: "opacity"
-                target: bg;
-                from: 0;
-                to: 0.7;
-                duration: 500
-            }
-            PropertyAnimation {
-                property: "opacity"
                 target: info;
                 from: 0;
                 to: 1;
+                duration: 500
+            }
+            PropertyAnimation {
+                property: "y"
+                target: root;
+                from: root.position.y;
+                to: root.position.y-100;
                 duration: 500
             }
         }
@@ -76,18 +73,10 @@ Item {
         ParallelAnimation{
             PropertyAnimation {
                 property: "opacity"
-                target: bg;
-                from: 0.7;
-                to: 0;
-                duration: 500
-            }
-            PropertyAnimation {
-                property: "opacity"
                 target: info;
                 from: 1;
                 to: 0;
                 duration: 500
-
             }
         }
 

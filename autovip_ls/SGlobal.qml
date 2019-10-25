@@ -249,7 +249,7 @@ Item {
         {
         mediaModel.append(
                     {
-            name: qsTr("Kodi Player"),
+            name: qsTr("Media Player"),
             st: "KodiMediaPlayer",
             bg: "qrc:/design/media/leftmenu/kodiplayer.png"
                     }

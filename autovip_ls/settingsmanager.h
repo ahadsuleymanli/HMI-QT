@@ -32,6 +32,7 @@ class SettingsManager : public QObject
 
     Q_PROPERTY(uint tvtype READ tvtype)
 
+
     Q_PROPERTY(bool playstation READ playstation)
     Q_PROPERTY(bool slboolean READ slboolean)
     Q_PROPERTY(bool dockingstation READ dockingstation)
@@ -49,11 +50,12 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool demomode READ demomode)
     Q_PROPERTY(bool intro READ intro)
 
-
+    Q_PROPERTY(bool autoUpdate READ autoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
     Q_PROPERTY(QString version READ version)
-    Q_PROPERTY(QString lastversion READ lastversion)
+    Q_PROPERTY(QString lastdownloadedversion READ lastdownloadedversion)
 public:
     explicit SettingsManager(QObject *parent = nullptr);
+    void resetSettings();
     int lang();
     uint actype();
     uint tvtype();
@@ -89,8 +91,11 @@ Q_INVOKABLE uint mediaplayertype();
     QString portname();
     void setPortname(QString p_pn);
     QSettings* getSettings();
+
+    bool autoUpdate();
+    void setAutoUpdate(bool enabled = true);
     QString version();
-    QString lastversion();
+    QString lastdownloadedversion();
 
 
 Q_INVOKABLE  QVariant value(QString key);
@@ -113,6 +118,7 @@ signals:
     void portnameChanged(QString);
     void actypeChanged(uint);
     void mediaplayertypeChanged(uint);
+    void autoUpdateChanged(bool);
 public slots:
 };
 

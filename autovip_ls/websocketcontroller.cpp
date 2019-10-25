@@ -81,7 +81,7 @@ void WebsocketController::onNewConnection()
 void WebsocketController::processMessage(const QString &message)
 {
     try{
-        qDebug()<<"Microphone Service Message : "<<message<<endl;
+        qDebug()<<"Microphone Service Message : "<<message<<"\n";
         QJsonDocument json = QJsonDocument::fromJson(message.toUtf8());
         QJsonObject obj = json.object();
         if(!obj.contains("notice") || !obj.contains("state"))
@@ -107,7 +107,7 @@ void WebsocketController::processMessage(const QString &message)
 
     }catch(...)
     {
-        qDebug()<<"Voice json message error"<<endl;
+        qDebug()<<"Voice json message error"<<"\n";
     }
 
 }

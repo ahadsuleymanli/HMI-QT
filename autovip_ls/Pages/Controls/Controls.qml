@@ -9,19 +9,51 @@ BasePage {
     id:root
     caption:qsTr("CONTROLS") + mytrans.emptyString
     pageName: "Controls"
-    property alias leftMenu: leftMenu
+    property ListModel controlsModel: GSystem.controlsModel
 
-        LeftMenu{
-            id:leftMenu
-        }
-        AniCogWheel{
-            anchors.centerIn: root
-            width:200
-            height: 200
+
+    AniCogWheel{
+        anchors{
+            horizontalCenter: parent.horizontalCenter
+            top:parent.top
+            topMargin: 130
         }
 
-      Component.onCompleted: {
+        width:120
+        height: 120
+    }
+    Item{
+        anchors.fill: parent
+        anchors.topMargin: 250
+        anchors.leftMargin: 10
+        anchors.bottomMargin: 120
+        GridView{
+            id: controlView
+            anchors.fill : parent
+            cellWidth: 200
+            cellHeight: 200
+            clip:true
+            model: root.controlsModel
+            delegate: Item{
+                width: controlView.cellWidth
+                height: controlView.cellHeight
+                LeftButton{
+                   id:wrapper
+                   anchors.fill: parent
+                   bgsource: bg
+                   text :qsTr(name) + mytrans.emptyString
+                   onClicked: {
+                        GSystem.state = name;
+                        GSystem.changePage(st);
+                    }
+
+
+                }
+            }
+        }
+    }
+  Component.onCompleted: {
         GSystem.createControlsModel();
-        leftMenu.model = GSystem.controlsModel;
-       }
+        root.controlsModel = GSystem.controlsModel;
+   }
 }

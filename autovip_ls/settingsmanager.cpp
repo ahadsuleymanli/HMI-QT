@@ -12,6 +12,16 @@ SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
     m_proto = new QSettings(protofile,QSettings::IniFormat);
 }
 
+void SettingsManager::resetSettings()
+{
+    QString setfile = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
+    QString protofile = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
+    delete general;
+    delete m_proto;
+    this->general = new QSettings(setfile,QSettings::IniFormat);
+    m_proto = new QSettings(protofile,QSettings::IniFormat);
+}
+
 int SettingsManager::lang()
 {
     return this->general->value("main/lang",Langs::ENG).toInt();
@@ -179,7 +189,7 @@ void SettingsManager::setVersion(int major, int minor)
 
 void SettingsManager::setLastVersion(QString lversion)
 {
-    this->general->setValue("update/lastversion",lversion);
+    this->general->setValue("update/lastdownloadedversion",lversion);
 }
 
 QString SettingsManager::version()
@@ -187,9 +197,9 @@ QString SettingsManager::version()
     return this->general->value("update/version").toString();
 }
 
-QString SettingsManager::lastversion()
+QString SettingsManager::lastdownloadedversion()
 {
-    return this->general->value("update/lastversion").toString();
+    return this->general->value("update/lastdownloadedversion").toString();
 }
 
 
@@ -326,6 +336,7 @@ bool SettingsManager::init()
     this->general->setValue("username", "gokhan");
     this->general->setValue("password", "g0khan111");
     this->general->setValue("version", "1.0");
+    this->general->setValue("autoUpdate", "true");
     this->general->setValue("lastversion", "1.0");
     this->general->endGroup();
 
@@ -347,6 +358,7 @@ bool SettingsManager::init()
         m_proto->setValue("start_code","");
         m_proto->setValue("end_code","");
         m_proto->setValue("aircondition","26");
+        m_proto->setValue("sound_control","36");
         m_proto->setValue("ceiling_light","77");
         m_proto->setValue("side_light","78");
         m_proto->setValue("inside_light","79");
@@ -708,12 +720,21 @@ bool SettingsManager::init()
 
         m_proto->setValue("intercom","27/10");
 
-        m_proto->setValue("mute","88/5");
-        m_proto->setValue("volume_up","88/1");
-        m_proto->setValue("volume_up_stop","7/0");
-        m_proto->setValue("volume_down_stop","7/0");
-        m_proto->setValue("volume_mute_stop","7/0");
+        m_proto->setValue("mute","107/3");
+        m_proto->setValue("volume_mute_stop","107/4");
+
+        m_proto->setValue("volume_up","107/0");
+        m_proto->setValue("volume_up_stop","107/2");
+        m_proto->setValue("volume_down_stop","107/2");
+
+
         m_proto->setValue("audio_source","88/4");
+
+        m_proto->setValue("aux_source","107/6");
+        m_proto->setValue("optic_source","107/7");
+        m_proto->setValue("highlevel_source","107/8");
+        m_proto->setValue("bluetooth_source","107/9");
+
 
         m_proto->setValue("screen_up","32/32");
         m_proto->setValue("screen_down","32/33");
@@ -1747,7 +1768,19 @@ QString SettingsManager::getLightMemory(int p_unit, int p_type)
 
 QSettings *SettingsManager::getSettings()
 {
-   return this->general;
+    return this->general;
+}
+
+bool SettingsManager::autoUpdate()
+{
+    return this->general->value("update/autoUpdate", true).toBool();
+}
+
+void SettingsManager::setAutoUpdate(bool enabled)
+{
+    if(autoUpdate() == enabled) return;
+    this->general->setValue("update/autoUpdate",enabled);
+    emit autoUpdateChanged(enabled);
 }
 
 QVariant SettingsManager::value(QString key)

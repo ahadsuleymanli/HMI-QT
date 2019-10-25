@@ -52,6 +52,8 @@ class SerialMng : public QObject
 
     QString m_fb_aircondition;
 
+    QString m_fb_sound_control;
+
     QString m_fb_ceiling_light;
     QString m_fb_side_light;
     QString m_fb_inside_light;
@@ -65,6 +67,8 @@ class SerialMng : public QObject
     QColor m_ceilingcolor;
     QColor m_insidecolor;
     QColor m_sidecolor;
+    uint m_volume = 30;
+    uint m_soundSource = 0;
 
     QTime m_lastsend;
     int m_last_arranged_cmd = 0;
@@ -99,6 +103,10 @@ class SerialMng : public QObject
     Q_PROPERTY(QColor ceilingcolor READ ceilingcolor WRITE setCeilingcolor NOTIFY ceilingcolorChanged)
     Q_PROPERTY(QColor sidecolor READ sidecolor WRITE setSidecolor NOTIFY sidecolorChanged)
     Q_PROPERTY(QColor insidecolor READ insidecolor WRITE setInsidecolor NOTIFY insidecolorChanged)
+
+    Q_PROPERTY(uint volume READ volume WRITE setVolume NOTIFY volumeChanged)
+    Q_PROPERTY(uint soundSource READ soundSource WRITE setSoundSource NOTIFY soundSourceChanged)
+
 public:
     explicit SerialMng(QObject *parent = nullptr);
     void openSerialPort();
@@ -127,9 +135,13 @@ public:
     QColor insidecolor();
     QColor sidecolor();
 
+    uint volume();
+    uint soundSource();
+
     void setSystemstate(int p_state);
 
-
+    void setVolume(uint vol);
+    void setSoundSource(uint source);
     void setHeat(uint p_h);
     void setCool(uint p_c);
     void setMassageon(bool p_o);
@@ -181,6 +193,7 @@ public:
     bool parserSideLight(QString p_response);
     bool parserInsideLight(QString p_response);
     bool parserCeilingLight(QString p_response);
+    bool parserSoundControl(QString p_response);
 
 public: //invokables
     Q_INVOKABLE void write(const QByteArray &writeData);
@@ -208,7 +221,8 @@ signals:
     void insidecolorChanged(QColor );
     void sidecolorChanged(QColor);
     void ceilingcolorChanged(QColor);
-
+    void volumeChanged(uint);
+    void soundSourceChanged(uint);
     void runFunction(QString);
 
 public slots:

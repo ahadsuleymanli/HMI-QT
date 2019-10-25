@@ -22,6 +22,28 @@ BasePage {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 35
     }
+    RightInfoBar{
+        id: rightInfoBar
+        anchors{
+            right: parent.right
+            rightMargin: 10
+            top: parent.top
+            topMargin: 160
+            bottom: parent.bottom
+        }
+    }
+    Connections{
+        target: iBottomMenu.btnIntercom
+        onClicked: rightInfoBar.intercomVisible = !rightInfoBar.intercomVisible
+    }
+    Connections{
+        target: iBottomMenu.btnVolumeUp
+        onClicked: rightInfoBar.showVolumeBar()
+    }
+    Connections{
+        target: iBottomMenu.btnVolumeDown
+        onClicked: rightInfoBar.showVolumeBar()
+    }
     /*
     ParticleSystem {
         id: particleSystem

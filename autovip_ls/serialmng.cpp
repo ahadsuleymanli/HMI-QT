@@ -1,6 +1,7 @@
 #include "serialmng.h"
 #include <QGuiApplication>
 #include <QDir>
+#include <iostream>
 using namespace voice;
 
 SerialMng::SerialMng(QObject *parent) : QObject(parent)
@@ -28,6 +29,8 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
    m_fbstart = m_proto->value("feedbacks/start_code").toString();
    m_fbend = m_proto->value("feedbacks/end_code").toString();
    m_fb_aircondition = m_proto->value("feedbacks/aircondition").toString();
+
+   m_fb_sound_control = m_proto->value("feedbacks/sound_control").toString();
 
    m_fb_ceiling_light = m_proto->value("feedbacks/ceiling_light").toString();
    m_fb_side_light = m_proto->value("feedbacks/side_light").toString();
@@ -315,7 +318,17 @@ QColor SerialMng::insidecolor()
 
 QColor SerialMng::sidecolor()
 {
-   return m_sidecolor;
+    return m_sidecolor;
+}
+
+uint SerialMng::volume()
+{
+    return m_volume;
+}
+
+uint SerialMng::soundSource()
+{
+    return m_soundSource;
 }
 
 void SerialMng::setSystemstate(int p_state)
@@ -323,6 +336,20 @@ void SerialMng::setSystemstate(int p_state)
     if(m_systemstate == p_state) return;
    m_systemstate = p_state;
    emit systemstateChanged(m_systemstate);
+}
+
+void SerialMng::setVolume(uint vol)
+{
+    if(m_volume == vol) return;
+    m_volume = vol;
+    emit volumeChanged(m_volume);
+}
+
+void SerialMng::setSoundSource(uint source)
+{
+    if(m_soundSource == source) return;
+    m_soundSource = source;
+    emit soundSourceChanged(m_soundSource);
 }
 
 void SerialMng::setHeat(uint p_h)
@@ -577,6 +604,8 @@ void SerialMng::parseFeedback(QString response)
     found = parserSideLight(response);
     if(found) { return; }
     found = parserCeilingLight(response);
+    if(found) { return; }
+    found = parserSoundControl(response);
     if(found) { return; }
 
 
@@ -850,11 +879,42 @@ bool SerialMng::parserCeilingLight(QString p_response)
 
 }
 
+bool SerialMng::parserSoundControl(QString p_response)
+{
+    bool found = false;
+    found = p_response.startsWith(m_fb_sound_control);
+    uint source=0, volume = 0;
+    if(found)
+    {
+        QStringList parts = p_response.split("/");
+        bool ok;
+        if(parts.length()!=3)
+        {
+            //error
+            return false;
+        }
+        source = parts[1].toUInt(&ok);
+        if(!ok){
+            //error
+            return false;
+        }
+        volume = parts[2].toUInt(&ok);
+        if(ok)
+        {
+            return false;
+        }
+        setVolume(volume);
+        setSoundSource(source);
+        return true;
+    }
+    return false;
+}
+
 
 
 void SerialMng::write(const QByteArray &writeData)
 {
-    qDebug()<<writeData<<endl;
+    qDebug()<<writeData<<"\n";
     this->m_writeData = writeData;
     this->m_serial->write(m_writeData);
     m_serial->flush();
@@ -863,8 +923,10 @@ void SerialMng::write(const QByteArray &writeData)
 
 void SerialMng::sendKey(const QString &key,bool wait,int p_delay,QString param)
 {
+    QString realCode = m_proto->value(key).toString();
+    std::cout <<"key: " << key.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
    if(!this->m_serial->isOpen()) return;
-   QString realCode = m_proto->value(key).toString();
+
    bool command_arranged = false;
    if(realCode.isEmpty() || realCode.compare("no") == 0)
    {
@@ -949,7 +1011,7 @@ void SerialMng::handleTimeout()
 
 void SerialMng::handleError(QSerialPort::SerialPortError error)
 {
-    qDebug()<<"Serial Connection Error "<<error<<endl;
+    qDebug()<<"Serial Connection Error "<<error<<"\n";
 }
 
 void SerialMng::handleClose()

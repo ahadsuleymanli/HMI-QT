@@ -164,6 +164,7 @@ Rectangle{
             border.width: 1
             border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
             Text{
+                id:setButton
                     text: qsTr("SET") + mytrans.emptyString
                     color: "white"
                     anchors.centerIn: parent
@@ -174,19 +175,23 @@ Rectangle{
         MouseArea{
             anchors.fill:parent
             onClicked: {
-            console.log("Setting date and time");
-            date.day = dayColumn.model.get(tumbler.getColumn(0).currentIndex).value
-            date.month = monthColumn.model[tumbler.getColumn(1).currentIndex]
-            date.year = yearColumn.model.get(tumbler.getColumn(2).currentIndex).value
-            time.hour = hourColumn.model.get(tumblerTime.getColumn(0).currentIndex).value
-            time.minutes = minutesColumn.model.get(tumblerTime.getColumn(1).currentIndex).value
-            var timesum = time.hour + ":" + time.minutes;
-            var hourdiff = time.hour - Qt.formatDateTime(new Date(), "h")*1
-            var mindiff = time.minutes - Qt.formatDateTime(new Date(), "m")*1
-            settingsmng.setTimeDiff(mindiff,hourdiff);
-            serial_mng.sendKey("main/setclock",false,root.delay,timesum);
-            console.log( "Date: " + date.day + " "+ date.month + " " + date.year );
-            console.log( "Time: " + time.hour + " " + time.minutes );
+                console.log("Setting date and time");
+                date.day = dayColumn.model.get(tumbler.getColumn(0).currentIndex).value
+                date.month = monthColumn.model[tumbler.getColumn(1).currentIndex]
+                date.year = yearColumn.model.get(tumbler.getColumn(2).currentIndex).value
+                time.hour = hourColumn.model.get(tumblerTime.getColumn(0).currentIndex).value
+                time.minutes = minutesColumn.model.get(tumblerTime.getColumn(1).currentIndex).value
+                var timesum = time.hour + ":" + time.minutes;
+                var hourdiff = time.hour - Qt.formatDateTime(new Date(), "h")*1
+                var mindiff = time.minutes - Qt.formatDateTime(new Date(), "m")*1
+                settingsmng.setTimeDiff(mindiff,hourdiff);
+                serial_mng.sendKey("main/setclock",false,root.delay,timesum);
+
+                console.log( "Date: " + date.day + " "+ date.month + " " + date.year );
+                console.log( "Time: " + time.hour + " " + time.minutes );
+
+                clcksttr.setTheClock(date.year +"-"+tumbler.getColumn(1).currentIndex+"-" +date.day
+                                     + " " + time.hour + ":" + time.minutes+":00")
             }
             onPressed: timesetrec.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
             onReleased: timesetrec.color = "#0f0f0f"
@@ -222,14 +227,16 @@ Rectangle{
             }
         }
         Rectangle {
+            id: regionRect
             x:0
-            color: "#1c1c1c"
-//            border.color: "black"
-//            border.width: 1
+            color:"#0f0f0f"
             height:100
-            width:150
+            width:100
             radius: 4
+            border.width: 1
+            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
             Text{
+                id:regionText
                     text: qsTr("SET") + mytrans.emptyString
                     anchors.centerIn: parent
                     color: "white"
@@ -240,23 +247,24 @@ Rectangle{
         MouseArea{
             anchors.fill:parent
             onClicked: {
-                        console.log("Setting date and time");
-                        date.day = dayColumn.model.get(tumbler.getColumn(0).currentIndex).value
-                        date.month = monthColumn.model[tumbler.getColumn(1).currentIndex]
-                        date.year = yearColumn.model.get(tumbler.getColumn(2).currentIndex).value
-                        time.hour = hourColumn.model.get(tumblerTime.getColumn(0).currentIndex).value
-                        time.minutes = minutesColumn.model.get(tumblerTime.getColumn(1).currentIndex).value
-                        var timesum = time.hour + ":" + time.minutes;
-                        var hourdiff = time.hour - Qt.formatDateTime(new Date(), "h")*1
-                        var mindiff = time.minutes - Qt.formatDateTime(new Date(), "m")*1
-                        settingsmng.setTimeDiff(mindiff,hourdiff);
-                        serial_mng.sendKey("main/setclock",false,root.delay,timesum);
-                        console.log( "Date: " + date.day + " "+ date.month + " " + date.year );
-                        console.log( "Time: " + time.hour + " " + time.minutes );
+                console.log("Setting date and time");
+                var regionName = region.model[tumblerRegion.getColumn(0).currentIndex]
+                clcksttr.setRegion(regionName)
             }
-            onPressed: timesetrec.color = "#212121"
-            onReleased: timesetrec.color = "#1c1c1c"
+            onPressed: regionRect.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
+            onReleased: regionRect.color = "#0f0f0f"
         }
+        }
+    }
+    Connections{
+        target: clcksttr
+        onRegionChanged:{
+            var date = new Date
+            var timesum = date.toLocaleTimeString(Qt.locale(),"hh:mm")
+            serial_mng.sendKey("main/setclock",false,root.delay,timesum);
+
+            settingsmng.setTimeDiff(0,0);
+
         }
     }
 }

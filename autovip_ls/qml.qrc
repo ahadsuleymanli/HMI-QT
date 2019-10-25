@@ -485,5 +485,13 @@
         <file>Components/InfoOverlay.qml</file>
         <file>design/general/spinner.png</file>
         <file>Pages/Settings/RestoreOlderVersion.qml</file>
+        <file>design/media/kodi/addQueue.png</file>
+        <file>design/media/kodi/atQueue.png</file>
+        <file>Components/VolumeBar.qml</file>
+        <file>Components/RightInfoBar.qml</file>
+        <file>design/general/volume.png</file>
+        <file>design/general/auxcable.png</file>
+        <file>design/general/bluetooth.png</file>
+        <file>design/general/HighLevel.png</file>
     </qresource>
 </RCC>

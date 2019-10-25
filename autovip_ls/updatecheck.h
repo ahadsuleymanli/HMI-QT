@@ -11,7 +11,18 @@
 
 class UpdateCheck : public QObject
 {
+    enum state{
+        idle = 0,
+        checking,
+        failed,
+        updateReady,
+        uptodate
+    };
+
     Q_OBJECT
+    Q_PROPERTY(QString currentVersion READ currentVersion WRITE setCurrentVersion NOTIFY currentVersionChanged)
+    Q_PROPERTY(QString updateVersion READ updateVersion WRITE setUpdateVersion NOTIFY updateVersionChanged)
+
     int m_timeout = 5000;
     QProcess *m_rpro = nullptr;
     QTimer m_timer;
@@ -20,10 +31,21 @@ class UpdateCheck : public QObject
     QTimer overlaytimer;
     SettingsManager smng;
     Restarter rstrtr;
+    state m_state;
+
+    QString m_updateVersion;
+    QString m_currentVersion;
 private:
     bool checkExecutable();
 public:
     explicit UpdateCheck(QObject *parent = nullptr);
+
+    QString currentVersion() { return m_currentVersion; }
+    void setCurrentVersion(QString version);
+
+    QString updateVersion() { return  m_updateVersion; }
+    void setUpdateVersion(QString version);
+
     Q_INVOKABLE void makeUpdate();
     Q_INVOKABLE void checkUpdate();
     Q_INVOKABLE bool checkUnzipped();
@@ -33,8 +55,14 @@ public:
 
 signals:
     void doUpdateOverlay();
+    void updateStateChanged(int updateState);
 
+    void updateVersionChanged(QString);
+    void currentVersionChanged(QString);
 public slots:
+    void handleReadyRead();
+    void sendArguments();
+
     void overlayFunction();
 };
 
