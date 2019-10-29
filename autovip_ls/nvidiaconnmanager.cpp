@@ -76,10 +76,10 @@ void NvidiaConnManager::instantiateValueChangers(){
     timedToggleCommands["seat_headrest_adjust/down"]="head_down";
     timedToggleCommands["seat_headrest_adjust/stop"]="head_stop";
     timedToggleCommands["seat_back_position/forwards"]="back_forward";
-    timedToggleCommands["seat_back_position/backwards"]="back_backwards";
+    timedToggleCommands["seat_back_position/backwards"]="back_backward";
     timedToggleCommands["seat_back_position/stop"]="back_stop";
     timedToggleCommands["seat_position/forwards"]="seat_forward";
-    timedToggleCommands["seat_position/backwards"]="seat_backwards";
+    timedToggleCommands["seat_position/backwards"]="seat_backward";
     timedToggleCommands["seat_position/stop"]="seat_stop";
     seatIntentMajorParameters << "forwards_backwards" << "up_down" << "heating_cooling";
     //serial_mng.sendKey("first_seat/"+key)
@@ -111,7 +111,7 @@ void NvidiaConnManager::initializeStateObject(){
 
 void NvidiaConnManager::onNewConnection()
 {
-    QTextStream(stdout)  << "InspectionServer::onNewConnection\n";
+    QTextStream(stdout)  << "NvidiaConnManager::onNewConnection\n";
 
     auto socket_ptr = webSocketServer->nextPendingConnection();
     socket_ptr->setParent(this);
