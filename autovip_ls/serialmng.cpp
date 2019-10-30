@@ -12,7 +12,7 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
    //connect(m_serial,&QSerialPort::bytesWritten,this,&SerialMng::handleBytesWritten);
    connect(m_serial,&QSerialPort::readyRead,this,&SerialMng::newMessage);
 //   connect(m_serial, &QSerialPort::errorOccurred, this, &SerialMng::handleError);
-   connect(m_serial, &QSerialPort::close,this,&SerialMng::handleClose);
+//   connect(m_serial, &QSerialPort::close,this,&SerialMng::handleClose);
 
    QString protofile = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
 
@@ -592,7 +592,6 @@ void SerialMng::parseFeedback(QString response)
        response.remove(response.length()-m_fbend.length(),m_fbend.length());
     }
 
-
     found = parserSystem(response);
     if(found) { return; }
     found = parserAircondition(response);
@@ -607,9 +606,6 @@ void SerialMng::parseFeedback(QString response)
     if(found) { return; }
     found = parserSoundControl(response);
     if(found) { return; }
-
-
-
 }
 
 bool SerialMng::parserAircondition(QString p_response)
@@ -886,6 +882,7 @@ bool SerialMng::parserSoundControl(QString p_response)
     uint source=0, volume = 0;
     if(found)
     {
+
         QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=3)
@@ -898,12 +895,12 @@ bool SerialMng::parserSoundControl(QString p_response)
             //error
             return false;
         }
-        volume = parts[2].toUInt(&ok);
-        if(ok)
+        volume = parts[2].toUInt(&ok) - 1;
+        setVolume(volume);
+        if(!ok)
         {
             return false;
         }
-        setVolume(volume);
         setSoundSource(source);
         return true;
     }
@@ -924,9 +921,10 @@ void SerialMng::write(const QByteArray &writeData)
 void SerialMng::sendKey(const QString &key,bool wait,int p_delay,QString param)
 {
     QString realCode = m_proto->value(key).toString();
-    std::cout <<"key: " << key.toStdString()<<" "<<param.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
-   if(!this->m_serial->isOpen()) return;
 
+
+    if(!this->m_serial->isOpen()) return;
+    std::cout <<"key: " << key.toStdString()<<" "<<param.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
    bool command_arranged = false;
    if(realCode.isEmpty() || realCode.compare("no") == 0)
    {

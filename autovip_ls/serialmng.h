@@ -109,6 +109,7 @@ class SerialMng : public QObject
 
 public:
     explicit SerialMng(QObject *parent = nullptr);
+
     void openSerialPort();
     void closeSerialPort();
     bool setPortName(QString str);

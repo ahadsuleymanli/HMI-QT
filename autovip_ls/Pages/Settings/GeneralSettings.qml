@@ -214,9 +214,11 @@ BasePage {
                 CheckBox{
                     id: volumeCheckBox
                     Material.accent: Material.Blue
+
                     onCheckedChanged: {
                         root.volumeVisible(checked)
                     }
+                    Component.onCompleted: checked = true
                 }
             }
 
