@@ -250,7 +250,7 @@ Item {
         mediaModel.append(
                     {
             name: qsTr("Media Player"),
-            st: "KodiMediaPlayer",
+            st: "MediaPlayer",
             bg: "qrc:/design/media/leftmenu/kodiplayer.png"
                     }
                     );
@@ -631,7 +631,7 @@ Item {
             ,
                 "ScreenDivider"
             ,
-                "KodiMediaPlayer"
+                "MediaPlayer"
             ,
                 "PlayStation"
             ,
@@ -794,7 +794,7 @@ ListModel {
     id: mediaModel
     ListElement {
        name: qsTr("Kodi Player")
-        st: "KodiMediaPlayer"
+        st: "MediaPlayer"
        bg: "qrc:/design/media/leftmenu/kodiplayer.png"
     }
     ListElement {
