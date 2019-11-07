@@ -58,16 +58,17 @@ void NvidiaConnManager::instantiateValueChangers(){
     acfanChanger = new IterativeValueChanger("acfan",50,[this](int current, int target)-> int{
         if (current < target){
             this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_up",true,50);
-            this->serial_mng->setACDeg(current += 1);
+//            this->serial_mng->setFandeg(current += 1);
         }
         else if (current > target){
             this->serial_mng->sendKey("controls/" + bustype["ac"] + "_ai_fan_down",true,50);
-            this->serial_mng->setACDeg(current -= 1);
+//            this->serial_mng->setFandeg(current -= 1);
         }
         return current;
     });
     acfanChanger->setMinMax(0,7,2);
 
+    // TODO: current toggle off implamentation is not accurate, fix it
     toggleCommands = new IterativeValueChanger("toggleCommands",50,nullptr,[this](QString function)-> int{
         this->serial_mng->sendKey(function,true,50);
         return 0;
@@ -163,26 +164,47 @@ void NvidiaConnManager::processMessage(const QString &message)
        }
     }
     if (intent=="acfan" || intent=="acfan_followup"){
-       int current_acdeg = serial_mng->acdeg();
+       int current_fandeg = serial_mng->fandeg();
        if(messageMap["open_close"] == "open"){
-          if (current_acdeg == -1)
-            acdegChanger->turnOn(current_acdeg);
+//          if (current_fandeg == -1)
+            acfanChanger->turnOn(current_fandeg);
        }
        else if(messageMap["open_close"] == "close"){
-          if (current_acdeg != -1)
-            acdegChanger->turnOff(current_acdeg);
+          if (current_fandeg != -1)
+            acfanChanger->turnOff(current_fandeg);
        }
        else if(messageMap["value"].userType() != QMetaType::QString){
            int val = messageMap["value"].toInt();
-           acdegChanger->changeVal(current_acdeg, val - 15);
+           acfanChanger->changeVal(current_fandeg, val);
        }
        else if(messageMap["increase_decrease"] == "increase"){
 
-           acdegChanger->changeVal(current_acdeg, current_acdeg + 1);
+           acfanChanger->changeVal(current_fandeg, current_fandeg + 1);
        }
        else if (messageMap["increase_decrease"] == "decrease"){
-           acdegChanger->changeVal(current_acdeg, current_acdeg - 1);
+           acfanChanger->changeVal(current_fandeg, current_fandeg - 1);
        }
+    }
+    else if (intent == "make_espresso" )
+    {
+        QString openClose = messageMap["open_close"].toString();
+        if ( openClose != "open" )
+            toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",20000);
+        else if ( openClose != "close" )
+            toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",20000);
+    }
+    else if (intent == "make_espresso_asked" )
+    {
+        QString openClose = messageMap["open_close"].toString();
+        QString yesNoOkay = messageMap["yes_no_okay"].toString();
+        if ( openClose == "open" )
+            toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",20000);
+        else if ( openClose == "close" )
+            toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",20000);
+        else if ( yesNoOkay == "yes" || yesNoOkay == "okay" || yesNoOkay == "ofcourse" )
+            toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",20000);
+        else if ( openClose == "no" )
+            toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",20000);
     }
     else if (intent == "change_menu")
     {
