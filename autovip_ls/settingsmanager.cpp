@@ -36,16 +36,6 @@ uint SettingsManager::tvtype()
 {
     return this->general->value("main/tvtype",6).toUInt();
 }
-
-uint SettingsManager::espressoopentime()
-{
-    return this->general->value("delays/espressoopentime",10000).toUInt();
-}
-
-uint SettingsManager::seatmovementduration()
-{
-    return this->general->value("delays/espressoopentime",5000).toUInt();
-}
 bool SettingsManager::satalliteremote()
 {
     return this->general->value("main/satalliteremote",false).toBool();

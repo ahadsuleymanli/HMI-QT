@@ -25,24 +25,91 @@ BasePage {
     property var lastSource: ""
     property alias mPlayerBackend : mPlayerBackend
 
-    property var positionRatio: {
-        if(mPlayerBackend.duration > 0){
-            return (mPlayerBackend.position / mPlayerBackend.duration)
-        }
+    property real positionRatio: {
+        if(audioPlayer.duration > 0)
+            return (audioPlayer.position / audioPlayer.duration)
     }
 
     property string audioPositionStr: {
-        var pos = root.userPause ? root.lastPosition : mPlayerBackend.position
+        var pos = root.userPause ? root.lastPosition : audioPlayer.position
         var posMin = Math.floor(pos / 60000)
         var posSec = Math.floor(pos / 1000 - posMin * 60)
         return posMin + ":" + (posSec < 10 ? "0" + posSec : posSec);
     }
     property string audioDurationStr: {
-        var durMin = Math.floor(mPlayerBackend.duration / 60000)
-        var durSec = Math.floor(mPlayerBackend.duration / 1000 - durMin * 60)
+        var durMin = Math.floor(audioPlayer.duration / 60000)
+        var durSec = Math.floor(audioPlayer.duration / 1000 - durMin * 60)
         return durMin + ":" + (durSec < 10 ? "0" + durSec : durSec);
     }
 
+    /* Generates random number within range of 0 to max value
+        except given value */
+    function generateRandom(max, exclude){
+        var num = Math.floor(Math.random() * max);
+        return (num === exclude) ? generateRandom() : num;
+    }
+
+    /* Decides which media to play next */
+    function nextMedia(){
+        var nextIndex = 0
+        if(playQueue && queueModel.count !== 0){
+            if(isShuffle){
+                root.queueLastIndex = generateRandom(queueModel.count, root.queueLastIndex)
+            }
+            else{
+                root.queueLastIndex = (((root.queueLastIndex + 1) < queueModel.count) ?
+                            root.queueLastIndex + 1 : 0)
+            }
+            nextIndex = queueModel.get(queueLastIndex).listIndex
+        }
+        else{
+            if(isShuffle){
+                nextIndex = generateRandom(nameModel.count, root.playingIndex)
+            }
+            else{
+                nextIndex = (((root.playingIndex + 1) < nameModel.count) ?
+                                 root.playingIndex + 1 : 0)
+            }
+        }
+        audioPlayer.seek(0)
+        playAudio(nameModel.get(nextIndex).path)
+        playingIndex = nextIndex
+    }
+
+    /* Plays previously played media */
+    function prewMedia(){
+        root.queueLastIndex = (((root.queueLastIndex - 1) >= 0) ?
+                    root.queueLastIndex - 1 : queueModel.count-1)
+        var nextIndex = queueModel.get(queueLastIndex).listIndex
+        audioPlayer.source = nameModel.get(nextIndex).path
+        audioPlayer.seek(0)
+        playingIndex = nextIndex
+    }
+
+    /* Sets player to shuffle mode */
+    function shuffleMedia(){
+        isShuffle = true;
+    }
+
+    function pauseAudio(){
+        root.userPause = true
+        root.lastPosition = audioPlayer.position
+        audioPlayer.stop()
+        audioPlayer.source =""
+//        root.userPause = true
+    }
+    function playAudio(src){
+        if(src === "" || src === undefined)
+            audioPlayer.source = root.lastSource
+        else{
+            audioPlayer.source = src
+            root.lastSource = src
+        }
+        audioPlayer.play()
+
+        root.userStop = false
+
+    }
     MediaPlayerBackend{
         id: mPlayerBackend
         onPlayingMediaChanged: console.log(playingTitle)
@@ -53,6 +120,47 @@ BasePage {
         delegate: Text {
 //            Component.onCompleted: if(index ===2) mPlayerBackend.play(path)
 //            text: model.track
+        }
+    }
+
+    Audio{
+        id: audioPlayer
+        source :""
+        autoPlay: true
+        onSourceChanged: {
+            if(audioPlayer.source !== "" && audioPlayer.source !== undefined){
+
+            }
+        }
+        onDurationChanged: root.lastDuration = duration
+        onStatusChanged: {
+
+            if(status === Audio.EndOfMedia){
+                nextMedia()
+            }
+            if(status === Audio.Buffered ||
+                    status === Audio.Loaded||
+                    status === Audio.Loading){
+                if(root.userPause){
+                    audioPlayer.seek(root.lastPosition)
+                    root.userPause = false
+                }
+            }
+        }
+
+        onPlaybackStateChanged: {
+            if(audioPlayer.playbackState === Audio.PlayingState && root.userPause){
+
+            }
+        }
+
+        onStopped: {
+            if(!userStop && (status === Audio.Buffered ||
+                    status === Audio.Loaded||
+                    status === Audio.Loading)){
+                if(root.userPause)
+                    audioPlayer.seek(root.lastPosition)
+            }
         }
     }
 
@@ -103,10 +211,10 @@ BasePage {
                     ctx.restore()
                 }
             }
-            Loader{
-                id: formLoader
+            StackView{
+                id: stackView
                 anchors.fill: parent
-                source:"MediaPlayer/Home.qml"
+                initialItem: "MediaPlayer/Home.qml"
             }
         }
         Rectangle{
@@ -135,30 +243,21 @@ BasePage {
                     topMargin: 50
                 }
                 spacing: 12
-                Item{
+                RowLayout{
+                    id: row
                     Layout.fillWidth: true
                     height: childrenRect.height
-                    RowLayout{
-                        id: row
-                        width: childrenRect.width
-                        height: childrenRect.height
-                        Image{
-                            Layout.alignment: Qt.AlignVCenter
-                            sourceSize.width: 32
-                            sourceSize.height: 32
-                            source: "qrc:/design/media/MediaPlayer/home.png"
-                        }
-                        Text{
-                            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-                            text: qsTr("Home")
-                            color: "#a5a5a7"
-                            font.pixelSize: 20
-                        }
+                    Image{
+                        Layout.alignment: Qt.AlignVCenter
+                        sourceSize.width: 32
+                        sourceSize.height: 32
+                        source: "qrc:/design/media/MediaPlayer/home.png"
                     }
-                    MouseArea{
-                        id: homeArea
-                        anchors.fill: parent
-                        onClicked: formLoader.source = "MediaPlayer/Home.qml"
+                    Text{
+                        Layout.alignment: Qt.AlignVCenter
+                        text: qsTr("Home")
+                        color: "#a5a5a7"
+                        font.pixelSize: 20
                     }
                 }
                 RowLayout{
@@ -194,62 +293,15 @@ BasePage {
                     }
                 }
                 Item{
-                    height: 50
-                }
-                Text {
-                    Layout.leftMargin: 3
-                    text: qsTr("Playlist")
-                    color: "#a5a5a7"
-                    font.pixelSize: 25
-                }
-                Item{
-                    Layout.fillWidth: true
-                    height: childrenRect.height
-                    RowLayout{
-                        width: childrenRect.width
-                        height: childrenRect.height
-                        Image{
-                            Layout.alignment: Qt.AlignVCenter
-                            sourceSize.width: 32
-                            sourceSize.height: 32
-                            source: "qrc:/design/media/MediaPlayer/library.png"
-                        }
-                        Text{
-                            Layout.alignment: Qt.AlignVCenter
-                            text: qsTr("My Library")
-                            color: "#a5a5a7"
-                            font.pixelSize: 20
-                        }
-                    }
-                    MouseArea{
-                        id: libraryArea
-                        anchors.fill: parent
-                        onClicked: formLoader.source = "MediaPlayer/Library.qml"
-                    }
-                }
-
-
-                RowLayout{
-                    Layout.fillWidth: true
-                    height: childrenRect.height
-                    Image{
-                        Layout.alignment: Qt.AlignVCenter
-                        sourceSize.width: 32
-                        sourceSize.height: 32
-                        source: "qrc:/design/media/MediaPlayer/favorite_song.png"
-                    }
-                    Text{
-                        Layout.alignment: Qt.AlignVCenter
-                        text: qsTr("Favorite Songs")
-                        color: "#a5a5a7"
-                        font.pixelSize: 20
-                    }
-                }
-
-                Item{
                     Layout.fillHeight: true
                 }
+
             }
         }
+
     }
+
+
+
+
 }

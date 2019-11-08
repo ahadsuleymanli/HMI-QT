@@ -1,33 +1,15 @@
 import QtQuick 2.4
 
 HomeForm {
-
-
     durationText.text : audioDurationStr
     currentPositionText.text: audioPositionStr
     progressCurrent.width: positionRatio * progressBackground.width
 
-    infoLayout.visible: (infoTitle.text === "" ? false : true)
     infoTitle.text: mPlayerBackend.playingTitle
-    infoYear.text: (mPlayerBackend.playingYear === "" ? "" : ("("+mPlayerBackend.playingYear+")"))
-    infoArtist.text : (mPlayerBackend.playingArtist === "" ? "unknown" : mPlayerBackend.playingArtist)
-    coverImage.source: (mPlayerBackend.playingCover === "" ? "qrc:/design/media/MediaPlayer/melody.png":
-                                                             mPlayerBackend.playingCover)
-
-    progressArea.onMouseXChanged:{
-        var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)
-        mPlayerBackend.setPosition(pos)
-    }
 
     shuffleButton.onClicked: mPlayerBackend.shuffle()
 
-
-    playPauseButton.onClicked: {
-        if(mPlayerBackend.state === 1)
-            mPlayerBackend.pause()
-        else
-            mPlayerBackend.play()
-    }
+    playPauseButton.onClicked: mPlayerBackend.play()
 
     prewButton.onClicked: {
         mPlayerBackend.previous()
@@ -39,6 +21,7 @@ HomeForm {
     backButton.onClicked: {
 
     }
+    Component.onCompleted: {
 
-
+    }
 }

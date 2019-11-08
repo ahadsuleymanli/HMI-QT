@@ -184,5 +184,5 @@ message("PLATFORM" $${PLATFORM})
 
 DISTFILES +=
 
-target.path = /home/root/
-INSTALLS += target
+#target.path = /home/linaro/
+INSTALLS +=

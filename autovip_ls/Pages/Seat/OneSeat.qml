@@ -46,21 +46,21 @@ BasePage {
         width:305
         fillMode: Image.PreserveAspectFit
         source:"qrc:/design/seats/one_seat.png"
-        Image {
-            source: "qrc:/design/seats/overlays/head.svg"
-            id: head
-            x:195
-            y:20
-            width:73
-            height:67
-            opacity: 0
-            MouseArea{
-                anchors.fill: parent
-                onClicked: selectPart("SeatHead")
-                onPressed: head.opacity = 1
-                onReleased: head.opacity = 0
-            }
-        }
+//        Image {
+//            source: "qrc:/design/seats/overlays/head.svg"
+//            id: head
+//            x:195
+//            y:20
+//            width:73
+//            height:67
+//            opacity: 0
+//            MouseArea{
+//                anchors.fill: parent
+//                onClicked: selectPart("SeatHead")
+//                onPressed: head.opacity = 1
+//                onReleased: head.opacity = 0
+//            }
+//        }
         Image {
             source: "qrc:/design/seats/overlays/back.svg"
             id: back
@@ -157,144 +157,144 @@ BasePage {
             spacing: 20
             anchors.fill:parent
 
-            Rectangle {
-                id:headbt
-                width:275
-                height:75
-                anchors.horizontalCenter: parent.horizontalCenter
-                color:Qt.rgba(0, 0, 0,0.4)
-                border.width: 1
-                border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                Rectangle{
-                    anchors.centerIn: parent
-                    width: 125
-                    height: 75
-                    color:"transparent"
-                    border.width: 1
-                    border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                    Text{
-                        font.family: GSystem.myriadproita.name
-                        font.italic: true
-                        font.pixelSize: 24
-                        text: qsTr("Head") + mytrans.emptyString
-                        color: "white"
-                        anchors.centerIn: parent
-                    }
-                }
-                Rectangle{
-                    id:headup
-                    property var select: 0
-                    width: 74
-                    height: 73
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left:parent.left
-                    anchors.leftMargin: 1
-                    color: Qt.rgba(0/255, 108/255, 128/255,select);
+//            Rectangle {
+//                id:headbt
+//                width:275
+//                height:75
+//                anchors.horizontalCenter: parent.horizontalCenter
+//                color:Qt.rgba(0, 0, 0,0.4)
+//                border.width: 1
+//                border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+//                Rectangle{
+//                    anchors.centerIn: parent
+//                    width: 125
+//                    height: 75
+//                    color:"transparent"
 //                    border.width: 1
-//                    border.color:Qt.rgba(0/255, g/255, b/255,0.6)
-                    Text {
-                        font.family: GSystem.myriadproita.name
-                        font.pixelSize: 24
-                        text: qsTr("↑")
-                        color: "white"
-                        anchors.centerIn: parent
-                    }
-                    MouseArea{
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onPressed: function(){
-                            GSystem.sendSeatCommand("head_up");
-//                            headup.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
-                            pressedit.start();
+//                    border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+//                    Text{
+//                        font.family: GSystem.myriadproita.name
+//                        font.italic: true
+//                        font.pixelSize: 24
+//                        text: qsTr("Head") + mytrans.emptyString
+//                        color: "white"
+//                        anchors.centerIn: parent
+//                    }
+//                }
+//                Rectangle{
+//                    id:headup
+//                    property var select: 0
+//                    width: 74
+//                    height: 73
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    anchors.left:parent.left
+//                    anchors.leftMargin: 1
+//                    color: Qt.rgba(0/255, 108/255, 128/255,select);
+////                    border.width: 1
+////                    border.color:Qt.rgba(0/255, g/255, b/255,0.6)
+//                    Text {
+//                        font.family: GSystem.myriadproita.name
+//                        font.pixelSize: 24
+//                        text: qsTr("↑")
+//                        color: "white"
+//                        anchors.centerIn: parent
+//                    }
+//                    MouseArea{
+//                        anchors.fill: parent
+//                        cursorShape: Qt.PointingHandCursor
+//                        onPressed: function(){
+//                            GSystem.sendSeatCommand("head_up");
+////                            headup.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
+//                            pressedit.start();
+////                            head.opacity = 1;
+//                            olpressedit.start();
+//                        }
+//                        onReleased: function(){
+//                            GSystem.sendSeatCommand("head_stop");
+////                            headup.color = "transparent";
+//                            releasedit.start();
+////                            head.opacity = 0;
+//                            olreleasedit.start();
+//                        }
+//                    }
+//                }
+
+
+//                NumberAnimation {
+//                    id:pressedit
+//                    targets: headup
+//                    property: "select"
+//                    duration: 150
+//                    running: false
+//                    loops: 1
+//                    from:0
+//                    to:0.6
+//                }
+//                NumberAnimation {
+//                    id:releasedit
+//                    target: headup
+//                    property: "select"
+//                    duration: 150
+//                    running: false
+//                    loops: 1
+//                    from:0.6
+//                    to:0
+//                }
+//                NumberAnimation {
+//                    id:olpressedit
+//                    targets: head
+//                    property: "opacity"
+//                    duration: 150
+//                    running: false
+//                    loops: 1
+//                    from:0
+//                    to:1
+//                }
+//                NumberAnimation {
+//                    id:olreleasedit
+//                    target: head
+//                    property: "opacity"
+//                    duration: 150
+//                    running: false
+//                    loops: 1
+//                    from:1
+//                    to:0
+//                }
+
+
+//                Rectangle{
+//                    id:headdown
+//                    width: 75
+//                    height: 75
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    anchors.right:parent.right
+//                    color: "transparent"
+//                    border.width: 1
+//                    border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+//                    Text {
+//                        font.family: GSystem.myriadproita.name
+//                        font.pixelSize: 24
+//                        text: qsTr("↓")
+//                        color: "white"
+//                        anchors.centerIn: parent
+//                    }
+//                    MouseArea{
+//                        anchors.fill: parent
+//                        cursorShape: Qt.PointingHandCursor
+//                        onPressed: function(){
+//                            GSystem.sendSeatCommand("head_down");
+//                            headdown.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
 //                            head.opacity = 1;
-                            olpressedit.start();
-                        }
-                        onReleased: function(){
-                            GSystem.sendSeatCommand("head_stop");
-//                            headup.color = "transparent";
-                            releasedit.start();
+//                        }
+//                        onReleased: function(){
+//                            GSystem.sendSeatCommand("head_stop");
+//                            headdown.color = "transparent";
 //                            head.opacity = 0;
-                            olreleasedit.start();
-                        }
-                    }
-                }
+//                        }
+//                    }
+//                }
 
-
-                NumberAnimation {
-                    id:pressedit
-                    targets: headup
-                    property: "select"
-                    duration: 150
-                    running: false
-                    loops: 1
-                    from:0
-                    to:0.6
-                }
-                NumberAnimation {
-                    id:releasedit
-                    target: headup
-                    property: "select"
-                    duration: 150
-                    running: false
-                    loops: 1
-                    from:0.6
-                    to:0
-                }
-                NumberAnimation {
-                    id:olpressedit
-                    targets: head
-                    property: "opacity"
-                    duration: 150
-                    running: false
-                    loops: 1
-                    from:0
-                    to:1
-                }
-                NumberAnimation {
-                    id:olreleasedit
-                    target: head
-                    property: "opacity"
-                    duration: 150
-                    running: false
-                    loops: 1
-                    from:1
-                    to:0
-                }
-
-
-                Rectangle{
-                    id:headdown
-                    width: 75
-                    height: 75
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right:parent.right
-                    color: "transparent"
-                    border.width: 1
-                    border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                    Text {
-                        font.family: GSystem.myriadproita.name
-                        font.pixelSize: 24
-                        text: qsTr("↓")
-                        color: "white"
-                        anchors.centerIn: parent
-                    }
-                    MouseArea{
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onPressed: function(){
-                            GSystem.sendSeatCommand("head_down");
-                            headdown.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
-                            head.opacity = 1;
-                        }
-                        onReleased: function(){
-                            GSystem.sendSeatCommand("head_stop");
-                            headdown.color = "transparent";
-                            head.opacity = 0;
-                        }
-                    }
-                }
-
-            }
+//            }
 
             Rectangle {
                 id:seatbackbt

@@ -32,8 +32,7 @@ class SettingsManager : public QObject
 
     Q_PROPERTY(uint tvtype READ tvtype)
 
-    Q_PROPERTY(bool espressoopentime READ espressoopentime)
-    Q_PROPERTY(bool seatmovementduration READ seatmovementduration)
+
     Q_PROPERTY(bool playstation READ playstation)
     Q_PROPERTY(bool satalliteremote READ satalliteremote)
     Q_PROPERTY(bool slboolean READ slboolean)
@@ -63,8 +62,6 @@ public:
     int lang();
     uint actype();
     uint tvtype();
-    uint espressoopentime();
-    uint seatmovementduration();
     int mindiff();
     int hourdiff();
     bool satalliteremote();
@@ -86,7 +83,6 @@ public:
     bool demomode();
     bool intro();
     bool amp();
-
 
     void setActype(uint p_actype);
 Q_INVOKABLE uint mediaplayertype();

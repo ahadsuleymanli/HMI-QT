@@ -1,17 +1,13 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
 
 Item {
     width: 810
     height: 600
-    property alias progressArea: progressArea
-    property alias progressIndicator: progressIndicator
-    property alias coverImage: coverImage
-    property alias infoArtist: infoArtist
     property alias infoLayout: infoLayout
     property alias infoYear: infoYear
     property alias infoTitle: infoTitle
+    property alias infoDown: infoDown
     property alias progressBackground: progressBackground
     property alias durationText: durationText
     property alias currentPositionText: currentPositionText
@@ -32,51 +28,55 @@ Item {
             id: rowLayout
             Layout.fillWidth: true
             height: childrenRect.height
-            Item {
+            Image {
+                id: image
+                width: 100
+                height: 100
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 Layout.leftMargin: 50
-                width: 260
-                height: 200
-                clip: true
-                Image {
-                    id: coverImage
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
-                }
+                sourceSize.height: 200
+                sourceSize.width: 200
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/design/media/MediaPlayer/melody.png"
             }
+
             ColumnLayout {
                 id: infoLayout
-                //                width: childrenRect.width
-                //                height: childrenRect.height
+                width: childrenRect.width
+                height: childrenRect.height
                 Layout.leftMargin: 20
-                Layout.topMargin: 40
+                Layout.topMargin: 20
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                Layout.fillHeight: true
+                Layout.fillWidth: true
 
                 RowLayout {
                     id: rowLayout1
-//                    width: childrenRect.width
-//                    height: childrenRect.height
+                    width: 100
+                    height: 100
 
                     Text {
                         id: infoTitle
                         color: "#c5c5c5"
-                        text: ""
+                        text: "Another Love - Zwette Remix Radio Edit"
                         font.pixelSize: 20
                         styleColor: "#000000"
+                        Layout.leftMargin: 0
+                        Layout.topMargin: 0
                     }
 
                     Text {
                         id: infoYear
                         color: "#959595"
-                        text: ""
+                        text: "2019"
                         font.pixelSize: 20
                     }
                 }
 
                 RowLayout {
                     id: rowLayout2
-//                    width: childrenRect.width
-//                    height: childrenRect.height
+                    width: 100
+                    height: 100
 
                     Text {
                         id: element
@@ -86,9 +86,10 @@ Item {
                     }
 
                     Text {
-                        id: infoArtist
+                        id: infoDown
                         color: "#c5c5c5"
                         text: qsTr("Call On Me")
+                        Layout.leftMargin: 0
                         font.pixelSize: 26
                     }
                 }
@@ -109,13 +110,6 @@ Item {
                     anchors.fill: parent
                     color: "#575c5f"
                 }
-                Glow {
-                    anchors.fill: progressCurrent
-                    samples: 10
-                    color: "#7b8b8b"
-                    source: progressCurrent
-                    visible: progressArea.pressed
-                }
                 Rectangle {
                     id: progressCurrent
                     anchors {
@@ -123,10 +117,9 @@ Item {
                         top: parent.top
                     }
                     height: parent.height
-                    width: 0
+                    width: 150
                     color: "#d4d3d3"
                 }
-
                 Image {
                     id: progressIndicator
                     anchors.verticalCenter: parent.verticalCenter
@@ -135,34 +128,16 @@ Item {
                     height: 80
                     source: "qrc:/design/media/MediaPlayer/slider.png"
                 }
-                Glow {
-                    anchors.fill: progressIndicator
-                    radius: 15
-                    samples: 20
-                    color: "#abebfb"
-                    source: progressIndicator
-                    visible: progressArea.pressed
-                }
-
-                MouseArea {
-                    id: progressArea
-                    anchors.fill: progressBackground
-                    anchors.topMargin: -20
-                    anchors.bottomMargin: -20
-                }
             }
             Item {
-                id: element1
-                Layout.topMargin: 10
+                Layout.topMargin: 5
                 width: progressBackground.width
                 height: childrenRect.height
-                Layout.fillWidth: false
                 Text {
                     id: currentPositionText
                     anchors.left: parent.left
                     font.pixelSize: 18
                     text: "1:28"
-                    anchors.verticalCenter: parent.verticalCenter
                     color: "#a9a9ab"
                 }
                 Text {
@@ -170,7 +145,6 @@ Item {
                     anchors.right: parent.right
                     font.pixelSize: 18
                     text: "3:56"
-                    anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignLeft
                     color: "#a9a9ab"
                 }
@@ -184,124 +158,63 @@ Item {
             Item {
                 Layout.fillWidth: true
             }
-            Item {
-                width: childrenRect.width
-                height: childrenRect.height
-                Image {
-                    id: shuffleImage
-                    sourceSize.height: 30
-                    sourceSize.width: 30
-                    fillMode: Image.PreserveAspectFit
-                    source: "qrc:/design/media/MediaPlayer/change.png"
-                    MouseArea {
-                        id: shuffleButton
-                        anchors.fill: parent
-                    }
-                }
-                Glow {
-                    anchors.fill: shuffleImage
-                    radius: 20
-                    samples: 20
-                    color: "#bbabebfb"
-                    source: shuffleImage
-                    visible: shuffleButton.pressed
+            Image {
+                id: shuffleImage
+                sourceSize.height: 30
+                sourceSize.width: 30
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/design/media/MediaPlayer/change.png"
+                MouseArea {
+                    id: shuffleButton
+                    anchors.fill: parent
                 }
             }
             Item {
                 width: 2
             }
-            Item {
-                width: childrenRect.width
-                height: childrenRect.height
-                Image {
-                    id: prewImage
-                    sourceSize.height: 60
-                    sourceSize.width: 60
-                    fillMode: Image.PreserveAspectFit
-                    source: "qrc:/design/media/MediaPlayer/1.png"
-                    MouseArea {
-                        id: prewButton
-                        anchors.fill: parent
-                    }
-                }
-                Glow {
-                    anchors.fill: prewImage
-                    radius: 20
-                    samples: 20
-                    color: "#abebfb"
-                    source: prewImage
-                    visible: prewButton.pressed
+            Image {
+                id: prewImage
+                sourceSize.height: 70
+                sourceSize.width: 70
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/design/media/MediaPlayer/1.png"
+                MouseArea {
+                    id: prewButton
+                    anchors.fill: parent
                 }
             }
-            Item {
-                width: childrenRect.width
-                height: childrenRect.height
-                Image {
-                    id: playPauseImage
-                    fillMode: Image.Stretch
-                    Layout.fillWidth: false
-                    source: "qrc:/design/media/MediaPlayer/2.png"
-                    MouseArea {
-                        id: playPauseButton
-                        anchors.fill: parent
-                    }
-                }
-                Glow {
-                    anchors.fill: playPauseImage
-                    radius: 20
-                    samples: 20
-                    color: "#bbabebfb"
-                    source: playPauseImage
-                    visible: playPauseButton.pressed
+            Image {
+                id: playPauseImage
+                fillMode: Image.Stretch
+                Layout.fillWidth: false
+                source: "qrc:/design/media/MediaPlayer/2.png"
+                MouseArea {
+                    id: playPauseButton
+                    anchors.fill: parent
                 }
             }
-            Item {
-                width: childrenRect.width
-                height: childrenRect.height
-                Image {
-                    id: nextImage
-                    sourceSize.height: 60
-                    sourceSize.width: 60
-                    source: "qrc:/design/media/MediaPlayer/3.png"
-                    MouseArea {
-                        id: nextButton
-                        anchors.fill: parent
-                    }
-                }
-                Glow {
-                    anchors.fill: nextImage
-                    radius: 20
-                    samples: 20
-                    color: "#bbabebfb"
-                    source: nextImage
-                    visible: nextButton.pressed
+            Image {
+                id: nextImage
+                sourceSize.height: 70
+                sourceSize.width: 70
+                source: "qrc:/design/media/MediaPlayer/3.png"
+                MouseArea {
+                    id: nextButton
+                    anchors.fill: parent
                 }
             }
-
             Item {
                 width: 2
             }
-            Item {
-                width: childrenRect.width
-                height: childrenRect.height
-                Image {
-                    id: repeat
-                    sourceSize.height: 30
-                    sourceSize.width: 30
-                    fillMode: Image.PreserveAspectFit
-                    source: "qrc:/design/media/MediaPlayer/back.png"
-                    MouseArea {
-                        id: backButton
-                        anchors.fill: parent
-                    }
-                }
-                Glow {
-                    anchors.fill: repeat
-                    radius: 20
-                    samples: 20
-                    color: "#bbabebfb"
-                    source: repeat
-                    visible: backButton.pressed
+            Image {
+                id: repeat
+                sourceSize.height: 30
+                sourceSize.width: 30
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/design/media/MediaPlayer/back.png"
+                MouseArea {
+                    id: backButton
+                    anchors.fill: parent
                 }
             }
 

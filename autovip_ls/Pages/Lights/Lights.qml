@@ -38,27 +38,28 @@ BasePage {
         GSystem.createLightsModel();
         leftMenu.model=GSystem.lightsModel;
     }
+    function open(){
+        targetColorItem.saturation = 0
+    }
+
     function closeAll()
     {
-                ceilColorComponent.red = 0;
-                ceilColorComponent.green = 0;
-                ceilColorComponent.blue = 0;
-
-                sideColorComponent.color = "#000000";
-
-                insideColorComponent.color = "#000000";
+        targetColorItem.saturation = 1
+        serial_mng.ceilingcolor = "#000000"
+        serial_mng.sidecolor = "#000000"
+        serial_mng.insidecolor = "#000000"
 
 
 
         if (c3.color == "#fff6a6")
         {
-            c3.color = "#000000";
+//            c3.color = "#000000";
             serial_mng.sendKey("lights/rightreading_onoff",true,delay);
 
         }
         if (c4.color == "#fff6a6")
         {
-            c4.color = "#000000";
+//            c4.color = "#000000";
             serial_mng.sendKey("lights/leftreading_onoff",true,delay);
         }
 
@@ -72,12 +73,6 @@ BasePage {
 //            transitme6.running=false;
 //            transbtn.ison=false;
 //        }
-
-
-
-
-
-
 
     }
 
@@ -195,6 +190,7 @@ BasePage {
     {
             GSystem.info.src = "qrc:/design/general/saved.svg"
             GSystem.info.message = "";
+            GSystem.info.position = Qt.point(width/2, height- 300)
             GSystem.info.start();
     }
     function hexToRgb(hex) {
@@ -227,17 +223,17 @@ BasePage {
     {
 //        console.log("ceiling color changed : "+p_color);
         var parts = root.hexToRgb(p_color);
-        serial_mng.sendKey("lights/ceiling_red",false,root.delay,parts.r);
-        serial_mng.sendKey("lights/ceiling_green",false,root.delay,parts.g);
-        serial_mng.sendKey("lights/ceiling_blue",false,root.delay,parts.b);
+//        serial_mng.sendKey("lights/ceiling_red",false,root.delay,parts.r);
+//        serial_mng.sendKey("lights/ceiling_green",false,root.delay,parts.g);
+        serial_mng.sendKey("lights/side_red",false,root.delay,parts.b);
     }
     function sendSideColor(p_color)
     {
 //        console.log("side color changed : "+p_color);
         var parts = root.hexToRgb(p_color);
-        serial_mng.sendKey("lights/side_red",false,root.delay,parts.r);
+//        serial_mng.sendKey("lights/side_red",false,root.delay,parts.r);
         serial_mng.sendKey("lights/side_green",false,root.delay,parts.g);
-        serial_mng.sendKey("lights/side_blue",false,root.delay,parts.b);
+//        serial_mng.sendKey("lights/side_blue",false,root.delay,parts.b);
     }
     function sendInsideColor(p_color)
     {
@@ -261,7 +257,7 @@ BasePage {
                             root.targetColorItem = ceilColorComponent;
                            break;
                        case 2:
-                            root.targetColorItem = insideColorComponent
+                            root.targetColorItem = sideColorComponent
                            break;
                        case 3:
                             root.targetColorItem = sideColorComponent
@@ -329,6 +325,7 @@ BasePage {
         saturation: 1.0
         value: 1.0
         color:"white"
+
         onColorChanged: {
                   var color = insideColorComponent.toRGBString();
                   root.sendInsideColor(color)
@@ -340,26 +337,22 @@ BasePage {
     }
 
 
-    ColorSlider{
-        id: hSlider
-        x:274
-        y:200
-        height:360
-        width:60
-        color:"black"
-        value: 1.0 - targetColorItem.hue
-        gradient: Gradient {
-            GradientStop { position: 0/6; color: "red" }
-            GradientStop { position: 1/6; color: "magenta" }
-            GradientStop { position: 2/6; color: "blue" }
-            GradientStop { position: 3/6; color: "cyan" }
-            GradientStop { position: 4/6; color: "lime" }
-            GradientStop { position: 5/6; color: "yellow" }
-            GradientStop { position: 6/6; color: "red" }
-        }
+//    ColorSlider{
+//        id: hSlider
+//        x:274
+//        y:200
+//        height:360
+//        width:60
+//        color:"black"
+//        value: 1 - Math.max(0.0, Math.min(1.0 - mouseY / height, 1.0))
+//        gradient: Gradient {
+//            GradientStop { position: 0/6; color: "white" }
+//            GradientStop { position: 6/6; color: "white" }
 
-        onMouseYChanged: { targetColorItem.hue = Math.max(0.0, Math.min(1.0 - mouseY / height, 1.0)); targetColorItem.value = 1; }
-    }
+//        }
+
+//        onMouseYChanged: { targetColorItem.color = "#ffffff"; targetColorItem.value = 1; }
+//    }
 
     Item{
         id:cmodel
@@ -376,7 +369,9 @@ BasePage {
             height: 250
             border.width: 0
             antialiasing: true
-            color:ceilColor
+            color:"#" + (ceilColor.g < 16/255 ? "0" : "")+((ceilColor.b)*255).toString(16)+
+                  (ceilColor.g < 16/255 ? "0" : "")+((ceilColor.b)*255).toString(16) +
+                  (ceilColor.g < 16/255 ? "0" : "")+((ceilColor.b)*255).toString(16)
 
         }
         Image{
@@ -407,7 +402,7 @@ BasePage {
             width:350
             height:91
             rotation: 0
-            color:inSideColor
+            color:"#" + ((inSideColor.b)*255).toString(16) + ((inSideColor.b)*255).toString(16) + ((inSideColor.b)*255).toString(16)
             antialiasing: true
             }
         Rectangle{
@@ -417,7 +412,7 @@ BasePage {
             width:55
             height:175
             rotation: 0
-            color:inSideColor
+            color:"#" + ((inSideColor.b)*255).toString(16) + ((inSideColor.b)*255).toString(16) + ((inSideColor.b)*255).toString(16)
             antialiasing: true
             }
         Rectangle{
@@ -427,7 +422,7 @@ BasePage {
             width:44
             height:175
             rotation: 0
-            color:inSideColor
+            color:"#" + ((inSideColor.b)*255).toString(16) + ((inSideColor.b)*255).toString(16) + ((inSideColor.b)*255).toString(16)
             antialiasing: true
             }
          Rectangle{
@@ -436,7 +431,9 @@ BasePage {
              y:259
              width:45
              height:82
-             color:sideColor
+             color:"#" + (sideColor.g <16/255 ? "0" : "")+ ((sideColor.g)*255).toString(16)+
+                   (sideColor.g < 16/255 ? "0" : "")+((sideColor.g)*255).toString(16) +
+                   (sideColor.g < 16/255 ? "0" : "")+((sideColor.g)*255).toString(16)
              rotation: 0
              antialiasing: true
              visible: SM.sidelight()
@@ -447,7 +444,9 @@ BasePage {
              y:266
              width:48
              height:75
-             color:sideColor
+             color:"#" + (sideColor.g < 16/255 ? "0" : "")+((sideColor.g)*255).toString(16)+
+                   (sideColor.g < 16/255 ? "0" : "")+((sideColor.g)*255).toString(16) +
+                   (sideColor.g < 16/255 ? "0" : "")+((sideColor.g)*255).toString(16)
              antialiasing: true
              visible: SM.sidelight()
          }
@@ -498,16 +497,16 @@ BasePage {
 
     ColorSlider{
         id: sSlider
-        x:274
-        width: 712
-        height:30
+        x:364
+        width: 622
+        height:50
         color:"black"
         anchors.top: parent.top
         anchors.topMargin: 570
         orientation: Qt.Horizontal
         value: 1.0 - targetColorItem.saturation
         gradient: Gradient {
-                GradientStop { position: 0.0; color: Qt.hsla(targetColorItem.hue, 1.0, 0.5, 1.0) }
+                GradientStop { position: 0.0; color: "black" }
                 GradientStop { position: 1.0; color: "white"}
         }
 
@@ -517,13 +516,14 @@ BasePage {
         spacing: 10
         id:cl1
         anchors.top:sSlider.bottom
-        x:274
-        anchors.topMargin: 5
-
+        anchors.left: sSlider.left
+        anchors.topMargin: 10
+        anchors.right: parent.right
 
 
         RowLayout{
            spacing: 10
+           Layout.alignment: Qt.AlignHCenter
            anchors.top: cl1.top
            id:rl1
            LightButton{
@@ -539,60 +539,70 @@ BasePage {
            LightButton{
                Layout.preferredHeight: 30
                Layout.preferredWidth: 150
-               text:qsTr("Memory 1") + mytrans.emptyString
+               text:qsTr("Open") + mytrans.emptyString
                onClicked: {
-                   var ceilColor = SM.getLightMemory(1,1);
-                   var sideColor = SM.getLightMemory(1,2);
-                   var inSideColor = SM.getLightMemory(1,3);
-                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
-               }
-               onHolded: {
-                   SM.saveLightMemory(1,1,root.ceilColor);
-                   SM.saveLightMemory(1,2,root.sideColor);
-                   SM.saveLightMemory(1,3,root.inSideColor);
-                   root.showInfo();
+                   root.open();
+                   GSystem.createLightsModel();
+                   leftMenu.model=GSystem.lightsModel;
                }
            }
-           LightButton{
-               Layout.preferredHeight: 30
-               Layout.preferredWidth: 150
-               text:qsTr("Memory 2") + mytrans.emptyString
-               onClicked: {
-                   var ceilColor = SM.getLightMemory(2,1);
-                   var sideColor = SM.getLightMemory(2,2);
-                   var inSideColor = SM.getLightMemory(2,3);
-                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
-               }
-               onHolded: {
-                   SM.saveLightMemory(2,1,root.ceilColor);
-                   SM.saveLightMemory(2,2,root.sideColor);
-                   SM.saveLightMemory(2,3,root.inSideColor);
-                   root.showInfo();
-               }
-           }
-           LightButton{
-               Layout.preferredHeight: 30
-               Layout.preferredWidth: 150
-               text:qsTr("Memory 3") + mytrans.emptyString
-               onClicked: {
-                    var ceilColor = SM.getLightMemory(3,1);
-                    var sideColor = SM.getLightMemory(3,2);
-                    var inSideColor = SM.getLightMemory(3,3);
-                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
-               }
-               onHolded: {
-                   SM.saveLightMemory(3,1,root.ceilColor);
-                   SM.saveLightMemory(3,2,root.sideColor);
-                   SM.saveLightMemory(3,3,root.inSideColor);
-                   root.showInfo();
-               }
-           }
+//           LightButton{
+//               Layout.preferredHeight: 30
+//               Layout.preferredWidth: 150
+//               text:qsTr("Memory 1") + mytrans.emptyString
+//               onClicked: {
+//                   var ceilColor = SM.getLightMemory(1,1);
+//                   var sideColor = SM.getLightMemory(1,2);
+//                   var inSideColor = SM.getLightMemory(1,3);
+//                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
+//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
+//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
+//               }
+//               onHolded: {
+//                   SM.saveLightMemory(1,1,root.ceilColor);
+//                   SM.saveLightMemory(1,2,root.sideColor);
+//                   SM.saveLightMemory(1,3,root.inSideColor);
+//                   root.showInfo();
+//               }
+//           }
+//           LightButton{
+//               Layout.preferredHeight: 30
+//               Layout.preferredWidth: 150
+//               text:qsTr("Memory 2") + mytrans.emptyString
+//               onClicked: {
+//                   var ceilColor = SM.getLightMemory(2,1);
+//                   var sideColor = SM.getLightMemory(2,2);
+//                   var inSideColor = SM.getLightMemory(2,3);
+//                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
+//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
+//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
+//               }
+//               onHolded: {
+//                   SM.saveLightMemory(2,1,root.ceilColor);
+//                   SM.saveLightMemory(2,2,root.sideColor);
+//                   SM.saveLightMemory(2,3,root.inSideColor);
+//                   root.showInfo();
+//               }
+//           }
+//           LightButton{
+//               Layout.preferredHeight: 30
+//               Layout.preferredWidth: 150
+//               text:qsTr("Memory 3") + mytrans.emptyString
+//               onClicked: {
+//                    var ceilColor = SM.getLightMemory(3,1);
+//                    var sideColor = SM.getLightMemory(3,2);
+//                    var inSideColor = SM.getLightMemory(3,3);
+//                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
+//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
+//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
+//               }
+//               onHolded: {
+//                   SM.saveLightMemory(3,1,root.ceilColor);
+//                   SM.saveLightMemory(3,2,root.sideColor);
+//                   SM.saveLightMemory(3,3,root.inSideColor);
+//                   root.showInfo();
+//               }
+//           }
 
         }
 
@@ -605,6 +615,7 @@ BasePage {
            spacing: 10
            id:rl2
            x:284
+           visible: SM.readinglight()
            LightButton{
                Layout.preferredHeight: 30
                Layout.preferredWidth: 310

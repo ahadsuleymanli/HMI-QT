@@ -1,7 +1,5 @@
 #include "mediaplayerbackend.h"
 #include <QMediaMetaData>
-#include <QBuffer>
-#include <iostream>
 
 MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
     : QMediaPlayer(parent)
@@ -9,9 +7,11 @@ MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
     m_playList = new QMediaPlaylist(this);
     setPlaylist(m_playList);
     m_trackList = new TrackList(m_playList);
-
+    m_playList->setCurrentIndex(0);
     connect(this, &QMediaPlayer::mediaStatusChanged,[=](){
-        if(mediaStatus() == QMediaPlayer::BufferedMedia || mediaStatus() == QMediaPlayer::LoadedMedia){
+        qDebug() << mediaStatus() << m_playList->currentIndex() << m_playList->mediaCount();
+        if(mediaStatus() == QMediaPlayer::BufferedMedia){
+            qDebug() << "loaded";
             emit playingMediaChanged();
         }
     });
@@ -19,43 +19,15 @@ MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
 
 QString MediaPlayerBackend::playingTitle()
 {
+    qDebug() << "title";
     if(!playlist()) return QString();
+    qDebug() << metaData(QMediaMetaData::Title).toString();
     return metaData(QMediaMetaData::Title).toString();
-}
-
-QString MediaPlayerBackend::playingYear()
-{
-    if(!playlist()) return QString();
-    return metaData(QMediaMetaData::Year).toString();
-}
-
-QString MediaPlayerBackend::playingArtist()
-{
-    if(!playlist()) return QString();
-    return metaData(QMediaMetaData::ContributingArtist).toString();
-}
-
-QString MediaPlayerBackend::playingCover()
-{
-    if(!playlist()) return QString();
-    QImage image = metaData(QMediaMetaData::CoverArtImage).value<QImage>();
-    if(image.isNull()) return QString();
-    QByteArray bArray;
-    QBuffer buffer(&bArray);
-    buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "JPEG");
-    image.isNull();
-    QString imgStr = "data:image/jpg;base64,";
-
-    imgStr.append(QString::fromLatin1(bArray.toBase64().data()));
-    return imgStr;
 }
 
 
 void MediaPlayerBackend::next()
 {
-    if(playlist()->currentIndex() == playlist()->mediaCount() -1 )
-        playlist()->setCurrentIndex(0);
     playlist()->next();
 }
 

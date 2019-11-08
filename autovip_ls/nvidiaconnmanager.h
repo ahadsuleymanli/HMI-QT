@@ -29,8 +29,8 @@ class NvidiaConnManager: public QObject
     int changePageTimeout = 2000;
     QString usersLastPage = "Home";
     IterativeValueChanger *acdegChanger,*acfanChanger,*toggleCommands;
-    QStringList menuNames = {"Home", "Lights", "AirConditioner", "Curtains", "LeftCurtain", "RightCurtain", "LeftCurtain2", "RightCurtain2", "Controls", "Seats", "Media", "Espresso", "Settings", "MediaPlayer"};
-    int seatMovementDurationMs = 5000;
+    QStringList menuNames = {"Home", "Lights", "AirConditioner", "Curtains", "LeftCurtain", "RightCurtain", "LeftCurtain2", "RightCurtain2", "Controls", "Seats", "Media", "Espresso", "Settings"};
+    int seatMovementDurationMs = 1000;
     QMap<QString, QString> timedToggleCommands;
     QStringList seatIntentMajorParameters = {};
 

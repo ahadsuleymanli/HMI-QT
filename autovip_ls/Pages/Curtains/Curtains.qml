@@ -31,22 +31,6 @@ BasePage {
         ListModel{
             id: tmodel
             ListElement{
-                name: qsTr("First Curtain")
-                st:"LeftCurtain"
-            }
-            ListElement{
-                name: qsTr("Second Curtain")
-                st:"RightCurtain"
-            }
-            ListElement{
-                name: qsTr("Third Curtain")
-                st:"LeftCurtain2"
-            }
-            ListElement{
-                name: qsTr("Fourth Curtain")
-                st:"RightCurtain2"
-            }
-            ListElement{
                 name: qsTr("Luggage Curtain")
                 st:"LuggageCurtain"
             }
@@ -62,78 +46,78 @@ BasePage {
             x:247
             anchors.verticalCenter: parent.verticalCenter
             source:"qrc:/design/controls/curtains.png"
-            Image{
-                id:c1
-                x:68
-                y:122
-                sourceSize.height:48
-                fillMode: Image.PreserveAspectFit
-                source:"qrc:/design/general/two.png"
-                MouseArea{
-                    width: 75
-                    height: 75
-                    x: -35
-                    y: -35
-                    onClicked: {
-                                GSystem.state = "LeftCurtain";
-                                GSystem.changePage("LeftCurtain");
-                        }
-                }
-            }
-            Image{
-                id:c2
-                x:704
-                y:122
-                sourceSize.height:48
-                fillMode: Image.PreserveAspectFit
-                source:"qrc:/design/general/one.png"
-                MouseArea{
-                    width: 75
-                    height: 75
-                    x: -35
-                    y: -35
-                   onClicked: {
-                                GSystem.state = "RightCurtain";
-                                GSystem.changePage("RightCurtain");
-                        }
-                }
-            }
-            Image{
-                id:c3
-                x:166
-                y:68
-                sourceSize.height:48
-                fillMode: Image.PreserveAspectFit
-                source:"qrc:/design/general/four.png"
-                MouseArea{
-                    width: 75
-                    height: 75
-                    x: -35
-                    y: -35
-                   onClicked: {
-                                GSystem.state = "LeftCurtain2";
-                                GSystem.changePage("LeftCurtain2");
-                        }
-                }
-            }
-            Image{
-                id:c4
-                x:610
-                y:68
-                sourceSize.height:48
-                fillMode: Image.PreserveAspectFit
-                source:"qrc:/design/general/three.png"
-                MouseArea{
-                    width: 75
-                    height: 75
-                    x: -35
-                    y: -35
-                   onClicked: {
-                                GSystem.state = "RightCurtain2";
-                                GSystem.changePage("RightCurtain2");
-                        }
-                }
-            }
+//            Image{
+//                id:c1
+//                x:68
+//                y:122
+//                sourceSize.height:48
+//                fillMode: Image.PreserveAspectFit
+//                source:"qrc:/design/general/two.png"
+//                MouseArea{
+//                    width: 75
+//                    height: 75
+//                    x: -35
+//                    y: -35
+//                    onClicked: {
+//                                GSystem.state = "LeftCurtain";
+//                                GSystem.changePage("LeftCurtain");
+//                        }
+//                }
+//            }
+//            Image{
+//                id:c2
+//                x:704
+//                y:122
+//                sourceSize.height:48
+//                fillMode: Image.PreserveAspectFit
+//                source:"qrc:/design/general/one.png"
+//                MouseArea{
+//                    width: 75
+//                    height: 75
+//                    x: -35
+//                    y: -35
+//                   onClicked: {
+//                                GSystem.state = "RightCurtain";
+//                                GSystem.changePage("RightCurtain");
+//                        }
+//                }
+//            }
+//            Image{
+//                id:c3
+//                x:166
+//                y:68
+//                sourceSize.height:48
+//                fillMode: Image.PreserveAspectFit
+//                source:"qrc:/design/general/four.png"
+//                MouseArea{
+//                    width: 75
+//                    height: 75
+//                    x: -35
+//                    y: -35
+//                   onClicked: {
+//                                GSystem.state = "LeftCurtain2";
+//                                GSystem.changePage("LeftCurtain2");
+//                        }
+//                }
+//            }
+//            Image{
+//                id:c4
+//                x:610
+//                y:68
+//                sourceSize.height:48
+//                fillMode: Image.PreserveAspectFit
+//                source:"qrc:/design/general/three.png"
+//                MouseArea{
+//                    width: 75
+//                    height: 75
+//                    x: -35
+//                    y: -35
+//                   onClicked: {
+//                                GSystem.state = "RightCurtain2";
+//                                GSystem.changePage("RightCurtain2");
+//                        }
+//                }
+//            }
             Image{
                 id:c5
                 y:12

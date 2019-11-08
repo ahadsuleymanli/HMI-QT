@@ -62,8 +62,6 @@ bool InitializeMng::init()
     {
         return false;
     }
-
-
     QProcess *removeProcess = new QProcess();
     connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
     removeProcess->start("sudo rm /var/lock/LCK..ttyMSM1");
@@ -84,9 +82,8 @@ bool InitializeMng::init()
 	    return false;
     }
 
-//    this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
-
-//    this->flogger->installMsgHandler();
+    this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
+    this->flogger->installMsgHandler();
 
     engine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
     engine->rootContext()->setContextProperty("workingDirPath", QDir::currentPath());
