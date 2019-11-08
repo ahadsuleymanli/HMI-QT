@@ -84,9 +84,9 @@ bool InitializeMng::init()
 	    return false;
     }
 
-    this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
+//    this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
 
-    this->flogger->installMsgHandler();
+//    this->flogger->installMsgHandler();
 
     engine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
     engine->rootContext()->setContextProperty("workingDirPath", QDir::currentPath());

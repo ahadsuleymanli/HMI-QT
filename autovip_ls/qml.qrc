@@ -432,5 +432,7 @@
         <file>design/media/Tv/btnBackground.png</file>
         <file>design/media/leftmenu/satallite.png</file>
         <file>design/media/MediaPlayer/melody.png</file>
+        <file>Pages/Media/MediaPlayer/Library.qml</file>
+        <file>Pages/Media/MediaPlayer/LibraryForm.ui.qml</file>
     </qresource>
 </RCC>

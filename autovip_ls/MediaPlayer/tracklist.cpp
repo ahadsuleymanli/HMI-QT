@@ -94,20 +94,17 @@ TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
         m_trackContents.push_back(tc);
     }
 
-    m_mediaList->setCurrentIndex(0);
-
-
     m_mediaPlayer->setPlaylist(m_mediaList);
+    m_mediaList->setCurrentIndex(0);
     connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, [=](){
 
         if(m_mediaPlayer->mediaStatus() == QMediaPlayer::LoadingMedia) return;
-
+        if(!m_mediaPlayer->metaData(QMediaMetaData::Title).isValid()) return;
         auto tc = m_trackContents.begin() + m_mediaList->currentIndex();
         tc->index = m_mediaList->currentIndex();
+
         tc->trackName = m_mediaPlayer->metaData(QMediaMetaData::Title);
         tc->artistName = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
-
-
         QImage image = m_mediaPlayer->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
         QByteArray bArray;
         QBuffer buffer(&bArray);
@@ -137,7 +134,7 @@ QVariant TrackList::data(const QModelIndex &index, int role) const
 
     if(row >=  m_trackContents.size()) return QVariant();
 
-//    qDebug() << m_trackContents[row].trackName;
+//    qDebug() << row <<m_trackContents.size()<< m_trackContents[row].trackName;
     TrackContent tc = m_trackContents[row];
     switch (r) {
     case TrackRole:

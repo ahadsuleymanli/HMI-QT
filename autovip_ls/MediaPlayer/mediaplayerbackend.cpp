@@ -1,6 +1,7 @@
 #include "mediaplayerbackend.h"
 #include <QMediaMetaData>
 #include <QBuffer>
+#include <iostream>
 
 MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
     : QMediaPlayer(parent)
@@ -9,14 +10,8 @@ MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
     setPlaylist(m_playList);
     m_trackList = new TrackList(m_playList);
 
-    connect(m_trackList, &TrackList::listReady, [=](){
-        m_playList->setCurrentIndex(0);
-        qDebug() << "listReady";
-        emit playingMediaChanged();
-    });
     connect(this, &QMediaPlayer::mediaStatusChanged,[=](){
-        qDebug() << mediaStatus() << m_playList->currentIndex() << m_playList->mediaCount();
-        if(mediaStatus() == QMediaPlayer::BufferedMedia){
+        if(mediaStatus() == QMediaPlayer::BufferedMedia || mediaStatus() == QMediaPlayer::LoadedMedia){
             emit playingMediaChanged();
         }
     });
