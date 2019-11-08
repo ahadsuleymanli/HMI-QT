@@ -16,6 +16,7 @@
 #include <QDir>
 #include <nvidiaconnmanager.h>
 #include "MediaPlayer/tracklist.h"
+#include "MediaPlayer/mediaplayerbackend.h"
 #include <QProcess>
 
 bool changeCD()
@@ -31,7 +32,7 @@ int main(int argc, char *argv[])
 {
 //    qDebug()<<"start"<<endl;
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
-    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     qputenv("QT_QUICK_CONTROLS_STYLE", "material");
     qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
@@ -48,14 +49,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
     qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
     qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");            // Ahadin notlari: bunu yapmakla klasin 2 kez instantiate ediyorsun.
+    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
+    qmlRegisterType<TrackList>("MediaPlayerBackend",1,0,"TrackList");
 
     SettingsManager sm;
     Translator mTrans(&app);
+
     MediaPlayerMng mpMan;
+
     InitializeMng imng;
     SerialMng smng;
     ClockSetter mclck;
-//    qDebug()<<"objs created"<<endl;
 
     imng.setTranslator(&mTrans);
     imng.setSettingsManager(&sm);
@@ -66,8 +70,6 @@ int main(int argc, char *argv[])
     // instantiating an NvidiaConnManager object
     NvidiaConnManager nvidiaConnManager(1234, &smng, &sm, &app);
     engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
-//    UpdateCheck updatecheck(&app);
-//    engine.rootContext()->setContextProperty("update_manager", &updatecheck);
 
 
     if(imng.init() == false)
@@ -75,11 +77,6 @@ int main(int argc, char *argv[])
 //        qDebug()<<"init unsuccessful"<<endl;
          return -1;
     }
-
-    TrackList tracks;
-
-    QQmlContext *ctxt = engine.rootContext();
-    ctxt->setContextProperty("trackModel", &tracks);
 
 
     return app.exec();

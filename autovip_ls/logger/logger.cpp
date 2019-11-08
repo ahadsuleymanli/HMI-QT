@@ -7,7 +7,7 @@
 #include <QObject>
 #include <iostream>
 
-Logger* Logger::defaultLogger=0;
+Logger* Logger::defaultLogger=nullptr;
 
 
 QThreadStorage<QHash<QString,QString>*> Logger::logVars;

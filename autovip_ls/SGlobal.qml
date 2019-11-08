@@ -159,8 +159,8 @@ Item {
 
         }else{
             serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
-                        serial_mng.sendKey("main/system_onoff");
-                        serial_mng.sendKey("main/system_feedback");
+            serial_mng.sendKey("main/system_onoff");
+            serial_mng.sendKey("main/system_feedback");
         }
 
 
@@ -236,7 +236,8 @@ Item {
     function createLightsModel(){
         lightsModel.clear();
         lightsModel.append({name:qsTr("Ceiling Light"),target:1,selected:false});
-        lightsModel.append({name:qsTr("Inside Light"),target:2,selected:false});
+        if(SM.insidelight() === true)
+            lightsModel.append({name:qsTr("Inside Light"),target:2,selected:false});
         if(SM.slboolean === true){
             lightsModel.append({name:qsTr("Side Light"),target:3,selected:false});
         }
@@ -250,7 +251,7 @@ Item {
         mediaModel.append(
                     {
             name: qsTr("Media Player"),
-            st: "KodiMediaPlayer",
+            st: "MediaPlayer",
             bg: "qrc:/design/media/leftmenu/kodiplayer.png"
                     }
                     );
@@ -295,6 +296,17 @@ Item {
                         bg: "qrc:/design/media/leftmenu/screendivider.png"
                     }
                     );
+
+        if(SM.satalliteremote === true){
+        mediaModel.append(
+                {
+                name: qsTr("Satallite"),
+                st: "Satallite",
+                bg: "qrc:/design/media/leftmenu/satallite.png"
+
+                }
+                );
+        }
         mediaModel.append(
                    {
                     name: qsTr("Television"),
@@ -383,14 +395,15 @@ Item {
                     );
 
      }
-
+    if(SM.aircondition){
         controlsModel.append(
-    {
-        name: qsTr("Air Condition"),
-        st: "AirConditioner",
-        bg: "qrc:/design/controls/leftmenu/airconditioner.png"
+        {
+            name: qsTr("Air Condition"),
+            st: "AirConditioner",
+            bg: "qrc:/design/controls/leftmenu/airconditioner.png"
+        }
+                        );
     }
-                    );
         controlsModel.append(
     {
         name: qsTr("Smoke Fan"),
@@ -399,13 +412,15 @@ Item {
     }
                     );
 
+     if(SM.windows){
         controlsModel.append(
-    {
-        name: qsTr("Windows"),
-        st: "Windows",
-        bg: "qrc:/design/controls/leftmenu/windows.png"
-    }
-    );
+        {
+            name: qsTr("Windows"),
+            st: "Windows",
+            bg: "qrc:/design/controls/leftmenu/windows.png"
+        }
+        );
+     }
      if(SM.bar)
      {
         controlsModel.append(
@@ -631,7 +646,7 @@ Item {
             ,
                 "ScreenDivider"
             ,
-                "KodiMediaPlayer"
+                "MediaPlayer"
             ,
                 "PlayStation"
             ,
@@ -793,8 +808,8 @@ ListModel{
 ListModel {
     id: mediaModel
     ListElement {
-       name: qsTr("Kodi Player")
-        st: "KodiMediaPlayer"
+       name: qsTr("Media Player")
+        st: "MediaPlayer"
        bg: "qrc:/design/media/leftmenu/kodiplayer.png"
     }
     ListElement {

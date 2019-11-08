@@ -194,6 +194,10 @@ Item {
     {
         id:television
     }
+    MediaPages.SatalliteRemote
+    {
+        id:satalliteRemote
+    }
     MediaPages.HdmiInput
     {
         id:hdmiinput
@@ -201,8 +205,8 @@ Item {
     MediaPages.PcHdmi{
         id:pchdmi
     }
-    MediaPages.KodiMediaPlayer{
-        id:kodimediaplayer
+    MediaPages.MediaPlayer{
+        id:mediaplayer
     }
 
     MediaPages.AppleTv{
@@ -323,10 +327,11 @@ Item {
         GSystem.addPageItem("RearCamera",rearcamera);
         GSystem.addPageItem("DockingStation",dockingstation);
         GSystem.addPageItem("ScreenDivider",screendivider);
-        GSystem.addPageItem("KodiMediaPlayer",kodimediaplayer);
+        GSystem.addPageItem("MediaPlayer",mediaplayer);
         GSystem.addPageItem("CeilingScreen",ceilingscreen);
         GSystem.addPageItem("PlayStation",playstation);
         GSystem.addPageItem("Television",television);
+        GSystem.addPageItem("Satallite",satalliteRemote);
         GSystem.addPageItem("PcHdmi",pchdmi);
         GSystem.addPageItem("Windows",windows);
         GSystem.addPageItem("Settings",settings);

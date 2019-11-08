@@ -65,40 +65,45 @@ void rowSort(QVector<QPersistentModelIndex> & indices)
     });
 }
 
-TrackList::TrackList(QObject *parent)
+TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
     :QAbstractListModel(parent)
 {
 
     m_mediaPlayer = new QMediaPlayer();
     m_mediaPlayer->setVolume(0);
     m_mediaPlayer->setMuted(true);
-    QDir mediaDir("/media/");
+    QDir mediaDir("/home/serkan");
     QStringList dirs = mediaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
     if(!dirs.isEmpty())
-        mediaDir.setPath("/media/" + dirs[0] + "/");
+        mediaDir.setPath("/home/serkan/Music/");
     QStringList filters;
     filters << "*.mp3";
     mediaDir.setNameFilters(filters);
 
     QStringList tracks = mediaDir.entryList();
+    if(list)
+        m_mediaList = list;
+    else
+        m_mediaList = new QMediaPlaylist();
+
     for(auto &track : tracks)
     {
-        m_mediaList.addMedia(QUrl("file:" +mediaDir.path() + "/" + track));
+        m_mediaList->addMedia(QUrl("file:" +mediaDir.path() + "/" + track));
         TrackContent tc;
         tc.path = "file:" + mediaDir.path() + "/" + track;
         m_trackContents.push_back(tc);
     }
 
-    m_mediaList.setCurrentIndex(0);
+    m_mediaList->setCurrentIndex(0);
 
 
-    m_mediaPlayer->setPlaylist(&m_mediaList);
+    m_mediaPlayer->setPlaylist(m_mediaList);
     connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, [=](){
 
         if(m_mediaPlayer->mediaStatus() == QMediaPlayer::LoadingMedia) return;
 
-        auto tc = m_trackContents.begin() + m_mediaList.currentIndex();
-        tc->index = m_mediaList.currentIndex();
+        auto tc = m_trackContents.begin() + m_mediaList->currentIndex();
+        tc->index = m_mediaList->currentIndex();
         tc->trackName = m_mediaPlayer->metaData(QMediaMetaData::Title);
         tc->artistName = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
 
@@ -111,10 +116,12 @@ TrackList::TrackList(QObject *parent)
         tc->image = "data:image/jpg;base64,";
         tc->image.append(QString::fromLatin1(bArray.toBase64().data()));
 
-        if(m_mediaList.currentIndex() < m_mediaList.mediaCount() - 1)
-            m_mediaList.setCurrentIndex(m_mediaList.currentIndex() + 1);
+        if(m_mediaList->currentIndex() < m_mediaList->mediaCount() - 1)
+            m_mediaList->setCurrentIndex(m_mediaList->currentIndex() + 1);
         else{
+            m_mediaPlayer->setPlaylist(nullptr);
             emit listReady();
+            emit layoutChanged();
         }
     });
 
@@ -134,7 +141,7 @@ QVariant TrackList::data(const QModelIndex &index, int role) const
     TrackContent tc = m_trackContents[row];
     switch (r) {
     case TrackRole:
-        return tc.trackName;
+        return m_trackContents[row].trackName;
     case ArtistsRole:
         return tc.artistName;
     case ImageRole:
@@ -150,7 +157,7 @@ QVariant TrackList::data(const QModelIndex &index, int role) const
 
 int TrackList::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : m_mediaList.mediaCount();
+    return parent.isValid() ? 0 : m_mediaList->mediaCount();
 }
 
 QHash<int, QByteArray> TrackList::roleNames() const

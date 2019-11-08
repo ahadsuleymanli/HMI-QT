@@ -8,6 +8,14 @@ BasePage {
     id:root
     caption: qsTr("PLAYSTATION") + mytrans.emptyString
     pageName: "Playstation"
+    Connections{
+        target: GSystem
+        onActivePageChanged:{
+            if(GSystem.activePage === "PlayStation")
+                serial_mng.sendKey("media/play_station");
+        }
+    }
+
     Image{
         source:"qrc:/design/media/ikon-PS4.svg"
         anchors.horizontalCenter: parent.horizontalCenter

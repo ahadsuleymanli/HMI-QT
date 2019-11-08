@@ -37,6 +37,19 @@ uint SettingsManager::tvtype()
     return this->general->value("main/tvtype",6).toUInt();
 }
 
+uint SettingsManager::espressoopentime()
+{
+    return this->general->value("delays/espressoopentime",10000).toUInt();
+}
+
+uint SettingsManager::seatmovementduration()
+{
+    return this->general->value("delays/espressoopentime",5000).toUInt();
+}
+bool SettingsManager::satalliteremote()
+{
+    return this->general->value("main/satalliteremote",false).toBool();
+}
 bool SettingsManager::playstation()
 {
     return this->general->value("main/playstation",false).toBool();
@@ -78,6 +91,16 @@ bool SettingsManager::espresso()
 {
 
     return this->general->value("main/espresso",true).toBool();
+}
+
+bool SettingsManager::windows()
+{
+    return this->general->value("main/windows",true).toBool();
+}
+
+bool SettingsManager::aircondition()
+{
+    return this->general->value("main/aircondition",true).toBool();
 }
 
 bool SettingsManager::bar()
@@ -122,6 +145,16 @@ bool SettingsManager::intro()
 bool SettingsManager::sidelight()
 {
     return this->general->value("lights/sidelight",true).toBool();
+}
+
+bool SettingsManager::insidelight()
+{
+    return this->general->value("lights/insidelight",true).toBool();
+}
+
+bool SettingsManager::readinglight()
+{
+    return this->general->value("lights/readinglight",true).toBool();
 }
 
 bool SettingsManager::amp()
@@ -171,6 +204,8 @@ int SettingsManager::hourdiff()
 {
     return this->general->value("main/hourdiff",1).toInt();
 }
+
+
 
 
 void SettingsManager::setTimeDiff(int mndf, int hrdf)

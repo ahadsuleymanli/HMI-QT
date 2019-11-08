@@ -24,7 +24,7 @@ Rectangle {
         Text{
             id:caption
             text:""
-            z:2
+            z:32
             font.pixelSize: 36
             font.family: GSystem.centurygothic.name
             color:"white"
@@ -37,7 +37,7 @@ Rectangle {
             visible: (caption.text!="")?true:false
             anchors.bottom: parent.bottom
             source: "qrc:/design/general/captionline.svg"
-            z:1
+            z:31
         }
     }
 
@@ -68,7 +68,7 @@ Rectangle {
        anchors.right: return_btn.left
        anchors.rightMargin: width + 5
        y:35
-       z:32
+       z:332
        MouseArea{
            x:-16
            y:-16
@@ -82,7 +82,6 @@ Rectangle {
            }
        }
    }
-
    NumberAnimation on x {
         from: root.width
         to:  0

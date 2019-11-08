@@ -1,4 +1,5 @@
 #include "colorcomponents.h"
+#include <iostream>
 
 ColorComponents::ColorComponents(QObject *parent)
 	: QObject(parent)
@@ -91,7 +92,7 @@ void ColorComponents::setHue(qreal hue)
 	if(_inRange(hue) == this->hue()) return;
 
 	m_color.setHsvF(_inRange(hue), saturation(), value(), alpha());
-	
+
     emit hueChanged();
 
 	emit redChanged();
@@ -151,7 +152,6 @@ void ColorComponents::setColor(const QColor &color)
     if(!color.isValid() || color == this->color()) return;
     
     m_color = color;
-
     emit colorChanged();
     
     emit hueChanged();

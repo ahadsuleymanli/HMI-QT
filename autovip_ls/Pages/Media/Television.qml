@@ -1029,7 +1029,7 @@ BasePage {
 
     Rectangle{
         width: 150
-        height: 190
+        height: 329
         x:790
         y:250
         color: "transparent"
@@ -1220,6 +1220,116 @@ BasePage {
                 }
 
             }
+            Rectangle{
+                Layout.preferredWidth: 30
+                Layout.preferredHeight: 30
+                color: "transparent"
+                Image{
+                    id: volDownImage
+                    source:"qrc:/design/media/Tv/btnBackground.png"
+                    Text {
+                        text: "V-"
+                        anchors.centerIn: parent
+                        color :"#fdfdfd"
+                    }
+                    MouseArea{
+                        anchors.fill: parent
+                        onPressed: {
+                            sendCommand("volume_down");
+                            volDownDs.visible = true;
+                        }
+                        onClicked: volDownDs.visible = false
+                        onReleased:{ volDownDs.visible = false; sendCommand("volume_stop"); }
+                   }
+
+                }
+                DropShadow {
+                  id: volDownDs
+                  anchors.fill:volDownImage
+                  horizontalOffset: 0
+                  verticalOffset: 3
+                  radius: 8.0
+                  samples: 12
+                  source: volDownImage
+                  color: shadowColor
+                  visible: false
+                }
+
+            }
+            Rectangle{
+                Layout.preferredWidth: 30
+                Layout.preferredHeight: 30
+                color: "transparent"
+                Image{
+                    id: volUpImage
+                    source:"qrc:/design/media/Tv/btnBackground.png"
+                    Text {
+                        anchors.centerIn: parent
+                        text: "V+"
+                        color :"#fdfdfd"
+                    }
+                    MouseArea{
+                        anchors.fill: parent
+                        onPressed: {
+                            sendCommand("volume_up");
+                            volUpDs.visible = true;
+                        }
+                        onClicked: volUpDs.visible = false
+                        onReleased:{ volUpDs.visible = false; sendCommand("volume_stop"); }
+                   }
+
+                }
+                DropShadow {
+                  id: volUpDs
+                  anchors.fill:volUpImage
+                  horizontalOffset: 0
+                  verticalOffset: 3
+                  radius: 8.0
+                  samples: 12
+                  source: volUpImage
+                  color: shadowColor
+                  visible: false
+                }
+
+            }
+            Rectangle{
+                Layout.preferredWidth: 30
+                Layout.preferredHeight: 30
+                color: "transparent"
+                Image{
+                    id: sourceImage
+                    source:"qrc:/design/media/Tv/btnBackground.png"
+                    Text {
+                        anchors.centerIn: parent
+                        text: "Source"
+                        color :"#fdfdfd"
+                    }
+                    MouseArea{
+                        anchors.fill: parent
+                        onPressed: {
+                            sendCommand("source");
+                            sourceDs.visible = true;
+                        }
+                        onClicked: sourceDs.visible = false
+                        onReleased:{ sourceDs.visible = false; sendCommand("stop_code"); }
+                   }
+
+                }
+                DropShadow {
+                  id: sourceDs
+                  anchors.fill:sourceImage
+                  horizontalOffset: 0
+                  verticalOffset: 3
+                  radius: 8.0
+                  samples: 12
+                  source: sourceImage
+                  color: shadowColor
+                  visible: false
+                }
+
+            }
+
+
         }
 
     }

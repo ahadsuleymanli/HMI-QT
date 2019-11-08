@@ -23,6 +23,7 @@ BasePage {
     }
         Row{
             anchors.horizontalCenter: parent.horizontalCenter
+            width: childrenRect.width
             spacing: 10
         Rectangle{
             id:onoff
@@ -51,61 +52,61 @@ BasePage {
                 }
             }
         }
-        Rectangle{
-            id:source
-            width:120
-            height:50
-            color:GSystem.leftTextMenuItemColor
-            border.width: 1
-            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-            Text{
-                anchors.centerIn: parent
-                text:qsTr("Source")
-                color:"white"
-                font.pixelSize: 22
-                horizontalAlignment: Text.AlignHCenter
-                font.family: GSystem.centurygothic.name
-            }
-            MouseArea{
-                anchors.fill: parent
-                onPressed: {
-                    source.color=GSystem.leftTextMenuItemPressedColor;
-                    serial_mng.sendKey("media/back_monitor_src");
-                }
-                onReleased: {
-                    source.color=GSystem.leftTextMenuItemColor;
+//        Rectangle{
+//            id:source
+//            width:120
+//            height:50
+//            color:GSystem.leftTextMenuItemColor
+//            border.width: 1
+//            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+//            Text{
+//                anchors.centerIn: parent
+//                text:qsTr("Source")
+//                color:"white"
+//                font.pixelSize: 22
+//                horizontalAlignment: Text.AlignHCenter
+//                font.family: GSystem.centurygothic.name
+//            }
+//            MouseArea{
+//                anchors.fill: parent
+//                onPressed: {
+//                    source.color=GSystem.leftTextMenuItemPressedColor;
+//                    serial_mng.sendKey("media/back_monitor_src");
+//                }
+//                onReleased: {
+//                    source.color=GSystem.leftTextMenuItemColor;
 
-                }
-            }
-        }
-        Rectangle{
-            id:ok
-            width:120
-            height:50
-            color:GSystem.leftTextMenuItemColor
-            border.width: 1
-            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-            Text{
-                anchors.centerIn: parent
-                text:qsTr("Ok")
-                color:"white"
-                font.pixelSize: 22
-                horizontalAlignment: Text.AlignHCenter
-                font.family: GSystem.centurygothic.name
+//                }
+//            }
+//        }
+//        Rectangle{
+//            id:ok
+//            width:120
+//            height:50
+//            color:GSystem.leftTextMenuItemColor
+//            border.width: 1
+//            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+//            Text{
+//                anchors.centerIn: parent
+//                text:qsTr("Ok")
+//                color:"white"
+//                font.pixelSize: 22
+//                horizontalAlignment: Text.AlignHCenter
+//                font.family: GSystem.centurygothic.name
 
-            }
-            MouseArea{
-                anchors.fill: parent
-                onPressed: {
-                    ok.color=GSystem.leftTextMenuItemPressedColor;
-                    serial_mng.sendKey("media/back_monitor_ok");
-                }
-                onReleased: {
-                    ok.color=GSystem.leftTextMenuItemColor;
+//            }
+//            MouseArea{
+//                anchors.fill: parent
+//                onPressed: {
+//                    ok.color=GSystem.leftTextMenuItemPressedColor;
+//                    serial_mng.sendKey("media/back_monitor_ok");
+//                }
+//                onReleased: {
+//                    ok.color=GSystem.leftTextMenuItemColor;
 
-                }
-            }
-        }
+//                }
+//            }
+//        }
     }
     }
 

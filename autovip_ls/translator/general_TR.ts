@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="tr_TR">
+<TS version="2.1" language="tr_TR">
 <context>
     <name>AirConditioner</name>
     <message>
@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>ON</source>
-        <translation>AÇ</translation>
+        <translation type="vanished">AÇ</translation>
     </message>
     <message>
         <source>OFF</source>
-        <translation>KAPAT</translation>
+        <translation type="vanished">KAPAT</translation>
     </message>
 </context>
 <context>
@@ -206,11 +206,11 @@
     </message>
     <message>
         <source>Source</source>
-        <translation>Kaynak</translation>
+        <translation type="vanished">Kaynak</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Tamam</translation>
+        <translation type="vanished">Tamam</translation>
     </message>
 </context>
 <context>
@@ -228,19 +228,19 @@
     </message>
     <message>
         <source>First Curtain</source>
-        <translation>Birinci Perde</translation>
+        <translation type="vanished">Birinci Perde</translation>
     </message>
     <message>
         <source>Second Curtain</source>
-        <translation>İkinci Perde</translation>
+        <translation type="vanished">İkinci Perde</translation>
     </message>
     <message>
         <source>Third Curtain</source>
-        <translation>Üçüncü Perde</translation>
+        <translation type="vanished">Üçüncü Perde</translation>
     </message>
     <message>
         <source>Fourth Curtain</source>
-        <translation>Dördüncü Perde</translation>
+        <translation type="vanished">Dördüncü Perde</translation>
     </message>
     <message>
         <source>Luggage Curtain</source>
@@ -609,54 +609,54 @@
     <name>FourthFootrest1</name>
     <message>
         <source>Fourth Footrest M1 Calibration</source>
-        <translation>Dördüncü Ayak Standı M1 Kalibrasyon</translation>
+        <translation>Dördüncü Ayak Dayama M1 Kalibrasyon</translation>
     </message>
     <message>
         <source>Footrest Up</source>
-        <translation>Ayak Standı Yukarı</translation>
+        <translation>Ayak Dayama Yukarı</translation>
     </message>
     <message>
         <source>Footrest Down</source>
-        <translation>Ayak Standı Aşağı</translation>
+        <translation>Ayak Dayama Aşağı</translation>
     </message>
     <message>
         <source>Footrest Set Minimum</source>
-        <translation>Ayak Standı Minimum Ayarla</translation>
+        <translation>Ayak Dayama Minimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Set Maximum</source>
-        <translation>Ayak Standı Maksimum Ayarla</translation>
+        <translation>Ayak Dayama Maksimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Reset</source>
-        <translation>Ayak Standı Sıfırla</translation>
+        <translation>Ayak Dayama Sıfırla</translation>
     </message>
 </context>
 <context>
     <name>FourthFootrest2</name>
     <message>
         <source>Fourth Footrest M2 Calibration</source>
-        <translation>Dördüncü Ayak Standı M2 Kalibrasyon</translation>
+        <translation>Dördüncü Ayak Dayama M2 Kalibrasyon</translation>
     </message>
     <message>
         <source>Footrest Up</source>
-        <translation>Ayak Standı Yukarı</translation>
+        <translation>Ayak Dayama Yukarı</translation>
     </message>
     <message>
         <source>Footrest Down</source>
-        <translation>Ayak Standı Aşağı</translation>
+        <translation>Ayak Dayama Aşağı</translation>
     </message>
     <message>
         <source>Footrest Set Minimum</source>
-        <translation>Ayak Standı Minimum Ayarla</translation>
+        <translation>Ayak Dayama Minimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Set Maximum</source>
-        <translation>Ayak Standı Maksimum Ayarla</translation>
+        <translation>Ayak Dayama Maksimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Reset</source>
-        <translation>Ayak Standı Sıfırla</translation>
+        <translation>Ayak Dayama Sıfırla</translation>
     </message>
 </context>
 <context>
@@ -718,20 +718,20 @@
     <message>
         <source>System should be restarted to
  apply all language changes.</source>
-        <translation>Tüm dil değişiklerinin uygulanması
+        <translation type="vanished">Tüm dil değişiklerinin uygulanması
 için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translation>Y. Başlat</translation>
+        <translation type="vanished">Y. Başlat</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>İptal</translation>
+        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <source>Restart the system!</source>
-        <translation>Sistemi yeniden başlat!</translation>
+        <translation type="vanished">Sistemi yeniden başlat!</translation>
     </message>
     <message>
         <source>Update:</source>
@@ -743,7 +743,23 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Error: No Update Found! Check your internet connection.</source>
-        <translation>Hata: Güncelleştirme Bulunamadı! İnternet bağlantınızı kontrol edin.</translation>
+        <translation type="vanished">Hata: Güncelleştirme Bulunamadı! İnternet bağlantınızı kontrol edin.</translation>
+    </message>
+    <message>
+        <source>Volume Level:</source>
+        <translation>Ses Seviyesi</translation>
+    </message>
+    <message>
+        <source>Download failed please check internet connection.</source>
+        <translation>En Güncel Sürümdesiniz.</translation>
+    </message>
+    <message>
+        <source>Current Version: </source>
+        <translation>Mevcut Versiyon</translation>
+    </message>
+    <message>
+        <source>No Update Found! </source>
+        <translation>En Güncel Sürümdesiniz.</translation>
     </message>
 </context>
 <context>
@@ -751,6 +767,17 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <message>
         <source>HDMI INPUT</source>
         <translation>HDMI GİRİŞİ</translation>
+    </message>
+</context>
+<context>
+    <name>HomeForm.ui</name>
+    <message>
+        <source>Call On Me</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>by</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -776,7 +803,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>KodiMediaPlayer</name>
     <message>
         <source>MEDIA</source>
-        <translation>MEDYA</translation>
+        <translation type="vanished">MEDYA</translation>
     </message>
 </context>
 <context>
@@ -813,30 +840,30 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>LeftTable</name>
     <message>
         <source>LEFT TABLE</source>
-        <translation>SOL MASA</translation>
+        <translation type="vanished">SOL MASA</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation type="vanished">Kapat</translation>
     </message>
 </context>
 <context>
     <name>LeftWindow</name>
     <message>
         <source>LEFT WINDOW</source>
-        <translation>SOL CAM</translation>
+        <translation type="vanished">SOL CAM</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation type="vanished">Kapat</translation>
     </message>
 </context>
 <context>
@@ -854,15 +881,15 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Ceiling Light</source>
-        <translation>Tavan Aydınlatması</translation>
+        <translation type="vanished">Tavan Aydınlatması</translation>
     </message>
     <message>
         <source>Side Light</source>
-        <translation>Yan Aydınlatma</translation>
+        <translation type="vanished">Yan Aydınlatma</translation>
     </message>
     <message>
         <source>Inside Light</source>
-        <translation>İç Aydınlatma</translation>
+        <translation type="vanished">İç Aydınlatma</translation>
     </message>
     <message>
         <source>Close All</source>
@@ -870,15 +897,15 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Memory 1</source>
-        <translation>Hafıza 1</translation>
+        <translation type="vanished">Hafıza 1</translation>
     </message>
     <message>
         <source>Memory 2</source>
-        <translation>Hafıza 2</translation>
+        <translation type="vanished">Hafıza 2</translation>
     </message>
     <message>
         <source>Memory 3</source>
-        <translation>Hafıza 3</translation>
+        <translation type="vanished">Hafıza 3</translation>
     </message>
     <message>
         <source>Left Reading Light</source>
@@ -890,85 +917,89 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Transition Mode</source>
-        <translation>Geçiş Modu</translation>
+        <translation type="vanished">Geçiş Modu</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Aç</translation>
     </message>
 </context>
 <context>
     <name>Lights_CH</name>
     <message>
         <source>燈火</source>
-        <translation>燈火</translation>
+        <translation type="vanished">燈火</translation>
     </message>
     <message>
         <source>天花燈</source>
-        <translation>天花燈</translation>
+        <translation type="vanished">天花燈</translation>
     </message>
     <message>
         <source>內光</source>
-        <translation>內光</translation>
+        <translation type="vanished">內光</translation>
     </message>
     <message>
         <source>關閉所有</source>
-        <translation>關閉所有</translation>
+        <translation type="vanished">關閉所有</translation>
     </message>
     <message>
         <source>記憶1</source>
-        <translation>記憶1</translation>
+        <translation type="vanished">記憶1</translation>
     </message>
     <message>
         <source>記憶2</source>
-        <translation>記憶2</translation>
+        <translation type="vanished">記憶2</translation>
     </message>
     <message>
         <source>記憶3</source>
-        <translation>記憶3</translation>
+        <translation type="vanished">記憶3</translation>
     </message>
     <message>
         <source>左侧的阅读灯</source>
-        <translation>左侧的阅读灯</translation>
+        <translation type="vanished">左侧的阅读灯</translation>
     </message>
     <message>
         <source>右边的阅读灯</source>
-        <translation>右边的阅读灯</translation>
+        <translation type="vanished">右边的阅读灯</translation>
     </message>
 </context>
 <context>
     <name>Lights_TR</name>
     <message>
         <source>Işıklar</source>
-        <translation>Işıklar</translation>
+        <translation type="vanished">Işıklar</translation>
     </message>
     <message>
         <source>Tavan Aydınlatması</source>
-        <translation>Tavan Aydınlatması</translation>
+        <translation type="vanished">Tavan Aydınlatması</translation>
     </message>
     <message>
         <source>İç Aydınlatma</source>
-        <translation>İç Aydınlatma</translation>
+        <translation type="vanished">İç Aydınlatma</translation>
     </message>
     <message>
         <source>Hepsini Kapat</source>
-        <translation>Hepsini Kapat</translation>
+        <translation type="vanished">Hepsini Kapat</translation>
     </message>
     <message>
         <source>Hafıza 1</source>
-        <translation>Hafıza 1</translation>
+        <translation type="vanished">Hafıza 1</translation>
     </message>
     <message>
         <source>Hafıza 2</source>
-        <translation>Hafıza 2</translation>
+        <translation type="vanished">Hafıza 2</translation>
     </message>
     <message>
         <source>Hafıza 3</source>
-        <translation>Hafıza 3</translation>
+        <translation type="vanished">Hafıza 3</translation>
     </message>
     <message>
         <source>Sol Okuma Aydınlatması</source>
-        <translation>Sol Okuma Aydınlatması</translation>
+        <translation type="vanished">Sol Okuma Aydınlatması</translation>
     </message>
     <message>
         <source>Sağ Okuma Aydınlatması</source>
-        <translation>Sağ Okuma Aydınlatması</translation>
+        <translation type="vanished">Sağ Okuma Aydınlatması</translation>
     </message>
 </context>
 <context>
@@ -994,6 +1025,25 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
 </context>
 <context>
+    <name>MediaPlayer</name>
+    <message>
+        <source>MEDIA</source>
+        <translation>MEDYA</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Çalıyor</translation>
+    </message>
+    <message>
+        <source>Explore</source>
+        <translation>Keşfet</translation>
+    </message>
+    <message>
+        <source>Artists</source>
+        <translation>Artist</translation>
+    </message>
+</context>
+<context>
     <name>MediaSettings</name>
     <message>
         <source>MEDIA SETTINGS</source>
@@ -1012,7 +1062,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>OneSeat</name>
     <message>
         <source>Head</source>
-        <translation>Kafa</translation>
+        <translation type="vanished">Kafa</translation>
     </message>
     <message>
         <source>↑</source>
@@ -1024,7 +1074,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Seat Back</source>
-        <translation>Koltuk Arkası</translation>
+        <translation>Sırt</translation>
     </message>
     <message>
         <source>←</source>
@@ -1072,7 +1122,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Footrest</source>
-        <translation>Ayak Standı</translation>
+        <translation>Ayak Dayama</translation>
     </message>
 </context>
 <context>
@@ -1233,30 +1283,30 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>RightTable</name>
     <message>
         <source>RIGHT TABLE</source>
-        <translation>SAĞ MASA</translation>
+        <translation type="vanished">SAĞ MASA</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation type="vanished">Kapat</translation>
     </message>
 </context>
 <context>
     <name>RightWindow</name>
     <message>
         <source>RIGHT WINDOW</source>
-        <translation>SAĞ CAM</translation>
+        <translation type="vanished">SAĞ CAM</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation type="vanished">Kapat</translation>
     </message>
 </context>
 <context>
@@ -1302,7 +1352,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>SeatBack</source>
-        <translation>Koltuk Arkası</translation>
+        <translation>Sırt</translation>
     </message>
     <message>
         <source>Seat</source>
@@ -1314,7 +1364,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Foot Rest</source>
-        <translation>Ayak Standı</translation>
+        <translation>Ayak Dayama</translation>
     </message>
     <message>
         <source>Thigh</source>
@@ -1334,7 +1384,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Kodi Player</source>
-        <translation>Kodi Player</translation>
+        <translation type="vanished">Kodi Player</translation>
     </message>
     <message>
         <source>Apple Tv</source>
@@ -3616,6 +3666,14 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <source>Returns to The Homepage</source>
         <translation>Anasayfaya Döner</translation>
     </message>
+    <message>
+        <source>Media Player</source>
+        <translation>Medya Oynatıcı</translation>
+    </message>
+    <message>
+        <source>Satallite</source>
+        <translation>Uydu</translation>
+    </message>
 </context>
 <context>
     <name>SafeBox</name>
@@ -3630,6 +3688,21 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <message>
         <source>Close</source>
         <translation>Kapat</translation>
+    </message>
+</context>
+<context>
+    <name>SatalliteRemote</name>
+    <message>
+        <source>SATALLITE</source>
+        <translation>UYDU</translation>
+    </message>
+    <message>
+        <source>HD</source>
+        <translation>HD</translation>
+    </message>
+    <message>
+        <source>Mute</source>
+        <translation type="vanished">Sessiz</translation>
     </message>
 </context>
 <context>
@@ -3650,12 +3723,16 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <source>Rear Camera</source>
         <translation>Arka Kamera</translation>
     </message>
+    <message>
+        <source>DVD Player</source>
+        <translation>DVD Oynatıcı</translation>
+    </message>
 </context>
 <context>
     <name>SeatBack</name>
     <message>
         <source>SEAT BACK</source>
-        <translation>KOLTUK ARKASI</translation>
+        <translation>SIRT</translation>
     </message>
 </context>
 <context>
@@ -3676,7 +3753,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>SeatFeet</name>
     <message>
         <source>SEAT FOOT REST</source>
-        <translation>KOLTUK AYAK STANDI</translation>
+        <translation>KOLTUK AYAK DAYAMA</translation>
     </message>
 </context>
 <context>
@@ -3824,7 +3901,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>Tables</name>
     <message>
         <source>TABLES</source>
-        <translation>MASALAR</translation>
+        <translation type="vanished">MASALAR</translation>
     </message>
     <message>
         <source>Left Table</source>
@@ -3858,54 +3935,54 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>ThirdFootrestM1</name>
     <message>
         <source>Third Footrest M1 Calibration</source>
-        <translation>Üçüncü Ayak Standı M1 Kalibrasyon</translation>
+        <translation>Üçüncü Ayak Dayama M1 Kalibrasyon</translation>
     </message>
     <message>
         <source>Footrest Up</source>
-        <translation>Ayak Standı Yukarı</translation>
+        <translation>Ayak Dayama Yukarı</translation>
     </message>
     <message>
         <source>Footrest Down</source>
-        <translation>Ayak Standı Aşağı</translation>
+        <translation>Ayak Dayama Aşağı</translation>
     </message>
     <message>
         <source>Footrest Set Minimum</source>
-        <translation>Ayak Standı Minimum Ayarla</translation>
+        <translation>Ayak Dayama Minimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Set Maximum</source>
-        <translation>Ayak Standı Maksimum Ayarla</translation>
+        <translation>Ayak Dayama Maksimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Reset</source>
-        <translation>Ayak Standı Sıfırla</translation>
+        <translation>Ayak Dayama Sıfırla</translation>
     </message>
 </context>
 <context>
     <name>ThirdFootrestM2</name>
     <message>
         <source>Third Footrest M2 Calibration</source>
-        <translation>Üçüncü Ayak Standı M2 Kalibrasyon</translation>
+        <translation>Üçüncü Ayak Dayama M2 Kalibrasyon</translation>
     </message>
     <message>
         <source>Footrest Up</source>
-        <translation>Ayak Standı Yukarı</translation>
+        <translation>Ayak dayama Yukarı</translation>
     </message>
     <message>
         <source>Footrest Down</source>
-        <translation>Ayak Standı Aşağı</translation>
+        <translation>Ayak Dayama Aşağı</translation>
     </message>
     <message>
         <source>Footrest Set Minimum</source>
-        <translation>Ayak Standı Minimum Ayarla</translation>
+        <translation>Ayak Dayama Minimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Set Maximum</source>
-        <translation>Ayak Standı Maksimum Ayarla</translation>
+        <translation>Ayak Dayama Maksimum Ayarla</translation>
     </message>
     <message>
         <source>Footrest Reset</source>
-        <translation>Ayak Standı Sıfırla</translation>
+        <translation>Ayak Dayama Sıfırla</translation>
     </message>
 </context>
 <context>
@@ -3948,6 +4025,54 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <message>
         <source>Region:</source>
         <translation>Bölge:</translation>
+    </message>
+    <message>
+        <source>Jan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Feb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>May</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Oct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nov</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dec</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4027,2207 +4152,2207 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Return to The Homepage</source>
-        <translation>Anasayfaya Dön</translation>
+        <translation type="vanished">Anasayfaya Dön</translation>
     </message>
     <message>
         <source>Returns to The Homepage</source>
-        <translation>Anasayfaya Döner</translation>
+        <translation type="vanished">Anasayfaya Döner</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Komut</translation>
+        <translation type="vanished">Komut</translation>
     </message>
     <message>
         <source>Action</source>
-        <translation>Eylem</translation>
+        <translation type="vanished">Eylem</translation>
     </message>
     <message>
         <source>Command list that you can ask from the voice assistant.</source>
-        <translation>Sesli asistandan isteyebileceğiniz komut listesi.</translation>
+        <translation type="vanished">Sesli asistandan isteyebileceğiniz komut listesi.</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation type="vanished">Kapat</translation>
     </message>
     <message>
         <source>First table open</source>
-        <translation>Birinci masayı aç</translation>
+        <translation type="vanished">Birinci masayı aç</translation>
     </message>
     <message>
         <source>Opens the First Table</source>
-        <translation>Birinci masayı açar</translation>
+        <translation type="vanished">Birinci masayı açar</translation>
     </message>
     <message>
         <source>First table close</source>
-        <translation>Birinci masayı kapat</translation>
+        <translation type="vanished">Birinci masayı kapat</translation>
     </message>
     <message>
         <source>Closes the First Table</source>
-        <translation>Birinci masayı kapatır</translation>
+        <translation type="vanished">Birinci masayı kapatır</translation>
     </message>
     <message>
         <source>Second table open</source>
-        <translation>İkinci masayı aç</translation>
+        <translation type="vanished">İkinci masayı aç</translation>
     </message>
     <message>
         <source>Opens the Second Table</source>
-        <translation>İkinci masayı açar</translation>
+        <translation type="vanished">İkinci masayı açar</translation>
     </message>
     <message>
         <source>Second table close</source>
-        <translation>İkinci masayı kapat</translation>
+        <translation type="vanished">İkinci masayı kapat</translation>
     </message>
     <message>
         <source>Closes the Second Table</source>
-        <translation>İkinci masayı kapatır</translation>
+        <translation type="vanished">İkinci masayı kapatır</translation>
     </message>
     <message>
         <source>Third table open</source>
-        <translation>Üçüncü masayı aç</translation>
+        <translation type="vanished">Üçüncü masayı aç</translation>
     </message>
     <message>
         <source>Opens the Third Table</source>
-        <translation>Üçüncü masayı açar</translation>
+        <translation type="vanished">Üçüncü masayı açar</translation>
     </message>
     <message>
         <source>Third table close</source>
-        <translation>Üçüncü masayı kapat</translation>
+        <translation type="vanished">Üçüncü masayı kapat</translation>
     </message>
     <message>
         <source>Closes the Third Table</source>
-        <translation>Üçüncü masayı kapatır</translation>
+        <translation type="vanished">Üçüncü masayı kapatır</translation>
     </message>
     <message>
         <source>Fourth table open</source>
-        <translation>Dördüncü masayı aç</translation>
+        <translation type="vanished">Dördüncü masayı aç</translation>
     </message>
     <message>
         <source>Opens the Fourth Table</source>
-        <translation>Dördüncü masayı açar</translation>
+        <translation type="vanished">Dördüncü masayı açar</translation>
     </message>
     <message>
         <source>Fourth table close</source>
-        <translation>Dördüncü masayı kapat</translation>
+        <translation type="vanished">Dördüncü masayı kapat</translation>
     </message>
     <message>
         <source>Closes the Fourth Table</source>
-        <translation>Dördüncü masayı kapatır</translation>
+        <translation type="vanished">Dördüncü masayı kapatır</translation>
     </message>
     <message>
         <source>Fifth table open</source>
-        <translation>Beşinci masayı aç</translation>
+        <translation type="vanished">Beşinci masayı aç</translation>
     </message>
     <message>
         <source>Opens the Fifth Table</source>
-        <translation>Beşinci masayı açar</translation>
+        <translation type="vanished">Beşinci masayı açar</translation>
     </message>
     <message>
         <source>Fifth table close</source>
-        <translation>Beşinci masayı kapat</translation>
+        <translation type="vanished">Beşinci masayı kapat</translation>
     </message>
     <message>
         <source>Closes the Fifth Table</source>
-        <translation>Beşinci masayı kapatır</translation>
+        <translation type="vanished">Beşinci masayı kapatır</translation>
     </message>
     <message>
         <source>Sixth table open</source>
-        <translation>Altıncı masayı aç</translation>
+        <translation type="vanished">Altıncı masayı aç</translation>
     </message>
     <message>
         <source>Opens the Sixth Table</source>
-        <translation>Altıncı masayı açar</translation>
+        <translation type="vanished">Altıncı masayı açar</translation>
     </message>
     <message>
         <source>Sixth table close</source>
-        <translation>Altıncı masayı kapat</translation>
+        <translation type="vanished">Altıncı masayı kapat</translation>
     </message>
     <message>
         <source>Closes the Sixth Table</source>
-        <translation>Altıncı masayı kapatır</translation>
+        <translation type="vanished">Altıncı masayı kapatır</translation>
     </message>
     <message>
         <source>Left table open</source>
-        <translation>Sol masayı aç</translation>
+        <translation type="vanished">Sol masayı aç</translation>
     </message>
     <message>
         <source>Opens the Left Table</source>
-        <translation>Sol Masayı Açar</translation>
+        <translation type="vanished">Sol Masayı Açar</translation>
     </message>
     <message>
         <source>Left table close</source>
-        <translation>Sol Masayı Kapat</translation>
+        <translation type="vanished">Sol Masayı Kapat</translation>
     </message>
     <message>
         <source>Closes the Left Table</source>
-        <translation>Sol Masayı Kapatır</translation>
+        <translation type="vanished">Sol Masayı Kapatır</translation>
     </message>
     <message>
         <source>Right table open</source>
-        <translation>Sağ masayı aç</translation>
+        <translation type="vanished">Sağ masayı aç</translation>
     </message>
     <message>
         <source>Opens the Right Table</source>
-        <translation>Sağ masayı açar</translation>
+        <translation type="vanished">Sağ masayı açar</translation>
     </message>
     <message>
         <source>Right table close</source>
-        <translation>Sağ masayı kapat</translation>
+        <translation type="vanished">Sağ masayı kapat</translation>
     </message>
     <message>
         <source>Closes the Right Table</source>
-        <translation>Sağ masayı kapatır</translation>
+        <translation type="vanished">Sağ masayı kapatır</translation>
     </message>
     <message>
         <source>First seat footrest open</source>
-        <translation>Birinci koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">Birinci koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the First seat footrest</source>
-        <translation>Birinci koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">Birinci koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>First seat footrest close</source>
-        <translation>Birinci koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">Birinci koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the First seat footrest</source>
-        <translation>Birinci koltuk ayak dayamayı kapatır</translation>
+        <translation type="vanished">Birinci koltuk ayak dayamayı kapatır</translation>
     </message>
     <message>
         <source>Second seat footrest open</source>
-        <translation>İkinci koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">İkinci koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the Second seat footrest</source>
-        <translation>İkinci koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">İkinci koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>Second seat footrest close</source>
-        <translation>İkinci koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">İkinci koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the Second seat footrest</source>
-        <translation>İkinci koltuk ayak dayamayı kapatır</translation>
+        <translation type="vanished">İkinci koltuk ayak dayamayı kapatır</translation>
     </message>
     <message>
         <source>Third seat footrest open</source>
-        <translation>Üçüncü koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">Üçüncü koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the Third seat footrest</source>
-        <translation>Üçüncü koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">Üçüncü koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>Third seat footrest close</source>
-        <translation>Üçüncü koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">Üçüncü koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the Third seat footrest</source>
-        <translation>Üçüncü koltuk ayak dayamayı kapatır</translation>
+        <translation type="vanished">Üçüncü koltuk ayak dayamayı kapatır</translation>
     </message>
     <message>
         <source>Fourth seat footrest open</source>
-        <translation>Dördüncü koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">Dördüncü koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the Fourth seat footrest</source>
-        <translation>Dördüncü koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">Dördüncü koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>Fourth seat footrest close</source>
-        <translation>Dördüncü koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">Dördüncü koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the Fourth seat footrest</source>
-        <translation>Dördüncü koltuk ayak dayamayı kapatır</translation>
+        <translation type="vanished">Dördüncü koltuk ayak dayamayı kapatır</translation>
     </message>
     <message>
         <source>Fifth seat footrest open</source>
-        <translation>Beşinci koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">Beşinci koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the Fifth seat footrest</source>
-        <translation>Beşinci koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">Beşinci koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>Fifth seat footrest close</source>
-        <translation>Beşinci koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">Beşinci koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the Fifth seat footrest</source>
-        <translation>Beşinci koltuk ayak dayamayı kapatır</translation>
+        <translation type="vanished">Beşinci koltuk ayak dayamayı kapatır</translation>
     </message>
     <message>
         <source>Sixth seat footrest open</source>
-        <translation>Altıncı koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">Altıncı koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the Sixth seat footrest</source>
-        <translation>Altıncı koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">Altıncı koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>Sixth seat footrest close</source>
-        <translation>Altıncı koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">Altıncı koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the Sixth seat footrest</source>
-        <translation>Altıncı koltuk ayak dayamayı kapatır</translation>
+        <translation type="vanished">Altıncı koltuk ayak dayamayı kapatır</translation>
     </message>
     <message>
         <source>Right seat footrest open</source>
-        <translation>Sağ koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">Sağ koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the Right seat footrest</source>
-        <translation>Sağ koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">Sağ koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>Right seat footrest close</source>
-        <translation>Sağ koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">Sağ koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the Right seat footrest</source>
-        <translation>Sağ koltuk ayak dayamayı kapatır</translation>
+        <translation type="vanished">Sağ koltuk ayak dayamayı kapatır</translation>
     </message>
     <message>
         <source>Left seat footrest open</source>
-        <translation>Sol koltuk ayak dayamayı aç</translation>
+        <translation type="vanished">Sol koltuk ayak dayamayı aç</translation>
     </message>
     <message>
         <source>Opens the Left seat footrest</source>
-        <translation>Sol koltuk ayak dayamayı açar</translation>
+        <translation type="vanished">Sol koltuk ayak dayamayı açar</translation>
     </message>
     <message>
         <source>Left seat footrest close</source>
-        <translation>Sol koltuk ayak dayamayı kapat</translation>
+        <translation type="vanished">Sol koltuk ayak dayamayı kapat</translation>
     </message>
     <message>
         <source>Closes the Left seat footrest</source>
-        <translation>Sol koltuk ayak dayamayı Kapatır</translation>
+        <translation type="vanished">Sol koltuk ayak dayamayı Kapatır</translation>
     </message>
     <message>
         <source>First Curtain open</source>
-        <translation>Birinci perdeyi aç</translation>
+        <translation type="vanished">Birinci perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the First Curtain</source>
-        <translation>Birinci perdeyi açar</translation>
+        <translation type="vanished">Birinci perdeyi açar</translation>
     </message>
     <message>
         <source>First Curtain close</source>
-        <translation>Birinci perdeyi kapat</translation>
+        <translation type="vanished">Birinci perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the First Curtain</source>
-        <translation>Birinci perdeyi kapatır</translation>
+        <translation type="vanished">Birinci perdeyi kapatır</translation>
     </message>
     <message>
         <source>Second Curtain open</source>
-        <translation>İkinci perdeyi aç</translation>
+        <translation type="vanished">İkinci perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Second Curtain</source>
-        <translation>İkinci perdeyi açar</translation>
+        <translation type="vanished">İkinci perdeyi açar</translation>
     </message>
     <message>
         <source>Second Curtain close</source>
-        <translation>İkinci perdeyi kapat</translation>
+        <translation type="vanished">İkinci perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Second Curtain</source>
-        <translation>Birinci perdeyi kapatır</translation>
+        <translation type="vanished">Birinci perdeyi kapatır</translation>
     </message>
     <message>
         <source>Third Curtain open</source>
-        <translation>Üçüncü perdeyi aç</translation>
+        <translation type="vanished">Üçüncü perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Third Curtain</source>
-        <translation>Üçüncü perdeyi açar</translation>
+        <translation type="vanished">Üçüncü perdeyi açar</translation>
     </message>
     <message>
         <source>Third Curtain close</source>
-        <translation>Üçüncü perdeyi kapat</translation>
+        <translation type="vanished">Üçüncü perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Third Curtain</source>
-        <translation>Üçüncü perdeyi kapatır</translation>
+        <translation type="vanished">Üçüncü perdeyi kapatır</translation>
     </message>
     <message>
         <source>Fourth Curtain open</source>
-        <translation>Dördüncü perdeyi aç</translation>
+        <translation type="vanished">Dördüncü perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Fourth Curtain</source>
-        <translation>Dördüncü perdeyi açar</translation>
+        <translation type="vanished">Dördüncü perdeyi açar</translation>
     </message>
     <message>
         <source>Fourth Curtain close</source>
-        <translation>Dördüncü perdeyi kapat</translation>
+        <translation type="vanished">Dördüncü perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Fourth Curtain</source>
-        <translation>Dördüncü perdeyi kapatır</translation>
+        <translation type="vanished">Dördüncü perdeyi kapatır</translation>
     </message>
     <message>
         <source>Fifth Curtain open</source>
-        <translation>Beşinci perdeyi aç</translation>
+        <translation type="vanished">Beşinci perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Fifth Curtain</source>
-        <translation>Beşinci perdeyi açar</translation>
+        <translation type="vanished">Beşinci perdeyi açar</translation>
     </message>
     <message>
         <source>Fifth Curtain close</source>
-        <translation>Beşinci perdeyi kapat</translation>
+        <translation type="vanished">Beşinci perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Fifth Curtain</source>
-        <translation>Beşinci perdeyi kapatır</translation>
+        <translation type="vanished">Beşinci perdeyi kapatır</translation>
     </message>
     <message>
         <source>Sixth Curtain open</source>
-        <translation>Altıncı perdeyi aç</translation>
+        <translation type="vanished">Altıncı perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Sixth Curtain</source>
-        <translation>Altıncı perdeyi açar</translation>
+        <translation type="vanished">Altıncı perdeyi açar</translation>
     </message>
     <message>
         <source>Sixth Curtain close</source>
-        <translation>Altıncı perdeyi kapat</translation>
+        <translation type="vanished">Altıncı perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Sixth Curtain</source>
-        <translation>Altıncı perdeyi kapatır</translation>
+        <translation type="vanished">Altıncı perdeyi kapatır</translation>
     </message>
     <message>
         <source>Right Curtain open</source>
-        <translation>Sağ perdeyi aç</translation>
+        <translation type="vanished">Sağ perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Right Curtain</source>
-        <translation>Sağ perdeyi açar</translation>
+        <translation type="vanished">Sağ perdeyi açar</translation>
     </message>
     <message>
         <source>Right Curtain close</source>
-        <translation>Sağ perdeyi kapat</translation>
+        <translation type="vanished">Sağ perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Right Curtain</source>
-        <translation>Sağ perdeyi kapatır</translation>
+        <translation type="vanished">Sağ perdeyi kapatır</translation>
     </message>
     <message>
         <source>Left Curtain open</source>
-        <translation>Sol perdeyi aç</translation>
+        <translation type="vanished">Sol perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Left Curtain</source>
-        <translation>Sol perdeyi açar</translation>
+        <translation type="vanished">Sol perdeyi açar</translation>
     </message>
     <message>
         <source>Left Curtain close</source>
-        <translation>Sol perdeyi kapat</translation>
+        <translation type="vanished">Sol perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Left Curtain</source>
-        <translation>Sol perdeyi kapatır</translation>
+        <translation type="vanished">Sol perdeyi kapatır</translation>
     </message>
     <message>
         <source>First Seat Massage open</source>
-        <translation>Birinci koltuk masajı aç</translation>
+        <translation type="vanished">Birinci koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the First Seat Massage</source>
-        <translation>Birinci koltuk masajı açar</translation>
+        <translation type="vanished">Birinci koltuk masajı açar</translation>
     </message>
     <message>
         <source>First Seat Massage close</source>
-        <translation>Birinci koltuk masajı kapat</translation>
+        <translation type="vanished">Birinci koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the First Seat Massage</source>
-        <translation>Birinci koltuk masajı kapatır</translation>
+        <translation type="vanished">Birinci koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Second Seat Massage open</source>
-        <translation>İkinci koltuk masajı aç</translation>
+        <translation type="vanished">İkinci koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the Second Seat Massage</source>
-        <translation>İkinci koltuk masajı açar</translation>
+        <translation type="vanished">İkinci koltuk masajı açar</translation>
     </message>
     <message>
         <source>Second Seat Massage close</source>
-        <translation>İkinci koltuk masajı kapat</translation>
+        <translation type="vanished">İkinci koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the Second Seat Massage</source>
-        <translation>İkinci koltuk masajı kapatır</translation>
+        <translation type="vanished">İkinci koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Third Seat Massage open</source>
-        <translation>Üçüncü koltuk masajı aç</translation>
+        <translation type="vanished">Üçüncü koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the Third Seat Massage</source>
-        <translation>Üçüncü koltuk masajı açar</translation>
+        <translation type="vanished">Üçüncü koltuk masajı açar</translation>
     </message>
     <message>
         <source>Third Seat Massage close</source>
-        <translation>Üçüncü koltuk masajı kapat</translation>
+        <translation type="vanished">Üçüncü koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the Third Seat Massage</source>
-        <translation>Üçüncü koltuk masajı kapatır</translation>
+        <translation type="vanished">Üçüncü koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Fourth Seat Massage open</source>
-        <translation>Dördüncü koltuk masajı aç</translation>
+        <translation type="vanished">Dördüncü koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the Fourth Seat Massage</source>
-        <translation>Dördüncü koltuk masajı açar</translation>
+        <translation type="vanished">Dördüncü koltuk masajı açar</translation>
     </message>
     <message>
         <source>Fourth Seat Massage close</source>
-        <translation>Dördüncü koltuk masajı kapat</translation>
+        <translation type="vanished">Dördüncü koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the Fourth Seat Massage</source>
-        <translation>Dördüncü koltuk masajı kapatır</translation>
+        <translation type="vanished">Dördüncü koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Fifth Seat Massage open</source>
-        <translation>Beşinci koltuk masajı aç</translation>
+        <translation type="vanished">Beşinci koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the Fifth Seat Massage</source>
-        <translation>Beşinci koltuk masajı açar</translation>
+        <translation type="vanished">Beşinci koltuk masajı açar</translation>
     </message>
     <message>
         <source>Fifth Seat Massage close</source>
-        <translation>Beşinci koltuk masajı kapat</translation>
+        <translation type="vanished">Beşinci koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the Fifth Seat Massage</source>
-        <translation>Beşinci koltuk masajı kapatır</translation>
+        <translation type="vanished">Beşinci koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Sixth Seat Massage open</source>
-        <translation>Altıncı koltuk masajı aç</translation>
+        <translation type="vanished">Altıncı koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the Sixth Seat Massage</source>
-        <translation>Altıncı koltuk masajı açar</translation>
+        <translation type="vanished">Altıncı koltuk masajı açar</translation>
     </message>
     <message>
         <source>Sixth Seat Massage close</source>
-        <translation>Altıncı koltuk masajı kapat</translation>
+        <translation type="vanished">Altıncı koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the Sixth Seat Massage</source>
-        <translation>Altıncı koltuk masajı kapatır</translation>
+        <translation type="vanished">Altıncı koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Right Seat Massage open</source>
-        <translation>Sağ koltuk masajı aç</translation>
+        <translation type="vanished">Sağ koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the Right Seat Massage</source>
-        <translation>Sağ koltuk masajı açar</translation>
+        <translation type="vanished">Sağ koltuk masajı açar</translation>
     </message>
     <message>
         <source>Right Seat Massage close</source>
-        <translation>Sağ koltuk masajı kapat</translation>
+        <translation type="vanished">Sağ koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the Right Seat Massage</source>
-        <translation>Sağ koltuk masajı kapatır</translation>
+        <translation type="vanished">Sağ koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Left Seat Massage open</source>
-        <translation>Sol koltuk masajı aç</translation>
+        <translation type="vanished">Sol koltuk masajı aç</translation>
     </message>
     <message>
         <source>Opens the Left Seat Massage</source>
-        <translation>Sol koltuk masajı açar</translation>
+        <translation type="vanished">Sol koltuk masajı açar</translation>
     </message>
     <message>
         <source>Left Seat Massage close</source>
-        <translation>Sol koltuk masajı kapat</translation>
+        <translation type="vanished">Sol koltuk masajı kapat</translation>
     </message>
     <message>
         <source>Closes the Left Seat Massage</source>
-        <translation>Sol koltuk masajı kapatır</translation>
+        <translation type="vanished">Sol koltuk masajı kapatır</translation>
     </message>
     <message>
         <source>Nespresso open</source>
-        <translation>Nespresso aç</translation>
+        <translation type="vanished">Nespresso aç</translation>
     </message>
     <message>
         <source>Opens the Nespresso</source>
-        <translation>Nespresso açar</translation>
+        <translation type="vanished">Nespresso açar</translation>
     </message>
     <message>
         <source>Nespresso close</source>
-        <translation>Nespresso kapat</translation>
+        <translation type="vanished">Nespresso kapat</translation>
     </message>
     <message>
         <source>Closes the Nespresso</source>
-        <translation>Nespresso kapatır</translation>
+        <translation type="vanished">Nespresso kapatır</translation>
     </message>
     <message>
         <source>Front Nespresso open</source>
-        <translation>Ön Nespressoyu aç</translation>
+        <translation type="vanished">Ön Nespressoyu aç</translation>
     </message>
     <message>
         <source>Opens the Front Nespresso</source>
-        <translation>Ön Nespressoyu açar</translation>
+        <translation type="vanished">Ön Nespressoyu açar</translation>
     </message>
     <message>
         <source>Front Nespresso close</source>
-        <translation>Ön Nespressoyu kapat</translation>
+        <translation type="vanished">Ön Nespressoyu kapat</translation>
     </message>
     <message>
         <source>Closes the Front Nespresso</source>
-        <translation>Ön Nespressoyu kapatır</translation>
+        <translation type="vanished">Ön Nespressoyu kapatır</translation>
     </message>
     <message>
         <source>Rear Nespresso open</source>
-        <translation>Arka Nespressoyu aç</translation>
+        <translation type="vanished">Arka Nespressoyu aç</translation>
     </message>
     <message>
         <source>Opens the Rear Nespresso</source>
-        <translation>Arka Nespressoyu açar</translation>
+        <translation type="vanished">Arka Nespressoyu açar</translation>
     </message>
     <message>
         <source>Rear Nespresso close</source>
-        <translation>Arka Nespressoyu kapat</translation>
+        <translation type="vanished">Arka Nespressoyu kapat</translation>
     </message>
     <message>
         <source>Closes the Rear Nespresso</source>
-        <translation>Arka Nespressoyu kapatır</translation>
+        <translation type="vanished">Arka Nespressoyu kapatır</translation>
     </message>
     <message>
         <source>Door open</source>
-        <translation>Kapıyı aç</translation>
+        <translation type="vanished">Kapıyı aç</translation>
     </message>
     <message>
         <source>Opens the Door</source>
-        <translation>Kapıyı açar</translation>
+        <translation type="vanished">Kapıyı açar</translation>
     </message>
     <message>
         <source>Door close</source>
-        <translation>Kapıyı kapat</translation>
+        <translation type="vanished">Kapıyı kapat</translation>
     </message>
     <message>
         <source>Closes the Door</source>
-        <translation>Kapıyı kapatır</translation>
+        <translation type="vanished">Kapıyı kapatır</translation>
     </message>
     <message>
         <source>Right Door open</source>
-        <translation>Sağ Kapıyı aç</translation>
+        <translation type="vanished">Sağ Kapıyı aç</translation>
     </message>
     <message>
         <source>Opens the Right Door</source>
-        <translation>Sağ Kapıyı açar</translation>
+        <translation type="vanished">Sağ Kapıyı açar</translation>
     </message>
     <message>
         <source>Right Door close</source>
-        <translation>Sağ Kapıyı kapat</translation>
+        <translation type="vanished">Sağ Kapıyı kapat</translation>
     </message>
     <message>
         <source>Closes the Right Door</source>
-        <translation>Sağ Kapıyı kapatır</translation>
+        <translation type="vanished">Sağ Kapıyı kapatır</translation>
     </message>
     <message>
         <source>Left Door open</source>
-        <translation>Sol kapıyı aç</translation>
+        <translation type="vanished">Sol kapıyı aç</translation>
     </message>
     <message>
         <source>Opens the Left Door</source>
-        <translation>Sol kapıyı açar</translation>
+        <translation type="vanished">Sol kapıyı açar</translation>
     </message>
     <message>
         <source>Left Door close</source>
-        <translation>Sol kapıyı kapat</translation>
+        <translation type="vanished">Sol kapıyı kapat</translation>
     </message>
     <message>
         <source>Closes the Left Door</source>
-        <translation>Sol kapıyı kapatır</translation>
+        <translation type="vanished">Sol kapıyı kapatır</translation>
     </message>
     <message>
         <source>TV up</source>
-        <translation>TV yukarı</translation>
+        <translation type="vanished">TV yukarı</translation>
     </message>
     <message>
         <source>Puts the TV up</source>
-        <translation>TV yukarı çıkar</translation>
+        <translation type="vanished">TV yukarı çıkar</translation>
     </message>
     <message>
         <source>Tv down</source>
-        <translation>TV aşağı</translation>
+        <translation type="vanished">TV aşağı</translation>
     </message>
     <message>
         <source>Puts the TV down</source>
-        <translation>TV aşağı iner</translation>
+        <translation type="vanished">TV aşağı iner</translation>
     </message>
     <message>
         <source>Turn on TV</source>
-        <translation>TV aç</translation>
+        <translation type="vanished">TV aç</translation>
     </message>
     <message>
         <source>Turns the TV on</source>
-        <translation>TV açar</translation>
+        <translation type="vanished">TV açar</translation>
     </message>
     <message>
         <source>Turns the TV off</source>
-        <translation>TV kapat</translation>
+        <translation type="vanished">TV kapat</translation>
     </message>
     <message>
         <source>TV Volume up</source>
-        <translation>TV ses aç</translation>
+        <translation type="vanished">TV ses aç</translation>
     </message>
     <message>
         <source>Increases the TV volume</source>
-        <translation>TV ses açar</translation>
+        <translation type="vanished">TV ses açar</translation>
     </message>
     <message>
         <source>TV Volume down</source>
-        <translation>TV ses kapat</translation>
+        <translation type="vanished">TV ses kapat</translation>
     </message>
     <message>
         <source>Decreases the TV volume</source>
-        <translation>TV ses kapatır</translation>
+        <translation type="vanished">TV ses kapatır</translation>
     </message>
     <message>
         <source>Open Apple TV</source>
-        <translation>Apple TV aç</translation>
+        <translation type="vanished">Apple TV aç</translation>
     </message>
     <message>
         <source>Opens the Apple TV</source>
-        <translation>Apple TV açar</translation>
+        <translation type="vanished">Apple TV açar</translation>
     </message>
     <message>
         <source>Front camera open</source>
-        <translation>Ön kamerayı aç</translation>
+        <translation type="vanished">Ön kamerayı aç</translation>
     </message>
     <message>
         <source>Opens the Front Camera</source>
-        <translation>Ön kamerayı açar</translation>
+        <translation type="vanished">Ön kamerayı açar</translation>
     </message>
     <message>
         <source>Rear camera open</source>
-        <translation>Ön kamerayı kapat</translation>
+        <translation type="vanished">Ön kamerayı kapat</translation>
     </message>
     <message>
         <source>Opens the Rear Camera</source>
-        <translation>Ön kamerayı kapatır</translation>
+        <translation type="vanished">Ön kamerayı kapatır</translation>
     </message>
     <message>
         <source>Screen divider open</source>
-        <translation>Ekran bölücü aç</translation>
+        <translation type="vanished">Ekran bölücü aç</translation>
     </message>
     <message>
         <source>Opens the the Screen Divider</source>
-        <translation>Ekran bölücü açar</translation>
+        <translation type="vanished">Ekran bölücü açar</translation>
     </message>
     <message>
         <source>DVD open</source>
-        <translation>DVD aç</translation>
+        <translation type="vanished">DVD aç</translation>
     </message>
     <message>
         <source>Opens the DVD</source>
-        <translation>DVD açar</translation>
+        <translation type="vanished">DVD açar</translation>
     </message>
     <message>
         <source>Computer projection</source>
-        <translation>Bilgisayarı yansıt</translation>
+        <translation type="vanished">Bilgisayarı yansıt</translation>
     </message>
     <message>
         <source>Enables Computer Projection</source>
-        <translation>Bilgisayarı yansıtır</translation>
+        <translation type="vanished">Bilgisayarı yansıtır</translation>
     </message>
     <message>
         <source>Samsung dock projection</source>
-        <translation>Samsung docku yansıt</translation>
+        <translation type="vanished">Samsung docku yansıt</translation>
     </message>
     <message>
         <source>Enables Samsung Dock Projection</source>
-        <translation>Samsung docku yansıtır</translation>
+        <translation type="vanished">Samsung docku yansıtır</translation>
     </message>
     <message>
         <source>Turn on lights white</source>
-        <translation>Işıkları beyaz yap</translation>
+        <translation type="vanished">Işıkları beyaz yap</translation>
     </message>
     <message>
         <source>Turns white lights on</source>
-        <translation>Işıkları beyaz yapar</translation>
+        <translation type="vanished">Işıkları beyaz yapar</translation>
     </message>
     <message>
         <source>Turn on lights red</source>
-        <translation>Işıkları kırmızı yap</translation>
+        <translation type="vanished">Işıkları kırmızı yap</translation>
     </message>
     <message>
         <source>Turns red lights on</source>
-        <translation>Işıkları kırmızı yapar</translation>
+        <translation type="vanished">Işıkları kırmızı yapar</translation>
     </message>
     <message>
         <source>Turn on lights green</source>
-        <translation>Işıkları yeşil yap</translation>
+        <translation type="vanished">Işıkları yeşil yap</translation>
     </message>
     <message>
         <source>Turns green lights on</source>
-        <translation>Işıkları yeşil yapar</translation>
+        <translation type="vanished">Işıkları yeşil yapar</translation>
     </message>
     <message>
         <source>Turn on lights blue</source>
-        <translation>Işıkları mavi yap</translation>
+        <translation type="vanished">Işıkları mavi yap</translation>
     </message>
     <message>
         <source>Turns blue lights on</source>
-        <translation>Işıkları mavi yapar</translation>
+        <translation type="vanished">Işıkları mavi yapar</translation>
     </message>
     <message>
         <source>Turn off lights</source>
-        <translation>Işıkları kapat</translation>
+        <translation type="vanished">Işıkları kapat</translation>
     </message>
     <message>
         <source>Turns the lights off</source>
-        <translation>Işıkları kapatır</translation>
+        <translation type="vanished">Işıkları kapatır</translation>
     </message>
     <message>
         <source>Ceiling lights white turn on</source>
-        <translation>Tavan ışıkları beyaz yap</translation>
+        <translation type="vanished">Tavan ışıkları beyaz yap</translation>
     </message>
     <message>
         <source>Turns white ceiling lights on</source>
-        <translation>Tavan ışıkları beyaz yapar</translation>
+        <translation type="vanished">Tavan ışıkları beyaz yapar</translation>
     </message>
     <message>
         <source>Ceiling lights red turn on</source>
-        <translation>Tavan ışıkları kırmızı yap</translation>
+        <translation type="vanished">Tavan ışıkları kırmızı yap</translation>
     </message>
     <message>
         <source>Turns red ceiling lights on</source>
-        <translation>Tavan ışıkları kırmızı yapar</translation>
+        <translation type="vanished">Tavan ışıkları kırmızı yapar</translation>
     </message>
     <message>
         <source>Ceiling lights green turn on</source>
-        <translation>Tavan ışıkları yeşil yap</translation>
+        <translation type="vanished">Tavan ışıkları yeşil yap</translation>
     </message>
     <message>
         <source>Turns green ceiling lights on</source>
-        <translation>Tavan ışıkları yeşil yapar</translation>
+        <translation type="vanished">Tavan ışıkları yeşil yapar</translation>
     </message>
     <message>
         <source>Ceiling lights blue turn on</source>
-        <translation>Tavan ışıkları mavi yap</translation>
+        <translation type="vanished">Tavan ışıkları mavi yap</translation>
     </message>
     <message>
         <source>Turns blue ceiling lights on</source>
-        <translation>Tavan ışıkları mavi yapar</translation>
+        <translation type="vanished">Tavan ışıkları mavi yapar</translation>
     </message>
     <message>
         <source>Ceiling lights turn off</source>
-        <translation>Tavan ışıkları kapat</translation>
+        <translation type="vanished">Tavan ışıkları kapat</translation>
     </message>
     <message>
         <source>Turns ceiling lights off</source>
-        <translation>Tavan ışıkları kapatır</translation>
+        <translation type="vanished">Tavan ışıkları kapatır</translation>
     </message>
     <message>
         <source>Interior lights white turn on</source>
-        <translation>İç ışıkları beyaz yap</translation>
+        <translation type="vanished">İç ışıkları beyaz yap</translation>
     </message>
     <message>
         <source>Turns white Interior lights on</source>
-        <translation>İç ışıkları beyaz yapar</translation>
+        <translation type="vanished">İç ışıkları beyaz yapar</translation>
     </message>
     <message>
         <source>Interior lights red turn on</source>
-        <translation>İç ışıkları kırmızı yap</translation>
+        <translation type="vanished">İç ışıkları kırmızı yap</translation>
     </message>
     <message>
         <source>Turns red Interior lights on</source>
-        <translation>İç ışıkları kırmızı yapar</translation>
+        <translation type="vanished">İç ışıkları kırmızı yapar</translation>
     </message>
     <message>
         <source>Interior lights green turn on</source>
-        <translation>İç ışıkları yeşil yap</translation>
+        <translation type="vanished">İç ışıkları yeşil yap</translation>
     </message>
     <message>
         <source>Turns green Interior lights on</source>
-        <translation>İç ışıkları yeşil yapar</translation>
+        <translation type="vanished">İç ışıkları yeşil yapar</translation>
     </message>
     <message>
         <source>Interior lights blue turn on</source>
-        <translation>İç ışıkları mavi yap</translation>
+        <translation type="vanished">İç ışıkları mavi yap</translation>
     </message>
     <message>
         <source>Turns blue Interior lights on</source>
-        <translation>İç ışıkları mavi yapar</translation>
+        <translation type="vanished">İç ışıkları mavi yapar</translation>
     </message>
     <message>
         <source>Interior lights turn off</source>
-        <translation>İç ışıkları kapat</translation>
+        <translation type="vanished">İç ışıkları kapat</translation>
     </message>
     <message>
         <source>Turns Interior lights off</source>
-        <translation>İç ışıkları kapatır</translation>
+        <translation type="vanished">İç ışıkları kapatır</translation>
     </message>
     <message>
         <source>Side lights white turn on</source>
-        <translation>Yan ışıkları beyaz yap</translation>
+        <translation type="vanished">Yan ışıkları beyaz yap</translation>
     </message>
     <message>
         <source>Turns white Side lights on</source>
-        <translation>Yan ışıkları beyaz yapar</translation>
+        <translation type="vanished">Yan ışıkları beyaz yapar</translation>
     </message>
     <message>
         <source>Side lights red turn on</source>
-        <translation>Yan ışıkları kırmızı yap</translation>
+        <translation type="vanished">Yan ışıkları kırmızı yap</translation>
     </message>
     <message>
         <source>Turns red Side lights on</source>
-        <translation>Yan ışıkları kırmızı yapar</translation>
+        <translation type="vanished">Yan ışıkları kırmızı yapar</translation>
     </message>
     <message>
         <source>Side lights green turn on</source>
-        <translation>Yan ışıkları yeşil yap</translation>
+        <translation type="vanished">Yan ışıkları yeşil yap</translation>
     </message>
     <message>
         <source>Turns green Side lights on</source>
-        <translation>Yan ışıkları yeşil yapar</translation>
+        <translation type="vanished">Yan ışıkları yeşil yapar</translation>
     </message>
     <message>
         <source>Side lights blue turn on</source>
-        <translation>Yan ışıkları mavi yap</translation>
+        <translation type="vanished">Yan ışıkları mavi yap</translation>
     </message>
     <message>
         <source>Turns blue Side lights on</source>
-        <translation>Yan ışıkları mavi yapar</translation>
+        <translation type="vanished">Yan ışıkları mavi yapar</translation>
     </message>
     <message>
         <source>Side lights turn off</source>
-        <translation>Yan ışıkları kapat</translation>
+        <translation type="vanished">Yan ışıkları kapat</translation>
     </message>
     <message>
         <source>Turns Side lights off</source>
-        <translation>Yan ışıkları kapatır</translation>
+        <translation type="vanished">Yan ışıkları kapatır</translation>
     </message>
     <message>
         <source>Left Make Up Lights turn on</source>
-        <translation>Sol makyaj lambası aç</translation>
+        <translation type="vanished">Sol makyaj lambası aç</translation>
     </message>
     <message>
         <source>Turns Left Make Up Light on</source>
-        <translation>Sol makyaj lambası açar</translation>
+        <translation type="vanished">Sol makyaj lambası açar</translation>
     </message>
     <message>
         <source>Left Make Up Light turn off</source>
-        <translation>Sol makyaj lambası kapat</translation>
+        <translation type="vanished">Sol makyaj lambası kapat</translation>
     </message>
     <message>
         <source>Turns Left Make Up Light off</source>
-        <translation>Sol makyaj lambası kapatır</translation>
+        <translation type="vanished">Sol makyaj lambası kapatır</translation>
     </message>
     <message>
         <source>Right Make Up Light turn on</source>
-        <translation>Sağ makyaj lambası aç</translation>
+        <translation type="vanished">Sağ makyaj lambası aç</translation>
     </message>
     <message>
         <source>Turns Right Make Up Light on</source>
-        <translation>Sağ makyaj lambası açar</translation>
+        <translation type="vanished">Sağ makyaj lambası açar</translation>
     </message>
     <message>
         <source>Right Make Up Light turn off</source>
-        <translation>Sağ makyaj lambası kapat</translation>
+        <translation type="vanished">Sağ makyaj lambası kapat</translation>
     </message>
     <message>
         <source>Turns Right Make Up Light off</source>
-        <translation>Sağ makyaj lambası kapatır</translation>
+        <translation type="vanished">Sağ makyaj lambası kapatır</translation>
     </message>
     <message>
         <source>Left Reading Lights turn on</source>
-        <translation>Sağ okuma lambası aç</translation>
+        <translation type="vanished">Sağ okuma lambası aç</translation>
     </message>
     <message>
         <source>Turns Left Reading Light on</source>
-        <translation>Sağ okuma lambası açar</translation>
+        <translation type="vanished">Sağ okuma lambası açar</translation>
     </message>
     <message>
         <source>Left Reading Light turn off</source>
-        <translation>Sağ okuma lambası kapat</translation>
+        <translation type="vanished">Sağ okuma lambası kapat</translation>
     </message>
     <message>
         <source>Turns Left Reading Light off</source>
-        <translation>Sağ okuma lambası kapatır</translation>
+        <translation type="vanished">Sağ okuma lambası kapatır</translation>
     </message>
     <message>
         <source>Right Reading Light turn on</source>
-        <translation>Sol okuma lambası aç</translation>
+        <translation type="vanished">Sol okuma lambası aç</translation>
     </message>
     <message>
         <source>Turns Right Reading Light on</source>
-        <translation>Sol okuma lambası açar</translation>
+        <translation type="vanished">Sol okuma lambası açar</translation>
     </message>
     <message>
         <source>Right Reading Light turn off</source>
-        <translation>Sol okuma lambası kapat</translation>
+        <translation type="vanished">Sol okuma lambası kapat</translation>
     </message>
     <message>
         <source>Turns Right Reading Light off</source>
-        <translation>Sol okuma lambası kapatır</translation>
+        <translation type="vanished">Sol okuma lambası kapatır</translation>
     </message>
     <message>
         <source>Right Drawer Open</source>
-        <translation>Sağ çekmece aç</translation>
+        <translation type="vanished">Sağ çekmece aç</translation>
     </message>
     <message>
         <source>Opens the Right Drawer</source>
-        <translation>Sağ çekmece açar</translation>
+        <translation type="vanished">Sağ çekmece açar</translation>
     </message>
     <message>
         <source>Right Drawer Close</source>
-        <translation>Sağ çekmece kapat</translation>
+        <translation type="vanished">Sağ çekmece kapat</translation>
     </message>
     <message>
         <source>Closes the Right Drawer</source>
-        <translation>Sağ çekmece kapatır</translation>
+        <translation type="vanished">Sağ çekmece kapatır</translation>
     </message>
     <message>
         <source>Left Drawer Open</source>
-        <translation>Sol çekmece aç</translation>
+        <translation type="vanished">Sol çekmece aç</translation>
     </message>
     <message>
         <source>Opens the Left Drawer</source>
-        <translation>Sol çekmece açar</translation>
+        <translation type="vanished">Sol çekmece açar</translation>
     </message>
     <message>
         <source>Left Drawer Close</source>
-        <translation>Sol çekmece kapat</translation>
+        <translation type="vanished">Sol çekmece kapat</translation>
     </message>
     <message>
         <source>Closes the Left Drawer</source>
-        <translation>Sol çekmece kapatır</translation>
+        <translation type="vanished">Sol çekmece kapatır</translation>
     </message>
     <message>
         <source>Air conditioner turn on</source>
-        <translation>Klima aç</translation>
+        <translation type="vanished">Klima aç</translation>
     </message>
     <message>
         <source>Turns on the Air Conditioner</source>
-        <translation>Klima açar</translation>
+        <translation type="vanished">Klima açar</translation>
     </message>
     <message>
         <source>Air conditioner turn off</source>
-        <translation>Klima kapat</translation>
+        <translation type="vanished">Klima kapat</translation>
     </message>
     <message>
         <source>Turns off the Air Conditioner</source>
-        <translation>Klima kapatır</translation>
+        <translation type="vanished">Klima kapatır</translation>
     </message>
     <message>
         <source>Air conditioner Degree Increase</source>
-        <translation>Klima derece arttır</translation>
+        <translation type="vanished">Klima derece arttır</translation>
     </message>
     <message>
         <source>Increases the heat degree of AC</source>
-        <translation>Klima derece arttırır</translation>
+        <translation type="vanished">Klima derece arttırır</translation>
     </message>
     <message>
         <source>Air conditioner Degree Decrease</source>
-        <translation>Klima derece azalt</translation>
+        <translation type="vanished">Klima derece azalt</translation>
     </message>
     <message>
         <source>Decreases the heat degree of AC</source>
-        <translation>Klima derece azaltır</translation>
+        <translation type="vanished">Klima derece azaltır</translation>
     </message>
     <message>
         <source>Air conditioner Fan Increase</source>
-        <translation>Klima fan arttır</translation>
+        <translation type="vanished">Klima fan arttır</translation>
     </message>
     <message>
         <source>Increases the Fan Speed of AC</source>
-        <translation>Klima fan arttırır</translation>
+        <translation type="vanished">Klima fan arttırır</translation>
     </message>
     <message>
         <source>Air conditioner Fan Decrease</source>
-        <translation>Klima fan azalt</translation>
+        <translation type="vanished">Klima fan azalt</translation>
     </message>
     <message>
         <source>Decreases the Fan Speed of AC</source>
-        <translation>Klima fan azaltır</translation>
+        <translation type="vanished">Klima fan azaltır</translation>
     </message>
     <message>
         <source>Fridge degree increase</source>
-        <translation>Buzdolabı derece arttır</translation>
+        <translation type="vanished">Buzdolabı derece arttır</translation>
     </message>
     <message>
         <source>Increases heat of Fridge</source>
-        <translation>Buzdolabı derece arttırır</translation>
+        <translation type="vanished">Buzdolabı derece arttırır</translation>
     </message>
     <message>
         <source>Fridge degree decrease</source>
-        <translation>Buzdolabı derece azalt</translation>
+        <translation type="vanished">Buzdolabı derece azalt</translation>
     </message>
     <message>
         <source>Decreases heat of Fridge</source>
-        <translation>Buzdolabı derece azaltır</translation>
+        <translation type="vanished">Buzdolabı derece azaltır</translation>
     </message>
     <message>
         <source>Front Fridge degree increase</source>
-        <translation>Ön Buzdolabı derece arttır</translation>
+        <translation type="vanished">Ön Buzdolabı derece arttır</translation>
     </message>
     <message>
         <source>Increases heat of Front Fridge</source>
-        <translation>Ön Buzdolabı derece arttırır</translation>
+        <translation type="vanished">Ön Buzdolabı derece arttırır</translation>
     </message>
     <message>
         <source>Front Fridge degree decrease</source>
-        <translation>Ön Buzdolabı derece azalt</translation>
+        <translation type="vanished">Ön Buzdolabı derece azalt</translation>
     </message>
     <message>
         <source>Decreases heat of Front Fridge</source>
-        <translation>Ön Buzdolabı derece azaltır</translation>
+        <translation type="vanished">Ön Buzdolabı derece azaltır</translation>
     </message>
     <message>
         <source>Rear Fridge degree increase</source>
-        <translation>Arka buzdolabı derece arttır</translation>
+        <translation type="vanished">Arka buzdolabı derece arttır</translation>
     </message>
     <message>
         <source>Increases heat of Rear Fridge</source>
-        <translation>Arka buzdolabı derece arttırır</translation>
+        <translation type="vanished">Arka buzdolabı derece arttırır</translation>
     </message>
     <message>
         <source>Rear Fridge degree decrease</source>
-        <translation>Arka buzdolabı derece azalt</translation>
+        <translation type="vanished">Arka buzdolabı derece azalt</translation>
     </message>
     <message>
         <source>Decreases heat of Rear Fridge</source>
-        <translation>Arka buzdolabı derece azaltır</translation>
+        <translation type="vanished">Arka buzdolabı derece azaltır</translation>
     </message>
     <message>
         <source>Bottles Open</source>
-        <translation>Şişelik aç</translation>
+        <translation type="vanished">Şişelik aç</translation>
     </message>
     <message>
         <source>Opens the Bottles</source>
-        <translation>Şişelik açar</translation>
+        <translation type="vanished">Şişelik açar</translation>
     </message>
     <message>
         <source>Bottles Close</source>
-        <translation>Şişelik kapat</translation>
+        <translation type="vanished">Şişelik kapat</translation>
     </message>
     <message>
         <source>Closes the Bottles</source>
-        <translation>Şişelik kapatır</translation>
+        <translation type="vanished">Şişelik kapatır</translation>
     </message>
     <message>
         <source>Glasses Open</source>
-        <translation>Bardaklık aç</translation>
+        <translation type="vanished">Bardaklık aç</translation>
     </message>
     <message>
         <source>Opens the Glasses</source>
-        <translation>Bardaklık açar</translation>
+        <translation type="vanished">Bardaklık açar</translation>
     </message>
     <message>
         <source>Glasses Close</source>
-        <translation>Bardaklık kapat</translation>
+        <translation type="vanished">Bardaklık kapat</translation>
     </message>
     <message>
         <source>Closes the Glasses</source>
-        <translation>Bardaklık kapatır</translation>
+        <translation type="vanished">Bardaklık kapatır</translation>
     </message>
     <message>
         <source>Radio Channel Change</source>
-        <translation>Radyo kanal değiştir</translation>
+        <translation type="vanished">Radyo kanal değiştir</translation>
     </message>
     <message>
         <source>Changes the Radio Channel</source>
-        <translation>Radyo kanal değiştirir</translation>
+        <translation type="vanished">Radyo kanal değiştirir</translation>
     </message>
     <message>
         <source>Radio Channel Forward</source>
-        <translation>Radyo kanal ileri</translation>
+        <translation type="vanished">Radyo kanal ileri</translation>
     </message>
     <message>
         <source>Forwards the Radio Channel</source>
-        <translation>Radyo kanal ileri alır</translation>
+        <translation type="vanished">Radyo kanal ileri alır</translation>
     </message>
     <message>
         <source>Radio Channel Backward</source>
-        <translation>Radyo kanal geri</translation>
+        <translation type="vanished">Radyo kanal geri</translation>
     </message>
     <message>
         <source>Backwards the Radio Channel</source>
-        <translation>Radyo kanal geri alır</translation>
+        <translation type="vanished">Radyo kanal geri alır</translation>
     </message>
     <message>
         <source>Roof Monitor Open</source>
-        <translation>Tavan monitörü aç</translation>
+        <translation type="vanished">Tavan monitörü aç</translation>
     </message>
     <message>
         <source>Opens the Roof Monitor</source>
-        <translation>Tavan monitörü açar</translation>
+        <translation type="vanished">Tavan monitörü açar</translation>
     </message>
     <message>
         <source>Roof Monitor Close</source>
-        <translation>Tavan monitörü kapat</translation>
+        <translation type="vanished">Tavan monitörü kapat</translation>
     </message>
     <message>
         <source>Closes the Roof Monitor</source>
-        <translation>Tavan monitörü kapatır</translation>
+        <translation type="vanished">Tavan monitörü kapatır</translation>
     </message>
     <message>
         <source>Rear TV Open</source>
-        <translation>Arka TV aç</translation>
+        <translation type="vanished">Arka TV aç</translation>
     </message>
     <message>
         <source>Opens the Rear TV</source>
-        <translation>Arka TV açar</translation>
+        <translation type="vanished">Arka TV açar</translation>
     </message>
     <message>
         <source>Rear TV Close</source>
-        <translation>Arka TV kapat</translation>
+        <translation type="vanished">Arka TV kapat</translation>
     </message>
     <message>
         <source>Closes the Rear TV</source>
-        <translation>Arka TV kapatır</translation>
+        <translation type="vanished">Arka TV kapatır</translation>
     </message>
     <message>
         <source>Bar Open</source>
-        <translation>Barı aç</translation>
+        <translation type="vanished">Barı aç</translation>
     </message>
     <message>
         <source>Opens the Bar</source>
-        <translation>Barı açar</translation>
+        <translation type="vanished">Barı açar</translation>
     </message>
     <message>
         <source>Bar Close</source>
-        <translation>Barı kapat</translation>
+        <translation type="vanished">Barı kapat</translation>
     </message>
     <message>
         <source>Closes the Bar</source>
-        <translation>Barı kapatır</translation>
+        <translation type="vanished">Barı kapatır</translation>
     </message>
     <message>
         <source>First seat back take one step forward</source>
-        <translation>Birinci koltuk sırt bir kademe ileri al</translation>
+        <translation type="vanished">Birinci koltuk sırt bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes First Seat back one step forward</source>
-        <translation>Birinci koltuk sırt bir kademe ileri alır</translation>
+        <translation type="vanished">Birinci koltuk sırt bir kademe ileri alır</translation>
     </message>
     <message>
         <source>First seat back take two step forward</source>
-        <translation>Birinci koltuk sırt iki kademe ileri al</translation>
+        <translation type="vanished">Birinci koltuk sırt iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes First Seat back two step forward</source>
-        <translation>Birinci koltuk sırt iki kademe ileri alır</translation>
+        <translation type="vanished">Birinci koltuk sırt iki kademe ileri alır</translation>
     </message>
     <message>
         <source>First seat back take last point forward</source>
-        <translation>Birinci koltuk sırt en ileri al</translation>
+        <translation type="vanished">Birinci koltuk sırt en ileri al</translation>
     </message>
     <message>
         <source>Takes First Seat back last point forward</source>
-        <translation>Birinci koltuk sırt en ileri alır</translation>
+        <translation type="vanished">Birinci koltuk sırt en ileri alır</translation>
     </message>
     <message>
         <source>First seat back take one step backward</source>
-        <translation>Birinci koltuk sırt bir kademe geri al</translation>
+        <translation type="vanished">Birinci koltuk sırt bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes First Seat back one step backward</source>
-        <translation>Birinci koltuk sırt bir kademe geri alır</translation>
+        <translation type="vanished">Birinci koltuk sırt bir kademe geri alır</translation>
     </message>
     <message>
         <source>First seat back take two step backward</source>
-        <translation>Birinci koltuk sırt iki kademe geri al</translation>
+        <translation type="vanished">Birinci koltuk sırt iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes First Seat back two step backward</source>
-        <translation>Birinci koltuk sırt iki kademe geri alır</translation>
+        <translation type="vanished">Birinci koltuk sırt iki kademe geri alır</translation>
     </message>
     <message>
         <source>First seat back take last point backward</source>
-        <translation>Birinci koltuk sırt en geri al</translation>
+        <translation type="vanished">Birinci koltuk sırt en geri al</translation>
     </message>
     <message>
         <source>Takes First Seat back last point backward</source>
-        <translation>Birinci koltuk sırt en geri alır</translation>
+        <translation type="vanished">Birinci koltuk sırt en geri alır</translation>
     </message>
     <message>
         <source>First Seat take one step forward</source>
-        <translation>Birinci koltuğu bir kademe ileri al</translation>
+        <translation type="vanished">Birinci koltuğu bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes First Seat one step forward</source>
-        <translation>Birinci koltuğu bir kademe ileri alır</translation>
+        <translation type="vanished">Birinci koltuğu bir kademe ileri alır</translation>
     </message>
     <message>
         <source>First Seat take two step forward</source>
-        <translation>Birinci koltuğu iki kademe ileri al</translation>
+        <translation type="vanished">Birinci koltuğu iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes First Seat two step forward</source>
-        <translation>Birinci koltuğu iki kademe ileri alır</translation>
+        <translation type="vanished">Birinci koltuğu iki kademe ileri alır</translation>
     </message>
     <message>
         <source>First Seat take last point forward</source>
-        <translation>Birinci koltuğu en ileri al</translation>
+        <translation type="vanished">Birinci koltuğu en ileri al</translation>
     </message>
     <message>
         <source>Takes First Seat last point forward</source>
-        <translation>Birinci koltuğu en ileri alır</translation>
+        <translation type="vanished">Birinci koltuğu en ileri alır</translation>
     </message>
     <message>
         <source>First Seat take one step backward</source>
-        <translation>Birinci koltuğu bir kademe geri al</translation>
+        <translation type="vanished">Birinci koltuğu bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes First Seat one step backward</source>
-        <translation>Birinci koltuğu bir kademe geri alır</translation>
+        <translation type="vanished">Birinci koltuğu bir kademe geri alır</translation>
     </message>
     <message>
         <source>First Seat take two step backward</source>
-        <translation>Birinci koltuğu iki kademe geri al</translation>
+        <translation type="vanished">Birinci koltuğu iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes First Seat two step backward</source>
-        <translation>Birinci koltuğu iki kademe geri alır</translation>
+        <translation type="vanished">Birinci koltuğu iki kademe geri alır</translation>
     </message>
     <message>
         <source>First Seat take last point backward</source>
-        <translation>Birinci koltuğu en geri al</translation>
+        <translation type="vanished">Birinci koltuğu en geri al</translation>
     </message>
     <message>
         <source>Takes First Seat last point backward</source>
-        <translation>Birinci koltuğu en geri alır</translation>
+        <translation type="vanished">Birinci koltuğu en geri alır</translation>
     </message>
     <message>
         <source>First Seat Head take one step forward</source>
-        <translation>Birinci koltuk başlığı bir kademe yukarı al</translation>
+        <translation type="vanished">Birinci koltuk başlığı bir kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes First Seat Head one step forward</source>
-        <translation>Birinci koltuk başlığı bir kademe yukarı alır</translation>
+        <translation type="vanished">Birinci koltuk başlığı bir kademe yukarı alır</translation>
     </message>
     <message>
         <source>First Seat Head take two step forward</source>
-        <translation>Birinci koltuk başlığı iki kademe yukarı al</translation>
+        <translation type="vanished">Birinci koltuk başlığı iki kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes First Seat Head two step forward</source>
-        <translation>Birinci koltuk başlığı iki kademe yukarı alır</translation>
+        <translation type="vanished">Birinci koltuk başlığı iki kademe yukarı alır</translation>
     </message>
     <message>
         <source>First Seat Head take last point forward</source>
-        <translation>Birinci koltuk başlığı en yukarı al</translation>
+        <translation type="vanished">Birinci koltuk başlığı en yukarı al</translation>
     </message>
     <message>
         <source>Takes First Seat Head last point forward</source>
-        <translation>Birinci koltuk başlığı en yukarı alır</translation>
+        <translation type="vanished">Birinci koltuk başlığı en yukarı alır</translation>
     </message>
     <message>
         <source>First Seat Head take one step backward</source>
-        <translation>Birinci koltuk başlığı bir kademe aşağı al</translation>
+        <translation type="vanished">Birinci koltuk başlığı bir kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes First Seat Head one step backward</source>
-        <translation>Birinci koltuk başlığı bir kademe aşağı alır</translation>
+        <translation type="vanished">Birinci koltuk başlığı bir kademe aşağı alır</translation>
     </message>
     <message>
         <source>First Seat Head take two step backward</source>
-        <translation>Birinci koltuk başlığı iki kademe aşağı al</translation>
+        <translation type="vanished">Birinci koltuk başlığı iki kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes First Seat Head two step backward</source>
-        <translation>Birinci koltuk başlığı iki kademe aşağı alır</translation>
+        <translation type="vanished">Birinci koltuk başlığı iki kademe aşağı alır</translation>
     </message>
     <message>
         <source>First Seat Head take last point backward</source>
-        <translation>Birinci koltuk başlığı en aşağı al</translation>
+        <translation type="vanished">Birinci koltuk başlığı en aşağı al</translation>
     </message>
     <message>
         <source>Takes First Seat Head last point backward</source>
-        <translation>Birinci koltuk başlığı en aşağı alır</translation>
+        <translation type="vanished">Birinci koltuk başlığı en aşağı alır</translation>
     </message>
     <message>
         <source>Second seat back take one step forward</source>
-        <translation>İkinci koltuk sırt bir kademe ileri al</translation>
+        <translation type="vanished">İkinci koltuk sırt bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Second Seat back one step forward</source>
-        <translation>İkinci koltuk sırt bir kademe ileri alır</translation>
+        <translation type="vanished">İkinci koltuk sırt bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Second seat back take two step forward</source>
-        <translation>İkinci koltuk sırt iki kademe ileri al</translation>
+        <translation type="vanished">İkinci koltuk sırt iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Second Seat back two step forward</source>
-        <translation>İkinci koltuk sırt iki kademe ileri alır</translation>
+        <translation type="vanished">İkinci koltuk sırt iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Second seat back take last point forward</source>
-        <translation>İkinci koltuk sırt en ileri al</translation>
+        <translation type="vanished">İkinci koltuk sırt en ileri al</translation>
     </message>
     <message>
         <source>Takes Second Seat back last point forward</source>
-        <translation>İkinci koltuk sırt en ileri alır</translation>
+        <translation type="vanished">İkinci koltuk sırt en ileri alır</translation>
     </message>
     <message>
         <source>Second seat back take one step backward</source>
-        <translation>İkinci koltuk sırt bir kademe geri al</translation>
+        <translation type="vanished">İkinci koltuk sırt bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Second Seat back one step backward</source>
-        <translation>İkinci koltuk sırt bir kademe geri alır</translation>
+        <translation type="vanished">İkinci koltuk sırt bir kademe geri alır</translation>
     </message>
     <message>
         <source>Second seat back take two step backward</source>
-        <translation>İkinci koltuk sırt iki kademe geri al</translation>
+        <translation type="vanished">İkinci koltuk sırt iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Second Seat back two step backward</source>
-        <translation>İkinci koltuk sırt iki kademe geri alır</translation>
+        <translation type="vanished">İkinci koltuk sırt iki kademe geri alır</translation>
     </message>
     <message>
         <source>Second seat back take last point backward</source>
-        <translation>İkinci koltuk sırt en geri al</translation>
+        <translation type="vanished">İkinci koltuk sırt en geri al</translation>
     </message>
     <message>
         <source>Takes Second Seat back last point backward</source>
-        <translation>İkinci koltuk sırt en geri alır</translation>
+        <translation type="vanished">İkinci koltuk sırt en geri alır</translation>
     </message>
     <message>
         <source>Second Seat take one step forward</source>
-        <translation>İkinci koltuğu bir kademe ileri al</translation>
+        <translation type="vanished">İkinci koltuğu bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Second Seat one step forward</source>
-        <translation>İkinci koltuğu bir kademe ileri alır</translation>
+        <translation type="vanished">İkinci koltuğu bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Second Seat take two step forward</source>
-        <translation>İkinci koltuğu iki kademe ileri al</translation>
+        <translation type="vanished">İkinci koltuğu iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Second Seat two step forward</source>
-        <translation>İkinci koltuğu iki kademe ileri alır</translation>
+        <translation type="vanished">İkinci koltuğu iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Second Seat take last point forward</source>
-        <translation>İkinci koltuğu en ileri al</translation>
+        <translation type="vanished">İkinci koltuğu en ileri al</translation>
     </message>
     <message>
         <source>Takes Second Seat last point forward</source>
-        <translation>İkinci koltuğu en ileri alır</translation>
+        <translation type="vanished">İkinci koltuğu en ileri alır</translation>
     </message>
     <message>
         <source>Second Seat take one step backward</source>
-        <translation>İkinci koltuğu bir kademe geri al</translation>
+        <translation type="vanished">İkinci koltuğu bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Second Seat one step backward</source>
-        <translation>İkinci koltuğu bir kademe geri alır</translation>
+        <translation type="vanished">İkinci koltuğu bir kademe geri alır</translation>
     </message>
     <message>
         <source>Second Seat take two step backward</source>
-        <translation>İkinci koltuğu iki kademe geri al</translation>
+        <translation type="vanished">İkinci koltuğu iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Second Seat two step backward</source>
-        <translation>İkinci koltuğu iki kademe geri al</translation>
+        <translation type="vanished">İkinci koltuğu iki kademe geri al</translation>
     </message>
     <message>
         <source>Second Seat take last point backward</source>
-        <translation>İkinci koltuğu en geri al</translation>
+        <translation type="vanished">İkinci koltuğu en geri al</translation>
     </message>
     <message>
         <source>Takes Second Seat last point backward</source>
-        <translation>İkinci koltuğu en geri alır</translation>
+        <translation type="vanished">İkinci koltuğu en geri alır</translation>
     </message>
     <message>
         <source>Second Seat Head take one step forward</source>
-        <translation>İkinci koltuk başlığı bir kademe yukarı al</translation>
+        <translation type="vanished">İkinci koltuk başlığı bir kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Second Seat Head one step forward</source>
-        <translation>İkinci koltuk başlığı bir kademe yukarı alır</translation>
+        <translation type="vanished">İkinci koltuk başlığı bir kademe yukarı alır</translation>
     </message>
     <message>
         <source>Second Seat Head take two step forward</source>
-        <translation>İkinci koltuk başlığı iki kademe yukarı al</translation>
+        <translation type="vanished">İkinci koltuk başlığı iki kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Second Seat Head two step forward</source>
-        <translation>İkinci koltuk başlığı iki kademe yukarı alır</translation>
+        <translation type="vanished">İkinci koltuk başlığı iki kademe yukarı alır</translation>
     </message>
     <message>
         <source>Second Seat Head take last point forward</source>
-        <translation>İkinci koltuk başlığı en yukarı al</translation>
+        <translation type="vanished">İkinci koltuk başlığı en yukarı al</translation>
     </message>
     <message>
         <source>Takes Second Seat Head last point forward</source>
-        <translation>İkinci koltuk başlığı en yukarı alır</translation>
+        <translation type="vanished">İkinci koltuk başlığı en yukarı alır</translation>
     </message>
     <message>
         <source>Second Seat Head take one step backward</source>
-        <translation>İkinci koltuk başlığı bir kademe aşağı al</translation>
+        <translation type="vanished">İkinci koltuk başlığı bir kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Second Seat Head one step backward</source>
-        <translation>İkinci koltuk başlığı bir kademe aşağı alır</translation>
+        <translation type="vanished">İkinci koltuk başlığı bir kademe aşağı alır</translation>
     </message>
     <message>
         <source>Second Seat Head take two step backward</source>
-        <translation>İkinci koltuk başlığı iki kademe aşağı al</translation>
+        <translation type="vanished">İkinci koltuk başlığı iki kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Second Seat Head two step backward</source>
-        <translation>İkinci koltuk başlığı iki kademe aşağı alır</translation>
+        <translation type="vanished">İkinci koltuk başlığı iki kademe aşağı alır</translation>
     </message>
     <message>
         <source>Second Seat Head take last point backward</source>
-        <translation>İkinci koltuk başlığı en aşağı al</translation>
+        <translation type="vanished">İkinci koltuk başlığı en aşağı al</translation>
     </message>
     <message>
         <source>Takes Second Seat Head last point backward</source>
-        <translation>İkinci koltuk başlığı en aşağı alır</translation>
+        <translation type="vanished">İkinci koltuk başlığı en aşağı alır</translation>
     </message>
     <message>
         <source>Third seat back take one step forward</source>
-        <translation>Üçüncü koltuk sırt bir kademe ileri al</translation>
+        <translation type="vanished">Üçüncü koltuk sırt bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Third Seat back one step forward</source>
-        <translation>Üçüncü koltuk sırt bir kademe ileri alır</translation>
+        <translation type="vanished">Üçüncü koltuk sırt bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Third seat back take two step forward</source>
-        <translation>Üçüncü koltuk sırt iki kademe ileri al</translation>
+        <translation type="vanished">Üçüncü koltuk sırt iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Third Seat back two step forward</source>
-        <translation>Üçüncü koltuk sırt iki kademe ileri alır</translation>
+        <translation type="vanished">Üçüncü koltuk sırt iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Third seat back take last point forward</source>
-        <translation>Üçüncü koltuk sırt en ileri al</translation>
+        <translation type="vanished">Üçüncü koltuk sırt en ileri al</translation>
     </message>
     <message>
         <source>Takes Third Seat back last point forward</source>
-        <translation>Üçüncü koltuk sırt en ileri alır</translation>
+        <translation type="vanished">Üçüncü koltuk sırt en ileri alır</translation>
     </message>
     <message>
         <source>Third seat back take one step backward</source>
-        <translation>Üçüncü koltuk sırt bir kademe geri al</translation>
+        <translation type="vanished">Üçüncü koltuk sırt bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Third Seat back one step backward</source>
-        <translation>Üçüncü koltuk sırt bir kademe geri alır</translation>
+        <translation type="vanished">Üçüncü koltuk sırt bir kademe geri alır</translation>
     </message>
     <message>
         <source>Third seat back take two step backward</source>
-        <translation>Üçüncü koltuk sırt iki kademe geri al</translation>
+        <translation type="vanished">Üçüncü koltuk sırt iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Third Seat back two step backward</source>
-        <translation>Üçüncü koltuk sırt iki kademe geri alır</translation>
+        <translation type="vanished">Üçüncü koltuk sırt iki kademe geri alır</translation>
     </message>
     <message>
         <source>Third seat back take last point backward</source>
-        <translation>Üçüncü koltuk sırt en geri al</translation>
+        <translation type="vanished">Üçüncü koltuk sırt en geri al</translation>
     </message>
     <message>
         <source>Takes Third Seat back last point backward</source>
-        <translation>Üçüncü koltuk sırt en geri alır</translation>
+        <translation type="vanished">Üçüncü koltuk sırt en geri alır</translation>
     </message>
     <message>
         <source>Third Seat take one step forward</source>
-        <translation>Üçüncü koltuğu bir kademe ileri al</translation>
+        <translation type="vanished">Üçüncü koltuğu bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Third Seat one step forward</source>
-        <translation>Üçüncü koltuğu bir kademe ileri alır</translation>
+        <translation type="vanished">Üçüncü koltuğu bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Third Seat take two step forward</source>
-        <translation>Üçüncü koltuğu iki kademe ileri al</translation>
+        <translation type="vanished">Üçüncü koltuğu iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Third Seat two step forward</source>
-        <translation>Üçüncü koltuğu iki kademe ileri alır</translation>
+        <translation type="vanished">Üçüncü koltuğu iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Third Seat take last point forward</source>
-        <translation>Üçüncü koltuğu en ileri al</translation>
+        <translation type="vanished">Üçüncü koltuğu en ileri al</translation>
     </message>
     <message>
         <source>Takes Third Seat last point forward</source>
-        <translation>Üçüncü koltuğu en ileri alır</translation>
+        <translation type="vanished">Üçüncü koltuğu en ileri alır</translation>
     </message>
     <message>
         <source>Third Seat take one step backward</source>
-        <translation>Üçüncü koltuğu bir kademe geri al</translation>
+        <translation type="vanished">Üçüncü koltuğu bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Third Seat one step backward</source>
-        <translation>Üçüncü koltuğu bir kademe geri alır</translation>
+        <translation type="vanished">Üçüncü koltuğu bir kademe geri alır</translation>
     </message>
     <message>
         <source>Third Seat take two step backward</source>
-        <translation>Üçüncü koltuğu iki kademe geri al</translation>
+        <translation type="vanished">Üçüncü koltuğu iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Third Seat two step backward</source>
-        <translation>Üçüncü koltuğu iki kademe geri alır</translation>
+        <translation type="vanished">Üçüncü koltuğu iki kademe geri alır</translation>
     </message>
     <message>
         <source>Third Seat take last point backward</source>
-        <translation>Üçüncü koltuğu en geri al</translation>
+        <translation type="vanished">Üçüncü koltuğu en geri al</translation>
     </message>
     <message>
         <source>Takes Third Seat last point backward</source>
-        <translation>Üçüncü koltuğu en geri alır</translation>
+        <translation type="vanished">Üçüncü koltuğu en geri alır</translation>
     </message>
     <message>
         <source>Third Seat Head take one step forward</source>
-        <translation>Üçüncü koltuk başlığı bir kademe yukarı al</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı bir kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Third Seat Head one step forward</source>
-        <translation>Üçüncü koltuk başlığı bir kademe yukarı alır</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı bir kademe yukarı alır</translation>
     </message>
     <message>
         <source>Third Seat Head take two step forward</source>
-        <translation>Üçüncü koltuk başlığı iki kademe yukarı al</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı iki kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Third Seat Head two step forward</source>
-        <translation>Üçüncü koltuk başlığı iki kademe yukarı alır</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı iki kademe yukarı alır</translation>
     </message>
     <message>
         <source>Third Seat Head take last point forward</source>
-        <translation>Üçüncü koltuk başlığı en yukarı al</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı en yukarı al</translation>
     </message>
     <message>
         <source>Takes Third Seat Head last point forward</source>
-        <translation>Üçüncü koltuk başlığı en yukarı alır</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı en yukarı alır</translation>
     </message>
     <message>
         <source>Third Seat Head take one step backward</source>
-        <translation>Üçüncü koltuk başlığı bir kademe aşağı al</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı bir kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Third Seat Head one step backward</source>
-        <translation>Üçüncü koltuk başlığı bir kademe aşağı alır</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı bir kademe aşağı alır</translation>
     </message>
     <message>
         <source>Third Seat Head take two step backward</source>
-        <translation>Üçüncü koltuk başlığı iki kademe aşağı al</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı iki kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Third Seat Head two step backward</source>
-        <translation>Üçüncü koltuk başlığı iki kademe aşağı alır</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı iki kademe aşağı alır</translation>
     </message>
     <message>
         <source>Third Seat Head take last point backward</source>
-        <translation>Üçüncü koltuk başlığı en aşağı al</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı en aşağı al</translation>
     </message>
     <message>
         <source>Takes Third Seat Head last point backward</source>
-        <translation>Üçüncü koltuk başlığı en aşağı alır</translation>
+        <translation type="vanished">Üçüncü koltuk başlığı en aşağı alır</translation>
     </message>
     <message>
         <source>Fourth seat back take one step forward</source>
-        <translation>Dördüncü koltuk sırt bir kademe ileri al</translation>
+        <translation type="vanished">Dördüncü koltuk sırt bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat back one step forward</source>
-        <translation>Dördüncü koltuk sırt bir kademe ileri alır</translation>
+        <translation type="vanished">Dördüncü koltuk sırt bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Fourth seat back take two step forward</source>
-        <translation>Dördüncü koltuk sırt iki kademe ileri al</translation>
+        <translation type="vanished">Dördüncü koltuk sırt iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat back two step forward</source>
-        <translation>Dördüncü koltuk sırt iki kademe ileri alır</translation>
+        <translation type="vanished">Dördüncü koltuk sırt iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Fourth seat back take last point forward</source>
-        <translation>Dördüncü koltuk sırt en ileri al</translation>
+        <translation type="vanished">Dördüncü koltuk sırt en ileri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat back last point forward</source>
-        <translation>Dördüncü koltuk sırt en ileri alır</translation>
+        <translation type="vanished">Dördüncü koltuk sırt en ileri alır</translation>
     </message>
     <message>
         <source>Fourth seat back take one step backward</source>
-        <translation>Dördüncü koltuk sırt bir kademe geri al</translation>
+        <translation type="vanished">Dördüncü koltuk sırt bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat back one step backward</source>
-        <translation>Dördüncü koltuk sırt bir kademe geri alır</translation>
+        <translation type="vanished">Dördüncü koltuk sırt bir kademe geri alır</translation>
     </message>
     <message>
         <source>Fourth seat back take two step backward</source>
-        <translation>Dördüncü koltuk sırt iki kademe geri al</translation>
+        <translation type="vanished">Dördüncü koltuk sırt iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat back two step backward</source>
-        <translation>Dördüncü koltuk sırt iki kademe geri alır</translation>
+        <translation type="vanished">Dördüncü koltuk sırt iki kademe geri alır</translation>
     </message>
     <message>
         <source>Fourth seat back take last point backward</source>
-        <translation>Dördüncü koltuk sırt en geri al</translation>
+        <translation type="vanished">Dördüncü koltuk sırt en geri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat back last point backward</source>
-        <translation>Dördüncü koltuk sırt en geri alır</translation>
+        <translation type="vanished">Dördüncü koltuk sırt en geri alır</translation>
     </message>
     <message>
         <source>Fourth Seat take one step forward</source>
-        <translation>Dördüncü koltuğu bir kademe ileri al</translation>
+        <translation type="vanished">Dördüncü koltuğu bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat one step forward</source>
-        <translation>Dördüncü koltuğu bir kademe ileri alır</translation>
+        <translation type="vanished">Dördüncü koltuğu bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Fourth Seat take two step forward</source>
-        <translation>Dördüncü koltuğu iki kademe ileri al</translation>
+        <translation type="vanished">Dördüncü koltuğu iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat two step forward</source>
-        <translation>Dördüncü koltuğu iki kademe ileri alır</translation>
+        <translation type="vanished">Dördüncü koltuğu iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Fourth Seat take last point forward</source>
-        <translation>Dördüncü koltuğu en ileri al</translation>
+        <translation type="vanished">Dördüncü koltuğu en ileri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat last point forward</source>
-        <translation>Dördüncü koltuğu en ileri alır</translation>
+        <translation type="vanished">Dördüncü koltuğu en ileri alır</translation>
     </message>
     <message>
         <source>Fourth Seat take one step backward</source>
-        <translation>Dördüncü koltuğu bir kademe geri al</translation>
+        <translation type="vanished">Dördüncü koltuğu bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat one step backward</source>
-        <translation>Dördüncü koltuğu bir kademe geri alır</translation>
+        <translation type="vanished">Dördüncü koltuğu bir kademe geri alır</translation>
     </message>
     <message>
         <source>Fourth Seat take two step backward</source>
-        <translation>Dördüncü koltuğu iki kademe geri al</translation>
+        <translation type="vanished">Dördüncü koltuğu iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat two step backward</source>
-        <translation>Dördüncü koltuğu iki kademe geri alır</translation>
+        <translation type="vanished">Dördüncü koltuğu iki kademe geri alır</translation>
     </message>
     <message>
         <source>Fourth Seat take last point backward</source>
-        <translation>Dördüncü koltuğu en geri al</translation>
+        <translation type="vanished">Dördüncü koltuğu en geri al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat last point backward</source>
-        <translation>Dördüncü koltuğu en geri alır</translation>
+        <translation type="vanished">Dördüncü koltuğu en geri alır</translation>
     </message>
     <message>
         <source>Fourth Seat Head take one step forward</source>
-        <translation>Dördüncü koltuk başlığı bir kademe yukarı al</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı bir kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat Head one step forward</source>
-        <translation>Dördüncü koltuk başlığı bir kademe yukarı alır</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı bir kademe yukarı alır</translation>
     </message>
     <message>
         <source>Fourth Seat Head take two step forward</source>
-        <translation>Dördüncü koltuk başlığı iki kademe yukarı al</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı iki kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat Head two step forward</source>
-        <translation>Dördüncü koltuk başlığı iki kademe yukarı alır</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı iki kademe yukarı alır</translation>
     </message>
     <message>
         <source>Fourth Seat Head take last point forward</source>
-        <translation>Dördüncü koltuk başlığı en yukarı al</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı en yukarı al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat Head last point forward</source>
-        <translation>Dördüncü koltuk başlığı en yukarı alır</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı en yukarı alır</translation>
     </message>
     <message>
         <source>Fourth Seat Head take one step backward</source>
-        <translation>Dördüncü koltuk başlığı bir kademe aşağı al</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı bir kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat Head one step backward</source>
-        <translation>Dördüncü koltuk başlığı bir kademe aşağı alır</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı bir kademe aşağı alır</translation>
     </message>
     <message>
         <source>Fourth Seat Head take two step backward</source>
-        <translation>Dördüncü koltuk başlığı iki kademe aşağı al</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı iki kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat Head two step backward</source>
-        <translation>Dördüncü koltuk başlığı iki kademe aşağı alır</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı iki kademe aşağı alır</translation>
     </message>
     <message>
         <source>Fourth Seat Head take last point backward</source>
-        <translation>Dördüncü koltuk başlığı en aşağı al</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı en aşağı al</translation>
     </message>
     <message>
         <source>Takes Fourth Seat Head last point backward</source>
-        <translation>Dördüncü koltuk başlığı en aşağı alır</translation>
+        <translation type="vanished">Dördüncü koltuk başlığı en aşağı alır</translation>
     </message>
     <message>
         <source>Fifth seat back take one step forward</source>
-        <translation>Beşinci koltuk sırt bir kademe ileri al</translation>
+        <translation type="vanished">Beşinci koltuk sırt bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat back one step forward</source>
-        <translation>Beşinci koltuk sırt bir kademe ileri alır</translation>
+        <translation type="vanished">Beşinci koltuk sırt bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Fifth seat back take two step forward</source>
-        <translation>Beşinci koltuk sırt iki kademe ileri al</translation>
+        <translation type="vanished">Beşinci koltuk sırt iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat back two step forward</source>
-        <translation>Beşinci koltuk sırt iki kademe ileri alır</translation>
+        <translation type="vanished">Beşinci koltuk sırt iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Fifth seat back take last point forward</source>
-        <translation>Beşinci koltuk sırt en ileri al</translation>
+        <translation type="vanished">Beşinci koltuk sırt en ileri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat back last point forward</source>
-        <translation>Beşinci koltuk sırt en ileri alır</translation>
+        <translation type="vanished">Beşinci koltuk sırt en ileri alır</translation>
     </message>
     <message>
         <source>Fifth seat back take one step backward</source>
-        <translation>Beşinci koltuk sırt bir kademe geri al</translation>
+        <translation type="vanished">Beşinci koltuk sırt bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat back one step backward</source>
-        <translation>Beşinci koltuk sırt bir kademe geri alır</translation>
+        <translation type="vanished">Beşinci koltuk sırt bir kademe geri alır</translation>
     </message>
     <message>
         <source>Fifth seat back take two step backward</source>
-        <translation>Beşinci koltuk sırt iki kademe geri al</translation>
+        <translation type="vanished">Beşinci koltuk sırt iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat back two step backward</source>
-        <translation>Beşinci koltuk sırt iki kademe geri alır</translation>
+        <translation type="vanished">Beşinci koltuk sırt iki kademe geri alır</translation>
     </message>
     <message>
         <source>Fifth seat back take last point backward</source>
-        <translation>Beşinci koltuk sırt en geri al</translation>
+        <translation type="vanished">Beşinci koltuk sırt en geri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat back last point backward</source>
-        <translation>Beşinci koltuk sırt en geri alır</translation>
+        <translation type="vanished">Beşinci koltuk sırt en geri alır</translation>
     </message>
     <message>
         <source>Fifth Seat take one step forward</source>
-        <translation>Beşinci koltuğu bir kademe ileri al</translation>
+        <translation type="vanished">Beşinci koltuğu bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat one step forward</source>
-        <translation>Beşinci koltuğu bir kademe ileri alır</translation>
+        <translation type="vanished">Beşinci koltuğu bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Fifth Seat take two step forward</source>
-        <translation>Beşinci koltuğu iki kademe ileri al</translation>
+        <translation type="vanished">Beşinci koltuğu iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat two step forward</source>
-        <translation>Beşinci koltuğu iki kademe ileri alır</translation>
+        <translation type="vanished">Beşinci koltuğu iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Fifth Seat take last point forward</source>
-        <translation>Beşinci koltuğu en ileri al</translation>
+        <translation type="vanished">Beşinci koltuğu en ileri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat last point forward</source>
-        <translation>Beşinci koltuğu en ileri alır</translation>
+        <translation type="vanished">Beşinci koltuğu en ileri alır</translation>
     </message>
     <message>
         <source>Fifth Seat take one step backward</source>
-        <translation>Beşinci koltuğu bir kademe geri al</translation>
+        <translation type="vanished">Beşinci koltuğu bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat one step backward</source>
-        <translation>Beşinci koltuğu bir kademe geri alır</translation>
+        <translation type="vanished">Beşinci koltuğu bir kademe geri alır</translation>
     </message>
     <message>
         <source>Fifth Seat take two step backward</source>
-        <translation>Beşinci koltuğu iki kademe geri al</translation>
+        <translation type="vanished">Beşinci koltuğu iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat two step backward</source>
-        <translation>Beşinci koltuğu iki kademe geri alır</translation>
+        <translation type="vanished">Beşinci koltuğu iki kademe geri alır</translation>
     </message>
     <message>
         <source>Fifth Seat take last point backward</source>
-        <translation>Beşinci koltuğu en geri al</translation>
+        <translation type="vanished">Beşinci koltuğu en geri al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat last point backward</source>
-        <translation>Beşinci koltuğu en geri alır</translation>
+        <translation type="vanished">Beşinci koltuğu en geri alır</translation>
     </message>
     <message>
         <source>Fifth Seat Head take one step forward</source>
-        <translation>Beşinci koltuk başlığı bir kademe yukarı al</translation>
+        <translation type="vanished">Beşinci koltuk başlığı bir kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat Head one step forward</source>
-        <translation>Beşinci koltuk başlığı bir kademe yukarı alır</translation>
+        <translation type="vanished">Beşinci koltuk başlığı bir kademe yukarı alır</translation>
     </message>
     <message>
         <source>Fifth Seat Head take two step forward</source>
-        <translation>Beşinci koltuk başlığı iki kademe yukarı al</translation>
+        <translation type="vanished">Beşinci koltuk başlığı iki kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat Head two step forward</source>
-        <translation>Beşinci koltuk başlığı iki kademe yukarı alır</translation>
+        <translation type="vanished">Beşinci koltuk başlığı iki kademe yukarı alır</translation>
     </message>
     <message>
         <source>Fifth Seat Head take last point forward</source>
-        <translation>Beşinci koltuk başlığı en yukarı al</translation>
+        <translation type="vanished">Beşinci koltuk başlığı en yukarı al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat Head last point forward</source>
-        <translation>Beşinci koltuk başlığı en yukarı alır</translation>
+        <translation type="vanished">Beşinci koltuk başlığı en yukarı alır</translation>
     </message>
     <message>
         <source>Fifth Seat Head take one step backward</source>
-        <translation>Beşinci koltuk başlığı bir kademe aşağı al</translation>
+        <translation type="vanished">Beşinci koltuk başlığı bir kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat Head one step backward</source>
-        <translation>Beşinci koltuk başlığı bir kademe aşağı alır</translation>
+        <translation type="vanished">Beşinci koltuk başlığı bir kademe aşağı alır</translation>
     </message>
     <message>
         <source>Fifth Seat Head take two step backward</source>
-        <translation>Beşinci koltuk başlığı iki kademe aşağı al</translation>
+        <translation type="vanished">Beşinci koltuk başlığı iki kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat Head two step backward</source>
-        <translation>Beşinci koltuk başlığı iki kademe aşağı alır</translation>
+        <translation type="vanished">Beşinci koltuk başlığı iki kademe aşağı alır</translation>
     </message>
     <message>
         <source>Fifth Seat Head take last point backward</source>
-        <translation>Beşinci koltuk başlığı en aşağı al</translation>
+        <translation type="vanished">Beşinci koltuk başlığı en aşağı al</translation>
     </message>
     <message>
         <source>Takes Fifth Seat Head last point backward</source>
-        <translation>Beşinci koltuk başlığı en aşağı alır</translation>
+        <translation type="vanished">Beşinci koltuk başlığı en aşağı alır</translation>
     </message>
     <message>
         <source>Sixth seat back take one step forward</source>
-        <translation>Altıncı koltuk sırt bir kademe ileri al</translation>
+        <translation type="vanished">Altıncı koltuk sırt bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat back one step forward</source>
-        <translation>Altıncı koltuk sırt bir kademe ileri alır</translation>
+        <translation type="vanished">Altıncı koltuk sırt bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Sixth seat back take two step forward</source>
-        <translation>Altıncı koltuk sırt iki kademe ileri al</translation>
+        <translation type="vanished">Altıncı koltuk sırt iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat back two step forward</source>
-        <translation>Altıncı koltuk sırt iki kademe ileri alır</translation>
+        <translation type="vanished">Altıncı koltuk sırt iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Sixth seat back take last point forward</source>
-        <translation>Altıncı koltuk sırt en ileri al</translation>
+        <translation type="vanished">Altıncı koltuk sırt en ileri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat back last point forward</source>
-        <translation>Altıncı koltuk sırt en ileri alır</translation>
+        <translation type="vanished">Altıncı koltuk sırt en ileri alır</translation>
     </message>
     <message>
         <source>Sixth seat back take one step backward</source>
-        <translation>Altıncı koltuk sırt bir kademe geri al</translation>
+        <translation type="vanished">Altıncı koltuk sırt bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat back one step backward</source>
-        <translation>Altıncı koltuk sırt bir kademe geri alır</translation>
+        <translation type="vanished">Altıncı koltuk sırt bir kademe geri alır</translation>
     </message>
     <message>
         <source>Sixth seat back take two step backward</source>
-        <translation>Altıncı koltuk sırt iki kademe geri al</translation>
+        <translation type="vanished">Altıncı koltuk sırt iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat back two step backward</source>
-        <translation>Altıncı koltuk sırt iki kademe geri alır</translation>
+        <translation type="vanished">Altıncı koltuk sırt iki kademe geri alır</translation>
     </message>
     <message>
         <source>Sixth seat back take last point backward</source>
-        <translation>Altıncı koltuk sırt en geri al</translation>
+        <translation type="vanished">Altıncı koltuk sırt en geri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat back last point backward</source>
-        <translation>Altıncı koltuk sırt en geri alır</translation>
+        <translation type="vanished">Altıncı koltuk sırt en geri alır</translation>
     </message>
     <message>
         <source>Sixth Seat take one step forward</source>
-        <translation>Altıncı koltuğu bir kademe ileri al</translation>
+        <translation type="vanished">Altıncı koltuğu bir kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat one step forward</source>
-        <translation>Altıncı koltuğu bir kademe ileri alır</translation>
+        <translation type="vanished">Altıncı koltuğu bir kademe ileri alır</translation>
     </message>
     <message>
         <source>Sixth Seat take two step forward</source>
-        <translation>Altıncı koltuğu iki kademe ileri al</translation>
+        <translation type="vanished">Altıncı koltuğu iki kademe ileri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat two step forward</source>
-        <translation>Altıncı koltuğu iki kademe ileri alır</translation>
+        <translation type="vanished">Altıncı koltuğu iki kademe ileri alır</translation>
     </message>
     <message>
         <source>Sixth Seat take last point forward</source>
-        <translation>Altıncı koltuğu en ileri al</translation>
+        <translation type="vanished">Altıncı koltuğu en ileri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat last point forward</source>
-        <translation>Altıncı koltuğu en ileri alır</translation>
+        <translation type="vanished">Altıncı koltuğu en ileri alır</translation>
     </message>
     <message>
         <source>Sixth Seat take one step backward</source>
-        <translation>Altıncı koltuğu bir kademe geri al</translation>
+        <translation type="vanished">Altıncı koltuğu bir kademe geri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat one step backward</source>
-        <translation>Altıncı koltuğu bir kademe geri alır</translation>
+        <translation type="vanished">Altıncı koltuğu bir kademe geri alır</translation>
     </message>
     <message>
         <source>Sixth Seat take two step backward</source>
-        <translation>Altıncı koltuğu iki kademe geri al</translation>
+        <translation type="vanished">Altıncı koltuğu iki kademe geri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat two step backward</source>
-        <translation>Altıncı koltuğu iki kademe geri alır</translation>
+        <translation type="vanished">Altıncı koltuğu iki kademe geri alır</translation>
     </message>
     <message>
         <source>Sixth Seat take last point backward</source>
-        <translation>Altıncı koltuğu en geri al</translation>
+        <translation type="vanished">Altıncı koltuğu en geri al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat last point backward</source>
-        <translation>Altıncı koltuğu en geri alır</translation>
+        <translation type="vanished">Altıncı koltuğu en geri alır</translation>
     </message>
     <message>
         <source>Sixth Seat Head take one step forward</source>
-        <translation>Altıncı koltuk başlığı bir kademe yukarı al</translation>
+        <translation type="vanished">Altıncı koltuk başlığı bir kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat Head one step forward</source>
-        <translation>Altıncı koltuk başlığı bir kademe yukarı alır</translation>
+        <translation type="vanished">Altıncı koltuk başlığı bir kademe yukarı alır</translation>
     </message>
     <message>
         <source>Sixth Seat Head take two step forward</source>
-        <translation>Altıncı koltuk başlığı iki kademe yukarı al</translation>
+        <translation type="vanished">Altıncı koltuk başlığı iki kademe yukarı al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat Head two step forward</source>
-        <translation>Altıncı koltuk başlığı iki kademe yukarı alır</translation>
+        <translation type="vanished">Altıncı koltuk başlığı iki kademe yukarı alır</translation>
     </message>
     <message>
         <source>Sixth Seat Head take last point forward</source>
-        <translation>Altıncı koltuk başlığı en yukarı al</translation>
+        <translation type="vanished">Altıncı koltuk başlığı en yukarı al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat Head last point forward</source>
-        <translation>Altıncı koltuk başlığı en yukarı alır</translation>
+        <translation type="vanished">Altıncı koltuk başlığı en yukarı alır</translation>
     </message>
     <message>
         <source>Sixth Seat Head take one step backward</source>
-        <translation>Altıncı koltuk başlığı bir kademe aşağı al</translation>
+        <translation type="vanished">Altıncı koltuk başlığı bir kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat Head one step backward</source>
-        <translation>Altıncı koltuk başlığı bir kademe aşağı alır</translation>
+        <translation type="vanished">Altıncı koltuk başlığı bir kademe aşağı alır</translation>
     </message>
     <message>
         <source>Sixth Seat Head take two step backward</source>
-        <translation>Altıncı koltuk başlığı iki kademe aşağı al</translation>
+        <translation type="vanished">Altıncı koltuk başlığı iki kademe aşağı al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat Head two step backward</source>
-        <translation>Altıncı koltuk başlığı iki kademe aşağı alır</translation>
+        <translation type="vanished">Altıncı koltuk başlığı iki kademe aşağı alır</translation>
     </message>
     <message>
         <source>Sixth Seat Head take last point backward</source>
-        <translation>Altıncı koltuk başlığı en aşağı al</translation>
+        <translation type="vanished">Altıncı koltuk başlığı en aşağı al</translation>
     </message>
     <message>
         <source>Takes Sixth Seat Head last point backward</source>
-        <translation>Altıncı koltuk başlığı en aşağı alır</translation>
+        <translation type="vanished">Altıncı koltuk başlığı en aşağı alır</translation>
     </message>
     <message>
         <source>Luggage Curtain Open</source>
-        <translation>Bagaj perdeyi aç</translation>
+        <translation type="vanished">Bagaj perdeyi aç</translation>
     </message>
     <message>
         <source>Opens the Luggage Curtain</source>
-        <translation>Bagaj perdeyi açar</translation>
+        <translation type="vanished">Bagaj perdeyi açar</translation>
     </message>
     <message>
         <source>Luggage Curtain Close</source>
-        <translation>Bagaj perdeyi kapat</translation>
+        <translation type="vanished">Bagaj perdeyi kapat</translation>
     </message>
     <message>
         <source>Closes the Luggage Curtain</source>
-        <translation>Bagaj perdeyi kapatır</translation>
+        <translation type="vanished">Bagaj perdeyi kapatır</translation>
     </message>
     <message>
         <source>All Curtain Open</source>
-        <translation>Tüm perdeleri aç</translation>
+        <translation type="vanished">Tüm perdeleri aç</translation>
     </message>
     <message>
         <source>Opens all the Curtain</source>
-        <translation>Tüm perdeleri açar</translation>
+        <translation type="vanished">Tüm perdeleri açar</translation>
     </message>
     <message>
         <source>All Curtain Close</source>
-        <translation>Tüm perdeleri kapat</translation>
+        <translation type="vanished">Tüm perdeleri kapat</translation>
     </message>
     <message>
         <source>Closes all the Curtain</source>
-        <translation>Tüm perdeleri kapatır</translation>
+        <translation type="vanished">Tüm perdeleri kapatır</translation>
     </message>
     <message>
         <source>Take the first seat in sleep mode</source>
-        <translation>Birinci koltuğu uyku pozisyonuna al</translation>
+        <translation type="vanished">Birinci koltuğu uyku pozisyonuna al</translation>
     </message>
     <message>
         <source>Takes the first seat in sleep mode</source>
-        <translation>Birinci koltuğu uyku pozisyonuna alır</translation>
+        <translation type="vanished">Birinci koltuğu uyku pozisyonuna alır</translation>
     </message>
     <message>
         <source>Take the second seat in sleep mode</source>
-        <translation>İkinci koltuğu uyku pozisyonuna al</translation>
+        <translation type="vanished">İkinci koltuğu uyku pozisyonuna al</translation>
     </message>
     <message>
         <source>Takes the second seat in sleep mode</source>
-        <translation>İkinci koltuğu uyku pozisyonuna alır</translation>
+        <translation type="vanished">İkinci koltuğu uyku pozisyonuna alır</translation>
     </message>
     <message>
         <source>Gather first seat</source>
-        <translation>Birinci koltuğu topla</translation>
+        <translation type="vanished">Birinci koltuğu topla</translation>
     </message>
     <message>
         <source>Gathers first seat</source>
-        <translation>Birinci koltuğu toplar</translation>
+        <translation type="vanished">Birinci koltuğu toplar</translation>
     </message>
     <message>
         <source>Gather second seat</source>
-        <translation>İkinci koltuğu topla</translation>
+        <translation type="vanished">İkinci koltuğu topla</translation>
     </message>
     <message>
         <source>Gathers second seat</source>
-        <translation>İkinci koltuğu toplar</translation>
+        <translation type="vanished">İkinci koltuğu toplar</translation>
     </message>
     <message>
         <source>Take cinema mode</source>
-        <translation>Aracı sinema moduna al</translation>
+        <translation type="vanished">Aracı sinema moduna al</translation>
     </message>
     <message>
         <source>Takes cinema mode</source>
-        <translation>Aracı sinema moduna alır</translation>
+        <translation type="vanished">Aracı sinema moduna alır</translation>
     </message>
     <message>
         <source>Take conference mode</source>
-        <translation>Aracı toplantı moduna al</translation>
+        <translation type="vanished">Aracı toplantı moduna al</translation>
     </message>
     <message>
         <source>Takes conference mode</source>
-        <translation>Aracı toplantı moduna alır</translation>
+        <translation type="vanished">Aracı toplantı moduna alır</translation>
     </message>
     <message>
         <source>All tables open</source>
-        <translation>Tüm masaları aç</translation>
+        <translation type="vanished">Tüm masaları aç</translation>
     </message>
     <message>
         <source>Opens all tables</source>
-        <translation>Tüm masaları açar</translation>
+        <translation type="vanished">Tüm masaları açar</translation>
     </message>
     <message>
         <source>All tables close</source>
-        <translation>Tüm masaları kapat</translation>
+        <translation type="vanished">Tüm masaları kapat</translation>
     </message>
     <message>
         <source>Closes all tables</source>
-        <translation>Tüm masaları kapatır</translation>
+        <translation type="vanished">Tüm masaları kapatır</translation>
     </message>
     <message>
         <source>Gather all seats</source>
-        <translation>Tüm koltukları topla</translation>
+        <translation type="vanished">Tüm koltukları topla</translation>
     </message>
     <message>
         <source>Gathers all seats</source>
-        <translation>Tüm koltukları toplar</translation>
+        <translation type="vanished">Tüm koltukları toplar</translation>
     </message>
     <message>
         <source>In lights turn on</source>
-        <translation>iç ışıkları aç</translation>
+        <translation type="vanished">iç ışıkları aç</translation>
     </message>
     <message>
         <source>Turns on in lights</source>
-        <translation>iç ışıkları açar</translation>
+        <translation type="vanished">iç ışıkları açar</translation>
     </message>
     <message>
         <source>In lights turn off</source>
-        <translation>iç ışıkları kapat</translation>
+        <translation type="vanished">iç ışıkları kapat</translation>
     </message>
     <message>
         <source>Turns off in lights</source>
-        <translation>iç ışıkları kapatır</translation>
+        <translation type="vanished">iç ışıkları kapatır</translation>
     </message>
     <message>
         <source>Side lights turn on</source>
-        <translation>yan ışıkları aç</translation>
+        <translation type="vanished">yan ışıkları aç</translation>
     </message>
     <message>
         <source>Turns on Side lights</source>
-        <translation>yan ışıkları açar</translation>
+        <translation type="vanished">yan ışıkları açar</translation>
     </message>
     <message>
         <source>Turns off Side lights</source>
-        <translation>yan ışıkları kapat</translation>
+        <translation type="vanished">yan ışıkları kapat</translation>
     </message>
     <message>
         <source>Ceiling lights turn on</source>
-        <translation>yan ışıkları kapatır</translation>
+        <translation type="vanished">yan ışıkları kapatır</translation>
     </message>
     <message>
         <source>Turns on Ceiling lights</source>
-        <translation>tavan ışıkları aç</translation>
+        <translation type="vanished">tavan ışıkları aç</translation>
     </message>
     <message>
         <source>Turns off Ceiling lights</source>
-        <translation>tavan ışıkları açar</translation>
+        <translation type="vanished">tavan ışıkları açar</translation>
     </message>
     <message>
         <source>System off</source>
-        <translation>Sistemi Kapat</translation>
+        <translation type="vanished">Sistemi Kapat</translation>
     </message>
     <message>
         <source>Turns the System off</source>
-        <translation>Sistemi Kapatır</translation>
+        <translation type="vanished">Sistemi Kapatır</translation>
     </message>
     <message>
         <source>New Update Found!</source>
@@ -6237,13 +6362,13 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <source>There is a new update of the system software.
 Do you want to install it?
 (System will be restarted.)</source>
-        <translation>Yeni bir sistem yazılımı güncellemesi var.
+        <translation type="vanished">Yeni bir sistem yazılımı güncellemesi var.
 Yüklemek ister misiniz?
 (Sistem yeniden başlatılacak.)</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translation>Y. Başlat</translation>
+        <translation type="vanished">Y. Başlat</translation>
     </message>
     <message>
         <source>Cancel</source>

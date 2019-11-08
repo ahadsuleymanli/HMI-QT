@@ -16,11 +16,11 @@ BasePage {
         anchors{
             horizontalCenter: parent.horizontalCenter
             top:parent.top
-            topMargin: 130
+            topMargin: 135
         }
 
-        width:120
-        height: 120
+        width:110
+        height: 110
     }
     Item{
         anchors.fill: parent

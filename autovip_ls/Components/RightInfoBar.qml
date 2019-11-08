@@ -6,7 +6,7 @@ Item {
     width: infoLayout.width
     property alias intercomVisible: btnIntercomOverlay.visible
     function showVolumeBar(){
-        if(generalsettings.volumeCheckBoxChecked) return;
+        if(!SM.amp && generalsettings.volumeCheckBoxChecked) return;
         if(volumeBarHideAnim.running){
             volumeBarHideAnim.stop()
         }
@@ -51,7 +51,7 @@ Item {
             Layout.alignment: Qt.AlignHCenter
             width: 100
             height: 100
-            visible: false
+            visible: SM.amp
         }
         Item{
             Layout.fillHeight: true

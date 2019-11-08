@@ -23,7 +23,7 @@ BasePage {
     function init()
     {
         timesetter.refresh();
-        autotime.checked = csetter.isAutoTimeSync();
+//        autotime.checked = csetter.isAutoTimeSync();
     }
     SettingsManager{
         id:smanager
@@ -214,11 +214,11 @@ BasePage {
                 CheckBox{
                     id: volumeCheckBox
                     Material.accent: Material.Blue
-
+                    enabled: SM.amp
                     onCheckedChanged: {
                         root.volumeVisible(checked)
                     }
-                    Component.onCompleted: checked = true
+                    Component.onCompleted: if(SM.amp) checked = true
                 }
             }
 
@@ -250,7 +250,7 @@ BasePage {
                     }
                 }
                 Component.onCompleted: {
-                    if(SM.autoUpdate){
+                    if(false && SM.autoUpdate){
 
                         updatespinner.visible=true;
                         spinneranimation.running=true;
@@ -301,12 +301,12 @@ BasePage {
                         anchors.topMargin: 0
                         anchors.fill: parent
                         onClicked: {
-                            updatespinner.visible=true;
-                            spinneranimation.running=true;
-                            updatetimer1.running=true;
-//                            updatetimer2.running=true;
-                            myUpdater.checkUpdate();
-                            updateInfo.visible=false;
+//                            updatespinner.visible=true;
+//                            spinneranimation.running=true;
+//                            updatetimer1.running=true;
+////                            updatetimer2.running=true;
+//                            myUpdater.checkUpdate();
+//                            updateInfo.visible=false;
                         }
                         onPressed: {
                             updatebg.color =  Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -332,7 +332,7 @@ BasePage {
                 Text{
                     id:updateInfo
                     visible: true
-                    text: qsTr("Current Version: ") +myUpdater.currentVersion
+                    text: qsTr("Current Version: ") + " " +myUpdater.currentVersion
                     font.family:GSystem.myriadproita.name
                     font.pixelSize: 15
                     color: "white"
@@ -360,7 +360,7 @@ BasePage {
                         updatespinner.visible=false;
                         spinneranimation.running=false;
                         updatetimer2.running=false;
-                        updateInfo.text=qsTr("Error: No Update Found! Check your internet connection.") + mytrans.emptyString;
+                        updateInfo.text=qsTr("No Update Found! ") + qsTr("Current Version: ") +myUpdater.currentVersion +mytrans.emptyString;
                     }
                 }
                 Timer{

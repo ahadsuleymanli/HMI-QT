@@ -22,20 +22,25 @@ BasePage {
        switch(ind)
        {
        case 0:
-        serial_mng.sendKey("media/ready_divide",true,root.delay);
         serial_mng.sendKey("media/screen_divider",true,root.delay);
+        serial_mng.sendKey("media/ready_divide",true,root.delay);
                         main.source="qrc:/design/media/ekran-bolme.png";
            break;
        case 1:
-        serial_mng.sendKey("media/ready_divide",true,root.delay);
         serial_mng.sendKey("media/front_camera",true,root.delay);
+        serial_mng.sendKey("media/ready_divide",true,root.delay);
                         main.source="qrc:/design/media/camera-front.png";
            break;
        case 2:
-        serial_mng.sendKey("media/ready_divide",true,root.delay);
         serial_mng.sendKey("media/rear_camera",true,root.delay);
+        serial_mng.sendKey("media/ready_divide",true,root.delay);
                         main.source="qrc:/design/media/camera-back.png";
            break;
+       case 3:
+        serial_mng.sendKey("media/dvd_player",true,root.delay);
+        serial_mng.sendKey("media/ready_divide",true,root.delay);
+        main.source="qrc:/design/media/leftmenu/dvdplayer.png";
+            break;
        }
     }
     function ready()
@@ -129,6 +134,31 @@ BasePage {
                 anchors.fill: parent
                 onPressed: {
                     root.select(2);
+                }
+                onReleased: {
+
+                }
+            }
+        }
+        Rectangle{
+            id:dvdplayer
+            width:180
+            height:50
+            color: (root.selected === 3)?GSystem.leftTextMenuItemPressedColor:GSystem.leftTextMenuItemColor
+            border.width: 1
+            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+            Text{
+                anchors.centerIn: parent
+                text:qsTr("DVD Player") + mytrans.emptyString
+                color:"white"
+                font.pixelSize: 22
+                horizontalAlignment: Text.AlignHCenter
+                font.family: GSystem.centurygothic.name
+            }
+            MouseArea{
+                anchors.fill: parent
+                onPressed: {
+                    root.select(3);
                 }
                 onReleased: {
 

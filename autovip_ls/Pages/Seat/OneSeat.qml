@@ -462,86 +462,87 @@ BasePage {
             }
 
 
-                Rectangle {
-                    id:drawerbt
-                    width:275
-                    height:75
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color:Qt.rgba(0, 0, 0,0.4)
+            Rectangle {
+                id:thighbt
+                width:275
+                height:75
+                visible: SM.seatThigh(GSystem.selectedSeat) === true
+                anchors.horizontalCenter: parent.horizontalCenter
+                color:Qt.rgba(0, 0, 0,0.4)
+                border.width: 1
+                border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+                Text{
+                    font.family: GSystem.myriadproita.name
+                    font.italic: true
+                    font.pixelSize: 24
+                    text: qsTr("Thigh") + mytrans.emptyString
+                    color: "white"
+                    anchors.centerIn: parent
+                }
+                Rectangle{
+                    id:thighup
+                    width: 75
+                    height: 75
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left:parent.left
+                    color: "transparent"
                     border.width: 1
                     border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                    Text{
+                    Text {
                         font.family: GSystem.myriadproita.name
-                        font.italic: true
                         font.pixelSize: 24
-                        text: SM.seatDrawer(GSystem.selectedSeat)?qsTr("Drawer") + mytrans.emptyString:qsTr("Footrest") + mytrans.emptyString
+                        text: qsTr("↑")
                         color: "white"
                         anchors.centerIn: parent
                     }
-                    Rectangle{
-                        id:drawerleft
-                        width: 75
-                        height: 75
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left:parent.left
-                        color: "transparent"
-                        border.width: 1
-                        border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                        Text {
-                            font.family: GSystem.myriadproita.name
-                            font.pixelSize: 24
-                            text: qsTr("←")
-                            color: "white"
-                            anchors.centerIn: parent
+                    MouseArea{
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onPressed: function(){
+                            GSystem.sendSeatCommand("thigh_up");
+                            thighup.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
+                            seat.opacity=1;
                         }
-                        MouseArea{
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onPressed: function(){
-                                SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_open"):GSystem.sendSeatCommand("footrest_open");
-                                drawerleft.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
-                                feat.opacity = 1;
-                            }
-                            onReleased: function(){
-                                SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_stop"):GSystem.sendSeatCommand("footrest_stop");
-                                drawerleft.color = "transparent";
-                                feat.opacity = 0;
-                            }
+                        onReleased: function(){
+                            GSystem.sendSeatCommand("thigh_stop");
+                            thighup.color = "transparent";
+                            seat.opacity=0;
                         }
                     }
+                }
 
 
-                    Rectangle{
-                        id:drawerright
-                        width: 75
-                        height: 75
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.right:parent.right
-                        color: "transparent"
-                        border.width: 1
-                        border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                        Text {
-                            font.family: GSystem.myriadproita.name
-                            font.pixelSize: 24
-                            text: qsTr("→")
-                            color: "white"
-                            anchors.centerIn: parent
+                Rectangle{
+                    id:thighdown
+                    width: 75
+                    height: 75
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right:parent.right
+                    color: "transparent"
+                    border.width: 1
+                    border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+                    Text {
+                        font.family: GSystem.myriadproita.name
+                        font.pixelSize: 24
+                        text: qsTr("↓")
+                        color: "white"
+                        anchors.centerIn: parent
+                    }
+                    MouseArea{
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onPressed: function(){
+                            GSystem.sendSeatCommand("thigh_down");
+                            thighdown.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
+                            seat.opacity=1;
                         }
-                        MouseArea{
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onPressed: function(){
-                                SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_close"):GSystem.sendSeatCommand("footrest_close");
-                                drawerright.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
-                                feat.opacity = 1;
-                            }
-                            onReleased: function(){
-                                SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_stop"):GSystem.sendSeatCommand("footrest_stop");
-                                drawerright.color = "transparent";
-                                feat.opacity = 0;
-                            }
+                        onReleased: function(){
+                            GSystem.sendSeatCommand("thigh_stop");
+                            thighdown.color = "transparent";
+                            seat.opacity=0;
                         }
                     }
+                }
 
             }
 
@@ -613,88 +614,91 @@ BasePage {
                 anchors.fill:parent
                 visible: massagebt.color===Qt.rgba(0, 0, 0,0.4)?true:false
                 spacing: 20
-                Rectangle {
-                    id:thighbt
-                    width:275
-                    height:75
-                    visible: SM.seatThigh(GSystem.selectedSeat) === true
+
+                RowLayout{
                     anchors.horizontalCenter: parent.horizontalCenter
-                    color:Qt.rgba(0, 0, 0,0.4)
-                    border.width: 1
-                    border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                    Text{
-                        font.family: GSystem.myriadproita.name
-                        font.italic: true
-                        font.pixelSize: 24
-                        text: qsTr("Thigh") + mytrans.emptyString
-                        color: "white"
-                        anchors.centerIn: parent
-                    }
-                    Rectangle{
-                        id:thighup
-                        width: 75
-                        height: 75
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left:parent.left
-                        color: "transparent"
+                    width: childrenRect.width
+                    Rectangle {
+                        id:drawerbt
+                        width:275
+                        height:75
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        color:Qt.rgba(0, 0, 0,0.4)
                         border.width: 1
                         border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                        Text {
+                        Text{
                             font.family: GSystem.myriadproita.name
+                            font.italic: true
                             font.pixelSize: 24
-                            text: qsTr("↑")
+                            text: SM.seatDrawer(GSystem.selectedSeat)?qsTr("Drawer") + mytrans.emptyString:qsTr("Footrest") + mytrans.emptyString
                             color: "white"
                             anchors.centerIn: parent
                         }
-                        MouseArea{
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onPressed: function(){
-                                GSystem.sendSeatCommand("thigh_up");
-                                thighup.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
-                                seat.opacity=1;
+                        Rectangle{
+                            id:drawerleft
+                            width: 75
+                            height: 75
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left:parent.left
+                            color: "transparent"
+                            border.width: 1
+                            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+                            Text {
+                                font.family: GSystem.myriadproita.name
+                                font.pixelSize: 24
+                                text: qsTr("←")
+                                color: "white"
+                                anchors.centerIn: parent
                             }
-                            onReleased: function(){
-                                GSystem.sendSeatCommand("thigh_stop");
-                                thighup.color = "transparent";
-                                seat.opacity=0;
+                            MouseArea{
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onPressed: function(){
+                                    SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_open"):GSystem.sendSeatCommand("footrest_open");
+                                    drawerleft.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
+                                    feat.opacity = 1;
+                                }
+                                onReleased: function(){
+                                    SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_stop"):GSystem.sendSeatCommand("footrest_stop");
+                                    drawerleft.color = "transparent";
+                                    feat.opacity = 0;
+                                }
+                            }
+                        }
+
+
+                        Rectangle{
+                            id:drawerright
+                            width: 75
+                            height: 75
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.right:parent.right
+                            color: "transparent"
+                            border.width: 1
+                            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+                            Text {
+                                font.family: GSystem.myriadproita.name
+                                font.pixelSize: 24
+                                text: qsTr("→")
+                                color: "white"
+                                anchors.centerIn: parent
+                            }
+                            MouseArea{
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onPressed: function(){
+                                    SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_close"):GSystem.sendSeatCommand("footrest_close");
+                                    drawerright.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
+                                    feat.opacity = 1;
+                                }
+                                onReleased: function(){
+                                    SM.seatDrawer(GSystem.selectedSeat)?GSystem.sendSeatCommand("drawer_stop"):GSystem.sendSeatCommand("footrest_stop");
+                                    drawerright.color = "transparent";
+                                    feat.opacity = 0;
+                                }
                             }
                         }
                     }
-
-
-                    Rectangle{
-                        id:thighdown
-                        width: 75
-                        height: 75
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.right:parent.right
-                        color: "transparent"
-                        border.width: 1
-                        border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
-                        Text {
-                            font.family: GSystem.myriadproita.name
-                            font.pixelSize: 24
-                            text: qsTr("↓")
-                            color: "white"
-                            anchors.centerIn: parent
-                        }
-                        MouseArea{
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onPressed: function(){
-                                GSystem.sendSeatCommand("thigh_down");
-                                thighdown.color = Qt.rgba(0/255, 108/255, 128/255,0.6);
-                                seat.opacity=1;
-                            }
-                            onReleased: function(){
-                                GSystem.sendSeatCommand("thigh_stop");
-                                thighdown.color = "transparent";
-                                seat.opacity=0;
-                            }
-                        }
-                    }
-
                 }
 
                 Rectangle {
@@ -742,6 +746,7 @@ BasePage {
                             border.width: 1
                             border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
                             color: "transparent"
+
                             Column
                             {
                                 anchors.centerIn: parent
@@ -944,6 +949,7 @@ BasePage {
             }
 
         }
+
     }
 
 

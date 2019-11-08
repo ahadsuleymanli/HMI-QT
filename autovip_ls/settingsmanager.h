@@ -32,8 +32,10 @@ class SettingsManager : public QObject
 
     Q_PROPERTY(uint tvtype READ tvtype)
 
-
+    Q_PROPERTY(bool espressoopentime READ espressoopentime)
+    Q_PROPERTY(bool seatmovementduration READ seatmovementduration)
     Q_PROPERTY(bool playstation READ playstation)
+    Q_PROPERTY(bool satalliteremote READ satalliteremote)
     Q_PROPERTY(bool slboolean READ slboolean)
     Q_PROPERTY(bool dockingstation READ dockingstation)
     Q_PROPERTY(bool twodoor READ twodoor)
@@ -41,6 +43,8 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool refrigerator READ regrigerator)
     Q_PROPERTY(bool radio READ radio)
     Q_PROPERTY(bool sunroof READ sunroof)
+    Q_PROPERTY(bool windows READ windows)
+    Q_PROPERTY(bool aircondition READ aircondition)
     Q_PROPERTY(bool espresso READ espresso)
     Q_PROPERTY(bool bar READ bar)
     Q_PROPERTY(bool ceilingscreen READ ceilingscreen)
@@ -59,8 +63,11 @@ public:
     int lang();
     uint actype();
     uint tvtype();
+    uint espressoopentime();
+    uint seatmovementduration();
     int mindiff();
     int hourdiff();
+    bool satalliteremote();
     bool playstation();
     bool dockingstation();
     bool twodoor();
@@ -69,6 +76,8 @@ public:
     bool slboolean();
     bool sunroof();
     bool espresso();
+    bool windows();
+    bool aircondition();
     bool bar();
     bool ceilingscreen();
     bool safebox();
@@ -77,6 +86,7 @@ public:
     bool demomode();
     bool intro();
     bool amp();
+
 
     void setActype(uint p_actype);
 Q_INVOKABLE uint mediaplayertype();
@@ -100,6 +110,8 @@ Q_INVOKABLE uint mediaplayertype();
 
 Q_INVOKABLE  QVariant value(QString key);
 Q_INVOKABLE  bool sidelight();
+Q_INVOKABLE  bool insidelight();
+Q_INVOKABLE  bool readinglight();
 Q_INVOKABLE  bool seatHeating(int seat_no);
 Q_INVOKABLE  bool seatCooling(int seat_no);
 Q_INVOKABLE  bool seatMassage(int seat_no);

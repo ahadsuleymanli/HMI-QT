@@ -1,7 +1,7 @@
 #include "initializemng.h"
 #include <QDebug>
 #include <QDir>
-
+#include <QProcess>
 
 InitializeMng::InitializeMng(QObject *parent):QObject(parent)
 {
@@ -63,6 +63,11 @@ bool InitializeMng::init()
         return false;
     }
 
+
+    QProcess *removeProcess = new QProcess();
+    connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
+    removeProcess->start("sudo rm /var/lock/LCK..ttyMSM1");
+    removeProcess->waitForFinished(1000);
     QObject::connect(settings_mng,&SettingsManager::langChanged,translator,&Translator::updateLanguage,Qt::QueuedConnection);
 
     qmlRegisterType<Langs>("MyLang", 1, 0, "MyLang");
@@ -80,6 +85,7 @@ bool InitializeMng::init()
     }
 
     this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
+
     this->flogger->installMsgHandler();
 
     engine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());

@@ -219,7 +219,6 @@
         <file>design/controls/right-window.png</file>
         <file>design/controls/left-window.png</file>
         <file>design/controls/fan1.png</file>
-        <file>Pages/Media/KodiMediaPlayer.qml</file>
         <file>design/media/mediaplayer.png</file>
         <file>design/controls/airconditioner/degree.svg</file>
         <file>design/controls/airconditioner/fan1.svg</file>
@@ -227,24 +226,6 @@
         <file>design/controls/airconditioner/down.svg</file>
         <file>design/controls/airconditioner/temp-down.svg</file>
         <file>design/controls/airconditioner/temp-up.svg</file>
-        <file>design/media/kodi/back.svg</file>
-        <file>design/media/kodi/directBtn.svg</file>
-        <file>design/media/kodi/home.svg</file>
-        <file>design/media/kodi/info2Btn.svg</file>
-        <file>design/media/kodi/infoBtn.svg</file>
-        <file>design/media/kodi/list2.svg</file>
-        <file>design/media/kodi/listBtn.svg</file>
-        <file>design/media/kodi/nextBtn.svg</file>
-        <file>design/media/kodi/nextChapter.svg</file>
-        <file>design/media/kodi/okBtn.svg</file>
-        <file>design/media/kodi/pauseBtn.svg</file>
-        <file>design/media/kodi/pbPoint.svg</file>
-        <file>design/media/kodi/playBtn.svg</file>
-        <file>design/media/kodi/prevBtn.svg</file>
-        <file>design/media/kodi/prevChapterBtn.svg</file>
-        <file>design/media/kodi/progressBar_bg.svg</file>
-        <file>design/media/kodi/refreshBtn.svg</file>
-        <file>design/media/kodi/stopBtn.svg</file>
         <file>Components/SettingsMenu.qml</file>
         <file>Pages/Settings/GeneralSettings.qml</file>
         <file>Pages/Settings/MediaSettings.qml</file>
@@ -377,81 +358,6 @@
         <file>design/radio/dvlogo1.png</file>
         <file>design/general/background.png</file>
         <file>design/general/backgroundoverlay.png</file>
-        <file>jcon/jcon.h</file>
-        <file>jcon/jcon_assert.h</file>
-        <file>jcon/json_rpc_client.cpp</file>
-        <file>jcon/json_rpc_client.h</file>
-        <file>jcon/json_rpc_debug_logger.cpp</file>
-        <file>jcon/json_rpc_debug_logger.h</file>
-        <file>jcon/json_rpc_endpoint.cpp</file>
-        <file>jcon/json_rpc_endpoint.h</file>
-        <file>jcon/json_rpc_error.cpp</file>
-        <file>jcon/json_rpc_error.h</file>
-        <file>jcon/json_rpc_file_logger.cpp</file>
-        <file>jcon/json_rpc_file_logger.h</file>
-        <file>jcon/json_rpc_logger.cpp</file>
-        <file>jcon/json_rpc_logger.h</file>
-        <file>jcon/json_rpc_request.cpp</file>
-        <file>jcon/json_rpc_request.h</file>
-        <file>jcon/json_rpc_result.h</file>
-        <file>jcon/json_rpc_server.cpp</file>
-        <file>jcon/json_rpc_server.h</file>
-        <file>jcon/json_rpc_socket.h</file>
-        <file>jcon/json_rpc_success.cpp</file>
-        <file>jcon/json_rpc_success.h</file>
-        <file>jcon/json_rpc_tcp_client.cpp</file>
-        <file>jcon/json_rpc_tcp_client.h</file>
-        <file>jcon/json_rpc_tcp_server.cpp</file>
-        <file>jcon/json_rpc_tcp_server.h</file>
-        <file>jcon/json_rpc_tcp_socket.cpp</file>
-        <file>jcon/json_rpc_tcp_socket.h</file>
-        <file>jcon/json_rpc_websocket.cpp</file>
-        <file>jcon/json_rpc_websocket.h</file>
-        <file>jcon/json_rpc_websocket_client.cpp</file>
-        <file>jcon/json_rpc_websocket_client.h</file>
-        <file>jcon/json_rpc_websocket_server.cpp</file>
-        <file>jcon/json_rpc_websocket_server.h</file>
-        <file>jcon/string_util.cpp</file>
-        <file>jcon/string_util.h</file>
-        <file>logger/dualfilelogger.cpp</file>
-        <file>logger/dualfilelogger.h</file>
-        <file>logger/filelogger.cpp</file>
-        <file>logger/filelogger.h</file>
-        <file>logger/logger.cpp</file>
-        <file>logger/logger.h</file>
-        <file>logger/logglobal.h</file>
-        <file>logger/logmessage.cpp</file>
-        <file>logger/logmessage.h</file>
-        <file>clocksetter.cpp</file>
-        <file>clocksetter.h</file>
-        <file>colorcomponents.cpp</file>
-        <file>colorcomponents.h</file>
-        <file>cronjobs.cpp</file>
-        <file>cronjobs.h</file>
-        <file>initializemng.cpp</file>
-        <file>initializemng.h</file>
-        <file>langs.h</file>
-        <file>main.cpp</file>
-        <file>mediaplayermng.cpp</file>
-        <file>mediaplayermng.h</file>
-        <file>nvidiaconnmanager.cpp</file>
-        <file>nvidiaconnmanager.h</file>
-        <file>restarter.cpp</file>
-        <file>restarter.h</file>
-        <file>serialmng.cpp</file>
-        <file>serialmng.h</file>
-        <file>settingsmanager.cpp</file>
-        <file>settingsmanager.h</file>
-        <file>translator.cpp</file>
-        <file>translator.h</file>
-        <file>updatecheck.cpp</file>
-        <file>updatecheck.h</file>
-        <file>voiceprotohandler.cpp</file>
-        <file>voiceprotohandler.h</file>
-        <file>voicerecognitionservice.cpp</file>
-        <file>voicerecognitionservice.h</file>
-        <file>websocketcontroller.cpp</file>
-        <file>websocketcontroller.h</file>
         <file>design/seats/massage2.png</file>
         <file>design/media/appletv-kumanda/alt.png</file>
         <file>design/media/appletv-kumanda/down.png</file>
@@ -485,8 +391,6 @@
         <file>Components/InfoOverlay.qml</file>
         <file>design/general/spinner.png</file>
         <file>Pages/Settings/RestoreOlderVersion.qml</file>
-        <file>design/media/kodi/addQueue.png</file>
-        <file>design/media/kodi/atQueue.png</file>
         <file>Components/VolumeBar.qml</file>
         <file>Components/RightInfoBar.qml</file>
         <file>design/general/volume.png</file>
@@ -494,5 +398,38 @@
         <file>design/general/bluetooth.png</file>
         <file>design/general/HighLevel.png</file>
         <file>design/general/fibercable.png</file>
+        <file>Pages/Media/MediaPlayer.qml</file>
+        <file>design/media/MediaPlayer/1.png</file>
+        <file>design/media/MediaPlayer/2.png</file>
+        <file>design/media/MediaPlayer/3.png</file>
+        <file>design/media/MediaPlayer/album.png</file>
+        <file>design/media/MediaPlayer/artist.png</file>
+        <file>design/media/MediaPlayer/back.png</file>
+        <file>design/media/MediaPlayer/background.png</file>
+        <file>design/media/MediaPlayer/bottom_part.png</file>
+        <file>design/media/MediaPlayer/change.png</file>
+        <file>design/media/MediaPlayer/explore.png</file>
+        <file>design/media/MediaPlayer/favorite_song.png</file>
+        <file>design/media/MediaPlayer/history.png</file>
+        <file>design/media/MediaPlayer/home.png</file>
+        <file>design/media/MediaPlayer/library.png</file>
+        <file>design/media/MediaPlayer/media_player.png</file>
+        <file>design/media/MediaPlayer/media_player2.png</file>
+        <file>design/media/MediaPlayer/new_playlist.png</file>
+        <file>design/media/MediaPlayer/radio.png</file>
+        <file>design/media/MediaPlayer/right_part.png</file>
+        <file>design/media/MediaPlayer/search.png</file>
+        <file>design/media/MediaPlayer/search_button.png</file>
+        <file>design/media/MediaPlayer/slider.png</file>
+        <file>design/media/MediaPlayer/Text.png</file>
+        <file>design/media/MediaPlayer/timeline.png</file>
+        <file>design/media/MediaPlayer/voice.png</file>
+        <file>design/media/MediaPlayer/voice_recording.png</file>
+        <file>Pages/Media/MediaPlayer/Home.qml</file>
+        <file>Pages/Media/MediaPlayer/HomeForm.ui.qml</file>
+        <file>Pages/Media/SatalliteRemote.qml</file>
+        <file>design/media/Tv/btnBackground.png</file>
+        <file>design/media/leftmenu/satallite.png</file>
+        <file>design/media/MediaPlayer/melody.png</file>
     </qresource>
 </RCC>

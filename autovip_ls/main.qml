@@ -11,6 +11,7 @@ import QtQuick.Controls.Material 2.2
 import closx.updater 1.0
 import closx.smanager 1.0
 
+
 Window {
     id: root
     visible:true

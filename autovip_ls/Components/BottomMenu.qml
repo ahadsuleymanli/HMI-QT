@@ -77,7 +77,7 @@ Item {
                         id:btnMute
                         Layout.fillHeight: true
                         visible: SM.amp
-                        bgSource : (toggled==false ?
+                        bgSource : (toggled==true ?
                                                     (isUnderClick ?  "qrc:/design/general/Mute_off.svg" : "qrc:/design/general/Mute_on.svg")
                                                    : (isUnderClick ?  "qrc:/design/general/Mute_on.svg" : "qrc:/design/general/Mute_off.svg"))
                         height: GSystem.bottomIconHeight
@@ -115,6 +115,7 @@ Item {
                         Layout.fillHeight: true
                         width: 56
                         height: 46
+                        visible: SM.amp
                         property real popupWidth: childrenRect.width
                         model: ListModel {
                             id: model

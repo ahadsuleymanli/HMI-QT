@@ -24,7 +24,7 @@ Rectangle{
         console.log(cur_date.getMonth());
         console.log(cur_date.getFullYear());
         tumbler.setCurrentIndexAt(0,cur_date.getDate()-1) ;
-        tumbler.setCurrentIndexAt(1,cur_date.getMonth()-1) ;
+        tumbler.setCurrentIndexAt(1,cur_date.getMonth()) ;
         //dayColumn.currentIndex = cur_date.getDay();
         //monthColumn.currentIndex = cur_date.getMonth();
         var year  = cur_date.getFullYear();
@@ -82,7 +82,7 @@ Rectangle{
         TumblerColumn {
             id: monthColumn
             width: characterMetrics.width * 3 + tumbler.delegateTextMargins
-            model: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            model: [qsTr("Jan"), qsTr("Feb"), qsTr("Mar"), qsTr("Apr"), qsTr("May"), qsTr("Jun"), qsTr("Jul"), qsTr("Aug"), qsTr("Sep"), qsTr("Oct"), qsTr("Nov"), qsTr("Dec")]
             //onCurrentIndexChanged: dayColumn.updateModel()
         }
         TumblerColumn {
@@ -187,10 +187,10 @@ Rectangle{
                 settingsmng.setTimeDiff(mindiff,hourdiff);
                 serial_mng.sendKey("main/setclock",false,root.delay,timesum);
 
-                console.log( "Date: " + date.day + " "+ date.month + " " + date.year );
+                console.log( "Date: " + date.day + " "+(tumbler.getColumn(1).currentIndex + 1) + " " + date.year );
                 console.log( "Time: " + time.hour + " " + time.minutes );
 
-                clcksttr.setTheClock(date.year +"-"+tumbler.getColumn(1).currentIndex+"-" +date.day
+                clcksttr.setTheClock(date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day
                                      + " " + time.hour + ":" + time.minutes+":00")
             }
             onPressed: timesetrec.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
