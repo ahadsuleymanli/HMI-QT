@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtMultimedia 5.11
 import QtQuick.Controls.Material 2.3
 import ck.gmachine 1.0
-import "../../Components"
+import "../../../Components"
 
 BasePage {
     id:root
@@ -18,11 +18,13 @@ BasePage {
     property bool userPause: false
 
     property real lastPosition: 0
+    property real lastDuration: 0
     property var lastSource: ""
 
     property string audioPositionStr: {
-        var posMin = Math.floor(audioPlayer.position / 60000)
-        var posSec = Math.floor(audioPlayer.position / 1000 - posMin * 60)
+        var pos = root.userPause ? root.lastPosition : audioPlayer.position
+        var posMin = Math.floor(pos / 60000)
+        var posSec = Math.floor(pos / 1000 - posMin * 60)
         return posMin + ":" + (posSec < 10 ? "0" + posSec : posSec);
     }
     property string audioDurationStr: {
@@ -81,10 +83,11 @@ BasePage {
     }
 
     function pauseAudio(){
-        userPause = true;
-        lastPosition = audioPlayer.position
-        audioPlayer.pause()
+        root.userPause = true
+        root.lastPosition = audioPlayer.position
+        audioPlayer.stop()
         audioPlayer.source =""
+//        root.userPause = true
     }
     function playAudio(src){
         if(src === "" || src === undefined)
@@ -93,26 +96,47 @@ BasePage {
             audioPlayer.source = src
             root.lastSource = src
         }
-
-        userStop = false
-        userPause = false
         audioPlayer.play()
+        root.userStop = false
 
+    }
+    Text{
+        id: debugText
+        text: root.userPause
     }
 
     Audio{
         id: audioPlayer
         source :""
 
+        onSourceChanged: {
+            if(audioPlayer.source !== "" && audioPlayer.source !== undefined){
+
+            }
+        }
+        onDurationChanged: root.lastDuration = duration
         onStatusChanged: {
+
             if(status === Audio.EndOfMedia){
                 nextMedia()
             }
+            if(status === Audio.Buffered ||
+                    status === Audio.Loaded||
+                    status === Audio.Loading){
+                if(root.userPause){
+                    audioPlayer.seek(root.lastPosition)
+                    root.userPause = false
+                }
+            }
         }
-        onPlaying: {
-            if(userPause){
-                audio.seek(lastPosition)
-                userPause = false
+        onPositionChanged: {
+//            if(audioPlayer.position !== 0)
+//                root.userPause = false
+        }
+
+        onPlaybackStateChanged: {
+            if(audioPlayer.playbackState === Audio.PlayingState && root.userPause){
+
             }
         }
 
@@ -120,7 +144,9 @@ BasePage {
             if(!userStop && (status === Audio.Buffered ||
                     status === Audio.Loaded||
                     status === Audio.Loading)){
-                play()
+                if(root.userPause)
+                    audioPlayer.seek(root.lastPosition)
+//                play()
             }
 
         }
@@ -551,14 +577,20 @@ BasePage {
                         color: "#989898"
                         radius: 2
                         width: (parent.width - 4) *
-                               (audioPlayer.position / audioPlayer.duration)
+                               ((root.userPause ? root.lastPosition / root.lastDuration
+                                                : audioPlayer.position / audioPlayer.duration))
 
                     }
                     MouseArea{
                         anchors.fill: parent
                         anchors.margins: 2
                         onMouseXChanged: {
-                            audioPlayer.seek(Math.min(audioPlayer.duration * (mouseX / width),
+                            var xAbs = Math.max(0, mouseX)
+                            if(userPause)
+                                root.lastPosition = Math.min(root.lastDuration * (xAbs / width),
+                                                             root.lastDuration)
+                            else
+                                audioPlayer.seek(Math.min(audioPlayer.duration * (xAbs / width),
                                                       audioPlayer.duration))
                         }
                     }
