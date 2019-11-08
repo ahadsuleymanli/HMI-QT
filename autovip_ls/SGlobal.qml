@@ -808,11 +808,7 @@ ListModel{
 ListModel {
     id: mediaModel
     ListElement {
-<<<<<<< HEAD
        name: qsTr("Media Player")
-=======
-       name: qsTr("Kodi Player")
->>>>>>> f3489b296bf2dbd39d2af1a74b479b0288330ade
         st: "MediaPlayer"
        bg: "qrc:/design/media/leftmenu/kodiplayer.png"
     }

@@ -189,22 +189,20 @@ void NvidiaConnManager::processMessage(const QString &message)
     {
         QString openClose = messageMap["open_close"].toString();
         if ( openClose != "open" )
-<<<<<<< HEAD
+
             toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",SM->espressoopentime());
         else if ( openClose != "close" )
             toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",SM->espressoopentime());
-=======
-            toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",20000);
+
         else if ( openClose != "close" )
-            toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",20000);
->>>>>>> f3489b296bf2dbd39d2af1a74b479b0288330ade
+            toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",SM->espressoopentime());
+
     }
     else if (intent == "make_espresso_asked" )
     {
         QString openClose = messageMap["open_close"].toString();
         QString yesNoOkay = messageMap["yes_no_okay"].toString();
         if ( openClose == "open" )
-<<<<<<< HEAD
             toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",SM->espressoopentime());
         else if ( openClose == "close" )
             toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",SM->espressoopentime());
@@ -212,15 +210,7 @@ void NvidiaConnManager::processMessage(const QString &message)
             toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",SM->espressoopentime());
         else if ( openClose == "no" )
             toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",SM->espressoopentime());
-=======
-            toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",20000);
-        else if ( openClose == "close" )
-            toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",20000);
-        else if ( yesNoOkay == "yes" || yesNoOkay == "okay" || yesNoOkay == "ofcourse" )
-            toggleCommands->toggleKey("controls/espresso_open","controls/espresso_stop",20000);
-        else if ( openClose == "no" )
-            toggleCommands->toggleKey("controls/espresso_close","controls/espresso_stop",20000);
->>>>>>> f3489b296bf2dbd39d2af1a74b479b0288330ade
+
     }
     else if (intent == "change_menu")
     {

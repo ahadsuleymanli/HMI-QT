@@ -219,10 +219,7 @@
         <file>design/controls/right-window.png</file>
         <file>design/controls/left-window.png</file>
         <file>design/controls/fan1.png</file>
-<<<<<<< HEAD
-=======
         <file>Pages/Media/MediaPlayer.qml</file>
->>>>>>> f3489b296bf2dbd39d2af1a74b479b0288330ade
         <file>design/media/mediaplayer.png</file>
         <file>design/controls/airconditioner/degree.svg</file>
         <file>design/controls/airconditioner/fan1.svg</file>
