@@ -73,7 +73,7 @@ Item {
             id: trRotation
             origin.x: volumeBarItem.width - 6;
             origin.y: volumeBarItem.height/2-6;
-            axis { x: 0; y: 0; z: 1 } angle: 180 * (serial_mng.volume/maxVolue) -135
+            axis { x: 0; y: 0; z: 1 } angle: 180 * (((serial_mng.volume > 0) ? serial_mng.volume : 0)/maxVolue) -135
         }
 
         width: 20
@@ -150,7 +150,7 @@ Item {
                 Text{
                     id: volumeText
                     anchors.verticalCenter: parent.verticalCenter
-                    text : serial_mng.volume
+                    text : ((serial_mng.volume > 0) ? serial_mng.volume : 0)
                     font.pixelSize: 16
                     color: "#fefdfd"
                 }

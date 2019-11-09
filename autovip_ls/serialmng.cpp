@@ -321,7 +321,7 @@ QColor SerialMng::sidecolor()
     return m_sidecolor;
 }
 
-uint SerialMng::volume()
+int SerialMng::volume()
 {
     return m_volume;
 }
@@ -338,7 +338,7 @@ void SerialMng::setSystemstate(int p_state)
    emit systemstateChanged(m_systemstate);
 }
 
-void SerialMng::setVolume(uint vol)
+void SerialMng::setVolume(int vol)
 {
     if(m_volume == vol) return;
     m_volume = vol;

@@ -38,6 +38,7 @@ private:
     void initializeStateObject();
     void setProtocolBusType();
     void instantiateValueChangers();
+    bool handleEmulatedFeedback(QString feedback);
 public:
     NvidiaConnManager(quint16 port, SerialMng *serial_mng , SettingsManager *SM, QObject * parent = nullptr);
     virtual ~NvidiaConnManager();

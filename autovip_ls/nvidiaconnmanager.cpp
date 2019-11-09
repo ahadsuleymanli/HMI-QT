@@ -40,6 +40,19 @@ NvidiaConnManager::~NvidiaConnManager()
     webSocketServer->close();
 }
 
+bool NvidiaConnManager::handleEmulatedFeedback(QString feedback){
+    QStringList parts = feedback.split('/');
+    bool ok;
+    parts[0].toUInt(&ok);
+    if (ok || parts[0]=="Ax"){
+        QTextStream(stdout)  << "Emulated feedback: " << feedback<<"\n";
+        this->serial_mng->parseFeedback(feedback);
+        return true;
+    }
+    return false;
+}
+
+
 void NvidiaConnManager::instantiateValueChangers(){
     //acdeg------------------------
     acdegChanger = new IterativeValueChanger("acdeg",50,[this](int current, int target)-> int{
@@ -142,7 +155,10 @@ void NvidiaConnManager::processMessage(const QString &message)
     QTextStream(stdout) << parts.join(" ") << "\n";
     QString intent = messageMap["intent"].toString();
 
-    if (intent=="acdeg" || intent=="acdeg_followup"){
+    if (handleEmulatedFeedback(message)){
+
+    }
+    else if (intent=="acdeg" || intent=="acdeg_followup"){
        int current_acdeg = serial_mng->acdeg();
        if(messageMap["open_close"] == "open"){
           if (current_acdeg == -1)
@@ -163,7 +179,7 @@ void NvidiaConnManager::processMessage(const QString &message)
            acdegChanger->changeVal(current_acdeg, current_acdeg - 1);
        }
     }
-    if (intent=="acfan" || intent=="acfan_followup"){
+    else if (intent=="acfan" || intent=="acfan_followup"){
        int current_fandeg = serial_mng->fandeg();
        if(messageMap["open_close"] == "open"){
 //          if (current_fandeg == -1)
@@ -295,7 +311,6 @@ void NvidiaConnManager::socketDisconnected()
         clients.removeAll(client_ptr);
         client_ptr->deleteLater();
     }
-
 }
 
 

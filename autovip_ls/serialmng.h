@@ -67,7 +67,7 @@ class SerialMng : public QObject
     QColor m_ceilingcolor;
     QColor m_insidecolor;
     QColor m_sidecolor;
-    uint m_volume = 30;
+    int m_volume = 30;
     uint m_soundSource = 0;
 
     QTime m_lastsend;
@@ -104,7 +104,7 @@ class SerialMng : public QObject
     Q_PROPERTY(QColor sidecolor READ sidecolor WRITE setSidecolor NOTIFY sidecolorChanged)
     Q_PROPERTY(QColor insidecolor READ insidecolor WRITE setInsidecolor NOTIFY insidecolorChanged)
 
-    Q_PROPERTY(uint volume READ volume WRITE setVolume NOTIFY volumeChanged)
+    Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(uint soundSource READ soundSource WRITE setSoundSource NOTIFY soundSourceChanged)
 
 public:
@@ -136,12 +136,12 @@ public:
     QColor insidecolor();
     QColor sidecolor();
 
-    uint volume();
+    int volume();
     uint soundSource();
 
     void setSystemstate(int p_state);
 
-    void setVolume(uint vol);
+    void setVolume(int vol);
     void setSoundSource(uint source);
     void setHeat(uint p_h);
     void setCool(uint p_c);
@@ -222,7 +222,7 @@ signals:
     void insidecolorChanged(QColor );
     void sidecolorChanged(QColor);
     void ceilingcolorChanged(QColor);
-    void volumeChanged(uint);
+    void volumeChanged(int);
     void soundSourceChanged(uint);
     void runFunction(QString);
 
