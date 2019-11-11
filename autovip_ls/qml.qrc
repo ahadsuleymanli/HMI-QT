@@ -220,7 +220,6 @@
         <file>design/controls/left-window.png</file>
         <file>design/controls/fan1.png</file>
         <file>Pages/Media/MediaPlayer.qml</file>
-        <file>design/media/mediaplayer.png</file>
         <file>design/controls/airconditioner/degree.svg</file>
         <file>design/controls/airconditioner/fan1.svg</file>
         <file>design/controls/airconditioner/up.svg</file>
@@ -256,6 +255,7 @@
         <file>design/media/leftmenu/dockingstation.png</file>
         <file>design/media/leftmenu/hdmipc.png</file>
         <file>design/media/leftmenu/kodiplayer.png</file>
+        <file>design/media/leftmenu/mediaplayer.png</file>
         <file>design/media/leftmenu/playstation.png</file>
         <file>design/media/leftmenu/radio.png</file>
         <file>design/media/leftmenu/screendivider.png</file>
@@ -399,7 +399,6 @@
         <file>design/general/bluetooth.png</file>
         <file>design/general/HighLevel.png</file>
         <file>design/general/fibercable.png</file>
-        <file>Pages/Media/MediaPlayer.qml</file>
         <file>design/media/MediaPlayer/1.png</file>
         <file>design/media/MediaPlayer/2.png</file>
         <file>design/media/MediaPlayer/3.png</file>

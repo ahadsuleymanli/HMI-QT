@@ -252,7 +252,7 @@ Item {
                     {
             name: qsTr("Media Player"),
             st: "MediaPlayer",
-            bg: "qrc:/design/media/leftmenu/kodiplayer.png"
+            bg: "qrc:/design/media/leftmenu/mediaplayer.png"
                     }
                     );
         }
@@ -810,7 +810,7 @@ ListModel {
     ListElement {
        name: qsTr("Media Player")
         st: "MediaPlayer"
-       bg: "qrc:/design/media/leftmenu/kodiplayer.png"
+       bg: "qrc:/design/media/leftmenu/mediaplayer.png"
     }
     ListElement {
         name: qsTr("Playstation")

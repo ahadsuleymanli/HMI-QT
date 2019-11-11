@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QMediaMetaData>
 #include <QBuffer>
+#include <qdiriterator.h>
 
 QHash<int, QByteArray> createRoles() {
     QHash<int, QByteArray> r;
@@ -72,28 +73,36 @@ TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
     m_mediaPlayer = new QMediaPlayer();
     m_mediaPlayer->setVolume(0);
     m_mediaPlayer->setMuted(true);
-    QDir mediaDir("/home/serkan");
+    QDir mediaDir("/media/ahad/Toradex/music");
     QStringList dirs = mediaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
     if(!dirs.isEmpty())
-        mediaDir.setPath("/home/serkan/Music/");
+        mediaDir.setPath("/media/ahad/Toradex/music");
     QStringList filters;
-    filters << "*.mp3";
-    mediaDir.setNameFilters(filters);
-
-    QStringList tracks = mediaDir.entryList();
+    filters << "*.flac" << "*.mp3" << "*.wav" ;
+    QDirIterator it("/media/ahad/Toradex/music", filters, QDir::Files, QDirIterator::Subdirectories);
     if(list)
         m_mediaList = list;
     else
         m_mediaList = new QMediaPlaylist();
-
-    for(auto &track : tracks)
+    QString tempPath;
+    while (it.hasNext())
     {
-        m_mediaList->addMedia(QUrl("file:" +mediaDir.path() + "/" + track));
+        tempPath = "file:" + it.next();
+        m_mediaList->addMedia(QUrl( tempPath));
         TrackContent tc;
-        tc.path = "file:" + mediaDir.path() + "/" + track;
+        tc.path = tempPath;
         m_trackContents.push_back(tc);
     }
 
+//    mediaDir.setNameFilters(filters);
+//    QStringList tracks = mediaDir.entryList();
+//    for(auto &track : tracks)
+//    {
+//        m_mediaList->addMedia(QUrl("file:" +mediaDir.path() + "/" + track));
+//        TrackContent tc;
+//        tc.path = "file:" + mediaDir.path() + "/" + track;
+//        m_trackContents.push_back(tc);
+//    }
     m_mediaPlayer->setPlaylist(m_mediaList);
     m_mediaList->setCurrentIndex(0);
     connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, [=](){

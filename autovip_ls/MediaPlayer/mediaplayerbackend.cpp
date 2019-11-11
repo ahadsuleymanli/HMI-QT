@@ -56,7 +56,8 @@ void MediaPlayerBackend::next()
 {
     if(playlist()->currentIndex() == playlist()->mediaCount() -1 )
         playlist()->setCurrentIndex(0);
-    playlist()->next();
+    else
+        playlist()->next();
 }
 
 void MediaPlayerBackend::previous()

@@ -54,13 +54,15 @@ Item {
 
                 RowLayout {
                     id: rowLayout1
-//                    width: childrenRect.width
-//                    height: childrenRect.height
 
+                    //                    width: childrenRect.width
+                    //                    height: childrenRect.height
                     Text {
                         id: infoTitle
                         color: "#c5c5c5"
                         text: ""
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        Layout.maximumWidth: 400
                         font.pixelSize: 20
                         styleColor: "#000000"
                     }
@@ -75,9 +77,9 @@ Item {
 
                 RowLayout {
                     id: rowLayout2
-//                    width: childrenRect.width
-//                    height: childrenRect.height
 
+                    //                    width: childrenRect.width
+                    //                    height: childrenRect.height
                     Text {
                         id: element
                         color: "#959595"
@@ -89,6 +91,8 @@ Item {
                         id: infoArtist
                         color: "#c5c5c5"
                         text: qsTr("Call On Me")
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        Layout.maximumWidth: 400
                         font.pixelSize: 26
                     }
                 }
