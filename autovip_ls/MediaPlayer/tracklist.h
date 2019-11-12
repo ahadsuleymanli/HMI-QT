@@ -5,6 +5,7 @@
 #include <QMediaPlaylist>
 #include <QAbstractListModel>
 #include <QImage>
+#include "usbmounter.h"
 
 struct TrackContent{
     int index;
@@ -17,7 +18,7 @@ struct TrackContent{
 class TrackList : public QAbstractListModel
 {
     Q_OBJECT
-
+    UsbMounter *usbmounter;
 public:
     enum AnimalRoles {
         TypeRole = Qt::UserRole + 1,
@@ -66,10 +67,14 @@ public:
 signals:
     void listReady();
 
+private slots:
+    void createTracklist(QStringList newlyAddedList);
+    void emptyTracklist();
 private:
     QMediaPlaylist *m_mediaList;
     QMediaPlayer *m_mediaPlayer;
     QVector<TrackContent> m_trackContents;
+
 };
 
 #endif // TRACKLIST_H

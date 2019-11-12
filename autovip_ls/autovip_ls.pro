@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     MediaPlayer/mediaplayerbackend.cpp \
     MediaPlayer/tracklist.cpp \
+    MediaPlayer/usbmounter.cpp \
     iterativevaluechanger.cpp \
         nvidiaconnmanager.cpp \
         main.cpp \
@@ -65,6 +66,7 @@ SOURCES += \
 HEADERS += \
     MediaPlayer/mediaplayerbackend.h \
     MediaPlayer/tracklist.h \
+    MediaPlayer/usbmounter.h \
     iterativevaluechanger.h \
     nvidiaconnmanager.h \
     restarter.h \

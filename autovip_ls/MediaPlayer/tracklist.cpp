@@ -69,40 +69,45 @@ void rowSort(QVector<QPersistentModelIndex> & indices)
 TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
     :QAbstractListModel(parent)
 {
-
+    usbmounter = new UsbMounter(this);
     m_mediaPlayer = new QMediaPlayer();
-    m_mediaPlayer->setVolume(0);
-    m_mediaPlayer->setMuted(true);
-    QDir mediaDir("/media/ahad/Toradex/music");
-    QStringList dirs = mediaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-    if(!dirs.isEmpty())
-        mediaDir.setPath("/media/ahad/Toradex/music");
-    QStringList filters;
-    filters << "*.flac" << "*.mp3" << "*.wav" ;
-    QDirIterator it("/media/ahad/Toradex/music", filters, QDir::Files, QDirIterator::Subdirectories);
+//    m_mediaPlayer->setVolume(0);
+//    m_mediaPlayer->setMuted(true);
+//    QDir mediaDir("/media/usb");
+//    QStringList dirs = mediaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+
     if(list)
         m_mediaList = list;
     else
         m_mediaList = new QMediaPlaylist();
-    QString tempPath;
-    while (it.hasNext())
-    {
-        tempPath = "file:" + it.next();
-        m_mediaList->addMedia(QUrl( tempPath));
-        TrackContent tc;
-        tc.path = tempPath;
-        m_trackContents.push_back(tc);
+    connect(usbmounter,&UsbMounter::usbMounted,this,&TrackList::createTracklist);
+    connect(usbmounter,&UsbMounter::usbUnMounted,this,&TrackList::emptyTracklist);
+}
+
+void TrackList::emptyTracklist(){
+    qDebug()<<"clearing media_list";
+    m_mediaList->clear();
+    m_trackContents.clear();
+}
+
+void TrackList::createTracklist(QStringList newlyAddedList){
+    QStringList filters;
+    filters << "*.flac" << "*.mp3" << "*.wav" ;
+    for (QString path : newlyAddedList) {
+        QDirIterator it(path, filters, QDir::Files, QDirIterator::Subdirectories);
+        qDebug()<<"adding tracks from "<< path;
+        QString tempPath;
+        while (it.hasNext())
+        {
+            tempPath = "file:" + it.next();
+            m_mediaList->addMedia(QUrl( tempPath));
+            TrackContent tc;
+            tc.path = tempPath;
+            m_trackContents.push_back(tc);
+        }
     }
 
-//    mediaDir.setNameFilters(filters);
-//    QStringList tracks = mediaDir.entryList();
-//    for(auto &track : tracks)
-//    {
-//        m_mediaList->addMedia(QUrl("file:" +mediaDir.path() + "/" + track));
-//        TrackContent tc;
-//        tc.path = "file:" + mediaDir.path() + "/" + track;
-//        m_trackContents.push_back(tc);
-//    }
+//    if not
     m_mediaPlayer->setPlaylist(m_mediaList);
     m_mediaList->setCurrentIndex(0);
     connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, [=](){
@@ -131,8 +136,7 @@ TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
         }
     });
 
-    connect(this, &TrackList::listReady, [=](){m_mediaPlayer->deleteLater();});
-
+//    connect(this, &TrackList::listReady, [=](){m_mediaPlayer->deleteLater();});
 }
 
 QVariant TrackList::data(const QModelIndex &index, int role) const
