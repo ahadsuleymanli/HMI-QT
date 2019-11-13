@@ -49,8 +49,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
     qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
     qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
-    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
 //    qmlRegisterType<TrackList>("TrackList",1,0,"TrackList");
+    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
+
 
     SettingsManager sm;
     Translator mTrans(&app);

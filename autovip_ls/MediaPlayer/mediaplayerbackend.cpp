@@ -15,6 +15,9 @@ MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
             emit playingMediaChanged();
         }
     });
+//    connect(this, SIGNAL(QMediaPlayer::positionChanged(qint64)), SIGNAL(MediaPlayerBackend::setPosition_(qint64)));
+    connect(this,&QMediaPlayer::positionChanged,this,&MediaPlayerBackend::positionChanged);
+    connect(this,&MediaPlayerBackend::pausePressed,this,&MediaPlayerBackend::pauseHelper);
     m_trackList->connectUsbMounter();
 }
 
@@ -52,30 +55,36 @@ QString MediaPlayerBackend::playingCover()
     return imgStr;
 }
 
-qint64 MediaPlayerBackend::position() const{
-    if (pausePos)
-        return pausePos;
+qint64 MediaPlayerBackend::position(){
+    if ((state()==1 && pausePos == 0) || (state()!=1 && pausePos != 0)){
+        return  QMediaPlayer::position();
+//        return 5;
+    }
     else {
-        qint64 pos = QMediaPlayer::position();
-        return pos;
+        qint64 ret = pausePos;
+        return ret;
     }
 }
 
 void MediaPlayerBackend::pause(){
     pausePos = QMediaPlayer::position();
-    QMediaPlayer::stop();
-    setMuted(true);
+    mediaIndex = playlist()->currentIndex();
+    setMedia(nullptr);
+//    emit pausePressed();
+
 
 }
+
 void MediaPlayerBackend::play(){
-    setPosition(pausePos);
+    pauseHelper();
     pausePos = 0;
     QMediaPlayer::play();
-    setMuted(false);
+
 }
 void MediaPlayerBackend::next()
 {
     pausePos = 0;
+    pauseHelper();
     if(playlist()->currentIndex() == playlist()->mediaCount() -1 )
         playlist()->setCurrentIndex(0);
     else
@@ -85,6 +94,7 @@ void MediaPlayerBackend::next()
 void MediaPlayerBackend::previous()
 {
    pausePos = 0;
+   pauseHelper();
    playlist()->previous();
 }
 

@@ -1,7 +1,6 @@
 #include "usbmounter.h"
 
 UsbMounter::UsbMounter(QObject* parent){
-
     devWatcher.addPath("/dev");
 
     devChangeTimer.stop();
@@ -40,8 +39,9 @@ void UsbMounter::checkForUsbDevices(bool directory_change){
               QString line = textstream.readLine();
               if (line.contains("TYPE=\"", Qt::CaseInsensitive) && line.contains("dev/sd", Qt::CaseInsensitive)
                       && !(line.contains("Microsoft reserved partition", Qt::CaseInsensitive)||
-                           line.contains("Data", Qt::CaseInsensitive)||line.contains("8cc16bbc", Qt::CaseInsensitive)||line.contains("f0a0e50c", Qt::CaseInsensitive))){
+                           line.contains("PARTUUID=\"2c417d8b", Qt::CaseInsensitive)||line.contains("8cc16bbc", Qt::CaseInsensitive)||line.contains("f0a0e50c", Qt::CaseInsensitive))){
                   devPath = line.split(":")[0];
+//                  UUID="646E-0B80" TYPE="vfat" PARTLABEL="Basic data partition" PARTUUID="9a833a30-269d-01d5-189d-41cd4e93ea00"
 
                   mountPath = "/media/usb/music" + QString::number(mountIdx);
                   if (!QDir(mountPath).exists())

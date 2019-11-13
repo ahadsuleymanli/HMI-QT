@@ -7,6 +7,7 @@
 #include <QImage>
 #include "usbmounter.h"
 
+
 struct TrackContent{
     int index;
     QVariant path;
