@@ -38,7 +38,7 @@ bool InitializeMng::init()
             this->translator != nullptr &&
             this->settings_mng != nullptr &&
             this->engine != nullptr &&
-            this->mp_mng != nullptr &&
+//            this->mp_mng != nullptr &&
             this->serial_mng != nullptr
             );
     csetter = new ClockSetter(this);
@@ -54,10 +54,10 @@ bool InitializeMng::init()
     {
         return false;
     }
-    if(this->mp_mng == nullptr)
-    {
-        return false;
-    }
+//    if(this->mp_mng == nullptr)
+//    {
+//        return false;
+//    }
     if(this->serial_mng == nullptr)
     {
         return false;
@@ -77,7 +77,7 @@ bool InitializeMng::init()
 
 
     QUrl mediaurl(this->settings_mng->mediaPlayerURL());
-    this->mp_mng->setURL(mediaurl);
+//    this->mp_mng->setURL(mediaurl);
 
     if(!this->settings_mng->init()) {
 	    qDebug()<<"settings creation error";
@@ -93,7 +93,7 @@ bool InitializeMng::init()
     engine->rootContext()->setContextProperty("SM",this->settings_mng);
     engine->rootContext()->setContextProperty("mytrans", this->translator);
     engine->rootContext()->setContextProperty("serial_mng", this->serial_mng);
-    engine->rootContext()->setContextProperty("mp_mng", this->mp_mng);
+//    engine->rootContext()->setContextProperty("mp_mng", this->mp_mng);
     engine->rootContext()->setContextProperty("csetter", this->csetter);
 
 
@@ -109,19 +109,19 @@ bool InitializeMng::init()
 
     this->serial_mng->openSerialPort();
     serial_mng->setDemomode(settings_mng->demomode());
-    switch(settings_mng->mediaplayertype())
-    {
-        case 1:
-            if(this->mp_mng->connectToServer(mediaurl) == true)
-            {
-            qDebug()<<"MediaPlayer connection is successful";
-            }else{
+//    switch(settings_mng->mediaplayertype())
+//    {
+//        case 1:
+//            if(this->mp_mng->connectToServer(mediaurl) == true)
+//            {
+//            qDebug()<<"MediaPlayer connection is successful";
+//            }else{
 
-//            qDebug()<<"MediaPlayer connection is unsuccessful";
-            }
-        break;
+////            qDebug()<<"MediaPlayer connection is unsuccessful";
+//            }
+//        break;
 
-    }
+//    }
 
 
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));

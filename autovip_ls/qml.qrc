@@ -74,10 +74,6 @@
         <file>Components/LeftButton.qml</file>
         <file>design/general/lightline.png</file>
         <file>design/general/captionline.svg</file>
-        <file>Components/MediaDirection.qml</file>
-        <file>Components/MediaControls.qml</file>
-        <file>Components/MediaProgress.qml</file>
-        <file>Components/MediaPanel.qml</file>
         <file>design/mockupdata/film.png</file>
         <file>Components/RadioStationItem.qml</file>
         <file>design/radio/addFavourite.svg</file>
@@ -434,5 +430,6 @@
         <file>Pages/Media/MediaPlayer/Library.qml</file>
         <file>Pages/Media/MediaPlayer/LibraryForm.ui.qml</file>
         <file>design/media/MediaPlayer/shuffle_on.png</file>
+        <file>design/media/MediaPlayer/pause.png</file>
     </qresource>
 </RCC>

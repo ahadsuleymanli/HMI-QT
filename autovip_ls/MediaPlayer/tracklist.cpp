@@ -71,8 +71,8 @@ TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
 {
     usbmounter = new UsbMounter(this);
     m_mediaPlayer = new QMediaPlayer();
-    m_mediaPlayer->setVolume(0);
-    m_mediaPlayer->setMuted(true);
+//    m_mediaPlayer->setVolume(0);
+//    m_mediaPlayer->setMuted(true);
 //    QDir mediaDir("/media/usb");
 //    QStringList dirs = mediaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 

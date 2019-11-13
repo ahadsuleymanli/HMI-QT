@@ -13,7 +13,7 @@ HomeForm {
     infoArtist.text : (mPlayerBackend.playingArtist === "" ? "unknown" : mPlayerBackend.playingArtist)
     coverImage.source: (mPlayerBackend.playingCover === "" ? "qrc:/design/media/MediaPlayer/melody.png":
                                                              mPlayerBackend.playingCover)
-    playPauseImage.source:(mPlayerBackend.state === 1 ? "qrc:/design/media/MediaPlayer/1.png":
+    playPauseImage.source:(mPlayerBackend.state === 1 ? "qrc:/design/media/MediaPlayer/pause.png":
                                                                 "qrc:/design/media/MediaPlayer/2.png")
     progressArea.onMouseXChanged:{
         var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)

@@ -52,9 +52,30 @@ QString MediaPlayerBackend::playingCover()
     return imgStr;
 }
 
+qint64 MediaPlayerBackend::position() const{
+    if (pausePos)
+        return pausePos;
+    else {
+        qint64 pos = QMediaPlayer::position();
+        return pos;
+    }
+}
 
+void MediaPlayerBackend::pause(){
+    pausePos = QMediaPlayer::position();
+    QMediaPlayer::stop();
+    setMuted(true);
+
+}
+void MediaPlayerBackend::play(){
+    setPosition(pausePos);
+    pausePos = 0;
+    QMediaPlayer::play();
+    setMuted(false);
+}
 void MediaPlayerBackend::next()
 {
+    pausePos = 0;
     if(playlist()->currentIndex() == playlist()->mediaCount() -1 )
         playlist()->setCurrentIndex(0);
     else
@@ -63,6 +84,7 @@ void MediaPlayerBackend::next()
 
 void MediaPlayerBackend::previous()
 {
+   pausePos = 0;
    playlist()->previous();
 }
 
@@ -72,4 +94,7 @@ void MediaPlayerBackend::shuffle(bool enabled)
         playlist()->shuffle();
 }
 
+//void MediaPlayerBackend::pause()
+//{
 
+//}

@@ -48,14 +48,14 @@ int main(int argc, char *argv[])
     qmlRegisterType<Restarter>("closx.restarter", 1, 0, "Restarter");
     qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
     qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
-    qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");            // Ahadin notlari: bunu yapmakla klasin 2 kez instantiate ediyorsun.
+    qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
     qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
-    qmlRegisterType<TrackList>("MediaPlayerBackend",1,0,"TrackList");
+//    qmlRegisterType<TrackList>("TrackList",1,0,"TrackList");
 
     SettingsManager sm;
     Translator mTrans(&app);
 
-    MediaPlayerMng mpMan;
+//    MediaPlayerMng mpMan;
 
     InitializeMng imng;
     SerialMng smng;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     imng.setTranslator(&mTrans);
     imng.setSettingsManager(&sm);
     imng.setEngine(&engine);
-    imng.setMediaPlayerMng(&mpMan);
+//    imng.setMediaPlayerMng(&mpMan);
     imng.setSerialMng(&smng);
 
     // instantiating an NvidiaConnManager object

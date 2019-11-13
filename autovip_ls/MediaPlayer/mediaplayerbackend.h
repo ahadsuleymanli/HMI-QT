@@ -15,24 +15,29 @@ class MediaPlayerBackend: public QMediaPlayer
 
 public:
     MediaPlayerBackend(QObject *parent = nullptr);
-    Q_INVOKABLE TrackList* trackList() { return m_trackList; }
+    Q_INVOKABLE TrackList* trackList() { qDebug()<<"invoking tracklist";
+        return m_trackList; }
 
     QString playingTitle();
     QString playingYear();
     QString playingArtist();
     QString playingCover();
+    qint64 position() const;
 
 public slots:
 
+    void pause();
+    void play();
     void next();
     void previous();
-
     void shuffle(bool enabled = true);
+
 
 signals:
     void playingMediaChanged();
 
 private:
+    qint64 pausePos = 0;
     TrackList *m_trackList;
     QMediaPlaylist *m_playList;
 };
