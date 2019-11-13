@@ -7,9 +7,8 @@ UsbMounter::UsbMounter(QObject* parent){
     devChangeTimer.stop();
     devChangeTimer.setInterval(150);
     connect(&devWatcher, SIGNAL(directoryChanged(QString)), this,SLOT(reactToDevChange(QString)));
-    connect(&devChangeTimer, &QTimer::timeout, this,&UsbMounter::checkForUsbDevices);
-    checkForUsbDevices();
-
+    connect(&devChangeTimer, &QTimer::timeout, this,[this](){checkForUsbDevices(true);});
+    connect(this,SIGNAL(readyToCheck(bool)),this,SLOT(checkForUsbDevices(bool)));
 }
 
 void UsbMounter::reactToDevChange(const QString& str)
@@ -18,10 +17,11 @@ void UsbMounter::reactToDevChange(const QString& str)
     devChangeTimer.start();
 }
 
-void UsbMounter::checkForUsbDevices(){
+void UsbMounter::checkForUsbDevices(bool directory_change){
     devChangeTimer.stop();
 
-    qDebug("dev directory changed!");
+    if (directory_change == true)
+        qDebug("dev directory changed!");
     QString devPath;
     QString mountPath;
     int mountIdx = 0;
@@ -65,8 +65,9 @@ void UsbMounter::checkForUsbDevices(){
            }
         if (mountIdx)
             emit usbMounted(newlyAddedList);
-        else{
-            emit usbUnMounted();
+        else {
+            if (directory_change==true)
+                emit usbUnMounted();
             mountedPaths.clear();
         }
     }

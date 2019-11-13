@@ -13,7 +13,8 @@ HomeForm {
     infoArtist.text : (mPlayerBackend.playingArtist === "" ? "unknown" : mPlayerBackend.playingArtist)
     coverImage.source: (mPlayerBackend.playingCover === "" ? "qrc:/design/media/MediaPlayer/melody.png":
                                                              mPlayerBackend.playingCover)
-
+    playPauseImage.source:(mPlayerBackend.state === 1 ? "qrc:/design/media/MediaPlayer/1.png":
+                                                                "qrc:/design/media/MediaPlayer/2.png")
     progressArea.onMouseXChanged:{
         var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)
         mPlayerBackend.setPosition(pos)
@@ -23,10 +24,12 @@ HomeForm {
 
 
     playPauseButton.onClicked: {
-        if(mPlayerBackend.state === 1)
+        if(mPlayerBackend.state === 1){
             mPlayerBackend.pause()
-        else
+        }
+        else{
             mPlayerBackend.play()
+        }
     }
 
     prewButton.onClicked: {
@@ -36,7 +39,7 @@ HomeForm {
     nextButton.onClicked: {
         mPlayerBackend.next()
     }
-    backButton.onClicked: {
+    repeatButton.onClicked: {
 
     }
 

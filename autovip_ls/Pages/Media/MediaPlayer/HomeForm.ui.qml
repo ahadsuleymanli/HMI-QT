@@ -5,9 +5,11 @@ import QtGraphicalEffects 1.0
 Item {
     width: 810
     height: 600
+    property alias repeatButton: repeatButton
     property alias progressArea: progressArea
     property alias progressIndicator: progressIndicator
     property alias coverImage: coverImage
+    property alias playPauseImage: playPauseImage
     property alias infoArtist: infoArtist
     property alias infoLayout: infoLayout
     property alias infoYear: infoYear
@@ -20,7 +22,6 @@ Item {
     property alias shuffleButton: shuffleButton
     property alias playPauseButton: playPauseButton
     property alias nextButton: nextButton
-    property alias backButton: backButton
 
     ColumnLayout {
         id: columnLayout
@@ -196,7 +197,7 @@ Item {
                     sourceSize.height: 30
                     sourceSize.width: 30
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/design/media/MediaPlayer/change.png"
+                    source: "qrc:/design/media/MediaPlayer/shuffle.png"
                     MouseArea {
                         id: shuffleButton
                         anchors.fill: parent
@@ -293,9 +294,9 @@ Item {
                     sourceSize.height: 30
                     sourceSize.width: 30
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/design/media/MediaPlayer/back.png"
+                    source: "qrc:/design/media/MediaPlayer/repeat.png"
                     MouseArea {
-                        id: backButton
+                        id: repeatButton
                         anchors.fill: parent
                     }
                 }
@@ -305,7 +306,7 @@ Item {
                     samples: 20
                     color: "#bbabebfb"
                     source: repeat
-                    visible: backButton.pressed
+                    visible: repeatButton.pressed
                 }
             }
 

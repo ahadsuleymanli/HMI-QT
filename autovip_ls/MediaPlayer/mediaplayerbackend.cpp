@@ -15,6 +15,7 @@ MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
             emit playingMediaChanged();
         }
     });
+    m_trackList->connectUsbMounter();
 }
 
 QString MediaPlayerBackend::playingTitle()

@@ -63,6 +63,7 @@ public:
     Q_INVOKABLE QString imageAt(int index) { return m_trackContents[index].image; }
     Q_INVOKABLE QVariant pathAt(int index) { return m_trackContents[index].path; }
 
+    void connectUsbMounter();
 
 signals:
     void listReady();

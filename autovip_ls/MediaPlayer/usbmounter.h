@@ -25,11 +25,12 @@ public:
 
 public slots:
     void reactToDevChange(const QString& str);
-    void checkForUsbDevices();
+    void checkForUsbDevices(bool directory_change = true);
 
 signals:
     void usbMounted(QStringList newlyAddedList);
     void usbUnMounted();
+    void readyToCheck(bool directory_change);
 };
 
 #endif // MYCLASS_H

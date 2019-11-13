@@ -404,10 +404,10 @@
         <file>design/media/MediaPlayer/3.png</file>
         <file>design/media/MediaPlayer/album.png</file>
         <file>design/media/MediaPlayer/artist.png</file>
-        <file>design/media/MediaPlayer/back.png</file>
+        <file>design/media/MediaPlayer/repeat.png</file>
         <file>design/media/MediaPlayer/background.png</file>
         <file>design/media/MediaPlayer/bottom_part.png</file>
-        <file>design/media/MediaPlayer/change.png</file>
+        <file>design/media/MediaPlayer/shuffle.png</file>
         <file>design/media/MediaPlayer/explore.png</file>
         <file>design/media/MediaPlayer/favorite_song.png</file>
         <file>design/media/MediaPlayer/history.png</file>
@@ -433,5 +433,6 @@
         <file>design/media/MediaPlayer/melody.png</file>
         <file>Pages/Media/MediaPlayer/Library.qml</file>
         <file>Pages/Media/MediaPlayer/LibraryForm.ui.qml</file>
+        <file>design/media/MediaPlayer/shuffle_on.png</file>
     </qresource>
 </RCC>

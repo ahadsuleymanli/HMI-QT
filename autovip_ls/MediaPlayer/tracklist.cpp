@@ -71,8 +71,8 @@ TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
 {
     usbmounter = new UsbMounter(this);
     m_mediaPlayer = new QMediaPlayer();
-//    m_mediaPlayer->setVolume(0);
-//    m_mediaPlayer->setMuted(true);
+    m_mediaPlayer->setVolume(0);
+    m_mediaPlayer->setMuted(true);
 //    QDir mediaDir("/media/usb");
 //    QStringList dirs = mediaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
@@ -80,8 +80,13 @@ TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
         m_mediaList = list;
     else
         m_mediaList = new QMediaPlaylist();
+
+}
+
+void TrackList::connectUsbMounter(){
     connect(usbmounter,&UsbMounter::usbMounted,this,&TrackList::createTracklist);
     connect(usbmounter,&UsbMounter::usbUnMounted,this,&TrackList::emptyTracklist);
+    emit usbmounter->readyToCheck(false);
 }
 
 void TrackList::emptyTracklist(){
@@ -93,9 +98,9 @@ void TrackList::emptyTracklist(){
 void TrackList::createTracklist(QStringList newlyAddedList){
     QStringList filters;
     filters << "*.flac" << "*.mp3" << "*.wav" ;
+    qDebug()<<"adding tracks from "<< newlyAddedList.join(", ");
     for (QString path : newlyAddedList) {
         QDirIterator it(path, filters, QDir::Files, QDirIterator::Subdirectories);
-        qDebug()<<"adding tracks from "<< path;
         QString tempPath;
         while (it.hasNext())
         {
