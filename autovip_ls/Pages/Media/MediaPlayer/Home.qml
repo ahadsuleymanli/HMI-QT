@@ -24,12 +24,8 @@ HomeForm {
 
 
     playPauseButton.onClicked: {
-        if(mPlayerBackend.state === 1){
-            mPlayerBackend.pause()
-        }
-        else{
-            mPlayerBackend.play()
-        }
+        mPlayerBackend.playPause()
+
     }
 
     prewButton.onClicked: {

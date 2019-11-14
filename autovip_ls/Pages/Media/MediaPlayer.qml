@@ -6,7 +6,6 @@ import QtQuick.Controls.Material 2.3
 import ck.gmachine 1.0
 import "../../Components"
 import QtGraphicalEffects 1.0
-import MediaPlayerBackend 1.0
 
 BasePage {
     id:root
@@ -23,7 +22,7 @@ BasePage {
     property real lastPosition: 0
     property real lastDuration: 0
     property var lastSource: ""
-    property alias mPlayerBackend : mPlayerBackend
+//    property alias mPlayerBackend : mPlayerBackend
 
     property var positionRatio: {
         if(mPlayerBackend.duration > 0){
@@ -43,10 +42,7 @@ BasePage {
         return durMin + ":" + (durSec < 10 ? "0" + durSec : durSec);
     }
 
-    MediaPlayerBackend{
-        id: mPlayerBackend
-        onPlayingMediaChanged: console.log(playingTitle)
-    }
+
     ListView{
         id: playList
         model: mPlayerBackend.trackList()

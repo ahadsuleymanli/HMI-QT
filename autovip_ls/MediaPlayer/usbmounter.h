@@ -1,5 +1,5 @@
-#ifndef MYCLASS_H
-#define MYCLASS_H
+#ifndef USBMOUNTER_H
+#define USBMOUNTER_H
 
 #include <QObject>
 #include <QtDebug>
@@ -33,4 +33,4 @@ signals:
     void readyToCheck(bool directory_change);
 };
 
-#endif // MYCLASS_H
+#endif // USBMOUNTER_H

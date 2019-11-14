@@ -9,16 +9,14 @@ MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
     m_playList = new QMediaPlaylist(this);
     setPlaylist(m_playList);
     m_trackList = new TrackList(m_playList);
-
+    setMuted(true);
     connect(this, &QMediaPlayer::mediaStatusChanged,[=](){
         if(mediaStatus() == QMediaPlayer::BufferedMedia || mediaStatus() == QMediaPlayer::LoadedMedia){
             emit playingMediaChanged();
         }
     });
-//    connect(this, SIGNAL(QMediaPlayer::positionChanged(qint64)), SIGNAL(MediaPlayerBackend::setPosition_(qint64)));
-    connect(this,&QMediaPlayer::positionChanged,this,&MediaPlayerBackend::positionChanged);
-    connect(this,&MediaPlayerBackend::pausePressed,this,&MediaPlayerBackend::pauseHelper);
     m_trackList->connectUsbMounter();
+    QTimer::singleShot(250,this,[this]{ setMuted(false); });
 }
 
 QString MediaPlayerBackend::playingTitle()
@@ -55,36 +53,24 @@ QString MediaPlayerBackend::playingCover()
     return imgStr;
 }
 
-qint64 MediaPlayerBackend::position(){
-    if ((state()==1 && pausePos == 0) || (state()!=1 && pausePos != 0)){
-        return  QMediaPlayer::position();
-//        return 5;
+
+
+void MediaPlayerBackend::playPause(){
+    if (state() == 1 && !paused){
+        setMuted(true);
+        QTimer::singleShot(250,this,[this]{ this->QMediaPlayer::pause(); setMuted(false); });
     }
-    else {
-        qint64 ret = pausePos;
-        return ret;
+    else{
+        this->QMediaPlayer::play();
+//        QTimer::singleShot(100,this,[this]{  });
     }
-}
-
-void MediaPlayerBackend::pause(){
-    pausePos = QMediaPlayer::position();
-    mediaIndex = playlist()->currentIndex();
-    setMedia(nullptr);
-//    emit pausePressed();
 
 
-}
 
-void MediaPlayerBackend::play(){
-    pauseHelper();
-    pausePos = 0;
-    QMediaPlayer::play();
 
 }
 void MediaPlayerBackend::next()
 {
-    pausePos = 0;
-    pauseHelper();
     if(playlist()->currentIndex() == playlist()->mediaCount() -1 )
         playlist()->setCurrentIndex(0);
     else
@@ -93,8 +79,6 @@ void MediaPlayerBackend::next()
 
 void MediaPlayerBackend::previous()
 {
-   pausePos = 0;
-   pauseHelper();
    playlist()->previous();
 }
 
@@ -104,7 +88,4 @@ void MediaPlayerBackend::shuffle(bool enabled)
         playlist()->shuffle();
 }
 
-//void MediaPlayerBackend::pause()
-//{
 
-//}

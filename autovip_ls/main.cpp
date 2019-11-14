@@ -18,6 +18,8 @@
 #include "MediaPlayer/tracklist.h"
 #include "MediaPlayer/mediaplayerbackend.h"
 #include <QProcess>
+#include "MediaPlayer/secondthread.h"
+#include "MediaPlayer/mediaplayerfrontend.h"
 
 bool changeCD()
 {
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
     qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
 //    qmlRegisterType<TrackList>("TrackList",1,0,"TrackList");
-    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
+//    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
 
 
     SettingsManager sm;
@@ -71,7 +73,14 @@ int main(int argc, char *argv[])
     // instantiating an NvidiaConnManager object
     NvidiaConnManager nvidiaConnManager(1234, &smng, &sm, &app);
     engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
-
+    SecondThread secondThread;
+//    MediaPlayerFrontend mPlayerBackend(&app);
+//    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::playPauseSignal, &secondThread, &SecondThread::playPause);
+//    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::nextSignal, &secondThread, &SecondThread::next);
+//    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::previousSignal, &secondThread, &SecondThread::previous);
+//    secondThread.start();
+    MediaPlayerBackend mPlayerBackend(&app);
+    engine.rootContext()->setContextProperty("mPlayerBackend", &mPlayerBackend);
 
     if(imng.init() == false)
     {

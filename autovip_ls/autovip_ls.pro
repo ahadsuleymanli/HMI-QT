@@ -65,6 +65,8 @@ SOURCES += \
 
 HEADERS += \
     MediaPlayer/mediaplayerbackend.h \
+    MediaPlayer/mediaplayerfrontend.h \
+    MediaPlayer/secondthread.h \
     MediaPlayer/tracklist.h \
     MediaPlayer/usbmounter.h \
     iterativevaluechanger.h \
