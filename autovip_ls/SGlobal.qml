@@ -35,17 +35,21 @@ Item {
     //Icon carousel menu
     property int leftMenuHeight: 480
     property int leftMenuWidth: 246
+    property int leftToggleMenuWidth: 266
     property int leftMenuSpacing: 25
     property string leftMenuColor: "transparent"
     //End Icon Carousel Menu
 
     //text menu
     property int leftTextMenuHeight: 430
-    property int leftTextMenuWidth: 246
+    property int leftTextMenuWidth: 266
     property int leftTextMenuSpacing: 20
     property string leftTextMenuColor: "transparent"
     property color leftTextMenuItemColor: Qt.rgba(0,0,0,0.1)
     property color leftTextMenuItemPressedColor: Qt.rgba(0/255, 108/255, 128/255,0.6)
+    property color toggleMenuToggleOnColor: Qt.rgba(100/255, 108/255, 128/255,0.6)
+    property string toggleOn: qsTr("on")
+    property string toggleOff: qsTr("off")
     //end text menu
 
     property alias oneSeatModel: oneSeatModel
@@ -235,12 +239,13 @@ Item {
 
     function createLightsModel(){
         lightsModel.clear();
-        lightsModel.append({name:qsTr("Ceiling Light"),target:1,selected:false});
+        if (true)
+            lightsModel.append({name:qsTr("Ceiling Light"),target:1,selected:false, lightsOff:true, offText:qsTr("off")});
         if(SM.insidelight() === true)
-            lightsModel.append({name:qsTr("Inside Light"),target:2,selected:false});
-        if(SM.slboolean === true){
-            lightsModel.append({name:qsTr("Side Light"),target:3,selected:false});
-        }
+            lightsModel.append({name:qsTr("Inside Light"),target:2,selected:false, lightsOff:true, offText:qsTr("off")});
+        if(SM.slboolean === true)
+            lightsModel.append({name:qsTr("Side Light"),target:3,selected:false, lightsOff:true, offText:qsTr("off")});
+
     }
 
     function createMediaModel()
@@ -788,21 +793,21 @@ ListModel {
 
 ListModel{
     id: lightsModel
-    ListElement{
-        name:QT_TR_NOOP("Ceiling Light")
-        target:1
-        selected:false
-    }
-    ListElement{
-        name:QT_TR_NOOP("Inside Light")
-        target:2
-        selected:false
-    }
-    ListElement{
-        name:QT_TR_NOOP("Side Light")
-        target:3
-        selected:false
-    }
+//    ListElement{
+//        name:QT_TR_NOOP("Ceiling Light")
+//        target:1
+//        selected:false
+//    }
+//    ListElement{
+//        name:QT_TR_NOOP("Inside Light")
+//        target:2
+//        selected:false
+//    }
+//    ListElement{
+//        name:QT_TR_NOOP("Side Light")
+//        target:3
+//        selected:false
+//    }
 }
 
 ListModel {

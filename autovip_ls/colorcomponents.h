@@ -20,6 +20,7 @@ class ColorComponents : public QObject
 	Q_PROPERTY(qreal value      READ value      WRITE setValue      NOTIFY valueChanged)
     Q_PROPERTY(QColor color     READ color      WRITE setColor      NOTIFY colorChanged)
     Q_PROPERTY(QString fullName READ fullName                       NOTIFY colorChanged)
+    Q_PROPERTY(bool lightsOff READ lightsOff                     NOTIFY lightsOffChanged)
 
 public:
 	ColorComponents(QObject *parent = 0);
@@ -49,7 +50,10 @@ public:
     void setColor(const QColor &color);
 
     QString fullName() const;
+
+    bool lightsOff() const;
     
+    Q_INVOKABLE bool toggleOnOff();
     Q_INVOKABLE static bool isValidColor(const QString& name);
     Q_INVOKABLE static QColor hsva(qreal h, qreal s, qreal v, qreal a = 1.0);
     Q_INVOKABLE QString toRGBString();
@@ -66,9 +70,12 @@ signals:
 	void saturationChanged();
 	void valueChanged();
 	void colorChanged();
+    void lightsOffChanged();
 
 private:
-	QColor m_color;
+    bool lightsOff_ = true;
+    QColor lastColor;
+    QColor m_color;
 };
 
 #endif // COLORCOMPONENTS_H

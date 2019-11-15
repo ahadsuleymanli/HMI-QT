@@ -431,5 +431,6 @@
         <file>Pages/Media/MediaPlayer/LibraryForm.ui.qml</file>
         <file>design/media/MediaPlayer/shuffle_on.png</file>
         <file>design/media/MediaPlayer/pause.png</file>
+        <file>Components/LeftToggleMenu.qml</file>
     </qresource>
 </RCC>

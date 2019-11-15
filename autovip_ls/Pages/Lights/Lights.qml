@@ -20,14 +20,20 @@ BasePage {
         onCeilingcolorChanged:function(val)
         {
             root.ceilColor = val;
+//            changeToggleText(1, targetColorItem.lightsOff);
+
         }
         onSidecolorChanged:function(val)
         {
             root.sideColor = val;
+//            changeToggleText(3, targetColorItem.lightsOff);
+
         }
         onInsidecolorChanged:function(val)
         {
             root.inSideColor = val;
+//            changeToggleText(2, targetColorItem.lightsOff);
+
         }
     }
     function init()
@@ -40,44 +46,18 @@ BasePage {
     }
     function closeAll()
     {
-                ceilColorComponent.red = 0;
-                ceilColorComponent.green = 0;
-                ceilColorComponent.blue = 0;
+        ceilColorComponent.color = "#000000";
+        sideColorComponent.color = "#000000";
+        insideColorComponent.color = "#000000";
 
-                sideColorComponent.color = "#000000";
-
-                insideColorComponent.color = "#000000";
-
-
-
-        if (c3.color == "#fff6a6")
-        {
+        if (c3.color != "#000000") {
             c3.color = "#000000";
             serial_mng.sendKey("lights/rightreading_onoff",true,delay);
-
         }
-        if (c4.color == "#fff6a6")
-        {
+        if (c4.color != "#000000"){
             c4.color = "#000000";
             serial_mng.sendKey("lights/leftreading_onoff",true,delay);
         }
-
-//        if (transbtn.ison==true)
-//        {
-//            transitme.running=false;
-//            transitme2.running=false;
-//            transitme3.running=false;
-//            transitme4.running=false;
-//            transitme5.running=false;
-//            transitme6.running=false;
-//            transbtn.ison=false;
-//        }
-
-
-
-
-
-
 
     }
 
@@ -253,37 +233,74 @@ BasePage {
     }
     onInSideColorChanged: function(){
     }
-    function changeTarget(id)
+    function pickTarged(id){
+        switch(id)
+        {
+        case 1:
+             root.targetColorItem = ceilColorComponent;
+            break;
+        case 2:
+             root.targetColorItem = insideColorComponent
+            break;
+        case 3:
+             root.targetColorItem = sideColorComponent
+            break;
+        }
+    }
+    function getColorRegionId(){
+        switch(root.targetColorItem)
+        {
+        case ceilColorComponent:
+            return 1;
+        case insideColorComponent:
+            return 2;
+        case sideColorComponent:
+            return 3;
+        }
+    }
+    function getColorRegionItem(id){
+        switch(id)
+        {
+        case 1:
+            return ceilColorComponent;
+        case 2:
+            return insideColorComponent;
+        case 3:
+            return sideColorComponent;
+        }
+    }
+    function changeSelection(id)
     {
-                       switch(id)
-                       {
-                       case 1:
-                            root.targetColorItem = ceilColorComponent;
-                           break;
-                       case 2:
-                            root.targetColorItem = insideColorComponent
-                           break;
-                       case 3:
-                            root.targetColorItem = sideColorComponent
-                           break;
-                       }
-                var msg = {'ind': id-1, 'model': leftMenu.model};
-                worker.sendMessage(msg);
+        pickTarged(id);
+        var msg = {'ind': id-1, 'model': leftMenu.model};
+        worker.sendMessage(msg);
     }
 
-        LeftTextMenu{
-            id:leftMenu
-            selection: true
-            onClicked: function(ind)
-            {
-                changeTarget(ind+1)
-            }
-            WorkerScript {
-            id: worker
-            source: "qrc:/scripts/modelworker.js"
-            }
+    function changeToggleText(id, val)
+    {
+        var msg = {'ind': id-1, 'model': leftMenu.model, "lightsOff": val};
+        worker.sendMessage(msg);
+    }
+
+    LeftToggleMenu{
+        id:leftMenu
+        selection: true
+        onLightsToggle: function (index){
+            var val = getColorRegionItem(index+1).toggleOnOff();
+//            changeToggleText(index+1,val);
+//            changeToggleText(index+1, targetColorItem.lightsOff);
 
         }
+        onClicked: function(ind)
+        {
+            changeSelection(ind+1)
+        }
+        WorkerScript {
+        id: worker
+        source: "qrc:/scripts/modelworker.js"
+        }
+
+    }
     Rectangle{
         x:0
         y:0
@@ -596,11 +613,6 @@ BasePage {
 
         }
 
-
-
-
-
-
         RowLayout{
            spacing: 10
            id:rl2
@@ -819,7 +831,7 @@ BasePage {
 
     Component.onCompleted: {
         root.delay = serial_mng.getLightsDelay();
-        changeTarget(1);
+        changeSelection(1);
         GSystem.createLightsModel();
         leftMenu.model=GSystem.lightsModel;
     }

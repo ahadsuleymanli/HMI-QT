@@ -1,6 +1,6 @@
 #include "colorcomponents.h"
 #include <iostream>
-
+#include <QDebug>
 ColorComponents::ColorComponents(QObject *parent)
 	: QObject(parent)
 {
@@ -132,7 +132,8 @@ void ColorComponents::setValue(qreal value)
 	if(_inRange(value) == this->value()) return;
 
 	m_color.setHsvF(hue(), saturation(), _inRange(value), alpha());
-
+    lastColor = nullptr;
+    lightsOff_ = false;
 	emit valueChanged();
 
 	emit redChanged();
@@ -147,11 +148,50 @@ QColor ColorComponents::color() const
     return m_color;
 }
 
+bool ColorComponents::toggleOnOff(){
+    if (lastColor!=nullptr){
+        // lights on
+        m_color = lastColor;
+        lastColor = nullptr;
+        emit colorChanged();
+        emit redChanged();
+        emit greenChanged();
+        emit blueChanged();
+        emit valueChanged();
+        lightsOff_ = false;
+        return false;
+    }
+    else if (m_color.rgb() != QColor("black").rgb()){
+        // lights off
+        qreal saturation = m_color.saturation();
+        lastColor = m_color;
+        m_color = QColor("black");
+        m_color.setHsvF(hue(), _inRange(saturation), value(), alpha());
+        emit colorChanged();
+        emit redChanged();
+        emit greenChanged();
+        emit blueChanged();
+        emit valueChanged();
+        lightsOff_ = true;
+        return true;
+    }
+}
+
+bool ColorComponents::lightsOff() const{
+    return lightsOff_;
+//    if (lastColor==nullptr)
+//        return false;
+//    else
+//        return true;
+}
+
 void ColorComponents::setColor(const QColor &color)
 {
     if(!color.isValid() || color == this->color()) return;
-    
+
     m_color = color;
+    lastColor = nullptr;
+    lightsOff_ = false;
     emit colorChanged();
     
     emit hueChanged();

@@ -1042,6 +1042,14 @@
         <translation>內光</translation>
     </message>
     <message>
+        <source>on</source>
+        <translation>打开</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>关</translation>
+    </message>
+    <message>
         <location filename="../Pages/Lights/Lights.qml" line="532"/>
         <source>Close All</source>
         <translation>關閉所有</translation>
@@ -1606,10 +1614,22 @@
         <translation>內光</translation>
     </message>
     <message>
-        <location filename="../SGlobal.qml" line="241"/>
+        <location filename="../SGlobal.qml" line="240"/>
         <location filename="../SGlobal.qml" line="787"/>
         <source>Side Light</source>
         <translation>側燈</translation>
+    </message>
+    <message>
+        <location filename="../SGlobal.qml" line="238"/>
+        <location filename="../SGlobal.qml" line="782"/>
+        <source>on</source>
+        <translation>打开</translation>
+    </message>
+    <message>
+        <location filename="../SGlobal.qml" line="238"/>
+        <location filename="../SGlobal.qml" line="782"/>
+        <source>off</source>
+        <translation>关</translation>
     </message>
     <message>
         <location filename="../SGlobal.qml" line="252"/>

@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
     qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
     qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
-//    qmlRegisterType<TrackList>("TrackList",1,0,"TrackList");
 //    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
 
 
@@ -73,7 +72,7 @@ int main(int argc, char *argv[])
     // instantiating an NvidiaConnManager object
     NvidiaConnManager nvidiaConnManager(1234, &smng, &sm, &app);
     engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
-    SecondThread secondThread;
+//    SecondThread secondThread;
 //    MediaPlayerFrontend mPlayerBackend(&app);
 //    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::playPauseSignal, &secondThread, &SecondThread::playPause);
 //    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::nextSignal, &secondThread, &SecondThread::next);
