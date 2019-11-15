@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh" sourcelanguage="en">
+<TS version="2.1" language="zh" sourcelanguage="en">
 <context>
     <name>AirConditioner</name>
     <message>
@@ -1042,14 +1042,6 @@
         <translation>內光</translation>
     </message>
     <message>
-        <source>on</source>
-        <translation>打开</translation>
-    </message>
-    <message>
-        <source>off</source>
-        <translation>关</translation>
-    </message>
-    <message>
         <location filename="../Pages/Lights/Lights.qml" line="532"/>
         <source>Close All</source>
         <translation>關閉所有</translation>
@@ -1620,16 +1612,9 @@
         <translation>側燈</translation>
     </message>
     <message>
-        <location filename="../SGlobal.qml" line="238"/>
-        <location filename="../SGlobal.qml" line="782"/>
-        <source>on</source>
-        <translation>打开</translation>
-    </message>
-    <message>
-        <location filename="../SGlobal.qml" line="238"/>
-        <location filename="../SGlobal.qml" line="782"/>
+        <location filename="../SGlobal.qml" line="240"/>
         <source>off</source>
-        <translation>关</translation>
+        <translation type="unfinished">关</translation>
     </message>
     <message>
         <location filename="../SGlobal.qml" line="252"/>

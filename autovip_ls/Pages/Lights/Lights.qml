@@ -542,6 +542,7 @@ BasePage {
         RowLayout{
            spacing: 10
            anchors.top: cl1.top
+           anchors.right: parent.right
            id:rl1
            LightButton{
                Layout.preferredHeight: 30
@@ -552,6 +553,8 @@ BasePage {
                    GSystem.createLightsModel();
                    leftMenu.model=GSystem.lightsModel;
                }
+               enabled: false
+               visible: false
            }
            LightButton{
                Layout.preferredHeight: 30
