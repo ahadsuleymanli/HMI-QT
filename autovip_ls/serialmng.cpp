@@ -901,7 +901,8 @@ bool SerialMng::parserSoundControl(QString p_response)
         {
             return false;
         }
-        setSoundSource(source);
+        if (source > 0)
+            setSoundSource(source-1);
         return true;
     }
     return false;

@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import ck.gmachine 1.0
+import QtQml.Models 2.10 as QM2
 
 Rectangle {
            id:root
@@ -18,6 +19,7 @@ Rectangle {
            height:GSystem.leftTextMenuHeight
            ListView{
                 id:mview
+//                model:myModel
                 interactive: false
                 anchors.verticalCenter: root.verticalCenter
                 anchors.verticalCenterOffset: 20
@@ -26,11 +28,19 @@ Rectangle {
                 width:root.width
                 height: mview.model.count * 95
                 focus:true
+
            }
+           function toggle(){
+
+           }
+//           function turnOff(){}
 
 
         Component {
             id:txtmenudlg
+//            function update(){
+//                off
+//            }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
                 Column{
@@ -94,13 +104,14 @@ Rectangle {
                          text : offText
                          width:75
                          height:75
-//                         bgcolor: (model.lightsOff == false)?GSystem.leftTextMenuItemColor:GSystem.toggleMenuToggleOnColor
+                         bgcolor: GSystem.leftTextMenuItemColor;
+//                         bgcolor: (!model.lightsOff)?GSystem.leftTextMenuItemColor:GSystem.toggleMenuToggleOnColor
                          area.onPressed: {
                              bgcolor = GSystem.leftTextMenuItemPressedColor;
                          }
                          area.onReleased: {
                              bgcolor = GSystem.leftTextMenuItemColor;
-//                             bgcolor = (model.lightsOff == false)?GSystem.leftTextMenuItemColor:GSystem.toggleMenuToggleOnColor
+//                             bgcolor = (!model.lightsOff)?GSystem.leftTextMenuItemColor:GSystem.toggleMenuToggleOnColor
                          }
                          area.onClicked: function(){
                              root.lightsToggle(model.index);

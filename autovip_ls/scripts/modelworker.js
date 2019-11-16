@@ -5,6 +5,7 @@ WorkerScript.onMessage = function(msg) {
                         if (typeof lightsOff !== 'undefined'){
                             model.setProperty(ind,"lightsOff",lightsOff)
                             console.log("index : "+ind + " lightsOff: " + lightsOff);
+//                            model.setProperty(ind)
                         }
                         else{
                             for(var i=0;i<model.count;i++)

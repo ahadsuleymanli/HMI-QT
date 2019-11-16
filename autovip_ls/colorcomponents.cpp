@@ -176,6 +176,22 @@ bool ColorComponents::toggleOnOff(){
         return true;
     }
 }
+bool ColorComponents::toggleOff(){
+    if (m_color.rgb() != QColor("black").rgb()){
+            // lights off
+            qreal saturation = m_color.saturation();
+            lastColor = m_color;
+            m_color = QColor("black");
+            m_color.setHsvF(hue(), _inRange(saturation), value(), alpha());
+            emit colorChanged();
+            emit redChanged();
+            emit greenChanged();
+            emit blueChanged();
+            emit valueChanged();
+            lightsOff_ = true;
+            return true;
+        }
+}
 
 bool ColorComponents::lightsOff() const{
     return lightsOff_;

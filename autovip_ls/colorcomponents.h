@@ -54,6 +54,7 @@ public:
     bool lightsOff() const;
     
     Q_INVOKABLE bool toggleOnOff();
+    Q_INVOKABLE bool toggleOff();
     Q_INVOKABLE static bool isValidColor(const QString& name);
     Q_INVOKABLE static QColor hsva(qreal h, qreal s, qreal v, qreal a = 1.0);
     Q_INVOKABLE QString toRGBString();

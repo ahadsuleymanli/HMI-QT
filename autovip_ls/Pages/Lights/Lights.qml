@@ -20,19 +20,20 @@ BasePage {
         onCeilingcolorChanged:function(val)
         {
             root.ceilColor = val;
-//            changeToggleText(1, targetColorItem.lightsOff);
-
+            changeToggleText(1, false);
+//            leftMenu.toggle();
         }
         onSidecolorChanged:function(val)
         {
             root.sideColor = val;
-//            changeToggleText(3, targetColorItem.lightsOff);
-
+            changeToggleText(3, false);
+//            leftMenu.toggle();
         }
         onInsidecolorChanged:function(val)
         {
             root.inSideColor = val;
-//            changeToggleText(2, targetColorItem.lightsOff);
+            changeToggleText(2, false);
+//            leftMenu.toggle();
 
         }
     }
@@ -46,9 +47,9 @@ BasePage {
     }
     function closeAll()
     {
-        ceilColorComponent.color = "#000000";
-        sideColorComponent.color = "#000000";
-        insideColorComponent.color = "#000000";
+        ceilColorComponent.toggleOff();
+        sideColorComponent.toggleOff();
+        insideColorComponent.toggleOff();
 
         if (c3.color != "#000000") {
             c3.color = "#000000";
@@ -287,7 +288,7 @@ BasePage {
         selection: true
         onLightsToggle: function (index){
             var val = getColorRegionItem(index+1).toggleOnOff();
-//            changeToggleText(index+1,val);
+            changeToggleText(index+1,val);
 //            changeToggleText(index+1, targetColorItem.lightsOff);
 
         }

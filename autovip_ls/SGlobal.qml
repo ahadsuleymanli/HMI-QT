@@ -47,7 +47,8 @@ Item {
     property string leftTextMenuColor: "transparent"
     property color leftTextMenuItemColor: Qt.rgba(0,0,0,0.1)
     property color leftTextMenuItemPressedColor: Qt.rgba(0/255, 108/255, 128/255,0.6)
-    property color toggleMenuToggleOnColor: Qt.rgba(100/255, 108/255, 128/255,0.6)
+    property color greenToggleOnColor: Qt.rgba(60/255, 200/255, 60/255,0.6)
+    property color toggleMenuToggleOnColor: Qt.rgba(200/255, 60/255, 60/255,0.6)
     property string toggleOn: qsTr("on")
     property string toggleOff: qsTr("off")
     //end text menu
@@ -2458,8 +2459,9 @@ ListModel {
         onTriggered: function(){
             if(serial_mng.systemstate !== 1)
             {
+                MainMdl.getPage("Lights").turn_off_lights();
+                MainMdl.getPage("SmokeFan").resetFan();
                 serial_mng.sendKey("main/system_request");
-//                console.log("feedback request sent")
             }
 
         }

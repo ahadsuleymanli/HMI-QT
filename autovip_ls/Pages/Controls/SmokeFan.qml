@@ -8,6 +8,12 @@ BasePage {
     id:root
     caption: qsTr("SMOKE FAN") + mytrans.emptyString
     pageName: "SmokeFan"
+    property bool isOn: false
+    function resetFan()
+    {
+        root.isOn = false;
+        bg.color = (!root.isOn)? GSystem.leftTextMenuItemColor : GSystem.greenToggleOnColor;
+    }
     Item{
         anchors.centerIn: parent
         width:300
@@ -18,12 +24,12 @@ BasePage {
             source:"qrc:/design/controls/fan1.png"
             sourceSize.height: 329
             fillMode: Image.PreserveAspectFit
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    serial_mng.sendKey("controls/smokefan_onoff");
-                }
-            }
+//            MouseArea{
+//                anchors.fill: parent
+//                onClicked: {
+//                    serial_mng.sendKey("controls/smokefan_onoff");
+//                }
+//            }
         }
         NumberAnimation {
             target: fan
@@ -40,8 +46,9 @@ BasePage {
             id:bg
             width:120
             height:50
-            color:GSystem.leftTextMenuItemColor
+            color:(!root.isOn)? GSystem.leftTextMenuItemColor : GSystem.greenToggleOnColor;
             border.width: 1
+
             border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
             Text{
                 anchors.centerIn: parent
@@ -50,15 +57,17 @@ BasePage {
                 font.pixelSize: 22
                 horizontalAlignment: Text.AlignHCenter
                 font.family: GSystem.centurygothic.name
+
             }
             MouseArea{
                 anchors.fill: parent
                 onPressed: {
                     bg.color=GSystem.leftTextMenuItemPressedColor;
                     serial_mng.sendKey("controls/smokefan_onoff");
+                    isOn = !isOn
                 }
                 onReleased: {
-                    bg.color=GSystem.leftTextMenuItemColor;
+                    bg.color = (!root.isOn)? GSystem.leftTextMenuItemColor : GSystem.greenToggleOnColor;
 
                 }
             }
