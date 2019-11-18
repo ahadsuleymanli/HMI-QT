@@ -8,7 +8,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QUrl>
-#include <colorcomponents.h>
+#include <LightsMenu/colorcomponents.h>
 #include <logger/filelogger.h>
 #include <clocksetter.h>
 #include <voicerecognitionservice.h>

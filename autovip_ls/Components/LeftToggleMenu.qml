@@ -101,20 +101,30 @@ Rectangle {
                 Column{
                      LeftTextButton{
                          id:onOffBtn
-                         text : offText
+                         text : GSystem.offText
                          width:75
                          height:75
+                         property bool lightsOff_: true
+                         Connections{
+                             target: model.object
+                             onLightsOffChanged:{
+                                onOffBtn.lightsOff_ = model.object.lightsOff;
+//                                console.log("signal worked " + onOffBtn.lightsOff_);
+//                                onOffBtn.bgcolor = (onOffBtn.lightsOff_)?GSystem.leftTextMenuItemColor:GSystem.toggleBrightColor
+                                onOffBtn.text = (onOffBtn.lightsOff_)?GSystem.offText:GSystem.onText
+
+                             }
+                         }
                          bgcolor: GSystem.leftTextMenuItemColor;
-//                         bgcolor: (!model.lightsOff)?GSystem.leftTextMenuItemColor:GSystem.toggleMenuToggleOnColor
                          area.onPressed: {
                              bgcolor = GSystem.leftTextMenuItemPressedColor;
                          }
                          area.onReleased: {
                              bgcolor = GSystem.leftTextMenuItemColor;
-//                             bgcolor = (!model.lightsOff)?GSystem.leftTextMenuItemColor:GSystem.toggleMenuToggleOnColor
                          }
                          area.onClicked: function(){
                              root.lightsToggle(model.index);
+
                          }
                      }
                 }

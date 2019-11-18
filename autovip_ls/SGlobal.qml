@@ -48,9 +48,9 @@ Item {
     property color leftTextMenuItemColor: Qt.rgba(0,0,0,0.1)
     property color leftTextMenuItemPressedColor: Qt.rgba(0/255, 108/255, 128/255,0.6)
     property color greenToggleOnColor: Qt.rgba(60/255, 200/255, 60/255,0.6)
-    property color toggleMenuToggleOnColor: Qt.rgba(200/255, 60/255, 60/255,0.6)
-    property string toggleOn: qsTr("on")
-    property string toggleOff: qsTr("off")
+    property color toggleBrightColor: Qt.rgba(100/255, 100/255, 100/255,0.6)
+    property string onText: qsTr("on")
+    property string offText: qsTr("off")
     //end text menu
 
     property alias oneSeatModel: oneSeatModel
@@ -238,14 +238,14 @@ Item {
         }
     }
 
-    function createLightsModel(){
+    function createLightsModel(ceilColorComponent,sideColorComponent,insideColorComponent){
         lightsModel.clear();
         if (true)
-            lightsModel.append({name:qsTr("Ceiling Light"),target:1,selected:false, lightsOff:true, offText:qsTr("off")});
+            lightsModel.append({name:qsTr("Ceiling Light"),target:1,selected:false, object:ceilColorComponent});
         if(SM.insidelight() === true)
-            lightsModel.append({name:qsTr("Inside Light"),target:2,selected:false, lightsOff:true, offText:qsTr("off")});
+            lightsModel.append({name:qsTr("Inside Light"),target:2,selected:false, object:insideColorComponent});
         if(SM.slboolean === true)
-            lightsModel.append({name:qsTr("Side Light"),target:3,selected:false, lightsOff:true, offText:qsTr("off")});
+            lightsModel.append({name:qsTr("Side Light"),target:3,selected:false, object:sideColorComponent});
 
     }
 

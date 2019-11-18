@@ -20,20 +20,14 @@ BasePage {
         onCeilingcolorChanged:function(val)
         {
             root.ceilColor = val;
-            changeToggleText(1, false);
-//            leftMenu.toggle();
         }
         onSidecolorChanged:function(val)
         {
             root.sideColor = val;
-            changeToggleText(3, false);
-//            leftMenu.toggle();
         }
         onInsidecolorChanged:function(val)
         {
             root.inSideColor = val;
-            changeToggleText(2, false);
-//            leftMenu.toggle();
 
         }
     }
@@ -42,8 +36,8 @@ BasePage {
         serial_mng.sendKey("lights/ceiling_request",true,delay);
         serial_mng.sendKey("lights/inside_request",true,delay);
         serial_mng.sendKey("lights/side_request");
-        GSystem.createLightsModel();
-        leftMenu.model=GSystem.lightsModel;
+//        GSystem.createLightsModel();
+//        leftMenu.model=GSystem.lightsModel;
     }
     function closeAll()
     {
@@ -277,19 +271,15 @@ BasePage {
         worker.sendMessage(msg);
     }
 
-    function changeToggleText(id, val)
-    {
-        var msg = {'ind': id-1, 'model': leftMenu.model, "lightsOff": val};
-        worker.sendMessage(msg);
-    }
 
     LeftToggleMenu{
         id:leftMenu
         selection: true
         onLightsToggle: function (index){
-            var val = getColorRegionItem(index+1).toggleOnOff();
-            changeToggleText(index+1,val);
-//            changeToggleText(index+1, targetColorItem.lightsOff);
+            var target = getColorRegionItem(index+1);
+            var val = target.toggleOnOff();
+//            console.log("called ", target.lightsOff);
+
 
         }
         onClicked: function(ind)
@@ -551,8 +541,8 @@ BasePage {
                text:qsTr("Close All") + mytrans.emptyString
                onClicked: {
                    root.closeAll();
-                   GSystem.createLightsModel();
-                   leftMenu.model=GSystem.lightsModel;
+//                   GSystem.createLightsModel();
+//                   leftMenu.model=GSystem.lightsModel;
                }
                enabled: false
                visible: false
@@ -835,8 +825,8 @@ BasePage {
 
     Component.onCompleted: {
         root.delay = serial_mng.getLightsDelay();
-        changeSelection(1);
-        GSystem.createLightsModel();
+        GSystem.createLightsModel(ceilColorComponent,sideColorComponent,insideColorComponent);
         leftMenu.model=GSystem.lightsModel;
+        changeSelection(1);
     }
 }

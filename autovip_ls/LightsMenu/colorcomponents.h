@@ -51,7 +51,7 @@ public:
 
     QString fullName() const;
 
-    bool lightsOff() const;
+    bool lightsOff();
     
     Q_INVOKABLE bool toggleOnOff();
     Q_INVOKABLE bool toggleOff();

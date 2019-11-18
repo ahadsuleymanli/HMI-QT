@@ -1612,9 +1612,14 @@
         <translation>側燈</translation>
     </message>
     <message>
-        <location filename="../SGlobal.qml" line="240"/>
+        <location filename="../SGlobal.qml" line="52"/>
+        <source>on</source>
+        <translation>开灯</translation>
+    </message>
+    <message>
+        <location filename="../SGlobal.qml" line="53"/>
         <source>off</source>
-        <translation type="unfinished">关</translation>
+        <translation>关灯</translation>
     </message>
     <message>
         <location filename="../SGlobal.qml" line="252"/>

@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    LightsMenu/colorcomponents.cpp \
     MediaPlayer/mediaplayerbackend.cpp \
     MediaPlayer/tracklist.cpp \
     MediaPlayer/usbmounter.cpp \
@@ -51,7 +52,6 @@ SOURCES += \
     jcon/json_rpc_websocket_server.cpp \
     jcon/string_util.cpp \
     serialmng.cpp \
-    colorcomponents.cpp \
     logger/dualfilelogger.cpp \
     logger/filelogger.cpp \
     logger/logger.cpp \
@@ -64,6 +64,8 @@ SOURCES += \
     voiceprotohandler.cpp
 
 HEADERS += \
+    LightsMenu/colorcomponents.h \
+    LightsMenu/leftToggleMenuModel.h \
     MediaPlayer/mediaplayerbackend.h \
     MediaPlayer/mediaplayerfrontend.h \
     MediaPlayer/secondthread.h \
@@ -98,7 +100,6 @@ HEADERS += \
     jcon/json_rpc_websocket_server.h \
     jcon/string_util.h \
     serialmng.h \
-    colorcomponents.h \
     logger/dualfilelogger.h \
     logger/filelogger.h \
     logger/logger.h \

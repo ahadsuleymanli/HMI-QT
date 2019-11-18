@@ -92,6 +92,9 @@ void ColorComponents::setHue(qreal hue)
 	if(_inRange(hue) == this->hue()) return;
 
 	m_color.setHsvF(_inRange(hue), saturation(), value(), alpha());
+    lastColor = nullptr;
+    lightsOff_ = false;
+    emit lightsOffChanged();
 
     emit hueChanged();
 
@@ -134,6 +137,7 @@ void ColorComponents::setValue(qreal value)
 	m_color.setHsvF(hue(), saturation(), _inRange(value), alpha());
     lastColor = nullptr;
     lightsOff_ = false;
+    emit lightsOffChanged();
 	emit valueChanged();
 
 	emit redChanged();
@@ -159,6 +163,7 @@ bool ColorComponents::toggleOnOff(){
         emit blueChanged();
         emit valueChanged();
         lightsOff_ = false;
+        emit lightsOffChanged();
         return false;
     }
     else if (m_color.rgb() != QColor("black").rgb()){
@@ -173,6 +178,7 @@ bool ColorComponents::toggleOnOff(){
         emit blueChanged();
         emit valueChanged();
         lightsOff_ = true;
+        emit lightsOffChanged();
         return true;
     }
 }
@@ -189,16 +195,13 @@ bool ColorComponents::toggleOff(){
             emit blueChanged();
             emit valueChanged();
             lightsOff_ = true;
+            emit lightsOffChanged();
             return true;
         }
 }
 
-bool ColorComponents::lightsOff() const{
+bool ColorComponents::lightsOff(){
     return lightsOff_;
-//    if (lastColor==nullptr)
-//        return false;
-//    else
-//        return true;
 }
 
 void ColorComponents::setColor(const QColor &color)
@@ -208,6 +211,7 @@ void ColorComponents::setColor(const QColor &color)
     m_color = color;
     lastColor = nullptr;
     lightsOff_ = false;
+    emit lightsOffChanged();
     emit colorChanged();
     
     emit hueChanged();

@@ -436,5 +436,9 @@
         <file>translator/general_AR_.ts</file>
         <file>translator/general_CH.ts</file>
         <file>translator/general_TR.ts</file>
+        <file>design/general/audiosource_aux.png</file>
+        <file>design/general/audiosource_dvd.png</file>
+        <file>design/general/audiosource_hi.png</file>
+        <file>design/general/audiosource_tv.png</file>
     </qresource>
 </RCC>

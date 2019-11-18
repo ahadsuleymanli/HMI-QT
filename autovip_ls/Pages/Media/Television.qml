@@ -192,7 +192,7 @@ BasePage {
                             fourDs.visible = true;
                         }
                         onClicked: fourDs.visible = false
-                        onReleased: {fourDs.visible = false; sendCommand("stop");}
+                        onReleased: {fourDs.visible = false; sendCommand("stop_code");}
                    }
 
                 }
