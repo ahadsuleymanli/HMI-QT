@@ -228,34 +228,34 @@ BasePage {
                 id:myUpdater
                 onUpdateStateChanged: {
                     if(updateState === 2){
-                        updateInfo.text = qsTr("Download failed please check internet connection.")+ mytrans.emptyString
+                        updateInfo.text = qsTr("Download failed please check internet connection.")+ mytrans.emptyString;
+                        updateInfo.visible = true;
                     }
                     else if(updateState === 3){
 //                        if(update_manager.checkUnzipped()){
                             updatespinner.visible=false;
                             spinneranimation.running=false;
-//                            updatetimer2.running=false;
                             updatetimer1.running=false;
                             updater.visible=true;
                             updaterbtn.visible=true;
-                        updatertext.changeLogText = myUpdater.changeLog();
+                            updatertext.changeLogText = myUpdater.changeLog();
+                            updateInfo.visible = true;
 //                        }
                     }
                     else if(updateState === 4){
                         updatespinner.visible=false;
                         spinneranimation.running=false;
                         updatetimer1.running=false;
-                        updateInfo.text =qsTr("Current Version: ")+ mytrans.emptyString +myUpdater.currentVersion
-                        updateInfo.visible = true
+                        updateInfo.text =qsTr("Current Version: ")+ mytrans.emptyString +myUpdater.currentVersion;
+                        updateInfo.visible = true;
                     }
                 }
                 Component.onCompleted: {
-                    if(false && SM.autoUpdate){
-
+                    if(SM.autoUpdate){
                         updatespinner.visible=true;
                         spinneranimation.running=true;
                         updatetimer1.running=true;
-                        updatetimer2.running=true;
+//                        updatetimer2.running=true;
                         updateInfo.visible=false;
                         myUpdater.checkUpdate();
                     }
@@ -301,12 +301,12 @@ BasePage {
                         anchors.topMargin: 0
                         anchors.fill: parent
                         onClicked: {
-//                            updatespinner.visible=true;
-//                            spinneranimation.running=true;
-//                            updatetimer1.running=true;
-////                            updatetimer2.running=true;
-//                            myUpdater.checkUpdate();
-//                            updateInfo.visible=false;
+                            updatespinner.visible=true;
+                            spinneranimation.running=true;
+                            updatetimer1.running=true;
+//                            updatetimer2.running=true;
+                            myUpdater.checkUpdate();
+                            updateInfo.visible=false;
                         }
                         onPressed: {
                             updatebg.color =  Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -361,6 +361,7 @@ BasePage {
                         spinneranimation.running=false;
                         updatetimer2.running=false;
                         updateInfo.text=qsTr("No Update Found! ") + qsTr("Current Version: ") +myUpdater.currentVersion +mytrans.emptyString;
+                        updateInfo.visible = true;
                     }
                 }
                 Timer{

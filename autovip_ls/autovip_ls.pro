@@ -75,6 +75,7 @@ HEADERS += \
     nvidiaconnmanager.h \
     restarter.h \
         settingsmanager.h \
+    tools/logstacktrace.h \
         translator.h \
         mediaplayermng.h\
         initializemng.h \

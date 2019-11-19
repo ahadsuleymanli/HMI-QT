@@ -20,6 +20,7 @@
 #include <QProcess>
 #include "MediaPlayer/secondthread.h"
 #include "MediaPlayer/mediaplayerfrontend.h"
+//#include "tools/logstacktrace.h"
 
 bool changeCD()
 {
@@ -32,6 +33,7 @@ bool changeCD()
 
 int main(int argc, char *argv[])
 {
+
 //    qDebug()<<"start"<<endl;
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -40,8 +42,7 @@ int main(int argc, char *argv[])
     qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
 //    qputenv("QSG_INFO", "1"); // INFO
     changeCD();
-
-
+//    enableStackTraceDump();
 
     QQmlApplicationEngine engine;
 
@@ -51,6 +52,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
     qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
     qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
+//    qmlRegisterType<TrackList>("TrackList",1,0,"TrackList");
 //    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
 
 
@@ -81,9 +83,7 @@ int main(int argc, char *argv[])
     MediaPlayerBackend mPlayerBackend(&app);
     engine.rootContext()->setContextProperty("mPlayerBackend", &mPlayerBackend);
 
-    if(imng.init() == false)
-    {
-//        qDebug()<<"init unsuccessful"<<endl;
+    if(imng.init() == false){
          return -1;
     }
 

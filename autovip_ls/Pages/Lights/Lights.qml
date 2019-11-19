@@ -278,8 +278,7 @@ BasePage {
         onLightsToggle: function (index){
             var target = getColorRegionItem(index+1);
             var val = target.toggleOnOff();
-//            console.log("called ", target.lightsOff);
-
+//            sSlider.color =
 
         }
         onClicked: function(ind)
@@ -365,7 +364,6 @@ BasePage {
             GradientStop { position: 5/6; color: "yellow" }
             GradientStop { position: 6/6; color: "red" }
         }
-
         onMouseYChanged: { targetColorItem.hue = Math.max(0.0, Math.min(1.0 - mouseY / height, 1.0)); targetColorItem.value = 1; }
     }
 
@@ -518,7 +516,6 @@ BasePage {
                 GradientStop { position: 0.0; color: Qt.hsla(targetColorItem.hue, 1.0, 0.5, 1.0) }
                 GradientStop { position: 1.0; color: "white"}
         }
-
         onMouseXChanged: targetColorItem.saturation = Math.max(0.0, Math.min(1.0 - mouseX / width, 1.0));
     }
     ColumnLayout{
@@ -555,9 +552,12 @@ BasePage {
                    var ceilColor = SM.getLightMemory(1,1);
                    var sideColor = SM.getLightMemory(1,2);
                    var inSideColor = SM.getLightMemory(1,3);
-                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
+                   ceilColorComponent.color = ceilColor;
+                   insideColorComponent.color = sideColor;
+                   sideColorComponent.color = sideColor;
+//                   if(!Qt.colorEqual(ceil,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
+//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
+//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
                }
                onHolded: {
                    SM.saveLightMemory(1,1,root.ceilColor);
@@ -574,9 +574,12 @@ BasePage {
                    var ceilColor = SM.getLightMemory(2,1);
                    var sideColor = SM.getLightMemory(2,2);
                    var inSideColor = SM.getLightMemory(2,3);
-                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
+                   ceilColorComponent.color = ceilColor;
+                   insideColorComponent.color = sideColor;
+                   sideColorComponent.color = sideColor;
+//                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
+//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
+//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
                }
                onHolded: {
                    SM.saveLightMemory(2,1,root.ceilColor);
@@ -593,9 +596,12 @@ BasePage {
                     var ceilColor = SM.getLightMemory(3,1);
                     var sideColor = SM.getLightMemory(3,2);
                     var inSideColor = SM.getLightMemory(3,3);
-                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
+                   ceilColorComponent.color = ceilColor;
+                   insideColorComponent.color = sideColor;
+                   sideColorComponent.color = sideColor;
+//                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
+//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
+//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
                }
                onHolded: {
                    SM.saveLightMemory(3,1,root.ceilColor);

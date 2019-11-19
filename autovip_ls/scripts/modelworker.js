@@ -12,7 +12,7 @@ WorkerScript.onMessage = function(msg) {
                             {
                                 model.setProperty(i,"selected",false);
                             }
-                            console.log("index : "+ind);
+//                            console.log("index : "+ind);
                             model.setProperty(ind,"selected",true);
 //                        }
 

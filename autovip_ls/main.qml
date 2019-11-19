@@ -220,6 +220,8 @@ Window {
                case 0:
                         start.visible=true;
                         startBtn.visible=true;
+                        GSystem.getPageItem("Lights").turn_off_lights();
+                        GSystem.getPageItem("SmokeFan").resetFan();
                         GSystem.syscheck.repeat=true;
                    break;
                case 1:

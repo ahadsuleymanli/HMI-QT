@@ -1,6 +1,18 @@
 #include "colorcomponents.h"
 #include <iostream>
 #include <QDebug>
+
+bool isBlack(QColor color){
+    int r;
+    int g;
+    int b;
+    color.getRgb(&r,&g,&b);
+    if (r==0 && g== 0 && b==0)
+        return true;
+    else
+        return false;
+}
+
 ColorComponents::ColorComponents(QObject *parent)
 	: QObject(parent)
 {
@@ -92,8 +104,8 @@ void ColorComponents::setHue(qreal hue)
 	if(_inRange(hue) == this->hue()) return;
 
 	m_color.setHsvF(_inRange(hue), saturation(), value(), alpha());
-    lastColor = nullptr;
-    lightsOff_ = false;
+    if (!isBlack(m_color))
+        lightsOff_ = false;
     emit lightsOffChanged();
 
     emit hueChanged();
@@ -115,7 +127,6 @@ void ColorComponents::setSaturation(qreal saturation)
 	if(_inRange(saturation) == this->saturation()) return;
 
 	m_color.setHsvF(hue(), _inRange(saturation), value(), alpha());
-
 	emit saturationChanged();
 
 	emit redChanged();
@@ -135,8 +146,8 @@ void ColorComponents::setValue(qreal value)
 	if(_inRange(value) == this->value()) return;
 
 	m_color.setHsvF(hue(), saturation(), _inRange(value), alpha());
-    lastColor = nullptr;
-    lightsOff_ = false;
+    if (!isBlack(m_color))
+        lightsOff_ = false;
     emit lightsOffChanged();
 	emit valueChanged();
 
@@ -153,10 +164,9 @@ QColor ColorComponents::color() const
 }
 
 bool ColorComponents::toggleOnOff(){
-    if (lastColor!=nullptr){
+    if (lightsOff_ == true && isBlack(m_color) && !isBlack(lastColor)){
         // lights on
         m_color = lastColor;
-        lastColor = nullptr;
         emit colorChanged();
         emit redChanged();
         emit greenChanged();
@@ -166,10 +176,10 @@ bool ColorComponents::toggleOnOff(){
         emit lightsOffChanged();
         return false;
     }
-    else if (m_color.rgb() != QColor("black").rgb()){
+    else if (!isBlack(m_color)){
         // lights off
-        qreal saturation = m_color.saturation();
-        lastColor = m_color;
+        qreal saturation = m_color.saturationF();
+        lastColor.setHsvF(m_color.hueF(), m_color.saturationF(), m_color.valueF(), m_color.saturationF());
         m_color = QColor("black");
         m_color.setHsvF(hue(), _inRange(saturation), value(), alpha());
         emit colorChanged();
@@ -182,19 +192,22 @@ bool ColorComponents::toggleOnOff(){
         return true;
     }
 }
+
+
 bool ColorComponents::toggleOff(){
-    if (m_color.rgb() != QColor("black").rgb()){
+    if (lightsOff_ == false && isBlack(m_color) == false){
             // lights off
-            qreal saturation = m_color.saturation();
-            lastColor = m_color;
+            qreal saturation = m_color.saturationF();
+            lastColor.setHsvF(m_color.hueF(), m_color.saturationF(), m_color.valueF(), m_color.saturationF());
+            qDebug()<<"after change last color: "<<lastColor.name(QColor::HexRgb);;
             m_color = QColor("black");
             m_color.setHsvF(hue(), _inRange(saturation), value(), alpha());
+            lightsOff_ = true;
             emit colorChanged();
             emit redChanged();
             emit greenChanged();
             emit blueChanged();
             emit valueChanged();
-            lightsOff_ = true;
             emit lightsOffChanged();
             return true;
         }
@@ -209,8 +222,8 @@ void ColorComponents::setColor(const QColor &color)
     if(!color.isValid() || color == this->color()) return;
 
     m_color = color;
-    lastColor = nullptr;
-    lightsOff_ = false;
+    if (!isBlack(m_color))
+        lightsOff_ = false;
     emit lightsOffChanged();
     emit colorChanged();
     

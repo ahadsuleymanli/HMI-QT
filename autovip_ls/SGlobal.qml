@@ -146,7 +146,7 @@ Item {
     {
         if(SM.demomode)
         {
-        serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
+//        serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
             switch(serial_mng.systemstate)
             {
                 case -1:
@@ -160,13 +160,14 @@ Item {
                     break;
                 default:
             }
-            return;
 
         }else{
-            serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
             serial_mng.sendKey("main/system_onoff");
             serial_mng.sendKey("main/system_feedback");
+//            serial_mng.sendKey("main/setclock",true,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
         }
+        delayedclocksetter.restart();
+        delayedclocksetter.running = true;
 
 
     }
@@ -2445,8 +2446,7 @@ ListModel {
         onTriggered: function(){
             if(serial_mng.systemstate !== 1)
             {
-                serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
-
+            serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
             }
 
         }
@@ -2459,11 +2459,21 @@ ListModel {
         onTriggered: function(){
             if(serial_mng.systemstate !== 1)
             {
-                MainMdl.getPage("Lights").turn_off_lights();
-                MainMdl.getPage("SmokeFan").resetFan();
+//                MainMdl.getPage("Lights").turn_off_lights();
+//                MainMdl.getPage("SmokeFan").resetFan();
                 serial_mng.sendKey("main/system_request");
             }
 
+        }
+    }
+    Timer {
+        id:delayedclocksetter
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: function(){
+            console.log("delayed setter");
+            serial_mng.sendKey("main/setclock",true,root.delay + 200,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
         }
     }
         Connections{

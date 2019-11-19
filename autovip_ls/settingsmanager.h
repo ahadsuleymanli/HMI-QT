@@ -39,8 +39,8 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool slboolean READ slboolean)
     Q_PROPERTY(bool dockingstation READ dockingstation)
     Q_PROPERTY(bool twodoor READ twodoor)
-    Q_PROPERTY(bool amp READ amp)
-    Q_PROPERTY(bool refrigerator READ regrigerator)
+    Q_PROPERTY(bool amp READ amp NOTIFY settingsChanged)
+    Q_PROPERTY(bool refrigerator READ regrigerator NOTIFY settingsChanged)
     Q_PROPERTY(bool radio READ radio)
     Q_PROPERTY(bool sunroof READ sunroof)
     Q_PROPERTY(bool windows READ windows)
@@ -131,6 +131,7 @@ signals:
     void actypeChanged(uint);
     void mediaplayertypeChanged(uint);
     void autoUpdateChanged(bool);
+    void settingsChanged(bool);
 public slots:
 };
 

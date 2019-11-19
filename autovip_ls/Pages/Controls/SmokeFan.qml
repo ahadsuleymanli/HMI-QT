@@ -11,8 +11,10 @@ BasePage {
     property bool isOn: false
     function resetFan()
     {
-        root.isOn = false;
-        bg.color = (!root.isOn)? GSystem.leftTextMenuItemColor : GSystem.greenToggleOnColor;
+        if (root.isOn){
+            root.isOn = false;
+            bg.color = (!root.isOn)? GSystem.leftTextMenuItemColor : GSystem.greenToggleOnColor;
+        }
     }
     Item{
         anchors.centerIn: parent
