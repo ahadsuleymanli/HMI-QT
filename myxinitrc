@@ -1,0 +1,22 @@
+#!/bin/bash
+
+export DISPLAY=':0.0'
+# To set a background color
+xsetroot -solid black &
+xset s noblank
+xset s off -dpms
+# To show a background logo (qiv should be installed).
+#qiv /home/linaro/logo.png &
+#pid=$!
+#wait $pid
+cd "/home/linaro/autovip/"
+mkdir -p logs
+MAXSIZE=1048576
+DUMP_PATH=logs/stderr
+filesize=$(stat -c%s "$DUMP_PATH")
+if (( filesize > MAXSIZE )); then
+	mv $DUMP_PATH ./$DUMP_PATH.1
+fi
+current_time=$(date "+%Y.%m.%d-%H.%M.%S")
+echo "starting the program $current_time">>$DUMP_PATH
+./autovip_ls 2>>$DUMP_PATH

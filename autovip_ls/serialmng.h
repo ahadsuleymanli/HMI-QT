@@ -83,6 +83,8 @@ class SerialMng : public QObject
     int m_systemstate = -1;
     int m_actype = 1;
     bool m_demomode = false;
+    QByteArray lastWriteData;
+    uint writeDataSpamCount = 0;
 
     voice::VoiceProtoHandler* m_voicehandler = nullptr;
 

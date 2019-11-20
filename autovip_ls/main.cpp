@@ -7,7 +7,7 @@
 #include <QObject>
 #include <initializemng.h>
 #include "mediaplayermng.h"
-#include <logger/dualfilelogger.h>
+//#include <logger/dualfilelogger.h>
 #include <cronjobs.h>
 #include <QDebug>
 #include "clocksetter.h"
@@ -20,7 +20,7 @@
 #include <QProcess>
 #include "MediaPlayer/secondthread.h"
 #include "MediaPlayer/mediaplayerfrontend.h"
-//#include "tools/logstacktrace.h"
+#include "tools/logstacktrace.h"
 
 bool changeCD()
 {
@@ -42,12 +42,11 @@ int main(int argc, char *argv[])
     qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
 //    qputenv("QSG_INFO", "1"); // INFO
     changeCD();
-//    enableStackTraceDump();
+    enableStackTraceDump();
 
     QQmlApplicationEngine engine;
 
 
-//    qDebug()<<"apps created"<<endl;
     qmlRegisterType<Restarter>("closx.restarter", 1, 0, "Restarter");
     qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
     qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
@@ -84,7 +83,11 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("mPlayerBackend", &mPlayerBackend);
 
     if(imng.init() == false){
+        qDebug()<<"main.cpp: initializemng failed";
          return -1;
+    }
+    else {
+        qDebug()<<"main.cpp: initializemng succeeded";
     }
 
 

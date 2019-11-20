@@ -912,7 +912,18 @@ bool SerialMng::parserSoundControl(QString p_response)
 
 void SerialMng::write(const QByteArray &writeData)
 {
-    qDebug()<<writeData<<"\n";
+    if (lastWriteData!=nullptr && lastWriteData == writeData){
+        writeDataSpamCount ++;
+    }
+    else if (writeDataSpamCount){
+        qDebug()<<writeData<<" . before this "<<lastWriteData<<" was repeated "<<writeDataSpamCount<<" time(s)";
+        writeDataSpamCount = 0;
+        lastWriteData = writeData;
+    }
+    else{
+        qDebug()<<writeData<<"";
+        lastWriteData = writeData;
+    }
     this->m_writeData = writeData;
     this->m_serial->write(m_writeData);
     m_serial->flush();
@@ -921,10 +932,13 @@ void SerialMng::write(const QByteArray &writeData)
 
 void SerialMng::sendKey(const QString &key,bool wait,int p_delay,QString param)
 {
-    QString realCode = m_proto->value(key).toString();
+   QString realCode = m_proto->value(key).toString();
 
-    std::cout <<"key: " << key.toStdString()<<" "<<param.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
-    if(!this->m_serial->isOpen()) return;
+   if(!this->m_serial->isOpen() && key!="main/system_request"){
+        std::cout <<"key: " << key.toStdString()<<" "<<param.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
+        return;
+   }
+   else if (!this->m_serial->isOpen()) return;
 
    bool command_arranged = false;
    if(realCode.isEmpty() || realCode.compare("no") == 0)
@@ -1000,7 +1014,8 @@ void SerialMng::handleBytesWritten(qint64 bytes)
 void SerialMng::newMessage()
 {
     QString readData = m_serial->readAll();
-    std::cout << "Received Message: " << readData.toStdString() << std::endl;
+//    std::cout << "Received Message: " << readData.toStdString() << std::endl;
+    qDebug() << "Received Message: " << readData;
     this->parseFeedback(readData);
 }
 

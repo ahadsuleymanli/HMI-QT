@@ -64,10 +64,17 @@ bool InitializeMng::init()
     }
 
 
+    this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
+
+    this->flogger->installMsgHandler();
+    qDebug()<<"\n\n----------Program Started-------------";
+
     QProcess *removeProcess = new QProcess();
     connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
+    qDebug()<<"initializemng.cpp: removing /var/lock/LCK..ttyMSM1";
     removeProcess->start("sudo rm /var/lock/LCK..ttyMSM1");
-    removeProcess->waitForFinished(1000);
+    bool waitResult = removeProcess->waitForFinished(1000);
+    qDebug()<<"initializemng.cpp: removed /var/lock/LCK..ttyMSM1 , result: "<< waitResult;
     QObject::connect(settings_mng,&SettingsManager::langChanged,translator,&Translator::updateLanguage,Qt::QueuedConnection);
 
     qmlRegisterType<Langs>("MyLang", 1, 0, "MyLang");
@@ -84,9 +91,6 @@ bool InitializeMng::init()
 	    return false;
     }
 
-//    this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
-
-//    this->flogger->installMsgHandler();
 
     engine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
     engine->rootContext()->setContextProperty("workingDirPath", QDir::currentPath());
@@ -98,7 +102,7 @@ bool InitializeMng::init()
 
 
     this->translator->updateLanguage(this->settings_mng->lang());
-
+    qDebug()<<"initializemng.cpp: serial_mng->setBaudRate.., etc";
     this->serial_mng->setBaudRate(this->settings_mng->value("serial/baud_rate").toInt());
     this->serial_mng->setDataBits(this->settings_mng->value("serial/databits").toInt());
     this->serial_mng->setParity(this->settings_mng->value("serial/parity").toInt());
@@ -106,7 +110,7 @@ bool InitializeMng::init()
     this->serial_mng->setFlowControl(this->settings_mng->value("serial/flowcontrol").toInt());
     this->serial_mng->setPortName(this->settings_mng->value("serial/port_name").toString());
     this->serial_mng->setActype(settings_mng->value("main/actype").toInt());
-
+    qDebug()<<"initializemng.cpp: serial_mng->openSerialPort()";
     this->serial_mng->openSerialPort();
     serial_mng->setDemomode(settings_mng->demomode());
 //    switch(settings_mng->mediaplayertype())
@@ -125,7 +129,7 @@ bool InitializeMng::init()
 
 
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
-//    qDebug()<<"main.qml is loadded"<<endl;
+    qDebug()<<"initializemng.cpp: main.qml is loadded"<<endl;
 
     if (engine->rootObjects().isEmpty())
         return false;

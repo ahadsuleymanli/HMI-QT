@@ -8,7 +8,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <stdio.h>
-
+#include <QDebug>
 void FileLogger::refreshSettings()
 {
     mutex.lock();
@@ -39,6 +39,7 @@ void FileLogger::refreshSettings()
     {
         fprintf(stderr,"Logging to %s\n",qPrintable(fileName));
         close();
+//        rotate();
         open();
     }
     mutex.unlock();
@@ -56,8 +57,9 @@ FileLogger::FileLogger(QSettings* settings, const int refreshInterval, QObject* 
     {
         refreshTimer.start(refreshInterval,this);
     }
-    flushTimer.start(1000,this);
     refreshSettings();
+    flushTimer.start(1000,this);
+
 }
 
 
@@ -167,6 +169,7 @@ void FileLogger::timerEvent(QTimerEvent* event)
 
         if (maxSize>0 && file->size()>=maxSize)
         {
+
             close();
             rotate();
             open();

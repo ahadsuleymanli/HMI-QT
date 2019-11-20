@@ -196,13 +196,6 @@ Window {
 
     //////////////////////////////////// INFO OVERLAY'ININ BİTTİĞİ YER
 
-
-
-
-
-
-
-
        Rectangle{
            id:startBtn
            anchors.centerIn: start;
@@ -220,9 +213,12 @@ Window {
                case 0:
                         start.visible=true;
                         startBtn.visible=true;
-                        GSystem.getPageItem("Lights").turn_off_lights();
-                        GSystem.getPageItem("SmokeFan").resetFan();
+                        if (GSystem.getPageItem("Lights"))
+                           GSystem.getPageItem("Lights").turn_off_lights();
+                        if (GSystem.getPageItem("SmokeFan"))
+                           GSystem.getPageItem("SmokeFan").resetFan();
                         GSystem.syscheck.repeat=true;
+
                    break;
                case 1:
                         start.visible=false;

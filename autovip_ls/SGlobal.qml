@@ -2472,7 +2472,6 @@ ListModel {
         running: false;
         repeat: false;
         onTriggered: function(){
-            console.log("delayed setter");
             serial_mng.sendKey("main/setclock",true,root.delay + 200,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
         }
     }

@@ -24,6 +24,41 @@
 #include <QDebug>
 #include <QDateTime>
 
+QString fileName = "./logs/stacktrace";
+int maxBackups = 20;
+int maxSize = 1024*1024;
+void rotate() {
+    int count=0;
+    forever
+    {
+        QFile bakFile(QString("%1.%2").arg(fileName).arg(count+1));
+        if (bakFile.exists())
+        {
+            ++count;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    while (count>=maxBackups)
+    {
+        QFile::remove(QString("%1.%2").arg(fileName).arg(count));
+        --count;
+    }
+
+    for (int i=count; i>0; --i) {
+        QFile::rename(QString("%1.%2").arg(fileName).arg(i),QString("%1.%2").arg(fileName).arg(i+1));
+    }
+
+    QFile::rename(fileName,fileName+".1");
+}
+
+bool fileOverMaxSize(){
+    return (QFile(fileName).size()>=maxSize);
+}
+
 /* This structure mirrors the one found in /usr/include/asm/ucontext.h */
 typedef struct _sig_ucontext {
     unsigned long     uc_flags;
@@ -56,9 +91,9 @@ void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext) {
     #endif
 
     FILE * backtraceFile;
-    if (!QDir("./stacktrace").exists())
-        QDir().mkdir("./stacktrace");
-    QString backtraceFilePath = "./stacktrace/stacktrace.txt";
+    if (!QDir("./logs").exists())
+        QDir().mkdir("./logs");
+    QString backtraceFilePath = fileName;
     backtraceFile = fopen(backtraceFilePath.toUtf8().data(),"a");
 
     fprintf(backtraceFile,"logged at %s\n", QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss.z").toStdString().c_str());
@@ -94,10 +129,15 @@ void installSignal(int __sig) {
 }
 
 void enableStackTraceDump(){
-    qDebug()<<"enabling stack backtracing";
-    installSignal(SIGINT);
-    installSignal(SIGQUIT);
-    installSignal(SIGTSTP);
+    if (fileOverMaxSize())
+        rotate();
+    qDebug()<<"logstacktrace.h: enabling stack backtracing";
+//    installSignal(SIGINT);
+//    installSignal(SIGQUIT);
+//    installSignal(SIGTSTP);
+//    installSignal(SIGKILL);
+    installSignal(SIGHUP);
+    installSignal(SIGALRM);
 
     installSignal(SIGSEGV);
     installSignal(SIGBUS);
