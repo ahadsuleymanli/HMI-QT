@@ -222,20 +222,16 @@ void SettingsManager::setVersion(int major, int minor)
     this->general->setValue("update/version",QString::number(major) + "." + QString::number(minor));
 }
 
-void SettingsManager::setLastVersion(QString lversion)
-{
-    this->general->setValue("update/lastdownloadedversion",lversion);
-}
-
 QString SettingsManager::version()
 {
     return this->general->value("update/version").toString();
 }
 
-QString SettingsManager::lastdownloadedversion()
-{
-    return this->general->value("update/lastdownloadedversion").toString();
-}
+// do not use this
+//QString SettingsManager::lastdownloadedversion()
+//{
+//    return this->general->value("update/lastdownloadedversion").toString();
+//}
 
 
 void SettingsManager::setLang(int nlang)

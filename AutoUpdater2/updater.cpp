@@ -151,6 +151,12 @@ void Updater::doListing(const QUrlInfo& inf){
     }
 
 }
+bool checkUnzipped(QStringList downloadedVersion)
+{
+    int major = downloadedVersion[0].toInt();
+    int minor = downloadedVersion[1].toInt();
+    return QFileInfo::exists(QString("%1/update_%2_%3").arg(QDir::currentPath()).arg(major).arg(minor));
+}
 
 void Updater::download(){
     ftpCurrentState = "downloading";
@@ -159,8 +165,8 @@ void Updater::download(){
     QString setfileLocation = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
     assert(QFileInfo::exists(setfileLocation));
     QSettings setting_ini(setfileLocation,QSettings::IniFormat);
-    QStringList version = (setting_ini.value("update/lastdownloadedversion","").toString()).split(".");
-    if (major_version == version[0].toInt() and minor_version == version[1].toInt() ){
+    QStringList downloadedVersion = (setting_ini.value("update/lastdownloadedversion","").toString()).split(".");
+    if ( downloadedVersion.length() == 2 && major_version == downloadedVersion[0].toInt() && minor_version == downloadedVersion[1].toInt() && checkUnzipped(downloadedVersion)){
         unzipSuccessful();
         return;
     }

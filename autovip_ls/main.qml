@@ -36,50 +36,6 @@ Window {
            GSystem.changePage(page,false);
        }
     }
-//    Connections {
-//        target: update_manager
-//        onDoUpdateOverlay: function(){
-//            updateOverlayTimer.running = startBtn.visible;
-//        }
-//    }
-
-//    Timer{
-//        id:updateOverlayTimer
-//        running: false
-//        repeat: true
-//        interval: 100
-//        onTriggered: {
-//            if(startBtn.visible==false){
-//                if(update_manager.checkUnzipped()){
-//                    updaterbtn.visible=true;
-//                    updater.visible=true;
-//                    updateOverlayTimer.running=false;
-//                }else{
-//                    updateOverlayTimer.running=false;
-//                    SM.setLastVersion(SM.version);
-//                }
-//            }
-//        }
-//    }
-
-//    AnimatedImage {
-//        x:0
-//        y:0
-//        source: "qrc:/design/general/background.gif"
-//        width:parent.width
-//        height:parent.height
-//        Body{
-//            id: bodyPart
-//            x:0
-//            y:0
-//        }
-//        BottomMenu
-//        {
-//            id: iBottomMenu
-//            x:0
-//            y:690
-//        }
-//    }
 
     Rectangle{
         x:0
@@ -378,9 +334,6 @@ Window {
                                   MouseArea{
                                       id: updateMouseArea
                                       anchors.fill: parent
-                                      onClicked: {
-//                                          updateMe.makeUpdate()
-                                      }
                                       onPressed: {
                                           updaterbg.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
                                       }

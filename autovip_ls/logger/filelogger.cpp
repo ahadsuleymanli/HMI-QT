@@ -60,6 +60,7 @@ FileLogger::FileLogger(QSettings* settings, const int refreshInterval, QObject* 
     refreshSettings();
     flushTimer.start(1000,this);
     installMsgHandler();
+    qDebug()<<"\n\n=============Program Started==================";
 }
 
 

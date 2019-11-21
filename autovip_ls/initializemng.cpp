@@ -1,4 +1,6 @@
 #include "initializemng.h"
+#include "updatecheck.h"
+#include "restarter.h"
 #include <QDebug>
 #include <QDir>
 #include <QProcess>
@@ -48,8 +50,6 @@ bool InitializeMng::init()
             this->serial_mng != nullptr
             );
 
-    qDebug()<<"\n\n----------Program Started-------------";
-
     QProcess *removeProcess = new QProcess();
     connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
     qDebug()<<"initializemng.cpp: removing /var/lock/LCK..ttyMSM1";
@@ -61,7 +61,9 @@ bool InitializeMng::init()
     qmlRegisterType<Langs>("MyLang", 1, 0, "MyLang");
     qmlRegisterType<VoiceRecognitionService>("VRService",1,0,"VRService");
     qmlRegisterType<ColorComponents>("ColorComponents", 1, 0, "ColorComponents");
+    qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
     qmlRegisterSingletonType( QUrl("qrc:/SGlobal.qml"), "ck.gmachine", 1, 0, "GSystem" );
+    qmlRegisterSingletonType<Restarter>("closx.restarter", 1, 0,"Restarter",&Restarter::qmlInstance);
 
 
     QUrl mediaurl(this->settings_mng->mediaPlayerURL());

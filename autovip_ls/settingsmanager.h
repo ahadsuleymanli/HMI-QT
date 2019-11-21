@@ -56,9 +56,16 @@ class SettingsManager : public QObject
 
     Q_PROPERTY(bool autoUpdate READ autoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
     Q_PROPERTY(QString version READ version)
-    Q_PROPERTY(QString lastdownloadedversion READ lastdownloadedversion)
+//    Q_PROPERTY(QString lastdownloadedversion READ lastdownloadedversion)
+
+    SettingsManager(QObject *parent = nullptr);
 public:
-    explicit SettingsManager(QObject *parent = nullptr);
+    SettingsManager(SettingsManager const&) = delete;
+    SettingsManager& operator=(SettingsManager const&) = delete;
+    static SettingsManager& instance(){
+      static SettingsManager INSTANCE;
+      return INSTANCE;
+    }
     void resetSettings();
     int lang();
     uint actype();
@@ -116,7 +123,6 @@ Q_INVOKABLE  bool seatHeating(int seat_no);
 Q_INVOKABLE  bool seatCooling(int seat_no);
 Q_INVOKABLE  bool seatMassage(int seat_no);
 Q_INVOKABLE  bool seatThigh(int seat_no);
-Q_INVOKABLE  void setLastVersion(QString lversion);
 Q_INVOKABLE  void setTimeDiff(int mndf,int hrdf);
 Q_INVOKABLE  bool seatDrawer(int seat_no);
 Q_INVOKABLE  bool seatFootrest(int seat_no);

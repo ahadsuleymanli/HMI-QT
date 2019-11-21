@@ -7,12 +7,9 @@
 #include <QObject>
 #include <initializemng.h>
 #include "mediaplayermng.h"
-//#include <logger/dualfilelogger.h>
 #include <cronjobs.h>
 #include <QDebug>
 #include "clocksetter.h"
-#include "updatecheck.h"
-#include "restarter.h"
 #include <QDir>
 #include <nvidiaconnmanager.h>
 #include "MediaPlayer/tracklist.h"
@@ -33,8 +30,6 @@ bool changeCD()
 
 int main(int argc, char *argv[])
 {
-
-//    qDebug()<<"start"<<endl;
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
@@ -45,35 +40,31 @@ int main(int argc, char *argv[])
     enableStackTraceDump();
 
     QQmlApplicationEngine engine;
-    qmlRegisterSingletonType<Restarter>("closx.restarter", 1, 0,"Restarter",&Restarter::qmlInstance);
-    qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
-//    qmlRegisterType<TrackList>("TrackList",1,0,"TrackList");
-//    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
-
-    SettingsManager sm;
+    SettingsManager *sm = &SettingsManager::instance();
     Translator mTrans(&app);
     InitializeMng imng;
     SerialMng smng;
     ClockSetter csetter;
-    FileLogger flogger(sm.getSettings(),10000,&app);
+    FileLogger flogger(sm->getSettings(),10000,&app);
+    NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
+    MediaPlayerBackend mPlayerBackend(&app);
+    engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
+    engine.rootContext()->setContextProperty("mPlayerBackend", &mPlayerBackend);
 
     imng.setClockSetter(&csetter);
     imng.setTranslator(&mTrans);
-    imng.setSettingsManager(&sm);
+    imng.setSettingsManager(sm);
     imng.setEngine(&engine);
     imng.setSerialMng(&smng);
 
-    // instantiating an NvidiaConnManager object
-    NvidiaConnManager nvidiaConnManager(1234, &smng, &sm, &app);
-    engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
 //    SecondThread secondThread;
 //    MediaPlayerFrontend mPlayerBackend(&app);
 //    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::playPauseSignal, &secondThread, &SecondThread::playPause);
 //    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::nextSignal, &secondThread, &SecondThread::next);
 //    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::previousSignal, &secondThread, &SecondThread::previous);
 //    secondThread.start();
-    MediaPlayerBackend mPlayerBackend(&app);
-    engine.rootContext()->setContextProperty("mPlayerBackend", &mPlayerBackend);
+
+
     qDebug()<<"initiating imng";
     if(imng.init() == false){
         qDebug()<<"main.cpp: initializemng failed";
