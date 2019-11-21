@@ -85,10 +85,49 @@ void MediaPlayerBackend::previous()
    playlist()->previous();
 }
 
-void MediaPlayerBackend::shuffle(bool enabled)
-{
-    if(enabled)
-        playlist()->shuffle();
+
+void MediaPlayerBackend::setLoopHelper(){
+    if (loopState==0){
+        playlist()->setPlaybackMode(QMediaPlaylist::Sequential);
+    }
+    else if (loopState==1){
+        playlist()->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+    }
+    else if (loopState==2){
+        playlist()->setPlaybackMode(QMediaPlaylist::Loop);
+    }
+}
+
+void MediaPlayerBackend::setShuffle(){
+    shuffleEnabled = !shuffleEnabled;
+    if (shuffleEnabled){
+        playlist()->setPlaybackMode(QMediaPlaylist::Random);
+    }
+    else {
+        setLoopHelper();
+    }
+    emit playModeChanged();
+}
+void MediaPlayerBackend::setLoop(){
+    if (shuffleEnabled)
+        shuffleEnabled = false;
+    else if (loopState == 0)
+        loopState = 1;
+    else if (loopState == 1)
+        loopState = 2;
+    else if (loopState == 2)
+        loopState = 0;
+    setLoopHelper();
+    emit playModeChanged();
+}
+bool MediaPlayerBackend::getShuffle(){
+    return shuffleEnabled;
+}
+int MediaPlayerBackend::getLoop(){
+    if (shuffleEnabled)
+        return 0;
+    else
+        return loopState;
 }
 
 

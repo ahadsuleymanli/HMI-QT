@@ -12,14 +12,17 @@ class MediaPlayerBackend: public QMediaPlayer
     Q_PROPERTY(QString playingYear READ playingYear NOTIFY playingMediaChanged)
     Q_PROPERTY(QString playingArtist READ playingArtist NOTIFY playingMediaChanged)
     Q_PROPERTY(QString playingCover READ playingCover NOTIFY playingMediaChanged)
+    Q_PROPERTY(bool shuffle READ getShuffle NOTIFY playModeChanged)
+    Q_PROPERTY(int loop READ getLoop NOTIFY playModeChanged)
 //    Q_PROPERTY(qint64 position READ position WRITE setPosition NOTIFY positionChanged)
 
 public:
     MediaPlayerBackend(QObject *parent = nullptr);
     void init();
-    Q_INVOKABLE TrackList* trackList() { qDebug()<<"invoking tracklist";
-        return m_trackList; }
-
+    Q_INVOKABLE TrackList* trackList() {return m_trackList; }
+    Q_INVOKABLE void setShuffle();
+    Q_INVOKABLE void setLoop();
+    void setLoopHelper();
     QString playingTitle();
     QString playingYear();
     QString playingArtist();
@@ -32,7 +35,8 @@ public slots:
     void playPause();
     void next();
     void previous();
-    void shuffle(bool enabled = true);
+    bool getShuffle();
+    int getLoop();
 //    void setPosition(qint64 position){QMediaPlayer::setPosition(position);}
 
 private slots:
@@ -82,9 +86,11 @@ signals:
     void playingMediaChanged();
     void positionChanged(qint64 position);
     void pausePressed();
+    void playModeChanged();
 
 private:
-    bool stupidvar = false;
+    int loopState = 0;
+    bool shuffleEnabled = false;
     int pauseState = 0;
     bool paused = false;
     qint64 pausePos = 0;

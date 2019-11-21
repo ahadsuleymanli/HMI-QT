@@ -20,7 +20,7 @@ HomeForm {
         mPlayerBackend.setPosition(pos)
     }
 
-    shuffleButton.onClicked: mPlayerBackend.shuffle()
+    shuffleButton.onClicked: mPlayerBackend.setShuffle()
 
 
     playPauseButton.onClicked: {
