@@ -69,12 +69,11 @@ void rowSort(QVector<QPersistentModelIndex> & indices)
 TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
     :QAbstractListModel(parent)
 {
+    qDebug()<<"creating tracklist";
     usbmounter = new UsbMounter(this);
     m_mediaPlayer = new QMediaPlayer();
     m_mediaPlayer->setVolume(0);
     m_mediaPlayer->setMuted(true);
-//    QDir mediaDir("/media/usb");
-//    QStringList dirs = mediaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
     if(list)
         m_mediaList = list;

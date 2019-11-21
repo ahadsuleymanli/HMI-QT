@@ -46,11 +46,13 @@ int main(int argc, char *argv[])
     SerialMng smng;
     ClockSetter csetter;
     FileLogger flogger(sm->getSettings(),10000,&app);
+
     NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
     MediaPlayerBackend mPlayerBackend(&app);
-    engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
-    engine.rootContext()->setContextProperty("mPlayerBackend", &mPlayerBackend);
 
+    engine.rootContext()->setContextProperty("nvidia_conn_manager", &nvidiaConnManager);
+
+    imng.setMediaPlayerBackend(&mPlayerBackend);
     imng.setClockSetter(&csetter);
     imng.setTranslator(&mTrans);
     imng.setSettingsManager(sm);

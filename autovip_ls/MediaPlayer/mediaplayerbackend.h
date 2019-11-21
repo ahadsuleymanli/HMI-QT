@@ -16,6 +16,7 @@ class MediaPlayerBackend: public QMediaPlayer
 
 public:
     MediaPlayerBackend(QObject *parent = nullptr);
+    void init();
     Q_INVOKABLE TrackList* trackList() { qDebug()<<"invoking tracklist";
         return m_trackList; }
 

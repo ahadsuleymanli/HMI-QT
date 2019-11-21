@@ -1,12 +1,18 @@
 #include "initializemng.h"
 #include "updatecheck.h"
 #include "restarter.h"
+#include "MediaPlayer/mediaplayerbackend.h"
 #include <QDebug>
 #include <QDir>
 #include <QProcess>
 
 InitializeMng::InitializeMng(QObject *parent):QObject(parent)
 {
+}
+
+void InitializeMng::setMediaPlayerBackend(MediaPlayerBackend *mPlayerBackend)
+{
+    this->mPlayerBackend = mPlayerBackend;
 }
 
 void InitializeMng::setClockSetter(ClockSetter *csetter)
@@ -42,6 +48,7 @@ void InitializeMng::setSerialMng(SerialMng *p_smng)
 bool InitializeMng::init()
 {
     Q_ASSERT(
+            this->mPlayerBackend != nullptr &&
             this->csetter != nullptr &&
             this->translator != nullptr &&
             this->settings_mng != nullptr &&
@@ -80,8 +87,9 @@ bool InitializeMng::init()
     engine->rootContext()->setContextProperty("SM",this->settings_mng);
     engine->rootContext()->setContextProperty("mytrans", this->translator);
     engine->rootContext()->setContextProperty("serial_mng", this->serial_mng);
-//    engine->rootContext()->setContextProperty("mp_mng", this->mp_mng);
     engine->rootContext()->setContextProperty("csetter", this->csetter);
+    qmlRegisterInterface<TrackList>("TrackList");
+    engine->rootContext()->setContextProperty("mPlayerBackend", mPlayerBackend);
 
 
     this->translator->updateLanguage(this->settings_mng->lang());
@@ -96,22 +104,9 @@ bool InitializeMng::init()
     qDebug()<<"initializemng.cpp: serial_mng->openSerialPort()";
     this->serial_mng->openSerialPort();
     serial_mng->setDemomode(settings_mng->demomode());
-//    switch(settings_mng->mediaplayertype())
-//    {
-//        case 1:
-//            if(this->mp_mng->connectToServer(mediaurl) == true)
-//            {
-//            qDebug()<<"MediaPlayer connection is successful";
-//            }else{
-
-////            qDebug()<<"MediaPlayer connection is unsuccessful";
-//            }
-//        break;
-
-//    }
-
 
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
+    mPlayerBackend->init();
     qDebug()<<"initializemng.cpp: main.qml is loadded"<<endl;
 
     if (engine->rootObjects().isEmpty())

@@ -12,6 +12,7 @@
 #include <logger/filelogger.h>
 #include <clocksetter.h>
 #include <voicerecognitionservice.h>
+#include "MediaPlayer/mediaplayerbackend.h"
 
 class InitializeMng: public QObject
 {
@@ -21,6 +22,7 @@ class InitializeMng: public QObject
     MediaPlayerMng* mp_mng = nullptr;
     SerialMng* serial_mng = nullptr;
     ClockSetter* csetter = nullptr;
+    MediaPlayerBackend* mPlayerBackend = nullptr;
 public:
     explicit InitializeMng(QObject *parent = nullptr);
     void setClockSetter(ClockSetter *csetter);
@@ -29,6 +31,7 @@ public:
     void setEngine(QQmlApplicationEngine* p_eng);
     void setMediaPlayerMng(MediaPlayerMng* p_mply);
     void setSerialMng(SerialMng* p_smng);
+    void setMediaPlayerBackend(MediaPlayerBackend *mPlayerBackend);
 
     bool init();
 };

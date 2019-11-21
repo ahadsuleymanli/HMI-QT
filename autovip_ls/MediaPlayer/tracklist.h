@@ -21,10 +21,6 @@ class TrackList : public QAbstractListModel
     Q_OBJECT
     UsbMounter *usbmounter;
 public:
-    enum AnimalRoles {
-        TypeRole = Qt::UserRole + 1,
-        SizeRole
-    };
     enum Role {
         TrackRole = Qt::UserRole,
         ArtistsRole,

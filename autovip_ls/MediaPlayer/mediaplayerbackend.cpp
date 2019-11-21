@@ -8,15 +8,18 @@ MediaPlayerBackend::MediaPlayerBackend(QObject *parent)
 {
     m_playList = new QMediaPlaylist(this);
     setPlaylist(m_playList);
-    m_trackList = new TrackList(m_playList);
+    m_trackList = new TrackList(m_playList, this);
     setMuted(true);
     connect(this, &QMediaPlayer::mediaStatusChanged,[=](){
         if(mediaStatus() == QMediaPlayer::BufferedMedia || mediaStatus() == QMediaPlayer::LoadedMedia){
             emit playingMediaChanged();
         }
     });
-    m_trackList->connectUsbMounter();
     QTimer::singleShot(250,this,[this]{ setMuted(false); });
+}
+
+void MediaPlayerBackend::init(){
+    m_trackList->connectUsbMounter();
 }
 
 QString MediaPlayerBackend::playingTitle()
