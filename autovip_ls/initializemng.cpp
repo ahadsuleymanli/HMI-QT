@@ -7,6 +7,11 @@ InitializeMng::InitializeMng(QObject *parent):QObject(parent)
 {
 }
 
+void InitializeMng::setClockSetter(ClockSetter *csetter)
+{
+    this->csetter = csetter;
+}
+
 void InitializeMng::setTranslator(Translator *trl)
 {
     this->translator = trl;
@@ -35,38 +40,14 @@ void InitializeMng::setSerialMng(SerialMng *p_smng)
 bool InitializeMng::init()
 {
     Q_ASSERT(
+            this->csetter != nullptr &&
             this->translator != nullptr &&
             this->settings_mng != nullptr &&
             this->engine != nullptr &&
 //            this->mp_mng != nullptr &&
             this->serial_mng != nullptr
             );
-    csetter = new ClockSetter(this);
-    if(this->translator == nullptr)
-    {
-        return false;
-    }
-    if(this->settings_mng == nullptr)
-    {
-        return false;
-    }
-    if(this->engine == nullptr)
-    {
-        return false;
-    }
-//    if(this->mp_mng == nullptr)
-//    {
-//        return false;
-//    }
-    if(this->serial_mng == nullptr)
-    {
-        return false;
-    }
 
-
-    this->flogger = new FileLogger(settings_mng->getSettings(),10000,this);
-
-    this->flogger->installMsgHandler();
     qDebug()<<"\n\n----------Program Started-------------";
 
     QProcess *removeProcess = new QProcess();
@@ -87,7 +68,7 @@ bool InitializeMng::init()
 //    this->mp_mng->setURL(mediaurl);
 
     if(!this->settings_mng->init()) {
-	    qDebug()<<"settings creation error";
+        qDebug()<<"ini files not found";
 	    return false;
     }
 

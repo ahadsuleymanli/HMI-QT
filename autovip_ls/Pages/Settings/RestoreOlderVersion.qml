@@ -17,9 +17,9 @@ BasePage{
     {
     }
 
-    Restarter{
-        id:restarter
-    }
+//    Restarter{
+//        id:restarter
+//    }
 
     ColumnLayout{
         anchors.centerIn: parent
@@ -56,7 +56,7 @@ BasePage{
                     }
                     onReleased: {
                         restoreButton.color = GSystem.leftTextMenuItemColor
-                        restarter.restoreOlderVersion()
+                        Restarter.restoreOlderVersion()
                     }
                 }
             }

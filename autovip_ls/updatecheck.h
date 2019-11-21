@@ -29,8 +29,7 @@ class UpdateCheck : public QObject
     QString m_programPath = QString("%1/AutoUpdater2").arg(QDir::currentPath());
     QString unzippedPath;
     QTimer overlaytimer;
-    SettingsManager smng;
-    Restarter rstrtr;
+    SettingsManager sm;
     state m_state;
 
     QString m_updateVersion;

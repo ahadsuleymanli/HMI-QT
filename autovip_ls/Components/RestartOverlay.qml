@@ -23,9 +23,9 @@ Item {
 //        restartfadeout.running=true;
 //    }
 
-    Restarter {
-        id:restarter
-    }
+//    Restarter {
+//        id:restarter
+//    }
 
     Rectangle{
         id:restart
@@ -130,7 +130,8 @@ Item {
                                    anchors.fill: parent
                                    onClicked: {
                                        if(restart.opacity==1){
-                                           restarter.makeRestart()
+                                           Restarter.makeRestart()
+//                                           Re.makeRestart()
                                        }
                                    }
                                    onPressed: {

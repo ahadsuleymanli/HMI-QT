@@ -2,7 +2,6 @@
 #include <QFileInfo>
 #include <QDir>
 #include <settingsmanager.h>
-#include <restarter.h>
 #include <iostream>
 
 UpdateCheck::UpdateCheck(QObject *parent) : QObject(parent)
@@ -11,7 +10,7 @@ UpdateCheck::UpdateCheck(QObject *parent) : QObject(parent)
     m_rpro = new QProcess(this);
     connect(m_rpro, &QProcess::readyRead, this, &UpdateCheck::handleReadyRead);
     connect(m_rpro, &QProcess::started, this, &UpdateCheck::sendArguments);
-    setCurrentVersion(smng.version());
+    setCurrentVersion(sm.version());
 }
 
 void UpdateCheck::setCurrentVersion(QString version)
@@ -131,7 +130,7 @@ QString UpdateCheck::changeLog()
 
 void UpdateCheck::makeUpdate()
 {
-    QString version = smng.version();
+    QString version = sm.version();
     QString lastversion = m_updateVersion;
     QStringList templast = lastversion.split(".");
     int major = templast[0].toInt();
@@ -144,11 +143,10 @@ void UpdateCheck::makeUpdate()
     if(checkUnzipped()){
         QDir olddir(QString("%1/update_%1_%2").arg(QDir::currentPath()).arg(majorver).arg(minorver));
         olddir.removeRecursively();
-        smng.setVersion(major,minor);
+        sm.setVersion(major,minor);
         m_rpro->startDetached(filepath);
     }else{
-//        smng.setVersion(major,minor);
-        rstrtr.makeRestart();
+        Restarter::makeRestart();
     }
 }
 void UpdateCheck::checkUpdate()

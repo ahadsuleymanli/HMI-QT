@@ -8,9 +8,6 @@ import "Components"
 import QtMultimedia 5.6
 import MyLang 1.0
 import QtQuick.Controls.Material 2.2
-import closx.updater 1.0
-import closx.smanager 1.0
-
 
 Window {
     id: root
@@ -254,9 +251,7 @@ Window {
 
        ///////////////////////////// UPDATER OVERLAY BAŞLANGICI
 
-//       Updater{
-//           id:updateMe
-//       }
+
 
 
        Rectangle{

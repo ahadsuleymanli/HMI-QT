@@ -20,10 +20,10 @@ class InitializeMng: public QObject
     QQmlApplicationEngine* engine = nullptr;
     MediaPlayerMng* mp_mng = nullptr;
     SerialMng* serial_mng = nullptr;
-    FileLogger* flogger = nullptr;
     ClockSetter* csetter = nullptr;
 public:
     explicit InitializeMng(QObject *parent = nullptr);
+    void setClockSetter(ClockSetter *csetter);
     void setTranslator(Translator * trl);
     void setSettingsManager(SettingsManager* p_sm);
     void setEngine(QQmlApplicationEngine* p_eng);

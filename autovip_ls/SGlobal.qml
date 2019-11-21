@@ -6,7 +6,6 @@ import "scripts/ether.js" as Ether
 import QtWebSockets 1.0
 import VRService 1.0
 import QtQml 2.0
-import closx.smanager 1.0
 /* Global fonksiyonlar, değişkenler ve durumlar(states) bu sayfada bulunuyor. */
 
 
@@ -137,16 +136,10 @@ Item {
         }
     }
 
-    SettingsManager{
-        id:smngr
-    }
-
-
     function systemOnOff()
     {
         if(SM.demomode)
         {
-//        serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
             switch(serial_mng.systemstate)
             {
                 case -1:
@@ -164,7 +157,6 @@ Item {
         }else{
             serial_mng.sendKey("main/system_onoff");
             serial_mng.sendKey("main/system_feedback");
-//            serial_mng.sendKey("main/setclock",true,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
         }
         delayedclocksetter.restart();
         delayedclocksetter.running = true;
@@ -2446,7 +2438,7 @@ ListModel {
         onTriggered: function(){
             if(serial_mng.systemstate !== 1)
             {
-            serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
+            serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + SM.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + SM.value("main/mindiff")*1));
             }
 
         }
@@ -2472,7 +2464,7 @@ ListModel {
         running: false;
         repeat: false;
         onTriggered: function(){
-            serial_mng.sendKey("main/setclock",true,root.delay + 200,(Qt.formatDateTime(new Date(), "h")*1 + smngr.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + smngr.value("main/mindiff")*1));
+            serial_mng.sendKey("main/setclock",true,root.delay + 200,(Qt.formatDateTime(new Date(), "h")*1 + SM.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + SM.value("main/mindiff")*1));
         }
     }
         Connections{

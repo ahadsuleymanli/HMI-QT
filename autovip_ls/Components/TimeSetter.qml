@@ -4,8 +4,6 @@ import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtGraphicalEffects 1.0
-import closx.clocksetter 1.0
-import closx.smanager 1.0
 
 Rectangle{
     id:root
@@ -144,14 +142,6 @@ Rectangle{
 
         }
 
-        SettingsManager{
-            id:settingsmng
-        }
-
-        ClockSetter{
-            id:clcksttr
-        }
-
         Rectangle {
             x:0
             id:timesetrec
@@ -184,13 +174,13 @@ Rectangle{
                 var timesum = time.hour + ":" + time.minutes;
                 var hourdiff = time.hour - Qt.formatDateTime(new Date(), "h")*1
                 var mindiff = time.minutes - Qt.formatDateTime(new Date(), "m")*1
-                settingsmng.setTimeDiff(mindiff,hourdiff);
+                SM.setTimeDiff(mindiff,hourdiff);
                 serial_mng.sendKey("main/setclock",false,root.delay,timesum);
 
                 console.log( "Date: " + date.day + " "+(tumbler.getColumn(1).currentIndex + 1) + " " + date.year );
                 console.log( "Time: " + time.hour + " " + time.minutes );
 
-                clcksttr.setTheClock(date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day
+                csetter.setTheClock(date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day
                                      + " " + time.hour + ":" + time.minutes+":00")
             }
             onPressed: timesetrec.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -249,7 +239,7 @@ Rectangle{
             onClicked: {
                 console.log("Setting date and time");
                 var regionName = region.model[tumblerRegion.getColumn(0).currentIndex]
-                clcksttr.setRegion(regionName)
+                csetter.setRegion(regionName)
             }
             onPressed: regionRect.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
             onReleased: regionRect.color = "#0f0f0f"
@@ -257,13 +247,13 @@ Rectangle{
         }
     }
     Connections{
-        target: clcksttr
+        target: csetter
         onRegionChanged:{
             var date = new Date
             var timesum = date.toLocaleTimeString(Qt.locale(),"hh:mm")
             serial_mng.sendKey("main/setclock",false,root.delay,timesum);
 
-            settingsmng.setTimeDiff(0,0);
+            SM.setTimeDiff(0,0);
 
         }
     }

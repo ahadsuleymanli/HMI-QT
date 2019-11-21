@@ -45,29 +45,22 @@ int main(int argc, char *argv[])
     enableStackTraceDump();
 
     QQmlApplicationEngine engine;
-
-
-    qmlRegisterType<Restarter>("closx.restarter", 1, 0, "Restarter");
-    qmlRegisterType<SettingsManager>("closx.smanager", 1, 0, "SettingsManager");
-    qmlRegisterType<ClockSetter>("closx.clocksetter", 1, 0, "ClockSetter");
+    qmlRegisterSingletonType<Restarter>("closx.restarter", 1, 0,"Restarter",&Restarter::qmlInstance);
     qmlRegisterType<UpdateCheck>("closx.updater",1,0,"Updater");
 //    qmlRegisterType<TrackList>("TrackList",1,0,"TrackList");
 //    qmlRegisterType<MediaPlayerBackend>("MediaPlayerBackend",1,0,"MediaPlayerBackend");
 
-
     SettingsManager sm;
     Translator mTrans(&app);
-
-//    MediaPlayerMng mpMan;
-
     InitializeMng imng;
     SerialMng smng;
-    ClockSetter mclck;
+    ClockSetter csetter;
+    FileLogger flogger(sm.getSettings(),10000,&app);
 
+    imng.setClockSetter(&csetter);
     imng.setTranslator(&mTrans);
     imng.setSettingsManager(&sm);
     imng.setEngine(&engine);
-//    imng.setMediaPlayerMng(&mpMan);
     imng.setSerialMng(&smng);
 
     // instantiating an NvidiaConnManager object
@@ -81,7 +74,7 @@ int main(int argc, char *argv[])
 //    secondThread.start();
     MediaPlayerBackend mPlayerBackend(&app);
     engine.rootContext()->setContextProperty("mPlayerBackend", &mPlayerBackend);
-
+    qDebug()<<"initiating imng";
     if(imng.init() == false){
         qDebug()<<"main.cpp: initializemng failed";
          return -1;

@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import ck.gmachine 1.0
-import closx.smanager 1.0
 
 Image {
         id:root
@@ -14,10 +13,6 @@ Image {
             console.log(pageName + "is clicked ");
             root.pageChange(pageName);
         }
-        SettingsManager{
-            id:smanager
-        }
-
 
             DDate{
                 id:topDate

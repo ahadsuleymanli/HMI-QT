@@ -6,12 +6,9 @@ import ck.gmachine 1.0
 import MyLang 1.0
 import QtGraphicalEffects 1.0
 import "../../Components"
-import closx.smanager 1.0
 import QtQuick.Extras 1.4
 import QtGraphicalEffects 1.0
 import closx.updater 1.0
-import closx.smanager 1.0
-
 
 BasePage {
     id:root
@@ -24,9 +21,6 @@ BasePage {
     {
         timesetter.refresh();
 //        autotime.checked = csetter.isAutoTimeSync();
-    }
-    SettingsManager{
-        id:smanager
     }
 
 
@@ -99,7 +93,7 @@ BasePage {
                             fillMode: Image.Stretch
                             antialiasing: true
                             smooth: true
-                            opacity: smanager.lang==125 ? 1 : 0.2
+                            opacity: SM.lang==125 ? 1 : 0.2
                             MouseArea{
                                 anchors.fill: parent
                                 onClicked: {
@@ -130,7 +124,7 @@ BasePage {
                             sourceSize.width: 120
                             width: 120
                             height:80
-                            opacity: smanager.lang==31 ? 1 : 0.2
+                            opacity: SM.lang==31 ? 1 : 0.2
                             fillMode: Image.Stretch
                             MouseArea{
                                 anchors.fill: parent
@@ -163,7 +157,7 @@ BasePage {
                             fillMode: Image.Stretch
                             antialiasing: true
                             smooth: true
-                            opacity: smanager.lang==25 ? 1 : 0.2
+                            opacity: SM.lang==25 ? 1 : 0.2
                                 MouseArea{
                                 anchors.fill: parent
                                 onClicked: {
