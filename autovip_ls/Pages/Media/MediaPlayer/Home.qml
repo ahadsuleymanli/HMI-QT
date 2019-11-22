@@ -15,13 +15,21 @@ HomeForm {
                                                              mPlayerBackend.playingCover)
     playPauseImage.source:(mPlayerBackend.state === 1 ? "qrc:/design/media/MediaPlayer/pause.png":
                                                                 "qrc:/design/media/MediaPlayer/2.png")
+//    shuffleGlow.
+
+
     progressArea.onMouseXChanged:{
         var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)
         mPlayerBackend.setPosition(pos)
     }
 
-    shuffleButton.onClicked: mPlayerBackend.setShuffle()
+    shuffleButton.onClicked: {
+        mPlayerBackend.setShuffle()
+    }
 
+    repeatButton.onClicked: {
+        mPlayerBackend.setLoop()
+    }
 
     playPauseButton.onClicked: {
         mPlayerBackend.playPause()
@@ -35,9 +43,7 @@ HomeForm {
     nextButton.onClicked: {
         mPlayerBackend.next()
     }
-    repeatButton.onClicked: {
 
-    }
 
 
 }

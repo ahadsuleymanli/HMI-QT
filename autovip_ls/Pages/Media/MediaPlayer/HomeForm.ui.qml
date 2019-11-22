@@ -10,6 +10,10 @@ Item {
     property alias progressIndicator: progressIndicator
     property alias coverImage: coverImage
     property alias playPauseImage: playPauseImage
+    property alias shuffleImage: shuffleImage
+    property alias repeatImage: repeatImage
+    property alias repeatGlow: repeatGlow
+    property alias shuffleGlow: shuffleGlow
     property alias infoArtist: infoArtist
     property alias infoLayout: infoLayout
     property alias infoYear: infoYear
@@ -22,6 +26,7 @@ Item {
     property alias shuffleButton: shuffleButton
     property alias playPauseButton: playPauseButton
     property alias nextButton: nextButton
+
 
     ColumnLayout {
         id: columnLayout
@@ -198,12 +203,21 @@ Item {
                     sourceSize.width: 30
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/design/media/MediaPlayer/shuffle.png"
+                    property bool toggled: false
                     MouseArea {
                         id: shuffleButton
                         anchors.fill: parent
                     }
                 }
+                ColorOverlay {
+                    anchors.fill: shuffleImage
+                    source: shuffleImage
+                    color: "#FF5555FF"
+                    cached: true
+//                    visiblw: true
+                }
                 Glow {
+                    id: shuffleGlow
                     anchors.fill: shuffleImage
                     radius: 20
                     samples: 20
@@ -290,7 +304,7 @@ Item {
                 width: childrenRect.width
                 height: childrenRect.height
                 Image {
-                    id: repeat
+                    id: repeatImage
                     sourceSize.height: 30
                     sourceSize.width: 30
                     fillMode: Image.PreserveAspectFit
@@ -301,11 +315,12 @@ Item {
                     }
                 }
                 Glow {
-                    anchors.fill: repeat
+                    id: repeatGlow
+                    anchors.fill: repeatImage
                     radius: 20
                     samples: 20
                     color: "#bbabebfb"
-                    source: repeat
+                    source: repeatImage
                     visible: repeatButton.pressed
                 }
             }

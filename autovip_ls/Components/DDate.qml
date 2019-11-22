@@ -17,7 +17,7 @@ Rectangle {
         id : timer
         interval: 500; running: true; repeat: true
         onTriggered: function() {
-            ddate.date = new Date;
+            ddate.date = csetter.getAdjustedTime();
         }
     }
 

@@ -20,7 +20,6 @@ BasePage {
     function init()
     {
         timesetter.refresh();
-//        autotime.checked = csetter.isAutoTimeSync();
     }
 
 

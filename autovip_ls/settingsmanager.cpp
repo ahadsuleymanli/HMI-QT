@@ -197,12 +197,12 @@ void SettingsManager::setMediaPlayerURL(QString nmediaPlayerURL)
 
 int SettingsManager::mindiff()
 {
-    return this->general->value("main/mindiff",1).toInt();
+    return this->general->value("main/mindiff",0).toInt();
 }
 
 int SettingsManager::hourdiff()
 {
-    return this->general->value("main/hourdiff",1).toInt();
+    return this->general->value("main/hourdiff",0).toInt();
 }
 
 

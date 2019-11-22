@@ -1,9 +1,31 @@
 #include "clocksetter.h"
 #include <QProcess>
+#include <QDebug>
 
 ClockSetter::ClockSetter(QObject *parent) :
     QObject (parent)
 {
+    hourDiff = sm->value("main/hourdiff").toInt();
+    minDiff = sm->value("main/mindiff").toInt();
+}
+
+void ClockSetter::setTimeDiff(int minDiff, int hourDiff, int daydiff,  int monthdiff, int yeardiff)
+{
+    sm->setTimeDiff(minDiff,hourDiff);
+    this->hourDiff = hourDiff;
+    this->minDiff = minDiff;
+    emit timeDiffChanged(minDiff,hourDiff);
+}
+
+QDateTime ClockSetter::getAdjustedTime(){
+//    QString hours = QString::number(QTime::currentTime().hour() + hourDiff).rightJustified(2, '0');
+//    QString mins = QString::number(QTime::currentTime().minute() + minDiff).rightJustified(2, '0');
+//    QString string = "01 Jan 2005 "+hours+":"+mins;
+    QDateTime adjustedDateTime = QDateTime::currentDateTime();
+    QTime tempTime = QTime::currentTime();
+    tempTime = tempTime.addSecs(hourDiff*3600+minDiff*60);
+    adjustedDateTime.setTime(tempTime);
+    return adjustedDateTime;
 }
 
 void ClockSetter::setTheClock(QString time)
@@ -31,6 +53,9 @@ void ClockSetter::setRegion(QString region)
 
     connect(regionSetter, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),
             [=](){
+        hourDiff = 0;
+        minDiff = 0;
+        sm->setTimeDiff(0,0);
         emit regionChanged(region);
         regionSetter->deleteLater();
     });

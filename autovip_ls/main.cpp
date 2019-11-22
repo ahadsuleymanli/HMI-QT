@@ -30,6 +30,11 @@ bool changeCD()
 
 int main(int argc, char *argv[])
 {
+    QString linuxTimeAtStart;
+    QProcess dateTimeReader;
+    dateTimeReader.start("date");
+    dateTimeReader.waitForFinished(500);
+    linuxTimeAtStart = dateTimeReader.readAllStandardOutput();
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
@@ -65,7 +70,10 @@ int main(int argc, char *argv[])
 //    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::nextSignal, &secondThread, &SecondThread::next);
 //    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::previousSignal, &secondThread, &SecondThread::previous);
 //    secondThread.start();
-
+    qDebug()<<"current date: "<<  QDate::currentDate();
+    dateTimeReader.start("date");
+    dateTimeReader.waitForFinished(500);
+    qDebug()<<"linux time at start: "<<linuxTimeAtStart<<", linux time later: "<<dateTimeReader.readAllStandardOutput();
 
     qDebug()<<"initiating imng";
     if(imng.init() == false){

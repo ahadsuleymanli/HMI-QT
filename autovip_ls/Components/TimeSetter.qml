@@ -16,7 +16,7 @@ Rectangle{
     property variant time : { "hour": "-1", "minutes": "-1" }
     function refresh()
     {
-        cur_date = new Date();
+        cur_date = csetter.getAdjustedTime();
         console.log(cur_date.toDateString());
         console.log(cur_date.getDate());
         console.log(cur_date.getMonth());
@@ -165,6 +165,7 @@ Rectangle{
         MouseArea{
             anchors.fill:parent
             onClicked: {
+                var systemDate = new Date();
                 console.log("Setting date and time");
                 date.day = dayColumn.model.get(tumbler.getColumn(0).currentIndex).value
                 date.month = monthColumn.model[tumbler.getColumn(1).currentIndex]
@@ -172,16 +173,18 @@ Rectangle{
                 time.hour = hourColumn.model.get(tumblerTime.getColumn(0).currentIndex).value
                 time.minutes = minutesColumn.model.get(tumblerTime.getColumn(1).currentIndex).value
                 var timesum = time.hour + ":" + time.minutes;
-                var hourdiff = time.hour - Qt.formatDateTime(new Date(), "h")*1
-                var mindiff = time.minutes - Qt.formatDateTime(new Date(), "m")*1
-                SM.setTimeDiff(mindiff,hourdiff);
+                var hourdiff = time.hour - Qt.formatDateTime(systemDate, "h")*1
+                var mindiff = time.minutes - Qt.formatDateTime(systemDate, "m")*1
+                console.log("timesetter hourdiff mindiff: " + hourdiff + " " + mindiff)
+//                SM.setTimeDiff(mindiff,hourdiff);
                 serial_mng.sendKey("main/setclock",false,root.delay,timesum);
 
                 console.log( "Date: " + date.day + " "+(tumbler.getColumn(1).currentIndex + 1) + " " + date.year );
                 console.log( "Time: " + time.hour + " " + time.minutes );
 
-                csetter.setTheClock(date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day
-                                     + " " + time.hour + ":" + time.minutes+":00")
+                csetter.setTimeDiff(mindiff,hourdiff);
+//                csetter.setTheClock(date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day
+//                                     + " " + time.hour + ":" + time.minutes+":00")
             }
             onPressed: timesetrec.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
             onReleased: timesetrec.color = "#0f0f0f"
@@ -253,7 +256,7 @@ Rectangle{
             var timesum = date.toLocaleTimeString(Qt.locale(),"hh:mm")
             serial_mng.sendKey("main/setclock",false,root.delay,timesum);
 
-            SM.setTimeDiff(0,0);
+//            SM.setTimeDiff(0,0);
 
         }
     }
