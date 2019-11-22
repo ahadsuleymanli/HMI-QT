@@ -208,13 +208,13 @@ int SettingsManager::hourdiff()
 
 
 
-void SettingsManager::setTimeDiff(int mndf, int hrdf)
+void SettingsManager::setTimeDiff(int mindiff, int hourdiff,int daydiff,int monthdiff,int yeardiff)
 {
-    if(this->mindiff() != mndf || this->hourdiff() != hrdf)
-    {
-        this->general->setValue("main/mindiff",mndf);
-        this->general->setValue("main/hourdiff",hrdf);
-    }
+    this->general->setValue("main/mindiff",mindiff);
+    this->general->setValue("main/hourdiff",hourdiff);
+    this->general->setValue("main/daydiff",daydiff);
+    this->general->setValue("main/monthdiff",monthdiff);
+    this->general->setValue("main/yeardiff",yeardiff);
 }
 
 void SettingsManager::setVersion(int major, int minor)

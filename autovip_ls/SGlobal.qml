@@ -2438,7 +2438,7 @@ ListModel {
         onTriggered: function(){
             if(serial_mng.systemstate !== 1)
             {
-            serial_mng.sendKey("main/setclock",false,root.delay,(Qt.formatDateTime(new Date(), "h")*1 + SM.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + SM.value("main/mindiff")*1));
+            serial_mng.sendKey("main/setclock",false,root.delay,csetter.getAdjustedTime().toLocaleTimeString(Qt.locale(),"hh:mm"));
             }
 
         }
@@ -2464,7 +2464,7 @@ ListModel {
         running: false;
         repeat: false;
         onTriggered: function(){
-            serial_mng.sendKey("main/setclock",true,root.delay + 200,(Qt.formatDateTime(new Date(), "h")*1 + SM.value("main/hourdiff")*1)+ ":" + (Qt.formatDateTime(new Date(), "m")*1 + SM.value("main/mindiff")*1));
+            serial_mng.sendKey("main/setclock",true,root.delay + 200,csetter.getAdjustedTime().toLocaleTimeString(Qt.locale(),"hh:mm"));
         }
     }
         Connections{

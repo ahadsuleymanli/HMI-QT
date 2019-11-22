@@ -21,9 +21,6 @@ Rectangle {
               date = csetter.getAdjustedTime();
 //              console.log(date);
 //            date = new Date;
-//            var mins = date.getMinutes() + csetter.minDiff;
-//            var hours = date.getHours() + csetter.hourDiff;
-//            console.log("digital clock: " + hours + ":"+mins);
         }
     }
 

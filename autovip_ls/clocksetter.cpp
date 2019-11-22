@@ -5,26 +5,32 @@
 ClockSetter::ClockSetter(QObject *parent) :
     QObject (parent)
 {
-    hourDiff = sm->value("main/hourdiff").toInt();
-    minDiff = sm->value("main/mindiff").toInt();
+    this->minDiff = sm->value("main/mindiff").toInt();
+    this->hourDiff = sm->value("main/hourdiff").toInt();
+    this->dayDiff = sm->value("main/daydiff").toInt();
+    this->monthDiff = sm->value("main/monthdiff").toInt();
+    this->yearDiff = sm->value("main/yeardiff").toInt();
 }
 
-void ClockSetter::setTimeDiff(int minDiff, int hourDiff, int daydiff,  int monthdiff, int yeardiff)
+void ClockSetter::setTimeDiff(int minDiff, int hourDiff, int dayDiff,  int monthDiff, int yearDiff)
 {
-    sm->setTimeDiff(minDiff,hourDiff);
+    sm->setTimeDiff(minDiff,hourDiff,dayDiff,monthDiff,yearDiff);
     this->hourDiff = hourDiff;
     this->minDiff = minDiff;
+    this->dayDiff = dayDiff;
+    this->monthDiff = monthDiff;
+    this->yearDiff = yearDiff;
     emit timeDiffChanged(minDiff,hourDiff);
 }
 
 QDateTime ClockSetter::getAdjustedTime(){
-//    QString hours = QString::number(QTime::currentTime().hour() + hourDiff).rightJustified(2, '0');
-//    QString mins = QString::number(QTime::currentTime().minute() + minDiff).rightJustified(2, '0');
-//    QString string = "01 Jan 2005 "+hours+":"+mins;
     QDateTime adjustedDateTime = QDateTime::currentDateTime();
-    QTime tempTime = QTime::currentTime();
-    tempTime = tempTime.addSecs(hourDiff*3600+minDiff*60);
-    adjustedDateTime.setTime(tempTime);
+    adjustedDateTime.setTime(QTime::currentTime().addSecs(hourDiff*3600+minDiff*60));
+    QDate tempDate(QDate::currentDate());
+    tempDate = tempDate.addDays(dayDiff);
+    tempDate = tempDate.addMonths(monthDiff);
+    tempDate = tempDate.addYears(yearDiff);
+    adjustedDateTime.setDate(tempDate);
     return adjustedDateTime;
 }
 
@@ -53,9 +59,7 @@ void ClockSetter::setRegion(QString region)
 
     connect(regionSetter, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),
             [=](){
-        hourDiff = 0;
-        minDiff = 0;
-        sm->setTimeDiff(0,0);
+        this->setTimeDiff(0,0,0,0,0);
         emit regionChanged(region);
         regionSetter->deleteLater();
     });

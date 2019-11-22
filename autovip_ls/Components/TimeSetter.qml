@@ -9,7 +9,7 @@ Rectangle{
     id:root
     width:tumbler.width
     height: tumbler.height
-    property date cur_date: new Date()
+    property date cur_date: csetter.getAdjustedTime()
     color:"transparent"
     property bool mode : false
     property variant date : { "day": "0" , "month": "Month", "year": "0000" }   // dummy valuess
@@ -168,21 +168,23 @@ Rectangle{
                 var systemDate = new Date();
                 console.log("Setting date and time");
                 date.day = dayColumn.model.get(tumbler.getColumn(0).currentIndex).value
-                date.month = monthColumn.model[tumbler.getColumn(1).currentIndex]
+                date.month = tumbler.getColumn(1).currentIndex+1
                 date.year = yearColumn.model.get(tumbler.getColumn(2).currentIndex).value
                 time.hour = hourColumn.model.get(tumblerTime.getColumn(0).currentIndex).value
                 time.minutes = minutesColumn.model.get(tumblerTime.getColumn(1).currentIndex).value
                 var timesum = time.hour + ":" + time.minutes;
                 var hourdiff = time.hour - Qt.formatDateTime(systemDate, "h")*1
                 var mindiff = time.minutes - Qt.formatDateTime(systemDate, "m")*1
-                console.log("timesetter hourdiff mindiff: " + hourdiff + " " + mindiff)
-//                SM.setTimeDiff(mindiff,hourdiff);
+                var daydiff = date.day - Qt.formatDateTime(systemDate, "d")*1
+                var monthdiff = date.month*1 - Qt.formatDateTime(systemDate, "M")*1
+                var yeardiff = date.year - Qt.formatDateTime(systemDate, "yyyy")*1
+//                console.log("timesetter: hr" + hourdiff + " min" + mindiff + " day" + daydiff + " month" + monthdiff + " year" + yeardiff)
                 serial_mng.sendKey("main/setclock",false,root.delay,timesum);
 
                 console.log( "Date: " + date.day + " "+(tumbler.getColumn(1).currentIndex + 1) + " " + date.year );
                 console.log( "Time: " + time.hour + " " + time.minutes );
 
-                csetter.setTimeDiff(mindiff,hourdiff);
+                csetter.setTimeDiff(mindiff,hourdiff,daydiff,monthdiff,yeardiff);
 //                csetter.setTheClock(date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day
 //                                     + " " + time.hour + ":" + time.minutes+":00")
             }
@@ -243,6 +245,7 @@ Rectangle{
                 console.log("Setting date and time");
                 var regionName = region.model[tumblerRegion.getColumn(0).currentIndex]
                 csetter.setRegion(regionName)
+//                root.refresh()
             }
             onPressed: regionRect.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
             onReleased: regionRect.color = "#0f0f0f"
@@ -255,8 +258,6 @@ Rectangle{
             var date = new Date
             var timesum = date.toLocaleTimeString(Qt.locale(),"hh:mm")
             serial_mng.sendKey("main/setclock",false,root.delay,timesum);
-
-//            SM.setTimeDiff(0,0);
 
         }
     }
