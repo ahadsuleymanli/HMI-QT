@@ -17,6 +17,7 @@ class UsbMounter: public QObject
     QStringList mountedPaths = {};
     QString prev_blkid = "";
     bool canListen = false;
+    bool mountAllowed = false;
 public:
     UsbMounter(QObject* parent=0);
     ~UsbMounter(){

@@ -12,8 +12,6 @@
 #include "settingsmanager.h"
 #include "iterativevaluechanger.h"
 
-class NvidiaConnManager;
-
 
 class NvidiaConnManager: public QObject
 {

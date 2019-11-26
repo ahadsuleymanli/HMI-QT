@@ -4,6 +4,7 @@
 #include "settingsmanager.h"
 #include "mediaplayermng.h"
 #include "serialmng.h"
+#include "nvidiaconnmanager.h"
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -23,6 +24,7 @@ class InitializeMng: public QObject
     SerialMng* serial_mng = nullptr;
     ClockSetter* csetter = nullptr;
     MediaPlayerBackend* mPlayerBackend = nullptr;
+    NvidiaConnManager* nvidiaConnManager = nullptr;
 public:
     explicit InitializeMng(QObject *parent = nullptr);
     void setClockSetter(ClockSetter *csetter);
@@ -32,6 +34,7 @@ public:
     void setMediaPlayerMng(MediaPlayerMng* p_mply);
     void setSerialMng(SerialMng* p_smng);
     void setMediaPlayerBackend(MediaPlayerBackend *mPlayerBackend);
+    void setNvidiaConnManager(NvidiaConnManager *nvidiaConnManager);
 
     bool init();
 };

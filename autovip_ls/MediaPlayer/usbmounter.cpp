@@ -8,6 +8,11 @@ UsbMounter::UsbMounter(QObject* parent){
     connect(&devWatcher, SIGNAL(directoryChanged(QString)), this,SLOT(reactToDevChange(QString)));
     connect(&devChangeTimer, &QTimer::timeout, this,[this](){checkForUsbDevices(true);});
     connect(this,SIGNAL(readyToCheck(bool)),this,SLOT(checkForUsbDevices(bool)));
+    #if defined(__arm__)
+        this->mountAllowed = true;
+    #elif defined(__aarch64__)
+        this->mountAllowed = true;
+    #endif
 }
 
 void UsbMounter::reactToDevChange(const QString& str)
@@ -31,7 +36,10 @@ void UsbMounter::checkForUsbDevices(bool directory_change){
     QString temp = chkproc->readAllStandardOutput();
     QTextStream textstream(&temp);
 
-    if (temp != prev_blkid){
+    if (!mountAllowed){
+        qDebug("mounting devices not allowed on non-target platform. (you're running the program on a PC)");
+    }
+    else if (temp != prev_blkid){
         prev_blkid = temp;
         QStringList newlyAddedList = {};
         while (!textstream.atEnd())

@@ -44,6 +44,10 @@ void InitializeMng::setSerialMng(SerialMng *p_smng)
 {
    this->serial_mng = p_smng;
 }
+void InitializeMng::setNvidiaConnManager(NvidiaConnManager *nvidiaConnManager)
+{
+   this->nvidiaConnManager = nvidiaConnManager;
+}
 
 bool InitializeMng::init()
 {
@@ -53,7 +57,6 @@ bool InitializeMng::init()
             this->translator != nullptr &&
             this->settings_mng != nullptr &&
             this->engine != nullptr &&
-//            this->mp_mng != nullptr &&
             this->serial_mng != nullptr
             );
 
@@ -90,6 +93,8 @@ bool InitializeMng::init()
     engine->rootContext()->setContextProperty("csetter", this->csetter);
     qmlRegisterInterface<TrackList>("TrackList");
     engine->rootContext()->setContextProperty("mPlayerBackend", mPlayerBackend);
+    if (nvidiaConnManager)
+        engine->rootContext()->setContextProperty("nvidia_conn_manager", nvidiaConnManager);
 
 
     this->translator->updateLanguage(this->settings_mng->lang());
