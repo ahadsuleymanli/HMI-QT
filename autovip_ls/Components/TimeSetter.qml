@@ -184,9 +184,9 @@ Rectangle{
                 console.log( "Date: " + date.day + " "+(tumbler.getColumn(1).currentIndex + 1) + " " + date.year );
                 console.log( "Time: " + time.hour + " " + time.minutes );
 
+//                var dateString = date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day+ " " + time.hour + ":" + time.minutes+":00";
                 csetter.setTimeDiff(mindiff,hourdiff,daydiff,monthdiff,yeardiff);
-//                csetter.setTheClock(date.year +"-"+(tumbler.getColumn(1).currentIndex + 1)+"-" +date.day
-//                                     + " " + time.hour + ":" + time.minutes+":00")
+//                csetter.setTheClock(dateString);
             }
             onPressed: timesetrec.color = Qt.rgba(0/255, 108/255, 128/255,0.6)
             onReleased: timesetrec.color = "#0f0f0f"

@@ -210,11 +210,21 @@ int SettingsManager::hourdiff()
 
 void SettingsManager::setTimeDiff(int mindiff, int hourdiff,int daydiff,int monthdiff,int yeardiff)
 {
-    this->general->setValue("main/mindiff",mindiff);
-    this->general->setValue("main/hourdiff",hourdiff);
-    this->general->setValue("main/daydiff",daydiff);
-    this->general->setValue("main/monthdiff",monthdiff);
-    this->general->setValue("main/yeardiff",yeardiff);
+    this->general->setValue("timedate/mindiff",mindiff);
+    this->general->setValue("timedate/hourdiff",hourdiff);
+    this->general->setValue("timedate/daydiff",daydiff);
+    this->general->setValue("timedate/monthdiff",monthdiff);
+    this->general->setValue("timedate/yeardiff",yeardiff);
+}
+
+void SettingsManager::setHwTimeOffset(int sec, int min, int hour,int day,int month,int year)
+{
+    this->general->setValue("timedate/hw_offset_sec",sec);
+    this->general->setValue("timedate/hw_offset_min",min);
+    this->general->setValue("timedate/hw_offset_hour",hour);
+    this->general->setValue("timedate/hw_offset_day",day);
+    this->general->setValue("timedate/hw_offset_month",month);
+    this->general->setValue("timedate/hw_offset_year",year);
 }
 
 void SettingsManager::setVersion(int major, int minor)

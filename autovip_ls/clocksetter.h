@@ -15,21 +15,33 @@ class ClockSetter : public QObject
     int dayDiff;
     int monthDiff;
     int yearDiff;
+
+    struct DateTimeStruct
+    {
+        int sec;
+        int min;
+        int hour;
+        int day;
+        int month;
+        int year;
+        QString activeTimezone = "";
+    };
+    DateTimeStruct hwTimeOffset;
+    bool hwTimeOffsetIsZero();
+    void updateHwClockOffset(bool measureTimeLag=false);
+    void setLocalTimeFromOffset();
+    void parseSystemTimes(QString queryString, DateTimeStruct *sysTime , DateTimeStruct *rtc, DateTimeStruct *offset);
     Q_PROPERTY(QDateTime adjustedDateTime READ getAdjustedTime() NOTIFY timeDiffChanged)
-//    Q_PROPERTY(int minDiff READ getMinDiff() NOTIFY timeDiffChanged)
-//    Q_PROPERTY(int hourDiff READ getHourDiff() NOTIFY timeDiffChanged)
-    int getMinDiff(){return sm->value("main/mindiff").toInt();}
-    int getHourDiff(){return sm->value("main/hourdiff").toInt();}
 public:
     explicit ClockSetter(QObject *parent = nullptr);
-    Q_INVOKABLE void setTimeDiff(int minDIff, int hourDiff, int dayDiff=0,  int monthDiff=0, int yearDiff=0);
-    Q_INVOKABLE void setTheClock(QString time);
+    Q_INVOKABLE void setTimeDiff(int minDIff, int hourDiff, int dayDiff,  int monthDiff, int yearDiff);
+    Q_INVOKABLE void setSystemClock(QString time);
     Q_INVOKABLE void setRegion(QString region);
     Q_INVOKABLE QDateTime getAdjustedTime();
 
 signals:
     void sendKey(QString);
-    void timeDiffChanged(int minDiff, int hourDiff);
+    void timeDiffChanged();
     void regionChanged(QString region);
 public slots:
 };
