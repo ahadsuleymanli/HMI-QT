@@ -15,32 +15,41 @@ HomeForm {
                                                              mPlayerBackend.playingCover)
     playPauseImage.source:(mPlayerBackend.state === 1 ? "qrc:/design/media/MediaPlayer/pause.png":
                                                                 "qrc:/design/media/MediaPlayer/2.png")
-//    shuffleGlow.
+    repeatImage.source: (mPlayerBackend.loop===2 ? "qrc:/design/media/MediaPlayer/repeat_1.png":"qrc:/design/media/MediaPlayer/repeat.png")
 
+    Connections{
+        target:mPlayerBackend
+        onPlayModeChanged:function()
+        {
+            shuffleImage.toggled = mPlayerBackend.shuffle
+            repeatImage.toggled = mPlayerBackend.loop > 0
+        }
+
+    }
 
     progressArea.onMouseXChanged:{
         var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)
         mPlayerBackend.setPosition(pos)
     }
 
-    shuffleButton.onClicked: {
-        mPlayerBackend.setShuffle()
+    shuffleButton.onReleased: {
+        mPlayerBackend.setShuffle();
     }
 
-    repeatButton.onClicked: {
+    repeatButton.onReleased: {
         mPlayerBackend.setLoop()
     }
 
-    playPauseButton.onClicked: {
+    playPauseButton.onReleased: {
         mPlayerBackend.playPause()
 
     }
 
-    prewButton.onClicked: {
+    prewButton.onReleased: {
         mPlayerBackend.previous()
     }
 
-    nextButton.onClicked: {
+    nextButton.onReleased: {
         mPlayerBackend.next()
     }
 

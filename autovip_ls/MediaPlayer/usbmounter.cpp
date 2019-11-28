@@ -8,9 +8,7 @@ UsbMounter::UsbMounter(QObject* parent){
     connect(&devWatcher, SIGNAL(directoryChanged(QString)), this,SLOT(reactToDevChange(QString)));
     connect(&devChangeTimer, &QTimer::timeout, this,[this](){checkForUsbDevices(true);});
     connect(this,SIGNAL(readyToCheck(bool)),this,SLOT(checkForUsbDevices(bool)));
-    #if defined(__arm__)
-        this->mountAllowed = true;
-    #elif defined(__aarch64__)
+    #if (defined(__arm__) || defined(__aarch64__))
         this->mountAllowed = true;
     #endif
 }
@@ -45,12 +43,8 @@ void UsbMounter::checkForUsbDevices(bool directory_change){
         while (!textstream.atEnd())
            {
               QString line = textstream.readLine();
-              if (line.contains("TYPE=\"", Qt::CaseInsensitive) && line.contains("dev/sd", Qt::CaseInsensitive)
-                      && !(line.contains("Microsoft reserved partition", Qt::CaseInsensitive)||
-                           line.contains("PARTUUID=\"2c417d8b", Qt::CaseInsensitive)||line.contains("8cc16bbc", Qt::CaseInsensitive)||line.contains("f0a0e50c", Qt::CaseInsensitive))){
+              if (line.contains("TYPE=\"", Qt::CaseInsensitive) && line.contains("dev/sd", Qt::CaseInsensitive)){
                   devPath = line.split(":")[0];
-//                  UUID="646E-0B80" TYPE="vfat" PARTLABEL="Basic data partition" PARTUUID="9a833a30-269d-01d5-189d-41cd4e93ea00"
-
                   mountPath = "/media/usb/music" + QString::number(mountIdx);
                   if (!QDir(mountPath).exists())
                       QDir().mkdir(mountPath);

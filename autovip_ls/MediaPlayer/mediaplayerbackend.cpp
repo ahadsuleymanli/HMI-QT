@@ -57,7 +57,6 @@ QString MediaPlayerBackend::playingCover()
 }
 
 
-
 void MediaPlayerBackend::playPause(){
     if (state() == 1 && !paused){
         setMuted(true);
@@ -65,7 +64,6 @@ void MediaPlayerBackend::playPause(){
     }
     else{
         this->QMediaPlayer::play();
-//        QTimer::singleShot(100,this,[this]{  });
     }
 
 }
@@ -84,31 +82,27 @@ void MediaPlayerBackend::previous()
 
 
 void MediaPlayerBackend::setLoopHelper(){
-    if (loopState==0){
+    if (loopState==2){
+        playlist()->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+    }
+    else if (shuffleEnabled){
+        playlist()->setPlaybackMode(QMediaPlaylist::Random);
+    }
+    else if (loopState==0){
         playlist()->setPlaybackMode(QMediaPlaylist::Sequential);
     }
     else if (loopState==1){
-        playlist()->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
-    }
-    else if (loopState==2){
         playlist()->setPlaybackMode(QMediaPlaylist::Loop);
     }
 }
 
 void MediaPlayerBackend::setShuffle(){
     shuffleEnabled = !shuffleEnabled;
-    if (shuffleEnabled){
-        playlist()->setPlaybackMode(QMediaPlaylist::Random);
-    }
-    else {
-        setLoopHelper();
-    }
+    setLoopHelper();
     emit playModeChanged();
 }
 void MediaPlayerBackend::setLoop(){
-    if (shuffleEnabled)
-        shuffleEnabled = false;
-    else if (loopState == 0)
+    if (loopState == 0)
         loopState = 1;
     else if (loopState == 1)
         loopState = 2;
@@ -121,10 +115,7 @@ bool MediaPlayerBackend::getShuffle(){
     return shuffleEnabled;
 }
 int MediaPlayerBackend::getLoop(){
-    if (shuffleEnabled)
-        return 0;
-    else
-        return loopState;
+    return loopState;
 }
 
 

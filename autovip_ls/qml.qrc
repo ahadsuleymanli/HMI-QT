@@ -429,7 +429,6 @@
         <file>design/media/MediaPlayer/melody.png</file>
         <file>Pages/Media/MediaPlayer/Library.qml</file>
         <file>Pages/Media/MediaPlayer/LibraryForm.ui.qml</file>
-        <file>design/media/MediaPlayer/shuffle_on.png</file>
         <file>design/media/MediaPlayer/pause.png</file>
         <file>Components/LeftToggleMenu.qml</file>
         <file>translator/general_AR.ts</file>
@@ -440,5 +439,7 @@
         <file>design/general/audiosource_dvd.png</file>
         <file>design/general/audiosource_hi.png</file>
         <file>design/general/audiosource_tv.png</file>
+        <file>design/media/MediaPlayer/repeat_1.png</file>
+        <file>design/media/MediaPlayer/DizaynVIP_Audio_Labs.png</file>
     </qresource>
 </RCC>
