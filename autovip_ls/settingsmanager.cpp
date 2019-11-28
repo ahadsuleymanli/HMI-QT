@@ -217,7 +217,7 @@ void SettingsManager::setTimeDiff(int mindiff, int hourdiff,int daydiff,int mont
     this->general->setValue("timedate/yeardiff",yeardiff);
 }
 
-void SettingsManager::setHwTimeOffset(int sec, int min, int hour,int day,int month,int year)
+void SettingsManager::setHwTimeOffset(int sec, int min, int hour,int day,int month,int year, QString timezone)
 {
     this->general->setValue("timedate/hw_offset_sec",sec);
     this->general->setValue("timedate/hw_offset_min",min);
@@ -225,6 +225,7 @@ void SettingsManager::setHwTimeOffset(int sec, int min, int hour,int day,int mon
     this->general->setValue("timedate/hw_offset_day",day);
     this->general->setValue("timedate/hw_offset_month",month);
     this->general->setValue("timedate/hw_offset_year",year);
+    this->general->setValue("timedate/timezone",timezone);
 }
 
 void SettingsManager::setVersion(int major, int minor)

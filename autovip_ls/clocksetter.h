@@ -24,7 +24,7 @@ class ClockSetter : public QObject
         int day;
         int month;
         int year;
-        QString activeTimezone = "";
+        QString activeTimezone = "UTC";
     };
     DateTimeStruct hwTimeOffset;
     bool hwTimeOffsetIsZero();

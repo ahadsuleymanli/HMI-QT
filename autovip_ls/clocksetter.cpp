@@ -17,8 +17,15 @@ ClockSetter::ClockSetter(QObject *parent) :
     this->hwTimeOffset.day = sm->value("timedate/hw_offset_day").toInt();
     this->hwTimeOffset.month = sm->value("timedate/hw_offset_month").toInt();
     this->hwTimeOffset.year = sm->value("timedate/hw_offset_year").toInt();
-    if (!hwTimeOffsetIsZero())
+    QString timezone = sm->value("timedate/timezone").toString();
+    if (timezone == "")
+        qDebug ()<<"timezone empty";
+    else
+        this->hwTimeOffset.activeTimezone = timezone;
+    if (!hwTimeOffsetIsZero()){
+        qDebug()<<"hwTimeOffsetIsZero, setting offsets using current time";
         setLocalTimeFromOffset();
+    }
     else{
         updateHwClockOffset();
     }
@@ -116,7 +123,7 @@ void ClockSetter::updateHwClockOffset(bool measureTimeLag){
             sm->getSettings()->setValue("timedate/hwclockdebugtimestamp",QDateTime::currentDateTime().toString());
         }
         this->hwTimeOffset = offset;
-        sm->setHwTimeOffset(offset.sec, offset.min, offset.hour, offset.day, offset.month, offset.year);
+        sm->setHwTimeOffset(offset.sec, offset.min, offset.hour, offset.day, offset.month, offset.year, hwTimeOffset.activeTimezone);
         readtimedatectl->deleteLater();
     });
     readtimedatectl->start("/bin/sh", QStringList() << "-c" << "timedatectl");
@@ -127,6 +134,8 @@ void ClockSetter::setLocalTimeFromOffset(){
         return;
     #endif
     QProcess *ntpSetter = new QProcess();
+//    QProcess *ntpSetter = new QProcess();
+//    QProcess *ntpSetter = new QProcess();
     QProcess *timeSetter = new QProcess();
     QProcess *readtimedatectl = new QProcess();
     connect(ntpSetter, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),
@@ -134,18 +143,28 @@ void ClockSetter::setLocalTimeFromOffset(){
         readtimedatectl->start("/bin/sh", QStringList() << "-c" << "timedatectl");
         ntpSetter->deleteLater();
     });
-    connect(timeSetter, SIGNAL(finished(int, QProcess::ExitStatus)),
-            timeSetter, SLOT(deleteLater()));
+    connect(timeSetter, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+        [=](int exitCode, QProcess::ExitStatus exitStatus){ timeSetter->deleteLater(); });
     connect(readtimedatectl, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),[=]()
     {
         DateTimeStruct sysTime;
         DateTimeStruct rtc;
         DateTimeStruct offset;
         parseSystemTimes(QString(readtimedatectl->readAllStandardOutput()),&sysTime,&rtc,&offset);
-        QString timeString = QString::number(rtc.year + hwTimeOffset.year ) +"-"+QString::number(rtc.month + hwTimeOffset.month )+"-"
-                +QString::number(rtc.day + hwTimeOffset.day ) + " " + QString::number(rtc.hour + hwTimeOffset.hour )+":"
-                +QString::number(rtc.min + hwTimeOffset.min )+":"+QString::number(rtc.sec + hwTimeOffset.sec );
-        timeSetter->start("/bin/sh", QStringList() << "-c" << "timedatectl set-timezone UTC && timedatectl set-time '"+timeString+"' && timedatectl set-timezone " + sysTime.activeTimezone);
+        QString dateFormat = "yyyy-M-d h:m:s";
+        QString dateString = QString::number(rtc.year) +"-"+QString::number(rtc.month)+"-"
+                +QString::number(rtc.day ) + " " + QString::number(rtc.hour )+":"
+                +QString::number(rtc.min )+":"+QString::number(rtc.sec);
+        QDateTime timeToAdvance = QDateTime::fromString(dateString,dateFormat );
+        timeToAdvance.setTime(timeToAdvance.time().addSecs(hwTimeOffset.hour*3600+hwTimeOffset.min*60+hwTimeOffset.sec));
+        timeToAdvance.setDate(timeToAdvance.date().addYears(hwTimeOffset.year).addMonths(hwTimeOffset.month).addDays(hwTimeOffset.day));
+//        qDebug()<<timeToAdvance.toString(dateFormat);
+//        QString timeString = QString::number(rtc.year + hwTimeOffset.year ) +"-"+QString::number(rtc.month + hwTimeOffset.month )+"-"
+//                +QString::number(rtc.day + hwTimeOffset.day ) + " " + QString::number(rtc.hour + hwTimeOffset.hour )+":"
+//                +QString::number(rtc.min + hwTimeOffset.min )+":"+QString::number(rtc.sec + hwTimeOffset.sec );
+        QStringList timesetCmd = QStringList() << "-c" << "timedatectl set-timezone UTC && timedatectl set-time '"+timeToAdvance.toString(dateFormat)+"' && timedatectl set-timezone " + hwTimeOffset.activeTimezone;
+        qDebug()<<"setting time with "<<timesetCmd;
+        timeSetter->start("/bin/sh", timesetCmd);
         readtimedatectl->deleteLater();
     });
     ntpSetter->start("/bin/sh", QStringList() << "-c" << "timedatectl set-ntp false");
@@ -188,11 +207,12 @@ void ClockSetter::setRegion(QString region)
         regionSetter->deleteLater();
     });
 
-    QString timeZone;
+    QString timeZone = "UTC";
     if(region == "Turkey")
         timeZone = "Europe/Istanbul";
     else if(region == "China")
         timeZone = "Asia/Shanghai";
+    hwTimeOffset.activeTimezone = timeZone;
     ntpSetter->start("/bin/sh", QStringList() << "-c" << "timedatectl set-ntp true");
     connect(ntpSetter, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),
             [=](){

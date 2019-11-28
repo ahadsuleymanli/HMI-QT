@@ -68,9 +68,6 @@ void MediaPlayerBackend::playPause(){
 //        QTimer::singleShot(100,this,[this]{  });
     }
 
-
-
-
 }
 void MediaPlayerBackend::next()
 {
