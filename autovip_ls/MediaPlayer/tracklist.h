@@ -59,6 +59,7 @@ public:
     Q_INVOKABLE QVariant artistAt(int index) { return m_trackContents[index].artistName; }
     Q_INVOKABLE QString imageAt(int index) { return m_trackContents[index].image; }
     Q_INVOKABLE QVariant pathAt(int index) { return m_trackContents[index].path; }
+    Q_INVOKABLE void playTrack(int index) { m_mediaList->setCurrentIndex(index); parentMediaplayer->play(); }
 
     void connectUsbMounter();
 
@@ -71,6 +72,7 @@ private slots:
 private:
     QMediaPlaylist *m_mediaList;
     QMediaPlayer *m_mediaPlayer;
+    QMediaPlayer *parentMediaplayer;
     QVector<TrackContent> m_trackContents;
 
 };

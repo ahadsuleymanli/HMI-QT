@@ -9,7 +9,7 @@ UsbMounter::UsbMounter(QObject* parent){
     connect(&devChangeTimer, &QTimer::timeout, this,[this](){checkForUsbDevices(true);});
     connect(this,SIGNAL(readyToCheck(bool)),this,SLOT(checkForUsbDevices(bool)));
     #if (defined(__arm__) || defined(__aarch64__))
-        this->mountAllowed = true;
+        this->mountAllAllowed = true;
     #endif
 }
 
@@ -34,16 +34,16 @@ void UsbMounter::checkForUsbDevices(bool directory_change){
     QString temp = chkproc->readAllStandardOutput();
     QTextStream textstream(&temp);
 
-    if (!mountAllowed){
-        qDebug("mounting devices not allowed on non-target platform. (you're running the program on a PC)");
+    if (!mountAllAllowed){
+        qDebug("mounting all drives not allowed. Will only mount drives named \"music\"");
     }
-    else if (temp != prev_blkid){
+    if (temp != prev_blkid){
         prev_blkid = temp;
         QStringList newlyAddedList = {};
         while (!textstream.atEnd())
            {
               QString line = textstream.readLine();
-              if (line.contains("TYPE=\"", Qt::CaseInsensitive) && line.contains("dev/sd", Qt::CaseInsensitive)){
+              if (line.contains("TYPE=\"", Qt::CaseInsensitive) && line.contains("dev/sd", Qt::CaseInsensitive) &&(mountAllAllowed || line.contains("LABEL=\"music\"", Qt::CaseInsensitive)) ){
                   devPath = line.split(":")[0];
                   mountPath = "/media/usb/music" + QString::number(mountIdx);
                   if (!QDir(mountPath).exists())

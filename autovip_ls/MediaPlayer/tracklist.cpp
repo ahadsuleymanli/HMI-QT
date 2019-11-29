@@ -74,7 +74,7 @@ TrackList::TrackList(QMediaPlaylist *list, QObject *parent)
     m_mediaPlayer = new QMediaPlayer();
     m_mediaPlayer->setVolume(0);
     m_mediaPlayer->setMuted(true);
-
+    parentMediaplayer = (QMediaPlayer *)parent;
     if(list)
         m_mediaList = list;
     else

@@ -102,31 +102,32 @@ Item {
                 text: (index + 1)
                 color:"#bfbfbf"
             }
+            MouseArea {
+                id:trackClickable
+                anchors.fill: parent
+                onClicked: {playlist.model.playTrack(index)}
+            }
             ColumnLayout{
                 anchors{
                     verticalCenter: parent.verticalCenter
                     left: indexText.right
                     right: durationText.left
                     rightMargin: 20
-                    leftMargin: 20
+                    leftMargin: trackClickable.pressed ? 22 : 20
                 }
                 spacing: 0
-                Item {
-                    Layout.fillHeight: true
-                }
                 Text {
+                    id: trackText
                     text: track
                     color: "#fbfbfb"
                     font.pixelSize: 16
                     font.bold: true
                 }
                 Text {
+                    id: artistsText
                     text: artists
                     color: "#9b9b9b"
                     font.pixelSize: 16
-                }
-                Item {
-                    Layout.fillHeight: true
                 }
             }
             Text {

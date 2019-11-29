@@ -15,7 +15,7 @@ HomeForm {
                                                              mPlayerBackend.playingCover)
     playPauseImage.source:(mPlayerBackend.state === 1 ? "qrc:/design/media/MediaPlayer/pause.png":
                                                                 "qrc:/design/media/MediaPlayer/2.png")
-    repeatImage.source: (mPlayerBackend.loop===2 ? "qrc:/design/media/MediaPlayer/repeat_1.png":"qrc:/design/media/MediaPlayer/repeat.png")
+    repeatImage.source: (mPlayerBackend.loop===2 ? "qrc:/design/media/MediaPlayer/repeat_1.png": mPlayerBackend.loop===1 ? "qrc:/design/media/MediaPlayer/repeat_all.png": "qrc:/design/media/MediaPlayer/repeat.png")
 
     Connections{
         target:mPlayerBackend
