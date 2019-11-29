@@ -28,7 +28,6 @@ Item {
     property alias nextButton: nextButton
     property string toggledColor: "#8800FF55"
 
-
     ColumnLayout {
         id: columnLayout
         anchors.fill: parent
@@ -340,7 +339,17 @@ Item {
         }
 
         Item {
-            Layout.fillHeight: true
+            id: audiolabs
+//            Layout.fillHeight: true
+            Image {
+                id: image
+                x: 0
+                y: 448
+                width: 209
+                height: 167
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/design/media/MediaPlayer/DizaynVIP_Audio_Labs.png"
+            }
         }
     }
 }
