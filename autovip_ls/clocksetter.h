@@ -16,43 +16,40 @@ class ClockSetter : public QObject
     int dayDiff;
     int monthDiff;
     int yearDiff;
-    QTimer loggerTimer;
+    QTimer timeLagDetectorTimer;
 
-    class MyDateTime{
+    class DateTime{
         public:
         int sec,min,hour,day,month,year;
-        MyDateTime(){}
-        MyDateTime(int sec, int min, int hour, int day, int month, int year){
+        DateTime(){}
+        DateTime(int sec, int min, int hour, int day, int month, int year){
             this->sec = sec; this->min = min; this->hour = hour; this->day = day; this->month = month; this->year = year;}
-        MyDateTime operator-(MyDateTime x){return MyDateTime(sec-x.sec,min-x.min,hour-x.hour,day-x.day,month-x.month,year-x.year);}
-        void operator=(MyDateTime x){sec=x.sec; min=x.min; hour=x.hour; day=x.day; month=x.month; year=x.year;}
+        void set(int sec, int min, int hour, int day, int month, int year){
+            this->sec = sec; this->min = min; this->hour = hour; this->day = day; this->month = month; this->year = year;}
+        DateTime operator-(DateTime x){return DateTime(sec-x.sec,min-x.min,hour-x.hour,day-x.day,month-x.month,year-x.year);}
+        void operator=(DateTime x){sec=x.sec; min=x.min; hour=x.hour; day=x.day; month=x.month; year=x.year;}
+        bool operator==(DateTime x){return (sec==x.sec && min==x.min && hour==x.hour && day==x.day && month==x.month && year==x.year);}
+        bool operator!=(DateTime x){return !(*this==x);}
         bool isZero(){return (sec==0 && min==0 && hour==0 && day==0 && month==0 && year==0); }
+        QStringList toQStringList(){return QStringList()<<QString::number(year)<<QString::number(month)
+                                                   <<QString::number(day)<<QString::number(hour)<<QString::number(min)<<QString::number(sec);}
+        qint64 toRoughSecs(){return sec + min*60 + hour*3600 + day*24*3600 + month*30*24*3600 + year*12*30*24*3600;}
     };
 
-
-
-//    bool useAutoNtp = true;
-
-//    struct DateTimeStruct
-//    {
-//        int sec;
-//        int min;
-//        int hour;
-//        int day;
-//        int month;
-//        int year;
-
-//    };
     QString activeTimezone = "UTC";
-    MyDateTime hwTimeOffset;
-    MyDateTime last_hwTimeOffset;
+    DateTime hwTimeOffset;
+    DateTime last_hwTimeOffset;
     QDateTime systemStartTimeWithLag;
     QDateTime lastPoweroffTime;
-//    bool dateTimeStructIsZero(DateTimeStruct *dateTime);
-//    void diffBetweenDateTimeStructs(DateTimeStruct *time1, DateTimeStruct *time2, DateTimeStruct *diff);
+    float lastRtcLagMulti;
+    qint64 lastLagMeasuredTimeInSecs;
+    qint64 currentLagMeasuredTimeInSecs;
+    QDateTime lastCheckedTime;
+    void updateRtcLagMuli(DateTime rtcLag);
+    void mitigateRtcLag(QDateTime *rtcTimeOffsetApplied);
     void updateHwClockOffset(bool measureTimeLag=false);
     void setLocalTimeFromOffset();
-    void parseSystemTimes(QString queryString, MyDateTime *sysTime , MyDateTime *rtc, MyDateTime *offset);
+    void parseSystemTimes(QString queryString, DateTime *sysTime , DateTime *rtc, DateTime *offset);
     Q_PROPERTY(QDateTime adjustedDateTime READ getAdjustedTime() NOTIFY timeDiffChanged)
 
 public:

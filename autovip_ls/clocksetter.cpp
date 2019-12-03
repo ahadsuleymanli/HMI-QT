@@ -1,7 +1,8 @@
 #include "clocksetter.h"
 #include <QProcess>
 #include <QDebug>
-
+#include <QtMath>
+#include <QtGlobal>
 ClockSetter::ClockSetter(QObject *parent) :
     QObject (parent)
 {
@@ -17,6 +18,13 @@ ClockSetter::ClockSetter(QObject *parent) :
     this->hwTimeOffset.day = sm->value("timedate/hw_offset_day").toInt();
     this->hwTimeOffset.month = sm->value("timedate/hw_offset_month").toInt();
     this->hwTimeOffset.year = sm->value("timedate/hw_offset_year").toInt();
+    this->last_hwTimeOffset = hwTimeOffset;
+    this->lastRtcLagMulti = sm->value("timedate/lagmulti").toFloat();
+    this->lastLagMeasuredTimeInSecs = sm->value("timedate/lagmeasuredtime").toInt();
+    this->lastPoweroffTime = QDateTime::fromString(sm->value("timedate/powerofftime").toString());
+    this->lastPoweroffTime.setTimeSpec(Qt::UTC);
+    qDebug()<<"last poweroff time " << lastPoweroffTime;
+    sm->getSettings()->setValue("timedate/powerofftime",QDateTime::currentDateTimeUtc().toString());
     QString timezone = sm->value("timedate/timezone").toString();
     if (timezone == "")
         qDebug ()<<"timezone empty";
@@ -24,33 +32,28 @@ ClockSetter::ClockSetter(QObject *parent) :
         this->activeTimezone = timezone;
 
     if (!hwTimeOffset.isZero()){
-        qDebug()<<"hwTimeOffsetIsZero, setting offsets using current time";
         setLocalTimeFromOffset();
     }
     else{
+        qDebug()<<"hwTimeOffsetIsZero, setting offsets using current time";
         updateHwClockOffset();
     }
-    this->loggerTimer.setInterval(60000);
-    connect(&loggerTimer,&QTimer::timeout,this,[=](){
+    this->timeLagDetectorTimer.setInterval(60000);
+    connect(&timeLagDetectorTimer,&QTimer::timeout,this,[=](){
+        QDateTime current = QDateTime::currentDateTimeUtc();
+        qint64 lag = lastCheckedTime.secsTo(current);
+        lastCheckedTime = current;
+        if ( lag > 60+20){
+            qDebug()<<"time lag detected: " << lag-60;
+            updateHwClockOffset(true);
+        }
         sm->getSettings()->setValue("timedate/powerofftime",QDateTime::currentDateTimeUtc().toString());
     });
-    loggerTimer.start();
+    timeLagDetectorTimer.stop();
 
 }
 
-//bool ClockSetter::dateTimeStructIsZero(DateTimeStruct *dateTime){
-//    return (dateTime->sec==0 && dateTime->min==0 && dateTime->hour==0 && dateTime->day==0 && dateTime->month==0 && dateTime->year==0);
-//}
-//void ClockSetter::diffBetweenDateTimeStructs(DateTimeStruct *time1, DateTimeStruct *time2, DateTimeStruct *diff){
-//    diff->year = time2->year - time1->year;
-//    diff->month = time2->month - time1->month;
-//    diff->day = time2->day - time1->day;
-//    diff->hour = time2->hour - time1->hour;
-//    diff->min = time2->min - time1->min;
-//    diff->sec = time2->sec - time1->sec;
-//}
-
-void ClockSetter::parseSystemTimes(QString queryString, MyDateTime *sysTime, MyDateTime *rtc, MyDateTime *offset){
+void ClockSetter::parseSystemTimes(QString queryString, DateTime *sysTime, DateTime *rtc, DateTime *offset){
     QString name_universaltime = "Universal time: ";
     QString name_rtctime = "RTC time: ";
     QString name_timezone = "Time zone: ";
@@ -86,36 +89,28 @@ void ClockSetter::parseSystemTimes(QString queryString, MyDateTime *sysTime, MyD
                 timezone = parts[0];
             }
         }
+        activeTimezone = timezone;
         if (sysTime){
-            sysTime->year = utcDateParts[0].toInt();
-            sysTime->month = utcDateParts[1].toInt();
-            sysTime->day = utcDateParts[2].toInt();
-            sysTime->hour = utcTimeParts[0].toInt();
-            sysTime->min = utcTimeParts[1].toInt();
-            sysTime->sec = utcTimeParts[2].toInt();
-            activeTimezone = timezone;
+            sysTime->set(utcTimeParts[2].toInt(), utcTimeParts[1].toInt(), utcTimeParts[0].toInt(), utcDateParts[2].toInt(), utcDateParts[1].toInt(), utcDateParts[0].toInt());
         }
         if (rtc){
-            rtc->year = rtcDateParts[0].toInt();
-            rtc->month = rtcDateParts[1].toInt();
-            rtc->day = rtcDateParts[2].toInt();
-            rtc->hour = rtcTimeParts[0].toInt();
-            rtc->min = rtcTimeParts[1].toInt();
-            rtc->sec = rtcTimeParts[2].toInt();
-            activeTimezone = timezone;
+            rtc->set(rtcTimeParts[2].toInt(), rtcTimeParts[1].toInt(), rtcTimeParts[0].toInt(), rtcDateParts[2].toInt(), rtcDateParts[1].toInt(), rtcDateParts[0].toInt());
         }
         if (offset && rtc && sysTime){
             *offset = *sysTime - *rtc;
-//            diffBetweenDateTimeStructs(rtc,sysTime,offset);
-//            offset->year = sysTime->year - rtc->year;
-//            offset->month = sysTime->month - rtc->month;
-//            offset->day = sysTime->day - rtc->day;
-//            offset->hour = sysTime->hour - rtc->hour;
-//            offset->min = sysTime->min - rtc->min;
-//            offset->sec = sysTime->sec - rtc->sec;
         }
     } catch (...) {
         qDebug()<<"Failed to parse timedatectl";
+    }
+}
+
+void ClockSetter::updateRtcLagMuli(DateTime rtcLag){
+    if (currentLagMeasuredTimeInSecs>0 && (qFabs(rtcLag.toRoughSecs())>30)){
+        float rtcLagMulti = float((currentLagMeasuredTimeInSecs + rtcLag.toRoughSecs()))/currentLagMeasuredTimeInSecs - 1;
+        lastRtcLagMulti = rtcLagMulti;
+        qDebug()<<"lag multi "<<rtcLagMulti;
+        sm->getSettings()->setValue("timedate/lagmulti",QString::number(rtcLagMulti));
+        sm->getSettings()->setValue("timedate/lagmeasuredtime",currentLagMeasuredTimeInSecs);
     }
 }
 
@@ -123,22 +118,21 @@ void ClockSetter::updateHwClockOffset(bool measureTimeLag){
     QProcess *readtimedatectl = new QProcess();
     connect(readtimedatectl, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),[=]()
     {
-        MyDateTime sysTime;
-        MyDateTime rtc;
-        MyDateTime offset;
+        DateTime sysTime;
+        DateTime rtc;
+        DateTime offset;
         parseSystemTimes(QString(readtimedatectl->readAllStandardOutput()),&sysTime,&rtc,&offset);
-        if (measureTimeLag && lastPoweroffTime.isValid() /*&& last_hwTimeOffset!=offset*/){
-
-
-            QString prevDTString = sm->value("timedate/powerofftime").toString();
-            if (prevDTString!=""){
-                QDateTime prevDT = QDateTime::fromString(prevDTString);
-                qint64 msecsDiff = prevDT.msecsTo(QDateTime::currentDateTime());
-                qDebug()<<"clocksetter: time passed since last time sync: "<< msecsDiff<<"ms ("<<msecsDiff/1000/60/60<<"mins)";
-                qDebug()<<"clocksetter: difference in offsets "<<(offset.day-hwTimeOffset.day)<<" days,"<<(offset.hour-hwTimeOffset.hour)
-                       <<" hours,"<<(offset.min-hwTimeOffset.min)<<" mins,"<<(offset.sec-hwTimeOffset.sec)<<" secs.";
+        if (measureTimeLag && lastPoweroffTime.isValid() && last_hwTimeOffset!=offset){
+            DateTime rtcLag = offset - last_hwTimeOffset;
+            qDebug()<<"time updated through network and rtc lag was "<<QString::number(rtcLag.toRoughSecs())<<" in " <<currentLagMeasuredTimeInSecs << "seconds (rtc lagged time)";
+            if (currentLagMeasuredTimeInSecs<2*24*60*60&&(currentLagMeasuredTimeInSecs>lastLagMeasuredTimeInSecs || currentLagMeasuredTimeInSecs>5*60*60)){
+                updateRtcLagMuli(rtcLag);
             }
-            sm->getSettings()->setValue("timedate/powerofftime",QDateTime::currentDateTime().toString());
+            else if (lastRtcLagMulti==0){
+                qDebug()<<"rtc lag compensation has not been calibrated yet. "
+                          <<"Please keep the device connected to the internet, turn it off for ~1 hours and turn it back on.";
+            }
+
         }
         this->hwTimeOffset = offset;
         sm->setHwTimeOffset(offset.sec, offset.min, offset.hour, offset.day, offset.month, offset.year, activeTimezone);
@@ -163,38 +157,53 @@ void ClockSetter::setLocalTimeFromOffset(){
     connect(timeSetter, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
         [=](int exitCode, QProcess::ExitStatus exitStatus){
         ntpReSetter->start("/bin/sh", QStringList() << "-c" << "timedatectl set-ntp true");
+        lastCheckedTime=QDateTime::currentDateTimeUtc();
+        timeLagDetectorTimer.start();
         timeSetter->deleteLater();
     });
     connect(ntpReSetter, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
         [=](int exitCode, QProcess::ExitStatus exitStatus){
-        updateHwClockOffset(true);
         ntpReSetter->deleteLater();
     });
     connect(readtimedatectl, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),[=]()
     {
-        MyDateTime sysTime;
-        MyDateTime rtc;
-        MyDateTime offset;
+        DateTime sysTime;
+        DateTime rtc;
+        DateTime offset;
         parseSystemTimes(QString(readtimedatectl->readAllStandardOutput()),&sysTime,&rtc,&offset);
         QString dateFormat = "yyyy-M-d h:m:s";
         QString dateString = QString::number(rtc.year) +"-"+QString::number(rtc.month)+"-"
                 +QString::number(rtc.day ) + " " + QString::number(rtc.hour )+":"
                 +QString::number(rtc.min )+":"+QString::number(rtc.sec);
-        QDateTime timeToAdvance = QDateTime::fromString(dateString,dateFormat );
-        timeToAdvance.setTime(timeToAdvance.time().addSecs(hwTimeOffset.hour*3600+hwTimeOffset.min*60+hwTimeOffset.sec));
-        timeToAdvance.setDate(timeToAdvance.date().addYears(hwTimeOffset.year).addMonths(hwTimeOffset.month).addDays(hwTimeOffset.day));
-        QStringList timesetCmd = QStringList() << "-c" << "timedatectl set-timezone UTC && timedatectl set-time '"+timeToAdvance.toString(dateFormat)+"' && timedatectl set-timezone " + activeTimezone;
+        QDateTime rtcTimeOffsetApplied = QDateTime::fromString(dateString,dateFormat);
+        rtcTimeOffsetApplied.setTimeSpec(Qt::UTC);
+        qDebug()<<"hwtimeoffset: "<<hwTimeOffset.toQStringList();
+        qDebug()<<"rtc: "<<rtcTimeOffsetApplied;
+        rtcTimeOffsetApplied = rtcTimeOffsetApplied.addSecs(hwTimeOffset.hour*3600+hwTimeOffset.min*60+hwTimeOffset.sec);
+        qDebug()<<"rtc secs applied: "<<rtcTimeOffsetApplied;
+        rtcTimeOffsetApplied = rtcTimeOffsetApplied.addDays(hwTimeOffset.day).addMonths(hwTimeOffset.month).addYears(hwTimeOffset.year);
+        qDebug()<<"rtc years applied: "<<rtcTimeOffsetApplied;
+        systemStartTimeWithLag = rtcTimeOffsetApplied;
+        mitigateRtcLag(&rtcTimeOffsetApplied);
+        QStringList timesetCmd = QStringList() << "-c" << "timedatectl set-timezone UTC && timedatectl set-time '"+rtcTimeOffsetApplied.toString(dateFormat)+"' && timedatectl set-timezone " + activeTimezone;
         qDebug()<<"setting time with "<<timesetCmd;
         timeSetter->start("/bin/sh", timesetCmd);
-        systemStartTimeWithLag = QDateTime::currentDateTimeUtc();
-        lastPoweroffTime = QDateTime::fromString(sm->value("timedate/powerofftime").toString());
-        last_hwTimeOffset = hwTimeOffset;
-//        qDebug()<<"times: "<< systemStartTimeWithLag <<", "<<lastPoweroffTime;
+
         readtimedatectl->deleteLater();
     });
     ntpSetter->start("/bin/sh", QStringList() << "-c" << "timedatectl set-ntp false");
 }
-
+void ClockSetter::mitigateRtcLag(QDateTime *rtcTimeOffsetApplied){
+    qint64 secsdiff = lastPoweroffTime.secsTo(*rtcTimeOffsetApplied);
+    currentLagMeasuredTimeInSecs = secsdiff;
+    qDebug()<<"datebefore lag mitigation: "<<rtcTimeOffsetApplied->toString()<<" secsdiff: "<<secsdiff<<" multi: "<<lastRtcLagMulti;
+    if (secsdiff<0){
+        qDebug()<<"negative time advance, probably rtc got reset.";
+        sm->getSettings()->setValue("timedate/powerofftime",0);
+    }
+    secsdiff = qMax(secsdiff-60,qint64(0));
+    *rtcTimeOffsetApplied = rtcTimeOffsetApplied->addSecs(int(float(secsdiff)*lastRtcLagMulti));
+}
 
 void ClockSetter::setTimeDiff(int minDiff, int hourDiff, int dayDiff,  int monthDiff, int yearDiff)
 {
@@ -209,12 +218,7 @@ void ClockSetter::setTimeDiff(int minDiff, int hourDiff, int dayDiff,  int month
 
 QDateTime ClockSetter::getAdjustedTime(){
     QDateTime adjustedDateTime = QDateTime::currentDateTime();
-    adjustedDateTime.setTime(QTime::currentTime().addSecs(hourDiff*3600+minDiff*60));
-    QDate tempDate(QDate::currentDate());
-    tempDate = tempDate.addDays(dayDiff);
-    tempDate = tempDate.addMonths(monthDiff);
-    tempDate = tempDate.addYears(yearDiff);
-    adjustedDateTime.setDate(tempDate);
+    adjustedDateTime = adjustedDateTime.addSecs(hourDiff*3600+minDiff*60).addDays(dayDiff).addMonths(monthDiff).addYears(yearDiff);
     return adjustedDateTime;
 }
 

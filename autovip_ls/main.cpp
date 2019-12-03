@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
     Translator mTrans(&app);
     InitializeMng imng;
     SerialMng smng;
-    ClockSetter csetter;
     FileLogger flogger(sm->getSettings(),10000,&app);
+    ClockSetter csetter;
 
     NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
     MediaPlayerBackend mPlayerBackend(&app);
