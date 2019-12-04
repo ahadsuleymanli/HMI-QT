@@ -13,7 +13,7 @@
 #include <QDir>
 #include <nvidiaconnmanager.h>
 #include "MediaPlayer/tracklist.h"
-#include "MediaPlayer/mediaplayerbackend.h"
+#include "MediaPlayer/mediaplayercontroller.h"
 #include <QProcess>
 #include "tools/logstacktrace.h"
 #include "IOThread/thread.h"
@@ -45,14 +45,15 @@ int main(int argc, char *argv[])
     SerialMng smng;
     FileLogger flogger(sm->getSettings(),10000,&app);
     ClockSetter csetter;
-    //    qDebug()<<"main called from: "<<QThread::currentThreadId();
-    IOThread ioThread(&csetter);
+    qDebug()<<"main called from: "<<QThread::currentThreadId();
+    MediaPlayerController mPlayerController(&app);
+    IOThread ioThread(&csetter, &mPlayerController);
     csetter.start();
 
     NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
-    MediaPlayerBackend mPlayerBackend(&app);
 
-    imng.setMediaPlayerBackend(&mPlayerBackend);
+
+    imng.setMediaPlayerController(&mPlayerController);
     imng.setClockSetter(&csetter);
     imng.setTranslator(&mTrans);
     imng.setSettingsManager(sm);

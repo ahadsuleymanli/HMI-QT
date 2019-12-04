@@ -1,7 +1,7 @@
 #include "initializemng.h"
 #include "updatecheck.h"
 #include "restarter.h"
-#include "MediaPlayer/mediaplayerbackend.h"
+#include "MediaPlayer/mediaplayercontroller.h"
 #include <QDebug>
 #include <QDir>
 #include <QProcess>
@@ -10,9 +10,9 @@ InitializeMng::InitializeMng(QObject *parent):QObject(parent)
 {
 }
 
-void InitializeMng::setMediaPlayerBackend(MediaPlayerBackend *mPlayerBackend)
+void InitializeMng::setMediaPlayerController(MediaPlayerController *mPlayerController)
 {
-    this->mPlayerBackend = mPlayerBackend;
+    this->mPlayerController = mPlayerController;
 }
 
 void InitializeMng::setClockSetter(ClockSetter *csetter)
@@ -52,7 +52,7 @@ void InitializeMng::setNvidiaConnManager(NvidiaConnManager *nvidiaConnManager)
 bool InitializeMng::init()
 {
     Q_ASSERT(
-            this->mPlayerBackend != nullptr &&
+            this->mPlayerController != nullptr &&
             this->csetter != nullptr &&
             this->translator != nullptr &&
             this->settings_mng != nullptr &&
@@ -92,7 +92,8 @@ bool InitializeMng::init()
     engine->rootContext()->setContextProperty("serial_mng", this->serial_mng);
     engine->rootContext()->setContextProperty("csetter", this->csetter);
     qmlRegisterInterface<TrackList>("TrackList");
-    engine->rootContext()->setContextProperty("mPlayerBackend", mPlayerBackend);
+
+    engine->rootContext()->setContextProperty("mPlayerBackend", mPlayerController);
     if (nvidiaConnManager)
         engine->rootContext()->setContextProperty("nvidia_conn_manager", nvidiaConnManager);
 
@@ -111,9 +112,8 @@ bool InitializeMng::init()
     serial_mng->setDemomode(settings_mng->demomode());
 
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
-    mPlayerBackend->init();
+    mPlayerController->init();
     qDebug()<<"initializemng.cpp: main.qml is loadded"<<endl;
-
     if (engine->rootObjects().isEmpty())
         return false;
 

@@ -25,8 +25,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     IOThread/datawriter.cpp \
     LightsMenu/colorcomponents.cpp \
-    MediaPlayer/mediaplayerbackend.cpp \
+    MediaPlayer/mediaplayercontroller.cpp \
     MediaPlayer/tracklist.cpp \
+    MediaPlayer/trackloader.cpp \
     MediaPlayer/usbmounter.cpp \
     iterativevaluechanger.cpp \
         nvidiaconnmanager.cpp \
@@ -69,8 +70,9 @@ HEADERS += \
     IOThread/thread.h \
     LightsMenu/colorcomponents.h \
     LightsMenu/leftToggleMenuModel.h \
-    MediaPlayer/mediaplayerbackend.h \
+    MediaPlayer/mediaplayercontroller.h \
     MediaPlayer/tracklist.h \
+    MediaPlayer/trackloader.h \
     MediaPlayer/usbmounter.h \
     iterativevaluechanger.h \
     nvidiaconnmanager.h \

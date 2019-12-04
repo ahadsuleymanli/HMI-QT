@@ -13,7 +13,7 @@
 #include <logger/filelogger.h>
 #include <clocksetter.h>
 #include <voicerecognitionservice.h>
-#include "MediaPlayer/mediaplayerbackend.h"
+#include "MediaPlayer/mediaplayercontroller.h"
 
 class InitializeMng: public QObject
 {
@@ -23,7 +23,7 @@ class InitializeMng: public QObject
     MediaPlayerMng* mp_mng = nullptr;
     SerialMng* serial_mng = nullptr;
     ClockSetter* csetter = nullptr;
-    MediaPlayerBackend* mPlayerBackend = nullptr;
+    MediaPlayerController* mPlayerController = nullptr;
     NvidiaConnManager* nvidiaConnManager = nullptr;
 public:
     explicit InitializeMng(QObject *parent = nullptr);
@@ -33,7 +33,7 @@ public:
     void setEngine(QQmlApplicationEngine* p_eng);
     void setMediaPlayerMng(MediaPlayerMng* p_mply);
     void setSerialMng(SerialMng* p_smng);
-    void setMediaPlayerBackend(MediaPlayerBackend *mPlayerBackend);
+    void setMediaPlayerController(MediaPlayerController *mPlayerController);
     void setNvidiaConnManager(NvidiaConnManager *nvidiaConnManager);
 
     bool init();

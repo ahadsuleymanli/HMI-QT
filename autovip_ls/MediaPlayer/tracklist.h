@@ -46,7 +46,7 @@ public:
         // Used in subclasses
         LastTrackCollectionModelRole
     };
-    explicit TrackList(QMediaPlaylist *list = nullptr, QObject *parent = Q_NULLPTR);
+    explicit TrackList( QObject *parent = Q_NULLPTR);
 
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent) const;
@@ -73,6 +73,7 @@ private:
     QMediaPlaylist *m_mediaList;
     QMediaPlayer *m_mediaPlayer;
     QMediaPlayer *parentMediaplayer;
+    QMediaPlaylist emptyMediaList;
     QVector<TrackContent> m_trackContents;
 
 };

@@ -340,14 +340,12 @@ Item {
 
         Item {
             id: audiolabs
-//            Layout.fillHeight: true
+            //            Layout.fillHeight: true
             Image {
                 id: image
-                x: 0
-                y: 448
-                width: 209
-                height: 167
-                fillMode: Image.PreserveAspectFit
+                fillMode: Image.PreserveAspectCrop
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: -545
                 source: "qrc:/design/media/MediaPlayer/DizaynVIP_Audio_Labs.png"
             }
         }
@@ -356,7 +354,7 @@ Item {
 
 /*##^##
 Designer {
-    D{i:1;anchors_height:100;anchors_width:100;anchors_x:332;anchors_y:250}
+    D{i:52;anchors_y:0}D{i:1;anchors_height:100;anchors_width:100;anchors_x:332;anchors_y:250}
 }
 ##^##*/
 

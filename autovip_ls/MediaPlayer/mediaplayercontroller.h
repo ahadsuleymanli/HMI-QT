@@ -1,11 +1,11 @@
-#ifndef MEDIAPLAYERBACKEND_H
-#define MEDIAPLAYERBACKEND_H
+#ifndef MEDIAPLAYERCONTROLLER_H
+#define MEDIAPLAYERCONTROLLER_H
 
 #include <QObject>
 #include <QMediaPlayer>
 #include "tracklist.h"
 
-class MediaPlayerBackend: public QMediaPlayer
+class MediaPlayerController: public QMediaPlayer
 {
     Q_OBJECT
     Q_PROPERTY(QString playingTitle READ playingTitle NOTIFY playingMediaChanged)
@@ -17,7 +17,7 @@ class MediaPlayerBackend: public QMediaPlayer
 //    Q_PROPERTY(qint64 position READ position WRITE setPosition NOTIFY positionChanged)
 
 public:
-    MediaPlayerBackend(QObject *parent = nullptr);
+    MediaPlayerController(QObject *parent = nullptr);
     void init();
     Q_INVOKABLE TrackList* trackList() {return m_trackList; }
     Q_INVOKABLE void setShuffle();
@@ -99,4 +99,4 @@ private:
     QMediaPlaylist *m_playList;
 };
 
-#endif // MEDIAPLAYERBACKEND_H
+#endif // MEDIAPLAYERCONTROLLER_H

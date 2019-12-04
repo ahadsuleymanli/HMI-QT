@@ -7,14 +7,14 @@
 #include <clocksetter.h>
 #include <QDebug>
 #include <IOThread/datawriter.h>
-
+#include <MediaPlayer/mediaplayercontroller.h>
 class IOThread : public QThread
 {
 
     DataWriterWorker *dataWriterWorker;
 
 public:
-    IOThread(ClockSetter *clockSetter, QObject* parent = nullptr) : QThread(parent) {
+    IOThread(ClockSetter *clockSetter,MediaPlayerController *mPlayer, QObject* parent = nullptr) : QThread(parent) {
         dataWriterWorker = new DataWriterWorker();
         clockSetter->setLastPowerOffTime(dataWriterWorker->getLastPowerOffTime());
         dataWriterWorker->moveToThread(this);
