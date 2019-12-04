@@ -54,6 +54,8 @@ class ClockSetter : public QObject
 
 public:
     explicit ClockSetter(QObject *parent = nullptr);
+    void setLastPowerOffTime(QString lastPowerOffTimeString);
+    void start();
     Q_INVOKABLE void setTimeDiff(int minDIff, int hourDiff, int dayDiff,  int monthDiff, int yearDiff);
     Q_INVOKABLE void setSystemClock(QString time);
     Q_INVOKABLE void setRegion(QString region);
@@ -63,6 +65,7 @@ signals:
     void sendKey(QString);
     void timeDiffChanged();
     void regionChanged(QString region);
+    void timeIsSet();
 };
 
 #endif // CLOCKSETTER_H

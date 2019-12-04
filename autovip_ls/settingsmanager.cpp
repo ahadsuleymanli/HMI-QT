@@ -7,12 +7,12 @@
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {
+    QString setfile = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
+    QString protofile = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
     QProcess *removeProcess1 = new QProcess();
     QProcess *removeProcess2 = new QProcess();
     connect(removeProcess1, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess1, SLOT(deleteLater()));
     connect(removeProcess2, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess2, SLOT(deleteLater()));
-    QString setfile = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
-    QString protofile = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
     removeProcess1->start("sudo rm "+setfile+".lock");
     removeProcess2->start("sudo rm "+protofile+".lock");
     removeProcess1->waitForFinished(1000);

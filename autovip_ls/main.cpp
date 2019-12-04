@@ -15,9 +15,8 @@
 #include "MediaPlayer/tracklist.h"
 #include "MediaPlayer/mediaplayerbackend.h"
 #include <QProcess>
-#include "MediaPlayer/secondthread.h"
-#include "MediaPlayer/mediaplayerfrontend.h"
 #include "tools/logstacktrace.h"
+#include "IOThread/thread.h"
 
 bool changeCD()
 {
@@ -46,6 +45,9 @@ int main(int argc, char *argv[])
     SerialMng smng;
     FileLogger flogger(sm->getSettings(),10000,&app);
     ClockSetter csetter;
+    //    qDebug()<<"main called from: "<<QThread::currentThreadId();
+    IOThread ioThread(&csetter);
+    csetter.start();
 
     NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
     MediaPlayerBackend mPlayerBackend(&app);
@@ -57,13 +59,6 @@ int main(int argc, char *argv[])
     imng.setEngine(&engine);
     imng.setSerialMng(&smng);
     imng.setNvidiaConnManager(&nvidiaConnManager);
-
-//    SecondThread secondThread;
-//    MediaPlayerFrontend mPlayerBackend(&app);
-//    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::playPauseSignal, &secondThread, &SecondThread::playPause);
-//    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::nextSignal, &secondThread, &SecondThread::next);
-//    QObject::connect(&mPlayerBackend, &MediaPlayerFrontend::previousSignal, &secondThread, &SecondThread::previous);
-//    secondThread.start();
 
     qDebug()<<"initiating imng";
     if(imng.init() == false){

@@ -3,6 +3,9 @@
 #include <QDebug>
 #include <QtMath>
 #include <QtGlobal>
+
+const int LAG_CHECK_TIME = 60;
+
 ClockSetter::ClockSetter(QObject *parent) :
     QObject (parent)
 {
@@ -21,16 +24,20 @@ ClockSetter::ClockSetter(QObject *parent) :
     this->last_hwTimeOffset = hwTimeOffset;
     this->lastRtcLagMulti = sm->value("timedate/lagmulti").toFloat();
     this->lastLagMeasuredTimeInSecs = sm->value("timedate/lagmeasuredtime").toInt();
-    this->lastPoweroffTime = QDateTime::fromString(sm->value("timedate/powerofftime").toString());
-    this->lastPoweroffTime.setTimeSpec(Qt::UTC);
-    qDebug()<<"last poweroff time " << lastPoweroffTime;
-    sm->getSettings()->setValue("timedate/powerofftime",QDateTime::currentDateTimeUtc().toString());
     QString timezone = sm->value("timedate/timezone").toString();
     if (timezone == "")
         qDebug ()<<"timezone empty";
     else
         this->activeTimezone = timezone;
+}
 
+void ClockSetter::setLastPowerOffTime(QString lastPowerOffTimeString){
+    this->lastPoweroffTime = QDateTime::fromString(lastPowerOffTimeString);
+    this->lastPoweroffTime.setTimeSpec(Qt::UTC);
+    qDebug()<<"last poweroff time " << lastPoweroffTime;
+}
+
+void ClockSetter::start(){
     if (!hwTimeOffset.isZero()){
         setLocalTimeFromOffset();
     }
@@ -38,19 +45,17 @@ ClockSetter::ClockSetter(QObject *parent) :
         qDebug()<<"hwTimeOffsetIsZero, setting offsets using current time";
         updateHwClockOffset();
     }
-    this->timeLagDetectorTimer.setInterval(60000);
+    this->timeLagDetectorTimer.setInterval(LAG_CHECK_TIME*1000);
     connect(&timeLagDetectorTimer,&QTimer::timeout,this,[=](){
         QDateTime current = QDateTime::currentDateTimeUtc();
         qint64 lag = lastCheckedTime.secsTo(current);
         lastCheckedTime = current;
-        if ( lag > 60+20){
-            qDebug()<<"time lag detected: " << lag-60;
+        if ( lag > LAG_CHECK_TIME+20){
+            qDebug()<<"time lag detected: " << lag-LAG_CHECK_TIME;
             updateHwClockOffset(true);
         }
-        sm->getSettings()->setValue("timedate/powerofftime",QDateTime::currentDateTimeUtc().toString());
     });
     timeLagDetectorTimer.stop();
-
 }
 
 void ClockSetter::parseSystemTimes(QString queryString, DateTime *sysTime, DateTime *rtc, DateTime *offset){
@@ -107,10 +112,19 @@ void ClockSetter::parseSystemTimes(QString queryString, DateTime *sysTime, DateT
 void ClockSetter::updateRtcLagMuli(DateTime rtcLag){
     if (currentLagMeasuredTimeInSecs>0 && (qFabs(rtcLag.toRoughSecs())>30)){
         float rtcLagMulti = float((currentLagMeasuredTimeInSecs + rtcLag.toRoughSecs()))/currentLagMeasuredTimeInSecs - 1;
-        lastRtcLagMulti = rtcLagMulti;
-        qDebug()<<"lag multi "<<rtcLagMulti;
-        sm->getSettings()->setValue("timedate/lagmulti",QString::number(rtcLagMulti));
-        sm->getSettings()->setValue("timedate/lagmeasuredtime",currentLagMeasuredTimeInSecs);
+        if (currentLagMeasuredTimeInSecs<10*24*60*60&&(currentLagMeasuredTimeInSecs>lastLagMeasuredTimeInSecs || currentLagMeasuredTimeInSecs>3*24*60*60)){
+            lastRtcLagMulti = rtcLagMulti;
+            qDebug()<<"lag multi updated to "<<rtcLagMulti;
+            sm->getSettings()->setValue("timedate/lagmulti",QString::number(rtcLagMulti));
+            sm->getSettings()->setValue("timedate/lagmeasuredtime",currentLagMeasuredTimeInSecs);
+        }
+        else{
+            qDebug()<<"calculated lag multi: "<<rtcLagMulti<<". This multi is not being set since a higher priority one exists.";
+        }
+    }
+    if (lastRtcLagMulti==0){
+        qDebug()<<"rtc lag compensation has not been calibrated yet. "
+                  <<"Please keep the device connected to the internet, turn it off for ~1 hours and turn it back on.";
     }
 }
 
@@ -125,14 +139,7 @@ void ClockSetter::updateHwClockOffset(bool measureTimeLag){
         if (measureTimeLag && lastPoweroffTime.isValid() && last_hwTimeOffset!=offset){
             DateTime rtcLag = offset - last_hwTimeOffset;
             qDebug()<<"time updated through network and rtc lag was "<<QString::number(rtcLag.toRoughSecs())<<" in " <<currentLagMeasuredTimeInSecs << "seconds (rtc lagged time)";
-            if (currentLagMeasuredTimeInSecs<2*24*60*60&&(currentLagMeasuredTimeInSecs>lastLagMeasuredTimeInSecs || currentLagMeasuredTimeInSecs>5*60*60)){
-                updateRtcLagMuli(rtcLag);
-            }
-            else if (lastRtcLagMulti==0){
-                qDebug()<<"rtc lag compensation has not been calibrated yet. "
-                          <<"Please keep the device connected to the internet, turn it off for ~1 hours and turn it back on.";
-            }
-
+            updateRtcLagMuli(rtcLag);
         }
         this->hwTimeOffset = offset;
         sm->setHwTimeOffset(offset.sec, offset.min, offset.hour, offset.day, offset.month, offset.year, activeTimezone);
@@ -159,6 +166,7 @@ void ClockSetter::setLocalTimeFromOffset(){
         ntpReSetter->start("/bin/sh", QStringList() << "-c" << "timedatectl set-ntp true");
         lastCheckedTime=QDateTime::currentDateTimeUtc();
         timeLagDetectorTimer.start();
+        emit timeIsSet();
         timeSetter->deleteLater();
     });
     connect(ntpReSetter, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
@@ -197,9 +205,8 @@ void ClockSetter::mitigateRtcLag(QDateTime *rtcTimeOffsetApplied){
     qint64 secsdiff = lastPoweroffTime.secsTo(*rtcTimeOffsetApplied);
     currentLagMeasuredTimeInSecs = secsdiff;
     qDebug()<<"datebefore lag mitigation: "<<rtcTimeOffsetApplied->toString()<<" secsdiff: "<<secsdiff<<" multi: "<<lastRtcLagMulti;
-    if (secsdiff<0){
+    if (secsdiff<-120){
         qDebug()<<"negative time advance, probably rtc got reset.";
-        sm->getSettings()->setValue("timedate/powerofftime",0);
     }
     secsdiff = qMax(secsdiff-60,qint64(0));
     *rtcTimeOffsetApplied = rtcTimeOffsetApplied->addSecs(int(float(secsdiff)*lastRtcLagMulti));

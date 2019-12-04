@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    IOThread/datawriter.cpp \
     LightsMenu/colorcomponents.cpp \
     MediaPlayer/mediaplayerbackend.cpp \
     MediaPlayer/tracklist.cpp \
@@ -64,11 +65,11 @@ SOURCES += \
     voiceprotohandler.cpp
 
 HEADERS += \
+    IOThread/datawriter.h \
+    IOThread/thread.h \
     LightsMenu/colorcomponents.h \
     LightsMenu/leftToggleMenuModel.h \
     MediaPlayer/mediaplayerbackend.h \
-    MediaPlayer/mediaplayerfrontend.h \
-    MediaPlayer/secondthread.h \
     MediaPlayer/tracklist.h \
     MediaPlayer/usbmounter.h \
     iterativevaluechanger.h \
