@@ -1,7 +1,6 @@
 #include "initializemng.h"
 #include "updatecheck.h"
 #include "restarter.h"
-#include "MediaPlayer/mediaplayercontroller.h"
 #include <QDebug>
 #include <QDir>
 #include <QProcess>
@@ -10,7 +9,7 @@ InitializeMng::InitializeMng(QObject *parent):QObject(parent)
 {
 }
 
-void InitializeMng::setMediaPlayerController(MediaPlayerController *mPlayerController)
+void InitializeMng::setMediaPlayerController(MediaPlayerFacade *mPlayerController)
 {
     this->mPlayerController = mPlayerController;
 }

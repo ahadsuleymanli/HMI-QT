@@ -2,47 +2,55 @@
 #include <QMediaMetaData>
 #include <QBuffer>
 #include <iostream>
+#include <QThread>
+#include <QGuiApplication>
 
 MediaPlayerController::MediaPlayerController(QObject *parent)
-    : QMediaPlayer(parent)
 {
-    setMuted(true);
-    QTimer::singleShot(250,this,[this]{ setMuted(false); });
-    m_trackList = new TrackList(this);
-    connect(this, &QMediaPlayer::mediaStatusChanged,[=](){
-        if(mediaStatus() == QMediaPlayer::BufferedMedia || mediaStatus() == QMediaPlayer::LoadedMedia){
+    m_player = new QMediaPlayer(this);
+    m_player->setMuted(true);
+    m_trackList = new TrackList(m_player,this);
+}
+void MediaPlayerController::process(){
+
+    QTimer::singleShot(250,m_player,[=]{ m_player->setMuted(false); });
+    connect(m_player, &QMediaPlayer::mediaStatusChanged,[=](){
+        if(m_player->mediaStatus() == QMediaPlayer::BufferedMedia || m_player->mediaStatus() == QMediaPlayer::LoadedMedia){
             emit playingMediaChanged();
         }
     });
-
 }
-
 void MediaPlayerController::init(){
-    m_trackList->connectUsbMounter();
+    if (m_trackList){
+        m_trackList->connectUsbMounter();
+    }
+    else{
+        QTimer::singleShot(500,this,[this]{ qDebug()<<"m_trackList was not ready trying again..."; init(); });
+    }
 }
 
 QString MediaPlayerController::playingTitle()
 {
-    if(!playlist()) return QString();
-    return metaData(QMediaMetaData::Title).toString();
+    if(!m_player->playlist()) return QString();
+    return m_player->metaData(QMediaMetaData::Title).toString();
 }
 
 QString MediaPlayerController::playingYear()
 {
-    if(!playlist()) return QString();
-    return metaData(QMediaMetaData::Year).toString();
+    if(!m_player->playlist()) return QString();
+    return m_player->metaData(QMediaMetaData::Year).toString();
 }
 
 QString MediaPlayerController::playingArtist()
 {
-    if(!playlist()) return QString();
-    return metaData(QMediaMetaData::ContributingArtist).toString();
+    if(!m_player->playlist()) return QString();
+    return m_player->metaData(QMediaMetaData::ContributingArtist).toString();
 }
 
 QString MediaPlayerController::playingCover()
 {
-    if(!playlist()) return QString();
-    QImage image = metaData(QMediaMetaData::CoverArtImage).value<QImage>();
+    if(!m_player->playlist()) return QString();
+    QImage image = m_player->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
     if(image.isNull()) return QString();
     QByteArray bArray;
     QBuffer buffer(&bArray);
@@ -57,53 +65,54 @@ QString MediaPlayerController::playingCover()
 
 
 void MediaPlayerController::playPause(){
-    if (!playlist()) return;
-    if (state() == 1 && !paused){
-        setMuted(true);
-        QTimer::singleShot(250,this,[this]{ this->QMediaPlayer::pause(); setMuted(false); });
+    qDebug()<<"playpause called from: "<<QThread::currentThreadId();
+    if (!m_player->playlist()) return;
+    if (m_player->state() == 1){
+        m_player->setMuted(true);
+        QTimer::singleShot(250,m_player,[=]{ m_player->QMediaPlayer::pause(); m_player->setMuted(false); });
     }
     else{
-        this->QMediaPlayer::play();
+        m_player->QMediaPlayer::play();
     }
 }
 void MediaPlayerController::next()
 {
-    if (!playlist()) return;
-    if(playlist()->currentIndex() == playlist()->mediaCount() -1 )
-        playlist()->setCurrentIndex(0);
+    if (!m_player->playlist()) return;
+    if(m_player->playlist()->currentIndex() == m_player->playlist()->mediaCount() -1 )
+        m_player->playlist()->setCurrentIndex(0);
     else
-        playlist()->next();
+        m_player->playlist()->next();
 }
 
 void MediaPlayerController::previous()
 {
-   if (!playlist()) return;
-   playlist()->previous();
+   if (!m_player->playlist()) return;
+   m_player->playlist()->previous();
 }
 
 void MediaPlayerController::setLoopHelper(){
     if (loopState==2){
-        playlist()->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+        m_player->playlist()->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
     }
     else if (shuffleEnabled){
-        playlist()->setPlaybackMode(QMediaPlaylist::Random);
+        m_player->playlist()->setPlaybackMode(QMediaPlaylist::Random);
     }
     else if (loopState==0){
-        playlist()->setPlaybackMode(QMediaPlaylist::Sequential);
+        m_player->playlist()->setPlaybackMode(QMediaPlaylist::Sequential);
     }
     else if (loopState==1){
-        playlist()->setPlaybackMode(QMediaPlaylist::Loop);
+        m_player->playlist()->setPlaybackMode(QMediaPlaylist::Loop);
     }
 }
 
 void MediaPlayerController::setShuffle(){
-    if(!playlist()) return;
+    if(!m_player->playlist()) return;
     shuffleEnabled = !shuffleEnabled;
     setLoopHelper();
     emit playModeChanged();
 }
 void MediaPlayerController::setLoop(){
-    if(!playlist()) return;
+    if(!m_player->playlist()) return;
     if (loopState == 0)
         loopState = 1;
     else if (loopState == 1)

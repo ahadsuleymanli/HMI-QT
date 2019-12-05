@@ -5,6 +5,7 @@
 #include <QMediaPlaylist>
 #include <QAbstractListModel>
 #include <QImage>
+#include <QTime>
 #include "usbmounter.h"
 
 
@@ -46,7 +47,7 @@ public:
         // Used in subclasses
         LastTrackCollectionModelRole
     };
-    explicit TrackList( QObject *parent = Q_NULLPTR);
+    explicit TrackList(QMediaPlayer *m_player, QObject *parent = Q_NULLPTR);
 
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent) const;
@@ -70,6 +71,7 @@ private slots:
     void createTracklist(QStringList newlyAddedList);
     void emptyTracklist();
 private:
+    QTime tic;
     QMediaPlaylist *m_mediaList;
     QMediaPlayer *m_mediaPlayer;
     QMediaPlayer *parentMediaplayer;

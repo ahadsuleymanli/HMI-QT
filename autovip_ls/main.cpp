@@ -14,9 +14,11 @@
 #include <nvidiaconnmanager.h>
 #include "MediaPlayer/tracklist.h"
 #include "MediaPlayer/mediaplayercontroller.h"
+#include "MediaPlayer/facade.h"
 #include <QProcess>
 #include "tools/logstacktrace.h"
 #include "IOThread/thread.h"
+#include "IOThread/threadutils.h"
 
 bool changeCD()
 {
@@ -29,9 +31,12 @@ bool changeCD()
 
 int main(int argc, char *argv[])
 {
+    ThreadUtils::assign_to_n_cores(2,(pthread_t)QThread::currentThreadId());
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
+    ThreadUtils::pin_to_core(2,(pthread_t)QThread::currentThreadId());
+
     qputenv("QT_QUICK_CONTROLS_STYLE", "material");
     qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
 //    qputenv("QSG_INFO", "1"); // INFO
@@ -46,14 +51,14 @@ int main(int argc, char *argv[])
     FileLogger flogger(sm->getSettings(),10000,&app);
     ClockSetter csetter;
     qDebug()<<"main called from: "<<QThread::currentThreadId();
-    MediaPlayerController mPlayerController(&app);
-    IOThread ioThread(&csetter, &mPlayerController);
+    MediaPlayerFacade mPlayerFacade(&app);
+    IOThread ioThread(&csetter, &mPlayerFacade);
     csetter.start();
 
     NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
 
 
-    imng.setMediaPlayerController(&mPlayerController);
+    imng.setMediaPlayerController(&mPlayerFacade);
     imng.setClockSetter(&csetter);
     imng.setTranslator(&mTrans);
     imng.setSettingsManager(sm);

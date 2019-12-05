@@ -14,6 +14,7 @@
 #include <clocksetter.h>
 #include <voicerecognitionservice.h>
 #include "MediaPlayer/mediaplayercontroller.h"
+#include "MediaPlayer/facade.h"
 
 class InitializeMng: public QObject
 {
@@ -23,7 +24,7 @@ class InitializeMng: public QObject
     MediaPlayerMng* mp_mng = nullptr;
     SerialMng* serial_mng = nullptr;
     ClockSetter* csetter = nullptr;
-    MediaPlayerController* mPlayerController = nullptr;
+    MediaPlayerFacade* mPlayerController = nullptr;
     NvidiaConnManager* nvidiaConnManager = nullptr;
 public:
     explicit InitializeMng(QObject *parent = nullptr);
@@ -33,7 +34,7 @@ public:
     void setEngine(QQmlApplicationEngine* p_eng);
     void setMediaPlayerMng(MediaPlayerMng* p_mply);
     void setSerialMng(SerialMng* p_smng);
-    void setMediaPlayerController(MediaPlayerController *mPlayerController);
+    void setMediaPlayerController(MediaPlayerFacade *mPlayerController);
     void setNvidiaConnManager(NvidiaConnManager *nvidiaConnManager);
 
     bool init();

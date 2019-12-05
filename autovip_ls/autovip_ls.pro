@@ -68,8 +68,11 @@ SOURCES += \
 HEADERS += \
     IOThread/datawriter.h \
     IOThread/thread.h \
+    IOThread/threadutils.h \
     LightsMenu/colorcomponents.h \
     LightsMenu/leftToggleMenuModel.h \
+    MediaPlayer/MediaPlayerWorker.h \
+    MediaPlayer/facade.h \
     MediaPlayer/mediaplayercontroller.h \
     MediaPlayer/tracklist.h \
     MediaPlayer/trackloader.h \

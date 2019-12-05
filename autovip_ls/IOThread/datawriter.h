@@ -49,7 +49,7 @@ class DataWriterWorker : public QObject
             deleteLockFile(datafilePath);
             this->datafile = new QSettings(datafilePath,QSettings::IniFormat);
             ioTimer = new QTimer();
-            ioTimer->setInterval(30000);
+            ioTimer->setInterval(10000);
             ioTimer->stop();
 //            qDebug()<<"thread stuff called from: "<<QThread::currentThreadId();
             connect(ioTimer,&QTimer::timeout,this,[=](){

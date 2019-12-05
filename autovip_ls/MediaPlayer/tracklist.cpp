@@ -67,18 +67,17 @@ void rowSort(QVector<QPersistentModelIndex> & indices)
     });
 }
 
-TrackList::TrackList( QObject *parent)
+TrackList::TrackList(QMediaPlayer *m_player, QObject *parent)
     :QAbstractListModel(parent)
 {
     qDebug()<<"creating tracklist";
     usbmounter = new UsbMounter(this);
-    m_mediaPlayer = new QMediaPlayer();
+    m_mediaPlayer = new QMediaPlayer(this);
     m_mediaPlayer->setVolume(0);
     m_mediaPlayer->setMuted(true);
-    parentMediaplayer = (QMediaPlayer *)parent;
+    parentMediaplayer = m_player;
     parentMediaplayer->setPlaylist(nullptr);
     m_mediaList = new QMediaPlaylist(this);
-
 }
 
 void TrackList::connectUsbMounter(){
@@ -100,6 +99,7 @@ void TrackList::createTracklist(QStringList newlyAddedList){
     filters << "*.flac" << "*.mp3" << "*.wav" ;
     qDebug()<<"adding tracks from "<< newlyAddedList.join(", ");
     qDebug()<<"tracklist called from: "<<QThread::currentThreadId();
+    tic = QTime::currentTime();
     for (QString path : newlyAddedList) {
         QDirIterator it(path, filters, QDir::Files, QDirIterator::Subdirectories);
         QString tempPath;
@@ -112,6 +112,8 @@ void TrackList::createTracklist(QStringList newlyAddedList){
             m_trackContents.push_back(tc);
         }
     }
+    qDebug()<<"media loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
+    tic = QTime::currentTime();
 
     m_mediaPlayer->setPlaylist(m_mediaList);
     m_mediaList->setCurrentIndex(0);
@@ -138,6 +140,8 @@ void TrackList::createTracklist(QStringList newlyAddedList){
             m_mediaPlayer->setPlaylist(nullptr);
             parentMediaplayer->setPlaylist(m_mediaList);
             qDebug()<<"tracks added.";
+            qDebug()<<"metadata loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
+            qDebug()<<"tracklist, metadata, thread: "<<QThread::currentThreadId();
             emit listReady();
             emit layoutChanged();
         }
