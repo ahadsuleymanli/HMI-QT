@@ -73,10 +73,10 @@ TrackList::TrackList( QObject *parent)
     qDebug()<<"creating tracklist";
     usbmounter = new UsbMounter(this);
     m_mediaPlayer = new QMediaPlayer();
-//    m_mediaPlayer->setVolume(0);
+    m_mediaPlayer->setVolume(0);
     m_mediaPlayer->setMuted(true);
     parentMediaplayer = (QMediaPlayer *)parent;
-    parentMediaplayer->setPlaylist(&emptyMediaList);
+    parentMediaplayer->setPlaylist(nullptr);
     m_mediaList = new QMediaPlaylist(this);
 
 }
@@ -91,7 +91,7 @@ void TrackList::emptyTracklist(){
     qDebug()<<"clearing media_list";
     m_mediaList->clear();
     m_trackContents.clear();
-    parentMediaplayer->setPlaylist(&emptyMediaList);
+    parentMediaplayer->setPlaylist(nullptr);
     emit layoutChanged();
 }
 

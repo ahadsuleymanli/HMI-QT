@@ -57,6 +57,7 @@ QString MediaPlayerController::playingCover()
 
 
 void MediaPlayerController::playPause(){
+    if (!playlist()) return;
     if (state() == 1 && !paused){
         setMuted(true);
         QTimer::singleShot(250,this,[this]{ this->QMediaPlayer::pause(); setMuted(false); });
@@ -64,10 +65,10 @@ void MediaPlayerController::playPause(){
     else{
         this->QMediaPlayer::play();
     }
-
 }
 void MediaPlayerController::next()
 {
+    if (!playlist()) return;
     if(playlist()->currentIndex() == playlist()->mediaCount() -1 )
         playlist()->setCurrentIndex(0);
     else
@@ -76,9 +77,9 @@ void MediaPlayerController::next()
 
 void MediaPlayerController::previous()
 {
+   if (!playlist()) return;
    playlist()->previous();
 }
-
 
 void MediaPlayerController::setLoopHelper(){
     if (loopState==2){
@@ -96,11 +97,13 @@ void MediaPlayerController::setLoopHelper(){
 }
 
 void MediaPlayerController::setShuffle(){
+    if(!playlist()) return;
     shuffleEnabled = !shuffleEnabled;
     setLoopHelper();
     emit playModeChanged();
 }
 void MediaPlayerController::setLoop(){
+    if(!playlist()) return;
     if (loopState == 0)
         loopState = 1;
     else if (loopState == 1)

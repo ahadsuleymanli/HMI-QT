@@ -26,6 +26,8 @@ Item {
     property alias shuffleButton: shuffleButton
     property alias playPauseButton: playPauseButton
     property alias nextButton: nextButton
+    property bool repeatImageToggled: false
+    property bool shuffleImageToggled: false
     property string toggledColor: "#8800FF55"
 
     ColumnLayout {
@@ -203,7 +205,6 @@ Item {
                     sourceSize.width: 30
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/design/media/MediaPlayer/shuffle.png"
-                    property bool toggled: false
                     MouseArea {
                         id: shuffleButton
                         anchors.fill: parent
@@ -214,7 +215,7 @@ Item {
                     source: shuffleImage
                     color: toggledColor
                     cached: true
-                    visible: shuffleImage.toggled
+                    visible: shuffleImageToggled
                 }
                 Glow {
                     id: shuffleGlow
@@ -308,7 +309,6 @@ Item {
                     sourceSize.height: 30
                     sourceSize.width: 30
                     fillMode: Image.PreserveAspectFit
-                    property bool toggled: false
                     source: "qrc:/design/media/MediaPlayer/repeat.png"
                     MouseArea {
                         id: repeatButton
@@ -320,7 +320,7 @@ Item {
                     source: repeatImage
                     color: toggledColor
                     cached: true
-                    visible: repeatImage.toggled
+                    visible: repeatImageToggled
                 }
                 Glow {
                     id: repeatGlow
@@ -340,7 +340,6 @@ Item {
 
         Item {
             id: audiolabs
-            //            Layout.fillHeight: true
             Image {
                 id: image
                 fillMode: Image.PreserveAspectCrop

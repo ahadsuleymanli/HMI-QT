@@ -73,7 +73,6 @@ private:
     QMediaPlaylist *m_mediaList;
     QMediaPlayer *m_mediaPlayer;
     QMediaPlayer *parentMediaplayer;
-    QMediaPlaylist emptyMediaList;
     QVector<TrackContent> m_trackContents;
 
 };

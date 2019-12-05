@@ -208,7 +208,7 @@ void ClockSetter::mitigateRtcLag(QDateTime *rtcTimeOffsetApplied){
     if (secsdiff<-120){
         qDebug()<<"negative time advance, probably rtc got reset.";
     }
-    secsdiff = qMax(secsdiff-60,qint64(0));
+    secsdiff = qMax(secsdiff-120,qint64(0));
     *rtcTimeOffsetApplied = rtcTimeOffsetApplied->addSecs(int(float(secsdiff)*lastRtcLagMulti));
 }
 

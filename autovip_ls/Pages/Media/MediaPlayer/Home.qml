@@ -1,11 +1,11 @@
 import QtQuick 2.4
-
 HomeForm {
 
 
     durationText.text : audioDurationStr
     currentPositionText.text: audioPositionStr
-    progressCurrent.width: positionRatio * progressBackground.width
+
+    progressCurrent.width: (mPlayerBackend.duration>0?mPlayerBackend.position/mPlayerBackend.duration:0) * progressBackground.width
 
     infoLayout.visible: (infoTitle.text === "" ? false : true)
     infoTitle.text: mPlayerBackend.playingTitle
@@ -17,15 +17,9 @@ HomeForm {
                                                                 "qrc:/design/media/MediaPlayer/2.png")
     repeatImage.source: (mPlayerBackend.loop===2 ? "qrc:/design/media/MediaPlayer/repeat_1.png": mPlayerBackend.loop===1 ? "qrc:/design/media/MediaPlayer/repeat_all.png": "qrc:/design/media/MediaPlayer/repeat.png")
 
-    Connections{
-        target:mPlayerBackend
-        onPlayModeChanged:function()
-        {
-            shuffleImage.toggled = mPlayerBackend.shuffle
-            repeatImage.toggled = mPlayerBackend.loop > 0
-        }
+    shuffleImageToggled: mPlayerBackend.shuffle
+    repeatImageToggled: mPlayerBackend.loop > 0
 
-    }
 
     progressArea.onMouseXChanged:{
         var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)

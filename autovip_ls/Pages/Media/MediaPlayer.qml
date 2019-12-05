@@ -11,27 +11,9 @@ BasePage {
     id:root
     caption: qsTr("MEDIA") + mytrans.emptyString
     pageName: "MediaPlayer"
-    property real playingIndex : -1
-    property real queueLastIndex: -1
-    property bool isShuffle: false
-    property bool playQueue: true
-    property bool userStop: false
-    property bool userPause: false
-
-
-    property real lastPosition: 0
-    property real lastDuration: 0
-    property var lastSource: ""
-//    property alias mPlayerBackend : mPlayerBackend
-
-    property var positionRatio: {
-        if(mPlayerBackend.duration > 0){
-            return (mPlayerBackend.position / mPlayerBackend.duration)
-        }
-    }
 
     property string audioPositionStr: {
-        var pos = root.userPause ? root.lastPosition : mPlayerBackend.position
+        var pos = mPlayerBackend.position
         var posMin = Math.floor(pos / 60000)
         var posSec = Math.floor(pos / 1000 - posMin * 60)
         return posMin + ":" + (posSec < 10 ? "0" + posSec : posSec);
@@ -40,16 +22,6 @@ BasePage {
         var durMin = Math.floor(mPlayerBackend.duration / 60000)
         var durSec = Math.floor(mPlayerBackend.duration / 1000 - durMin * 60)
         return durMin + ":" + (durSec < 10 ? "0" + durSec : durSec);
-    }
-
-
-    ListView{
-        id: playList
-        model: mPlayerBackend.trackList()
-        delegate: Text {
-//            Component.onCompleted: if(index ===2) mPlayerBackend.play(path)
-//            text: model.track
-        }
     }
 
     RowLayout{
@@ -78,6 +50,7 @@ BasePage {
                 anchors.fill: parent
                 onPaint:
                 {
+                    console.log("paint")
                     var ctx = getContext("2d")
 
                     // create a triangle as clip region
