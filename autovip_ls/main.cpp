@@ -17,8 +17,8 @@
 #include "MediaPlayer/facade.h"
 #include <QProcess>
 #include "tools/logstacktrace.h"
-#include "IOThread/thread.h"
-#include "IOThread/threadutils.h"
+#include "secondthread/thread.h"
+#include "secondthread/threadutils.h"
 
 bool changeCD()
 {
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     ClockSetter csetter;
     qDebug()<<"main called from: "<<QThread::currentThreadId();
     MediaPlayerFacade mPlayerFacade(&app);
-    IOThread ioThread(&csetter, &mPlayerFacade);
+    SecondThread secondthread(&csetter, &mPlayerFacade);
     csetter.start();
 
     NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);

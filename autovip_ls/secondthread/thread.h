@@ -6,15 +6,15 @@
 #include <QThread>
 #include <clocksetter.h>
 #include <QDebug>
-#include <IOThread/datawriter.h>
+#include <secondthread/datawriter.h>
 #include <MediaPlayer/facade.h>
-#include <IOThread/threadutils.h>
-class IOThread : public QThread
+#include <secondthread/threadutils.h>
+class SecondThread : public QThread
 {
     DataWriterWorker *dataWriterWorker;
     MediaPlayerController *mediaPlayerController;
 public:
-    IOThread(ClockSetter *clockSetter,MediaPlayerFacade *mPlayerFacade, QObject* parent = nullptr) : QThread(parent) {
+    SecondThread(ClockSetter *clockSetter,MediaPlayerFacade *mPlayerFacade, QObject* parent = nullptr) : QThread(parent) {
         dataWriterWorker = new DataWriterWorker();
         clockSetter->setLastPowerOffTime(dataWriterWorker->getLastPowerOffTime());
         dataWriterWorker->moveToThread(this);
