@@ -532,8 +532,8 @@ void SettingsManager::setAutoUpdate(bool enabled)
     emit autoUpdateChanged(enabled);
 }
 
-QVariant SettingsManager::value(QString key)
+QVariant SettingsManager::value(QString key, QVariant defaultValue)
 {
-   return this->general->value(key);
+   return this->general->value(key,defaultValue);
 }
 

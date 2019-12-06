@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMediaPlayer>
 #include <QMutex>
+#include <QThread>
 #include "tracklist.h"
 
 
@@ -21,7 +22,6 @@ public:
     MediaPlayerController(QObject *parent = nullptr);
     void process();
     void init();
-    Q_INVOKABLE TrackListModel* trackList() {return m_trackList->getTrackListModel(); }
     void setLoopHelper();
     QString playingTitle();
     QString playingYear();
@@ -29,16 +29,18 @@ public:
     QString playingCover();
     bool getShuffle();
     int getLoop();
+    void preventAudioBug();
 
 public slots:
-
     void setShuffle();
     void setLoop();
     void playPause();
+    void pause();
     void next();
     void previous();
-    void playTrack(int index) { if (!m_player->playlist()) return; m_playList->setCurrentIndex(index); play(); }
-
+    void playTrack(int index);
+    void setVolume(int volume);
+    TrackList* getTrackList(){return trackList;}
 signals:
     void playingMediaChanged(QString playingTitle,QString playingYear,QString playingArtist,QString playingCover);
     void playModeChanged(bool shuffle,int loop);
@@ -46,9 +48,9 @@ signals:
 private:
     int loopState = 0;
     bool shuffleEnabled = false;
-    TrackList *m_trackList;
-    QMediaPlayer *m_player;
-    QMediaPlaylist *m_playList;
+    TrackList *trackList;
+    QMediaPlayer *p_mediaPlayer;
+    QMediaPlaylist *playList;
 };
 
 #endif // MEDIAPLAYERCONTROLLER_H

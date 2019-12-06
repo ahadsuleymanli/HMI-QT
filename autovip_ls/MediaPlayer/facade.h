@@ -1,4 +1,4 @@
-#ifndef FACADE_H
+﻿#ifndef FACADE_H
 #define FACADE_H
 #include <QObject>
 #include <QThread>
@@ -30,22 +30,31 @@ class MediaPlayerFacade: public QObject
     qint64 position = 0;
     MediaPlayerController *mediaPlayerController;
     SettingsManager *sm = &SettingsManager::instance();
-    TrackListModel *m_trackList;
+    TrackListModel *trackListModel;
+    int volume;
 
 public:
 
     MediaPlayerFacade(QObject *parent = nullptr){
-
+        trackListModel = new TrackListModel(this);
+        QVariant sm_volume=sm->value("media/volume");
+        if (!sm_volume.isValid()){
+            sm->getSettings()->setValue("media/volume",70);
+            volume = 70;
+        }
+        else
+            volume = sm_volume.toInt();
     }
     void facadeConnections(MediaPlayerController*mediaPlayerController){
         this->mediaPlayerController=mediaPlayerController;
-
+        mediaPlayerController->setVolume(volume);
+        qDebug()<<"facade connection called from: "<<QThread::currentThreadId();
         connect(mediaPlayerController, &MediaPlayerController::playingMediaChanged,this,&MediaPlayerFacade::getPlayingMediaChanged);
         connect(mediaPlayerController, &MediaPlayerController::playModeChanged,this,&MediaPlayerFacade::getPlayModeChanged);
         connect(mediaPlayerController, &MediaPlayerController::stateChanged,this,&MediaPlayerFacade::getStateChanged);
         connect(mediaPlayerController, &MediaPlayerController::durationChanged,this,&MediaPlayerFacade::getDurationChanged);
         connect(mediaPlayerController, &MediaPlayerController::positionChanged,this,&MediaPlayerFacade::getPositionChanged);
-
+        connect(mediaPlayerController->getTrackList(), &TrackList::trackListUpdated,this,&MediaPlayerFacade::trackListModelUpdated);
         connect(this, &MediaPlayerFacade::initCalled,mediaPlayerController,&MediaPlayerController::init);
         connect(this, &MediaPlayerFacade::playPause,mediaPlayerController,&MediaPlayerController::playPause);
         connect(this, &MediaPlayerFacade::setShuffle,mediaPlayerController,&MediaPlayerController::setShuffle);
@@ -53,9 +62,16 @@ public:
         connect(this, &MediaPlayerFacade::next,mediaPlayerController,&MediaPlayerController::next);
         connect(this, &MediaPlayerFacade::previous,mediaPlayerController,&MediaPlayerController::previous);
         connect(this, &MediaPlayerFacade::setPosition,mediaPlayerController,&MediaPlayerController::setPosition);
-        connect(this, &MediaPlayerFacade::playTrack,mediaPlayerController,&MediaPlayerController::playTrack);
+        connect(this, &MediaPlayerFacade::signalPlayTrack,mediaPlayerController,&MediaPlayerController::playTrack);
+        connect(this, &MediaPlayerFacade::pause,mediaPlayerController,&MediaPlayerController::pause);
     }
-    Q_INVOKABLE TrackListModel* trackList() {return mediaPlayerController->trackList(); }
+    Q_INVOKABLE TrackListModel* trackList() {
+        qDebug()<<"tracklist called";
+        return trackListModel; }
+    Q_INVOKABLE void playTrack(int index) {
+        qDebug()<<"play emitted from: "<<QThread::currentThreadId();
+        emit signalPlayTrack(index);
+    }
 
     void init(){emit initCalled(); }
 public slots:
@@ -83,6 +99,12 @@ public slots:
         this->position=position;
         emit positionChanged();
     }
+    void trackListModelUpdated(TrackListModel *p){
+        trackListModel->copyObject(p);
+//        this->trackListModel=p;
+        qDebug()<<"tracklist copy is "<<trackListModel;
+        emit trackListModel->layoutChanged();
+    }
 
 
 signals:
@@ -96,7 +118,8 @@ signals:
     void playingMediaChanged();
     void stateChanged();void durationChanged();void positionChanged();
     void setPosition(qint64 position);
-    void playTrack(int index);
+    void signalPlayTrack(int index);
+    void pause();
 };
 
 

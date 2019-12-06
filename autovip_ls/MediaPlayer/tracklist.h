@@ -19,44 +19,29 @@ struct TrackContent{
 class TrackListModel : public QAbstractListModel{
     Q_OBJECT
 
-    Q_INVOKABLE QVariant count() { return m_mediaList->mediaCount(); }
+    Q_INVOKABLE QVariant count() {
+        if (m_mediaList)
+            return m_mediaList->mediaCount();
+        else
+            return _mediaCount;
+    }
     Q_INVOKABLE QVariant titleAt(int index) { return m_trackContents[index].trackName; }
     Q_INVOKABLE QVariant artistAt(int index) { return m_trackContents[index].artistName; }
     Q_INVOKABLE QString imageAt(int index) { return m_trackContents[index].image; }
     Q_INVOKABLE QVariant pathAt(int index) { return m_trackContents[index].path; }
 
     QVector<TrackContent> m_trackContents;
-    QMediaPlaylist *m_mediaList;
+    QMediaPlaylist *m_mediaList = nullptr;
+    int _mediaCount=0;
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
 public:
     enum Role {
-        TrackRole = Qt::UserRole,
-        ArtistsRole,
-        AlbumRole,
-        IsLoadedRole,
-        IsValidRole,
-        NameRole,
-        ArtistNamesRole,
-        AlbumNameRole,
-        DurationRole,
-        PopularityRole,
-        DiscRole,
-        AlbumIndexRole,
-        IsStarred,
-        IsPlaceholder,
-        IsLocal,
-        IsAutoLinked,
-        Availability,
-        CollectionIndexRole,
-        ImageRole,
-        PathRole,
-
-        // Used in subclasses
-        LastTrackCollectionModelRole
+        TrackRole = Qt::UserRole,ArtistsRole,AlbumRole,IsLoadedRole,IsValidRole,NameRole,ArtistNamesRole,AlbumNameRole,DurationRole,PopularityRole,
+        DiscRole,AlbumIndexRole,IsStarred,IsPlaceholder,IsLocal,IsAutoLinked,Availability,CollectionIndexRole,ImageRole,PathRole,LastTrackCollectionModelRole
     };
-//    explicit TrackListModel(QMediaPlaylist *m_mediaList, QObject *parent = Q_NULLPTR);
+    TrackListModel(QObject *parent = Q_NULLPTR):QAbstractListModel(parent){}
     TrackListModel(QMediaPlaylist *m_mediaList, QObject *parent):QAbstractListModel(parent){
         this->m_mediaList=m_mediaList;
     }
@@ -68,6 +53,10 @@ public:
     }
     void pushBackToTrackContents(TrackContent *tc){
         m_trackContents.push_back(*tc);
+    }
+    void copyObject(TrackListModel *x){
+        this->_mediaCount=x->m_mediaList->mediaCount();
+        this->m_trackContents = x->m_trackContents;
     }
 
 };
@@ -82,10 +71,13 @@ class TrackList : public QObject
     QMediaPlaylist *m_mediaList;
 public:
     explicit TrackList(QMediaPlayer *m_player, QObject *parent = Q_NULLPTR);
-    TrackListModel* getTrackListModel(){return trackListModel;}
     void connectUsbMounter();
+
 signals:
+    void loadingList();
+    void listCleared();
     void listReady();
+    void trackListUpdated(TrackListModel *TrackListModel);
 
 private slots:
     void createTracklist(QStringList newlyAddedList);

@@ -115,7 +115,7 @@ Q_INVOKABLE uint mediaplayertype();
     QString lastdownloadedversion();
 
 
-Q_INVOKABLE  QVariant value(QString key);
+Q_INVOKABLE  QVariant value(QString key, QVariant defaultValue = QVariant());
 Q_INVOKABLE  bool sidelight();
 Q_INVOKABLE  bool insidelight();
 Q_INVOKABLE  bool readinglight();

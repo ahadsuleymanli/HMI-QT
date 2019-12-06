@@ -44,7 +44,7 @@ Item {
                         Layout.fillHeight: true
                         bgSource : "qrc:/design/general/System.svg"
                         info:false
-                        onClicked:GSystem.systemOnOff()
+                        onPressed:GSystem.systemOnOff()
                     }
 
                     FooterButton {

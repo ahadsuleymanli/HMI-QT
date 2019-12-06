@@ -12,7 +12,6 @@
 #include "clocksetter.h"
 #include <QDir>
 #include <nvidiaconnmanager.h>
-#include "MediaPlayer/tracklist.h"
 #include "MediaPlayer/mediaplayercontroller.h"
 #include "MediaPlayer/facade.h"
 #include <QProcess>

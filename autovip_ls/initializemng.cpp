@@ -90,7 +90,7 @@ bool InitializeMng::init()
     engine->rootContext()->setContextProperty("mytrans", this->translator);
     engine->rootContext()->setContextProperty("serial_mng", this->serial_mng);
     engine->rootContext()->setContextProperty("csetter", this->csetter);
-    qmlRegisterInterface<TrackList>("TrackList");
+    qmlRegisterInterface<TrackListModel>("TrackListModel");
 
     engine->rootContext()->setContextProperty("mPlayerBackend", mPlayerController);
     if (nvidiaConnManager)

@@ -8,6 +8,7 @@ import "Components"
 import QtMultimedia 5.6
 import MyLang 1.0
 import QtQuick.Controls.Material 2.2
+//import QtGraphicalEffects 1.0
 
 Window {
     id: root
@@ -186,9 +187,18 @@ Window {
                sourceSize.width: 200
                sourceSize.height: 200
                z:334
+//               ColorOverlay {
+//                  id:co
+//                  visible: false
+//                  anchors.fill: parent
+//                  source: parent
+//                  color: Qt.rgba(191/255, 63/255, 191/255,0.1)
+//               }
                MouseArea{
                    anchors.fill: parent
-                   onClicked: {
+//                   onPressed: {co.visible = true;}
+                   onReleased: {
+//                       co.visible=false;
                        GSystem.systemOnOff();
                    }
                }

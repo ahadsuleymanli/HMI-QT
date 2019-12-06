@@ -94,7 +94,11 @@ QVariant TrackListModel::data(const QModelIndex &index, int role) const
 
 int TrackListModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : m_mediaList->mediaCount();
+    if (m_mediaList)
+        return parent.isValid() ? 0 : m_mediaList->mediaCount();
+    else{
+        return parent.isValid() ? 0 : _mediaCount;
+    }
 }
 
 QHash<int, QByteArray> TrackListModel::roleNames() const
@@ -115,6 +119,7 @@ TrackList::TrackList(QMediaPlayer *m_player, QObject *parent)
     parentMediaplayer->setPlaylist(nullptr);
     m_mediaList = new QMediaPlaylist(this);
     this->trackListModel = new TrackListModel(m_mediaList,this);
+    qDebug()<<"tracklistmodel when created "<< trackListModel;
 }
 
 void TrackList::connectUsbMounter(){
@@ -128,7 +133,9 @@ void TrackList::emptyTracklist(){
     m_mediaList->clear();
     parentMediaplayer->setPlaylist(nullptr);
     trackListModel->clearTrackContents();
+    emit trackListUpdated(trackListModel);
     emit trackListModel->layoutChanged();
+    emit listCleared();
 }
 
 void TrackList::createTracklist(QStringList newlyAddedList){
@@ -136,6 +143,7 @@ void TrackList::createTracklist(QStringList newlyAddedList){
     filters << "*.flac" << "*.mp3" << "*.wav" ;
     qDebug()<<"adding tracks from "<< newlyAddedList.join(", ");
     qDebug()<<"tracklist called from: "<<QThread::currentThreadId();
+    emit loadingList();
     tic = QTime::currentTime();
     for (QString path : newlyAddedList) {
         QDirIterator it(path, filters, QDir::Files, QDirIterator::Subdirectories);
@@ -180,7 +188,9 @@ void TrackList::createTracklist(QStringList newlyAddedList){
             qDebug()<<"metadata loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
             qDebug()<<"tracklist, metadata, thread: "<<QThread::currentThreadId();
             emit listReady();
-            emit trackListModel->layoutChanged();
+            qDebug()<<"tracklistmodel when ready "<< trackListModel;
+            emit trackListUpdated(trackListModel);
+//            emit trackListModel->layoutChanged();
         }
     });
 

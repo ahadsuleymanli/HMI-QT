@@ -8,6 +8,7 @@ BasePage {
     id:root
     caption:qsTr("RADIO FM") + mytrans.emptyString
     property real currentFrequency: 95.5
+
     ListModel{
         id: favoriteModel
         ListElement{frequency :"90.5"; name : "Fenomen FM"}
@@ -17,7 +18,10 @@ BasePage {
 
 
     }
-
+    function init()
+    {
+        mPlayerBackend.pause();
+    }
     ColumnLayout{
         anchors.fill: parent
         anchors.bottomMargin: 120

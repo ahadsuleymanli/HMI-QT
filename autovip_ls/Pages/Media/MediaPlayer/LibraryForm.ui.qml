@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import QtGraphicalEffects 1.0
 
 Item {
     width: 810
@@ -45,6 +46,7 @@ Item {
                 Layout.leftMargin: 5
                 ColumnLayout{
                     anchors.fill: parent
+                    anchors.leftMargin: headerClickable.pressed ?  2 : 0
                     spacing: 0
                     Item{
                         Layout.fillHeight: true
@@ -65,7 +67,6 @@ Item {
                 }
             }
 
-
         }
         Rectangle{
             anchors{
@@ -75,6 +76,11 @@ Item {
             }
             height: 1
             color: "#dd303030"
+        }
+        MouseArea {
+            id:headerClickable
+            anchors.fill: header
+            onClicked: {mPlayerBackend.playPause()}
         }
     }
 
