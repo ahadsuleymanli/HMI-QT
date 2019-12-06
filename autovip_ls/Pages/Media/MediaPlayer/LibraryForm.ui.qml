@@ -105,7 +105,7 @@ Item {
             MouseArea {
                 id:trackClickable
                 anchors.fill: parent
-                onClicked: {playlist.model.playTrack(index)}
+                onClicked: {mPlayerBackend.playTrack(index)}
             }
             ColumnLayout{
                 anchors{

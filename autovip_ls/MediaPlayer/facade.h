@@ -1,57 +1,90 @@
 #ifndef FACADE_H
 #define FACADE_H
-#include "mediaplayercontroller.h"
 #include <QObject>
-//class WorkerObject: public QObject
-//{
-//    Q_OBJECT
-//public:
-//    MediaPlayerController *mediaPlayerController;
-//    WorkerObject(QObject *parent = nullptr){
-//    }
-//    void process(){
-//        mediaPlayerController = new MediaPlayerController();
-
-//    }
-//};
+#include <QThread>
+#include "mediaplayercontroller.h"
+#include "settingsmanager.h"
 class MediaPlayerFacade: public QObject
 {
     Q_OBJECT
 
 
-    Q_PROPERTY(QString playingTitle READ playingTitle NOTIFY playingMediaChanged)
-    Q_PROPERTY(QString playingYear READ playingYear NOTIFY playingMediaChanged)
-    Q_PROPERTY(QString playingArtist READ playingArtist NOTIFY playingMediaChanged)
-    Q_PROPERTY(QString playingCover READ playingCover NOTIFY playingMediaChanged)
-    Q_PROPERTY(bool shuffle READ getShuffle NOTIFY playModeChanged)
-    Q_PROPERTY(int loop READ getLoop NOTIFY playModeChanged)
-    QString _playingTitle;
-    QString _playingYear;
-    QString _playingArtist;
-    QString _playingCover;
-    bool _shuffle;
-    int _loop;
-    QString playingTitle(){return _playingTitle;}
-    QString playingYear(){return _playingYear;}
-    QString playingArtist(){return _playingArtist;}
-    QString playingCover(){return _playingCover;}
-    bool getShuffle(){return _shuffle;}
-    int getLoop(){return _loop;}
-public:
+    Q_PROPERTY(QString playingTitle MEMBER playingTitle NOTIFY playingMediaChanged)
+    Q_PROPERTY(QString playingYear MEMBER playingYear NOTIFY playingMediaChanged)
+    Q_PROPERTY(QString playingArtist MEMBER playingArtist NOTIFY playingMediaChanged)
+    Q_PROPERTY(QString playingCover MEMBER playingCover NOTIFY playingMediaChanged)
+    Q_PROPERTY(bool shuffle MEMBER shuffle NOTIFY playModeChanged)
+    Q_PROPERTY(int loop MEMBER loop NOTIFY playModeChanged)
+    Q_PROPERTY(QMediaPlayer::State state MEMBER state NOTIFY stateChanged)
+    Q_PROPERTY(qint64 duration MEMBER duration NOTIFY durationChanged)
+    Q_PROPERTY(qint64 position MEMBER position WRITE setPosition NOTIFY positionChanged)
+
+    QString playingTitle;
+    QString playingYear;
+    QString playingArtist;
+    QString playingCover;
+    bool shuffle = false;
+    int loop = 0;
+    QMediaPlayer::State state = QMediaPlayer::StoppedState;
+    qint64 duration = 0;
+    qint64 position = 0;
     MediaPlayerController *mediaPlayerController;
+    SettingsManager *sm = &SettingsManager::instance();
+    TrackListModel *m_trackList;
+
+public:
+
     MediaPlayerFacade(QObject *parent = nullptr){
 
     }
     void facadeConnections(MediaPlayerController*mediaPlayerController){
-//        mediaPlayerController = new MediaPlayerController(this);
-        connect(this, &MediaPlayerFacade::playPause,mediaPlayerController,&MediaPlayerController::playPause);
+        this->mediaPlayerController=mediaPlayerController;
+
+        connect(mediaPlayerController, &MediaPlayerController::playingMediaChanged,this,&MediaPlayerFacade::getPlayingMediaChanged);
+        connect(mediaPlayerController, &MediaPlayerController::playModeChanged,this,&MediaPlayerFacade::getPlayModeChanged);
+        connect(mediaPlayerController, &MediaPlayerController::stateChanged,this,&MediaPlayerFacade::getStateChanged);
+        connect(mediaPlayerController, &MediaPlayerController::durationChanged,this,&MediaPlayerFacade::getDurationChanged);
+        connect(mediaPlayerController, &MediaPlayerController::positionChanged,this,&MediaPlayerFacade::getPositionChanged);
+
         connect(this, &MediaPlayerFacade::initCalled,mediaPlayerController,&MediaPlayerController::init);
+        connect(this, &MediaPlayerFacade::playPause,mediaPlayerController,&MediaPlayerController::playPause);
+        connect(this, &MediaPlayerFacade::setShuffle,mediaPlayerController,&MediaPlayerController::setShuffle);
+        connect(this, &MediaPlayerFacade::setLoop,mediaPlayerController,&MediaPlayerController::setLoop);
+        connect(this, &MediaPlayerFacade::next,mediaPlayerController,&MediaPlayerController::next);
+        connect(this, &MediaPlayerFacade::previous,mediaPlayerController,&MediaPlayerController::previous);
+        connect(this, &MediaPlayerFacade::setPosition,mediaPlayerController,&MediaPlayerController::setPosition);
+        connect(this, &MediaPlayerFacade::playTrack,mediaPlayerController,&MediaPlayerController::playTrack);
     }
-//    void makeConnections(){
-//        connect(this, &MediaPlayerFacade::playPause,worker->mediaPlayerController,&MediaPlayerController::playPause);
-//    }
+    Q_INVOKABLE TrackListModel* trackList() {return mediaPlayerController->trackList(); }
 
     void init(){emit initCalled(); }
+public slots:
+    void getPlayingMediaChanged(QString playingTitle,QString playingYear,QString playingArtist,QString playingCover){
+        this->playingTitle=playingTitle;
+        this->playingYear=playingYear;
+        this->playingArtist=playingArtist;
+        this->playingCover=playingCover;
+        emit playingMediaChanged();
+    }
+    void getPlayModeChanged(bool shuffle,int loop){
+        this->shuffle=shuffle;
+        this->loop=loop;
+        emit playModeChanged();
+    }
+    void getStateChanged(QMediaPlayer::State state){
+        this->state=state;
+        emit stateChanged();
+    }
+    void getDurationChanged(qint64 duration){
+        this->duration=duration;
+        emit durationChanged();
+    }
+    void getPositionChanged(qint64 position){
+        this->position=position;
+        emit positionChanged();
+    }
+
+
 signals:
     void initCalled();
     void setShuffle();
@@ -61,6 +94,9 @@ signals:
     void previous();
     void playModeChanged();
     void playingMediaChanged();
+    void stateChanged();void durationChanged();void positionChanged();
+    void setPosition(qint64 position);
+    void playTrack(int index);
 };
 
 

@@ -7,50 +7,50 @@
 
 QHash<int, QByteArray> createRoles() {
     QHash<int, QByteArray> r;
-    r.insert(TrackList::TrackRole, "track");
-    r.insert(TrackList::ArtistsRole, "artists");
-    r.insert(TrackList::AlbumRole, "album");
-    r.insert(TrackList::IsLoadedRole, "loaded");
-    r.insert(TrackList::IsValidRole, "valid");
-    r.insert(TrackList::NameRole, "name");
-    r.insert(TrackList::ArtistNamesRole, "artistNames");
-    r.insert(TrackList::AlbumNameRole, "albumName");
-    r.insert(TrackList::DurationRole, "duration");
-    r.insert(TrackList::PopularityRole, "popularity");
-    r.insert(TrackList::DiscRole, "disc");
-    r.insert(TrackList::CollectionIndexRole, "collectionIndex");
-    r.insert(TrackList::AlbumIndexRole, "albumIndex");
-    r.insert(TrackList::IsStarred, "starred");
-    r.insert(TrackList::IsPlaceholder, "placeholder");
-    r.insert(TrackList::IsLocal, "local");
-    r.insert(TrackList::IsAutoLinked, "autolinked");
-    r.insert(TrackList::Availability, "availability");
-    r.insert(TrackList::ImageRole, "image");
-    r.insert(TrackList::PathRole, "path");
+    r.insert(TrackListModel::TrackRole, "track");
+    r.insert(TrackListModel::ArtistsRole, "artists");
+    r.insert(TrackListModel::AlbumRole, "album");
+    r.insert(TrackListModel::IsLoadedRole, "loaded");
+    r.insert(TrackListModel::IsValidRole, "valid");
+    r.insert(TrackListModel::NameRole, "name");
+    r.insert(TrackListModel::ArtistNamesRole, "artistNames");
+    r.insert(TrackListModel::AlbumNameRole, "albumName");
+    r.insert(TrackListModel::DurationRole, "duration");
+    r.insert(TrackListModel::PopularityRole, "popularity");
+    r.insert(TrackListModel::DiscRole, "disc");
+    r.insert(TrackListModel::CollectionIndexRole, "collectionIndex");
+    r.insert(TrackListModel::AlbumIndexRole, "albumIndex");
+    r.insert(TrackListModel::IsStarred, "starred");
+    r.insert(TrackListModel::IsPlaceholder, "placeholder");
+    r.insert(TrackListModel::IsLocal, "local");
+    r.insert(TrackListModel::IsAutoLinked, "autolinked");
+    r.insert(TrackListModel::Availability, "availability");
+    r.insert(TrackListModel::ImageRole, "image");
+    r.insert(TrackListModel::PathRole, "path");
     return r;
 }
 
 QVector<int> createTrackRoleVector() {
     QVector<int> v;
-    v.append(TrackList::TrackRole);
-    v.append(TrackList::IsLoadedRole);
-    v.append(TrackList::IsValidRole);
-    v.append(TrackList::NameRole);
-    v.append(TrackList::DurationRole);
-    v.append(TrackList::PopularityRole);
+    v.append(TrackListModel::TrackRole);
+    v.append(TrackListModel::IsLoadedRole);
+    v.append(TrackListModel::IsValidRole);
+    v.append(TrackListModel::NameRole);
+    v.append(TrackListModel::DurationRole);
+    v.append(TrackListModel::PopularityRole);
     return v;
 }
 QVector<int> createAlbumRoleVector() {
     QVector<int> v;
-    v.append(TrackList::AlbumRole);
-    v.append(TrackList::AlbumNameRole);
+    v.append(TrackListModel::AlbumRole);
+    v.append(TrackListModel::AlbumNameRole);
     return v;
 }
 
 QVector<int> createArtistRoleVector() {
     QVector<int> v;
-    v.append(TrackList::ArtistsRole);
-    v.append(TrackList::ArtistNamesRole);
+    v.append(TrackListModel::ArtistsRole);
+    v.append(TrackListModel::ArtistNamesRole);
     return v;
 }
 
@@ -66,91 +66,7 @@ void rowSort(QVector<QPersistentModelIndex> & indices)
         return A.row() < B.row();
     });
 }
-
-TrackList::TrackList(QMediaPlayer *m_player, QObject *parent)
-    :QAbstractListModel(parent)
-{
-    qDebug()<<"creating tracklist";
-    usbmounter = new UsbMounter(this);
-    m_mediaPlayer = new QMediaPlayer(this);
-    m_mediaPlayer->setVolume(0);
-    m_mediaPlayer->setMuted(true);
-    parentMediaplayer = m_player;
-    parentMediaplayer->setPlaylist(nullptr);
-    m_mediaList = new QMediaPlaylist(this);
-}
-
-void TrackList::connectUsbMounter(){
-    connect(usbmounter,&UsbMounter::usbMounted,this,&TrackList::createTracklist);
-    connect(usbmounter,&UsbMounter::usbUnMounted,this,&TrackList::emptyTracklist);
-    emit usbmounter->readyToCheck(false);
-}
-
-void TrackList::emptyTracklist(){
-    qDebug()<<"clearing media_list";
-    m_mediaList->clear();
-    m_trackContents.clear();
-    parentMediaplayer->setPlaylist(nullptr);
-    emit layoutChanged();
-}
-
-void TrackList::createTracklist(QStringList newlyAddedList){
-    QStringList filters;
-    filters << "*.flac" << "*.mp3" << "*.wav" ;
-    qDebug()<<"adding tracks from "<< newlyAddedList.join(", ");
-    qDebug()<<"tracklist called from: "<<QThread::currentThreadId();
-    tic = QTime::currentTime();
-    for (QString path : newlyAddedList) {
-        QDirIterator it(path, filters, QDir::Files, QDirIterator::Subdirectories);
-        QString tempPath;
-        while (it.hasNext())
-        {
-            tempPath = "file:" + it.next();
-            m_mediaList->addMedia(QUrl( tempPath));
-            TrackContent tc;
-            tc.path = tempPath;
-            m_trackContents.push_back(tc);
-        }
-    }
-    qDebug()<<"media loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
-    tic = QTime::currentTime();
-
-    m_mediaPlayer->setPlaylist(m_mediaList);
-    m_mediaList->setCurrentIndex(0);
-    connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, [=](){
-
-        if(m_mediaPlayer->mediaStatus() == QMediaPlayer::LoadingMedia) return;
-        if(!m_mediaPlayer->metaData(QMediaMetaData::Title).isValid()) return;
-        TrackContent* p_tc = m_trackContents.begin() + m_mediaList->currentIndex();
-        p_tc->index = m_mediaList->currentIndex();
-
-        p_tc->trackName = m_mediaPlayer->metaData(QMediaMetaData::Title);
-        p_tc->artistName = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
-        QImage image = m_mediaPlayer->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
-        QByteArray bArray;
-        QBuffer buffer(&bArray);
-        buffer.open(QIODevice::WriteOnly);
-        image.save(&buffer, "JPEG");
-        p_tc->image = "data:image/jpg;base64,";
-        p_tc->image.append(QString::fromLatin1(bArray.toBase64().data()));
-
-        if(m_mediaList->currentIndex() < m_mediaList->mediaCount() - 1)
-            m_mediaList->setCurrentIndex(m_mediaList->currentIndex() + 1);
-        else{
-            m_mediaPlayer->setPlaylist(nullptr);
-            parentMediaplayer->setPlaylist(m_mediaList);
-            qDebug()<<"tracks added.";
-            qDebug()<<"metadata loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
-            qDebug()<<"tracklist, metadata, thread: "<<QThread::currentThreadId();
-            emit listReady();
-            emit layoutChanged();
-        }
-    });
-
-//    connect(this, &TrackList::listReady, [=](){m_mediaPlayer->deleteLater();});
-}
-
-QVariant TrackList::data(const QModelIndex &index, int role) const
+QVariant TrackListModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
 
@@ -176,13 +92,99 @@ QVariant TrackList::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-int TrackList::rowCount(const QModelIndex &parent) const
+int TrackListModel::rowCount(const QModelIndex &parent) const
 {
     return parent.isValid() ? 0 : m_mediaList->mediaCount();
 }
 
-QHash<int, QByteArray> TrackList::roleNames() const
+QHash<int, QByteArray> TrackListModel::roleNames() const
 {
-
     return g_roleNames;
 }
+
+
+TrackList::TrackList(QMediaPlayer *m_player, QObject *parent)
+    :QObject(parent)
+{
+    qDebug()<<"creating tracklist";
+    usbmounter = new UsbMounter(this);
+    m_mediaPlayer = new QMediaPlayer(this);
+    m_mediaPlayer->setVolume(0);
+    m_mediaPlayer->setMuted(true);
+    parentMediaplayer = m_player;
+    parentMediaplayer->setPlaylist(nullptr);
+    m_mediaList = new QMediaPlaylist(this);
+    this->trackListModel = new TrackListModel(m_mediaList,this);
+}
+
+void TrackList::connectUsbMounter(){
+    connect(usbmounter,&UsbMounter::usbMounted,this,&TrackList::createTracklist);
+    connect(usbmounter,&UsbMounter::usbUnMounted,this,&TrackList::emptyTracklist);
+    emit usbmounter->readyToCheck(false);
+}
+
+void TrackList::emptyTracklist(){
+    qDebug()<<"clearing media_list";
+    m_mediaList->clear();
+    parentMediaplayer->setPlaylist(nullptr);
+    trackListModel->clearTrackContents();
+    emit trackListModel->layoutChanged();
+}
+
+void TrackList::createTracklist(QStringList newlyAddedList){
+    QStringList filters;
+    filters << "*.flac" << "*.mp3" << "*.wav" ;
+    qDebug()<<"adding tracks from "<< newlyAddedList.join(", ");
+    qDebug()<<"tracklist called from: "<<QThread::currentThreadId();
+    tic = QTime::currentTime();
+    for (QString path : newlyAddedList) {
+        QDirIterator it(path, filters, QDir::Files, QDirIterator::Subdirectories);
+        QString tempPath;
+        while (it.hasNext())
+        {
+            tempPath = "file:" + it.next();
+            m_mediaList->addMedia(QUrl( tempPath));
+            TrackContent tc;
+            tc.path = tempPath;
+            trackListModel->pushBackToTrackContents(&tc);
+        }
+    }
+    qDebug()<<"media loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
+    tic = QTime::currentTime();
+
+    m_mediaPlayer->setPlaylist(m_mediaList);
+    m_mediaList->setCurrentIndex(0);
+    connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, [=](){
+
+        if(m_mediaPlayer->mediaStatus() == QMediaPlayer::LoadingMedia) return;
+        if(!m_mediaPlayer->metaData(QMediaMetaData::Title).isValid()) return;
+        TrackContent* p_tc = trackListModel->getTrackContents()->begin() + m_mediaList->currentIndex();
+        p_tc->index = m_mediaList->currentIndex();
+
+        p_tc->trackName = m_mediaPlayer->metaData(QMediaMetaData::Title);
+        p_tc->artistName = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
+        QImage image = m_mediaPlayer->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
+        QByteArray bArray;
+        QBuffer buffer(&bArray);
+        buffer.open(QIODevice::WriteOnly);
+        image.save(&buffer, "JPEG");
+        p_tc->image = "data:image/jpg;base64,";
+        p_tc->image.append(QString::fromLatin1(bArray.toBase64().data()));
+
+        if(m_mediaList->currentIndex() < m_mediaList->mediaCount() - 1)
+            m_mediaList->setCurrentIndex(m_mediaList->currentIndex() + 1);
+        else{
+            m_mediaPlayer->setPlaylist(nullptr);
+            parentMediaplayer->setPlaylist(m_mediaList);
+            qDebug()<<"tracks added.";
+            qDebug()<<"metadata loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
+            qDebug()<<"tracklist, metadata, thread: "<<QThread::currentThreadId();
+            emit listReady();
+            emit trackListModel->layoutChanged();
+        }
+    });
+
+//    connect(this, &TrackList::listReady, [=](){m_mediaPlayer->deleteLater();});
+}
+
+

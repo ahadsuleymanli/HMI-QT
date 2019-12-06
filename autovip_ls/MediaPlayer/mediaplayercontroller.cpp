@@ -5,18 +5,18 @@
 #include <QThread>
 #include <QGuiApplication>
 
-MediaPlayerController::MediaPlayerController(QObject *parent)
+MediaPlayerController::MediaPlayerController(QObject *parent) : QMediaPlayer(parent)
 {
-    m_player = new QMediaPlayer(this);
-    m_player->setMuted(true);
-    m_trackList = new TrackList(m_player,this);
+    m_player = this;
+    setMuted(true);
+    m_trackList = new TrackList(this,this);
 }
 void MediaPlayerController::process(){
 
     QTimer::singleShot(250,m_player,[=]{ m_player->setMuted(false); });
     connect(m_player, &QMediaPlayer::mediaStatusChanged,[=](){
         if(m_player->mediaStatus() == QMediaPlayer::BufferedMedia || m_player->mediaStatus() == QMediaPlayer::LoadedMedia){
-            emit playingMediaChanged();
+            emit playingMediaChanged(playingTitle(),playingYear(),playingArtist(),playingCover());
         }
     });
 }
@@ -109,7 +109,7 @@ void MediaPlayerController::setShuffle(){
     if(!m_player->playlist()) return;
     shuffleEnabled = !shuffleEnabled;
     setLoopHelper();
-    emit playModeChanged();
+    emit playModeChanged(getShuffle(),getLoop());
 }
 void MediaPlayerController::setLoop(){
     if(!m_player->playlist()) return;
@@ -120,7 +120,7 @@ void MediaPlayerController::setLoop(){
     else if (loopState == 2)
         loopState = 0;
     setLoopHelper();
-    emit playModeChanged();
+    emit playModeChanged(getShuffle(),getLoop());
 }
 bool MediaPlayerController::getShuffle(){
     return shuffleEnabled;

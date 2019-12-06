@@ -27,7 +27,6 @@ SOURCES += \
     LightsMenu/colorcomponents.cpp \
     MediaPlayer/mediaplayercontroller.cpp \
     MediaPlayer/tracklist.cpp \
-    MediaPlayer/trackloader.cpp \
     MediaPlayer/usbmounter.cpp \
     iterativevaluechanger.cpp \
         nvidiaconnmanager.cpp \

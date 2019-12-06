@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
 
     NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
 
-
     imng.setMediaPlayerController(&mPlayerFacade);
     imng.setClockSetter(&csetter);
     imng.setTranslator(&mTrans);

@@ -13,24 +13,25 @@ class SecondThread : public QThread
 {
     DataWriterWorker *dataWriterWorker;
     MediaPlayerController *mediaPlayerController;
+    MediaPlayerFacade *mPlayerFacade;
 public:
     SecondThread(ClockSetter *clockSetter,MediaPlayerFacade *mPlayerFacade, QObject* parent = nullptr) : QThread(parent) {
         dataWriterWorker = new DataWriterWorker();
         clockSetter->setLastPowerOffTime(dataWriterWorker->getLastPowerOffTime());
         dataWriterWorker->moveToThread(this);
+        this->mPlayerFacade=mPlayerFacade;
 
-        mediaPlayerController = new MediaPlayerController();
-        mediaPlayerController->moveToThread(this);
-        mPlayerFacade->facadeConnections(mediaPlayerController);
         connect(clockSetter,&ClockSetter::timeIsSet,dataWriterWorker,&DataWriterWorker::startTimeLogging);
         connect(this, SIGNAL(started()), dataWriterWorker, SLOT(process()));
-        connect(this, &QThread::started, mediaPlayerController, &MediaPlayerController::process);
         connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
         this->start();
-//        mPlayerFacade->init();
     }
     void run(){
         ThreadUtils::stick_this_thread_to_core(3);
+        mediaPlayerController = new MediaPlayerController(this);
+        mPlayerFacade->facadeConnections(mediaPlayerController);
+        mediaPlayerController->process();
+
         QThread::exec();
     }
 
