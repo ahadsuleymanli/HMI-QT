@@ -165,12 +165,15 @@ void TrackList::createTracklist(QStringList newlyAddedList){
     connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, [=](){
 
         if(m_mediaPlayer->mediaStatus() == QMediaPlayer::LoadingMedia) return;
-        if(!m_mediaPlayer->metaData(QMediaMetaData::Title).isValid()) return;
+//        if(!m_mediaPlayer->metaData(QMediaMetaData::Title).isValid()) {return};
         TrackContent* p_tc = trackListModel->getTrackContents()->begin() + m_mediaList->currentIndex();
         p_tc->index = m_mediaList->currentIndex();
-
-        p_tc->trackName = m_mediaPlayer->metaData(QMediaMetaData::Title);
-        p_tc->artistName = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
+        auto temp = m_mediaPlayer->metaData(QMediaMetaData::Title);
+        if (temp.isValid())
+            p_tc->trackName = temp;
+        temp = m_mediaPlayer->metaData(QMediaMetaData::Title);
+        if (temp.isValid())
+            p_tc->artistName = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
         QImage image = m_mediaPlayer->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
         QByteArray bArray;
         QBuffer buffer(&bArray);

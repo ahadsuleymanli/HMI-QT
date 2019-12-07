@@ -12,8 +12,8 @@
 struct TrackContent{
     int index;
     QVariant path;
-    QVariant trackName;
-    QVariant artistName;
+    QVariant trackName="";
+    QVariant artistName="";
     QString image;
 };
 class TrackListModel : public QAbstractListModel{

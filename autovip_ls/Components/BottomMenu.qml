@@ -119,16 +119,16 @@ Item {
                         property real popupWidth: childrenRect.width
                         model: ListModel {
                             id: model
-                            ListElement { name: "DVD"; command: "controls/aux_source" }
-                            ListElement { name: "TV"; command: "controls/optic_source" }
-//                            ListElement { name: "HILEVEL"; command: "controls/highlevel_source" }
-//                            ListElement { name: "BLUETOOTH"; command: "controls/bluetooth_source" }
+                            ListElement { name: "AUX"; command: "controls/aux_source" }
+                            ListElement { name: "OPTIC"; command: "controls/optic_source" }
+                            ListElement { name: "HILEVEL"; command: "controls/highlevel_source" }
+                            ListElement { name: "BLUETOOTH"; command: "controls/bluetooth_source" }
                         }
                         indicator: Image{
                             width: 56
                             height: 46
-                            property var images: ["qrc:/design/general/audiosource_dvd.png",
-                                "qrc:/design/general/audiosource_tv.png",
+                            property var images: ["qrc:/design/general/audiosource_aux.png",
+                                "qrc:/design/general/fibercable.png",
                                 "qrc:/design/general/audiosource_hi.png",
                                 "qrc:/design/general/bluetooth.png"]
                             source: images[serial_mng.soundSource]

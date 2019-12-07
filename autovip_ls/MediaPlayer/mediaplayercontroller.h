@@ -46,6 +46,66 @@ signals:
     void playModeChanged(bool shuffle,int loop);
 
 private:
+    class DelayedFunctions: public QObject
+    {
+        QTimer pauseTimer;
+        QTimer delayedPlayTimer;
+        QTimer delayedPreviousTimer;
+        QTimer delayedNextTimer;
+        MediaPlayerController *parentMPC;
+        int scheduledTrack = 0;
+    public:
+        DelayedFunctions(QObject *parent) : QObject(parent){
+            this->parentMPC=(MediaPlayerController*)parent;
+            pauseTimer.setInterval(250);
+            pauseTimer.setSingleShot(true);
+            pauseTimer.stop();
+            delayedPlayTimer.setInterval(250);
+            delayedPlayTimer.setSingleShot(true);
+            delayedPlayTimer.stop();
+            delayedPreviousTimer.setInterval(250);
+            delayedPreviousTimer.setSingleShot(true);
+            delayedPreviousTimer.stop();
+            delayedNextTimer.setInterval(250);
+            delayedNextTimer.setSingleShot(true);
+            delayedNextTimer.stop();
+            connect(&pauseTimer,&QTimer::timeout,this,[this](){parentMPC->QMediaPlayer::pause(); parentMPC->setMuted(false);});
+            connect(&delayedPreviousTimer,&QTimer::timeout,this,[this](){parentMPC->setMuted(false);parentMPC->playlist()->previous();});
+            connect(&delayedNextTimer,&QTimer::timeout,this,[this](){parentMPC->setMuted(false);parentMPC->playlist()->next();});
+            connect(&delayedPlayTimer,&QTimer::timeout,this,[this](){
+                parentMPC->setMuted(false);
+                parentMPC->playlist()->setCurrentIndex(scheduledTrack);
+                if (parentMPC->state() != QMediaPlayer::PlayingState)
+                    parentMPC->QMediaPlayer::play();
+            });
+        }
+        void stopTimers(){
+            pauseTimer.stop(); delayedPlayTimer.stop(); delayedPreviousTimer.stop(); delayedNextTimer.stop();
+        }
+        void delayedPause(){
+            stopTimers();
+            parentMPC->setMuted(true);
+            pauseTimer.start();
+        }
+        void delayedPlayTrack(int track){
+            stopTimers();
+            parentMPC->setMuted(true);
+            scheduledTrack = track;
+            delayedPlayTimer.start();
+        }
+        void delayedPrevious(){
+            stopTimers();
+            parentMPC->setMuted(true);
+            delayedPreviousTimer.start();
+        }
+        void delayedNext(){
+            stopTimers();
+            parentMPC->setMuted(true);
+            delayedNextTimer.start();
+        }
+
+    };
+    DelayedFunctions* delayedFunctions;
     int loopState = 0;
     bool shuffleEnabled = false;
     TrackList *trackList;

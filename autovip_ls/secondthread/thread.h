@@ -27,7 +27,7 @@ public:
         this->start();
     }
     void run(){
-        ThreadUtils::stick_this_thread_to_core(3);
+        ThreadUtils::stick_this_thread_to_core(0);
         mediaPlayerController = new MediaPlayerController(this);
         mPlayerFacade->facadeConnections(mediaPlayerController);
         mediaPlayerController->process();

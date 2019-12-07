@@ -10,6 +10,7 @@ MediaPlayerController::MediaPlayerController(QObject *parent) : QMediaPlayer(par
     p_mediaPlayer = this;
     p_mediaPlayer->setMuted(true);
     trackList = new TrackList(this,this);
+
 }
 void MediaPlayerController::preventAudioBug(){
     setMuted(true);
@@ -25,6 +26,7 @@ void MediaPlayerController::process(){
             emit playingMediaChanged(playingTitle(),playingYear(),playingArtist(),playingCover());
         }
     });
+    delayedFunctions=new DelayedFunctions(this);
 }
 void MediaPlayerController::init(){
     if (trackList){
@@ -75,9 +77,10 @@ void MediaPlayerController::playTrack(int index) {
     if (index == playlist()->currentIndex())
         playPause();
     else{
-        playlist()->setCurrentIndex(index);
-        if (p_mediaPlayer->state() != QMediaPlayer::PlayingState)
-            play();
+        delayedFunctions->delayedPlayTrack(index);
+//        playlist()->setCurrentIndex(index);
+//        if (p_mediaPlayer->state() != QMediaPlayer::PlayingState)
+//            play();
     }
 
 }
@@ -85,8 +88,7 @@ void MediaPlayerController::playPause(){
     qDebug()<<"playpause called from: "<<QThread::currentThreadId();
     if (!p_mediaPlayer->playlist()) return;
     if (p_mediaPlayer->state() == QMediaPlayer::PlayingState){
-        p_mediaPlayer->setMuted(true);
-        QTimer::singleShot(250,p_mediaPlayer,[=]{ p_mediaPlayer->QMediaPlayer::pause(); p_mediaPlayer->setMuted(false); });
+        delayedFunctions->delayedPause();
     }
     else{
         p_mediaPlayer->QMediaPlayer::play();
@@ -94,8 +96,7 @@ void MediaPlayerController::playPause(){
 }
 void MediaPlayerController::pause(){
     if (!p_mediaPlayer->playlist()) return;
-    p_mediaPlayer->setMuted(true);
-    QTimer::singleShot(250,p_mediaPlayer,[=]{ p_mediaPlayer->QMediaPlayer::pause(); p_mediaPlayer->setMuted(false); });
+    delayedFunctions->delayedPause();
 }
 void MediaPlayerController::setVolume(int volume){
     p_mediaPlayer->setVolume(volume);
@@ -103,16 +104,13 @@ void MediaPlayerController::setVolume(int volume){
 void MediaPlayerController::next()
 {
     if (!p_mediaPlayer->playlist()) return;
-    if(p_mediaPlayer->playlist()->currentIndex() == p_mediaPlayer->playlist()->mediaCount() -1 )
-        p_mediaPlayer->playlist()->setCurrentIndex(0);
-    else
-        p_mediaPlayer->playlist()->next();
+    delayedFunctions->delayedNext();
 }
 
 void MediaPlayerController::previous()
 {
    if (!p_mediaPlayer->playlist()) return;
-   p_mediaPlayer->playlist()->previous();
+   delayedFunctions->delayedPrevious();
 }
 
 void MediaPlayerController::setLoopHelper(){

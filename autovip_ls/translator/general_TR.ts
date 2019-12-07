@@ -1040,7 +1040,19 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Artists</source>
-        <translation>Artist</translation>
+        <translation>Sanatçı Listesi</translation>
+    </message>
+    <message>
+        <source>Playlist</source>
+        <translation type="unfinished">Listelerim</translation>
+    </message>
+    <message>
+        <source>My Library</source>
+        <translation>Kütüphanem</translation>
+    </message>
+    <message>
+        <source>Favorite Songs</source>
+        <translation>Favorilerim</translation>
     </message>
 </context>
 <context>
