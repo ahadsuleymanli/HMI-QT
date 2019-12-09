@@ -42,7 +42,7 @@ public slots:
     void setVolume(int volume);
     TrackList* getTrackList(){return trackList;}
 signals:
-    void playingMediaChanged(QString playingTitle,QString playingYear,QString playingArtist,QString playingCover);
+    void playingMediaChanged(int index, QString playingTitle,QString playingYear,QString playingArtist,QString playingCover);
     void playModeChanged(bool shuffle,int loop);
 
 private:
@@ -52,37 +52,59 @@ private:
         QTimer delayedPlayTimer;
         QTimer delayedPreviousTimer;
         QTimer delayedNextTimer;
+        QTimer unmuteTimer;
         MediaPlayerController *parentMPC;
         int scheduledTrack = 0;
+        bool playScheduled = false;
     public:
         DelayedFunctions(QObject *parent) : QObject(parent){
             this->parentMPC=(MediaPlayerController*)parent;
             pauseTimer.setInterval(250);
             pauseTimer.setSingleShot(true);
             pauseTimer.stop();
-            delayedPlayTimer.setInterval(250);
+            delayedPlayTimer.setInterval(50);
             delayedPlayTimer.setSingleShot(true);
             delayedPlayTimer.stop();
-            delayedPreviousTimer.setInterval(250);
+            delayedPreviousTimer.setInterval(50);
             delayedPreviousTimer.setSingleShot(true);
             delayedPreviousTimer.stop();
-            delayedNextTimer.setInterval(250);
+            delayedNextTimer.setInterval(50);
             delayedNextTimer.setSingleShot(true);
             delayedNextTimer.stop();
+            unmuteTimer.setInterval(75);
+            unmuteTimer.setSingleShot(true);
+            unmuteTimer.stop();
             connect(&pauseTimer,&QTimer::timeout,this,[this](){parentMPC->QMediaPlayer::pause(); parentMPC->setMuted(false);});
-            connect(&delayedPreviousTimer,&QTimer::timeout,this,[this](){parentMPC->setMuted(false);parentMPC->playlist()->previous();});
-            connect(&delayedNextTimer,&QTimer::timeout,this,[this](){parentMPC->setMuted(false);parentMPC->playlist()->next();});
+            connect(&delayedPreviousTimer,&QTimer::timeout,this,[this](){if(parentMPC->state()==QMediaPlayer::PlayingState) {playScheduled=true;parentMPC->stop();} parentMPC->playlist()->previous();});
+            connect(&delayedNextTimer,&QTimer::timeout,this,[this](){if(parentMPC->state()==QMediaPlayer::PlayingState) {playScheduled=true;parentMPC->stop();} parentMPC->playlist()->next();});
             connect(&delayedPlayTimer,&QTimer::timeout,this,[this](){
-                parentMPC->setMuted(false);
+                if(parentMPC->state()==QMediaPlayer::PlayingState)
+                    parentMPC->stop();
+                playScheduled=true;
                 parentMPC->playlist()->setCurrentIndex(scheduledTrack);
-                if (parentMPC->state() != QMediaPlayer::PlayingState)
-                    parentMPC->QMediaPlayer::play();
+            });
+            connect(&unmuteTimer,&QTimer::timeout,this,[this](){parentMPC->setMuted(false);});
+            connect(parentMPC, &QMediaPlayer::mediaStatusChanged,[=](){
+                if(parentMPC->mediaStatus() == QMediaPlayer::LoadedMedia /*|| parentMPC->mediaStatus() == QMediaPlayer::LoadedMedia*/){
+                    if (playScheduled){
+                        parentMPC->play();
+//                        unmuteTimer.start();
+                    }
+                }
+                else if(parentMPC->mediaStatus() == QMediaPlayer::BufferedMedia){
+                    if (playScheduled){
+                        playScheduled=false;
+                        parentMPC->play();
+                        parentMPC->setMuted(false);
+                    }
+                }
             });
         }
         void stopTimers(){
-            pauseTimer.stop(); delayedPlayTimer.stop(); delayedPreviousTimer.stop(); delayedNextTimer.stop();
+            delayedPlayTimer.stop(); delayedPreviousTimer.stop(); delayedNextTimer.stop();
         }
         void delayedPause(){
+            pauseTimer.stop();
             stopTimers();
             parentMPC->setMuted(true);
             pauseTimer.start();
@@ -92,16 +114,19 @@ private:
             parentMPC->setMuted(true);
             scheduledTrack = track;
             delayedPlayTimer.start();
+            unmuteTimer.start();
         }
         void delayedPrevious(){
             stopTimers();
             parentMPC->setMuted(true);
             delayedPreviousTimer.start();
+            unmuteTimer.start();
         }
         void delayedNext(){
             stopTimers();
             parentMPC->setMuted(true);
             delayedNextTimer.start();
+            unmuteTimer.start();
         }
 
     };
@@ -110,7 +135,6 @@ private:
     bool shuffleEnabled = false;
     TrackList *trackList;
     QMediaPlayer *p_mediaPlayer;
-    QMediaPlaylist *playList;
 };
 
 #endif // MEDIAPLAYERCONTROLLER_H

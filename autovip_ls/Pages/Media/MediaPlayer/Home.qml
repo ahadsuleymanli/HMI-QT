@@ -23,7 +23,7 @@ HomeForm {
 
     progressArea.onMouseXChanged:{
         var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)
-        mPlayerBackend.setPosition(pos)
+        mPlayerBackend.position = pos
     }
 
     shuffleButton.onReleased: {

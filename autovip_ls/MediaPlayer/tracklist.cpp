@@ -119,7 +119,6 @@ TrackList::TrackList(QMediaPlayer *m_player, QObject *parent)
     parentMediaplayer->setPlaylist(nullptr);
     m_mediaList = new QMediaPlaylist(this);
     this->trackListModel = new TrackListModel(m_mediaList,this);
-    qDebug()<<"tracklistmodel when created "<< trackListModel;
 }
 
 void TrackList::connectUsbMounter(){
@@ -147,13 +146,14 @@ void TrackList::createTracklist(QStringList newlyAddedList){
     tic = QTime::currentTime();
     for (QString path : newlyAddedList) {
         QDirIterator it(path, filters, QDir::Files, QDirIterator::Subdirectories);
-        QString tempPath;
+        QString filePath;
         while (it.hasNext())
         {
-            tempPath = "file:" + it.next();
-            m_mediaList->addMedia(QUrl( tempPath));
+            filePath = it.next();
+            m_mediaList->addMedia(QUrl( "file:" + filePath));
             TrackContent tc;
-            tc.path = tempPath;
+            tc.path = filePath;
+            tc.trackName = QFileInfo(filePath).fileName();
             trackListModel->pushBackToTrackContents(&tc);
         }
     }
@@ -171,9 +171,9 @@ void TrackList::createTracklist(QStringList newlyAddedList){
         auto temp = m_mediaPlayer->metaData(QMediaMetaData::Title);
         if (temp.isValid())
             p_tc->trackName = temp;
-        temp = m_mediaPlayer->metaData(QMediaMetaData::Title);
+        temp = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
         if (temp.isValid())
-            p_tc->artistName = m_mediaPlayer->metaData(QMediaMetaData::ContributingArtist);
+            p_tc->artistName = temp;
         QImage image = m_mediaPlayer->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
         QByteArray bArray;
         QBuffer buffer(&bArray);
@@ -187,11 +187,8 @@ void TrackList::createTracklist(QStringList newlyAddedList){
         else{
             m_mediaPlayer->setPlaylist(nullptr);
             parentMediaplayer->setPlaylist(m_mediaList);
-            qDebug()<<"tracks added.";
-            qDebug()<<"metadata loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
-            qDebug()<<"tracklist, metadata, thread: "<<QThread::currentThreadId();
+            qDebug()<<"tracks added, metadata loaded in "<<tic.msecsTo(QTime::currentTime())<<"ms";
             emit listReady();
-            qDebug()<<"tracklistmodel when ready "<< trackListModel;
             emit trackListUpdated(trackListModel);
 //            emit trackListModel->layoutChanged();
         }

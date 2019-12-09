@@ -50,7 +50,6 @@ BasePage {
                 anchors.fill: parent
                 onPaint:
                 {
-                    console.log("paint")
                     var ctx = getContext("2d")
 
                     // create a triangle as clip region

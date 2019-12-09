@@ -61,7 +61,7 @@ public:
         connect(this, &MediaPlayerFacade::setLoop,mediaPlayerController,&MediaPlayerController::setLoop);
         connect(this, &MediaPlayerFacade::next,mediaPlayerController,&MediaPlayerController::next);
         connect(this, &MediaPlayerFacade::previous,mediaPlayerController,&MediaPlayerController::previous);
-        connect(this, &MediaPlayerFacade::setPosition,mediaPlayerController,&MediaPlayerController::setPosition);
+        connect(this, &MediaPlayerFacade::setPositionCalled,mediaPlayerController,&MediaPlayerController::setPosition);
         connect(this, &MediaPlayerFacade::signalPlayTrack,mediaPlayerController,&MediaPlayerController::playTrack);
         connect(this, &MediaPlayerFacade::pause,mediaPlayerController,&MediaPlayerController::pause);
     }
@@ -72,11 +72,16 @@ public:
         qDebug()<<"play emitted from: "<<QThread::currentThreadId();
         emit signalPlayTrack(index);
     }
+    void setPosition(qint64 position){this->position=position; emit setPositionCalled(position);}
 
     void init(){emit initCalled(); }
 public slots:
-    void getPlayingMediaChanged(QString playingTitle,QString playingYear,QString playingArtist,QString playingCover){
-        this->playingTitle=playingTitle;
+    void getPlayingMediaChanged(int index, QString playingTitle,QString playingYear,QString playingArtist,QString playingCover){
+        if (playingTitle=="" && trackListModel->getTrackContents()->length()>index){
+            this->playingTitle= (trackListModel->getTrackContents()->at(index)).trackName.toString();
+        }
+        else
+            this->playingTitle=playingTitle;
         this->playingYear=playingYear;
         this->playingArtist=playingArtist;
         this->playingCover=playingCover;
@@ -117,7 +122,7 @@ signals:
     void playModeChanged();
     void playingMediaChanged();
     void stateChanged();void durationChanged();void positionChanged();
-    void setPosition(qint64 position);
+    void setPositionCalled(qint64 position);
     void signalPlayTrack(int index);
     void pause();
 };

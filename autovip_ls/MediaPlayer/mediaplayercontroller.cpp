@@ -19,11 +19,12 @@ void MediaPlayerController::preventAudioBug(){
 void MediaPlayerController::process(){
     connect(trackList,&TrackList::loadingList,this,&MediaPlayerController::preventAudioBug);
     connect(trackList, &TrackList::listCleared,[=](){
-            emit playingMediaChanged(playingTitle(),playingYear(),playingArtist(),playingCover());
+            emit playingMediaChanged(0,playingTitle(),playingYear(),playingArtist(),playingCover());
     });
     connect(p_mediaPlayer, &QMediaPlayer::mediaStatusChanged,[=](){
-        if(p_mediaPlayer->mediaStatus() == QMediaPlayer::BufferedMedia || p_mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia){
-            emit playingMediaChanged(playingTitle(),playingYear(),playingArtist(),playingCover());
+        if(p_mediaPlayer->mediaStatus() == QMediaPlayer::BufferedMedia || p_mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia || p_mediaPlayer->mediaStatus() == QMediaPlayer::EndOfMedia){
+            qDebug()<<"mediastatus: "<<mediaStatus();
+            emit playingMediaChanged(playlist()->currentIndex(),playingTitle(),playingYear(),playingArtist(),playingCover());
         }
     });
     delayedFunctions=new DelayedFunctions(this);
@@ -78,9 +79,6 @@ void MediaPlayerController::playTrack(int index) {
         playPause();
     else{
         delayedFunctions->delayedPlayTrack(index);
-//        playlist()->setCurrentIndex(index);
-//        if (p_mediaPlayer->state() != QMediaPlayer::PlayingState)
-//            play();
     }
 
 }
@@ -89,8 +87,10 @@ void MediaPlayerController::playPause(){
     if (!p_mediaPlayer->playlist()) return;
     if (p_mediaPlayer->state() == QMediaPlayer::PlayingState){
         delayedFunctions->delayedPause();
+        emit stateChanged(QMediaPlayer::PausedState);
     }
     else{
+        emit stateChanged(QMediaPlayer::PlayingState);
         p_mediaPlayer->QMediaPlayer::play();
     }
 }
