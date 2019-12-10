@@ -213,27 +213,28 @@ Item {
             }
 
 
-//            FooterButton{
-//                id:infobtn
-//                anchors.right: rowRectangle.right
-//                info:false
-//                bgSource : "qrc:/design/general/info.svg"
-//                onClicked: function(){
-//                        GSystem.infoverlay.come();
-//                }
-//            }
+            FooterButton{
+                id:infobtn
+                anchors.right: rowRectangle.right
+                info:false
+                Layout.fillHeight: true
+                bgSource : "qrc:/design/general/info.svg"
+                onClicked: function(){
+                        GSystem.infoverlay.come();
+                }
+            }
 
                     }
 
     }
 
 
-//            MicrophoneBtn{
-//                anchors.left: rowRectangle.right
-//                y:-25
-//                anchors.leftMargin: 230
-//                service:GSystem.voice_recognition.state
-//            }
+            MicrophoneBtn{
+                anchors.left: rowRectangle.right
+                y:-25
+                anchors.leftMargin: 230
+                service:GSystem.voice_recognition.state
+            }
             /*
             FooterButton {
                 id:btnMicrophone

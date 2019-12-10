@@ -65,12 +65,13 @@ Item {
 
                     //                    width: childrenRect.width
                     //                    height: childrenRect.height
+
                     Text {
                         id: infoTitle
                         color: "#c5c5c5"
                         text: ""
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        Layout.maximumWidth: 400
+                        Layout.maximumWidth: 370
                         font.pixelSize: 20
                         styleColor: "#000000"
                     }
@@ -100,7 +101,7 @@ Item {
                         color: "#c5c5c5"
                         text: qsTr("Call On Me")
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        Layout.maximumWidth: 400
+                        Layout.maximumWidth: 370
                         font.pixelSize: 26
                     }
                 }

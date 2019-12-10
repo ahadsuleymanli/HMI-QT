@@ -248,7 +248,6 @@ BasePage {
                         updatespinner.visible=true;
                         spinneranimation.running=true;
                         updatetimer1.running=true;
-//                        updatetimer2.running=true;
                         updateInfo.visible=false;
                         myUpdater.checkUpdate();
                     }
@@ -297,7 +296,6 @@ BasePage {
                             updatespinner.visible=true;
                             spinneranimation.running=true;
                             updatetimer1.running=true;
-//                            updatetimer2.running=true;
                             myUpdater.checkUpdate();
                             updateInfo.visible=false;
                         }
@@ -352,27 +350,11 @@ BasePage {
                     onTriggered: {
                         updatespinner.visible=false;
                         spinneranimation.running=false;
-                        updatetimer2.running=false;
                         updateInfo.text=qsTr("No Update Found! ") + qsTr("Current Version: ") +myUpdater.currentVersion +mytrans.emptyString;
                         updateInfo.visible = true;
                     }
                 }
-                Timer{
-                    id:updatetimer2
-                    interval:500
-                    running: false
-                    repeat: true
-                    onTriggered: {
-//                        if(update_manager.checkUnzipped()){
-//                            updatespinner.visible=false;
-//                            spinneranimation.running=false;
-//                            updatetimer2.running=false;
-//                            updatetimer1.running=false;
-//                            updater.visible=true;
-//                            updaterbtn.visible=true;
-//                        }
-                    }
-                }
+
 
             }
         }
