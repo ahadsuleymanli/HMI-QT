@@ -80,19 +80,22 @@ Window {
 //        Component.onCompleted: {
 //                player.play();
 //        }
-        Image {
-                x:0
-                y:0
-                source: "qrc:/design/general/backgroundoverlay.png"
-                width:parent.width
-                height:parent.height
-        }
 
         Body{
             id: bodyPart
             x:0
             y:0
         }
+        Image {
+            id: bgOverlay
+            x:0
+            y:0
+            source: "qrc:/design/general/backgroundoverlay.png"
+            width:parent.width
+            height:parent.height
+        }
+
+
         BottomMenu
         {
             id: iBottomMenu

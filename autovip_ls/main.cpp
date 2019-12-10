@@ -31,11 +31,11 @@ bool changeCD()
 
 int main(int argc, char *argv[])
 {
-    ThreadUtils::assign_to_n_cores(3,(pthread_t)QThread::currentThreadId());
+    ThreadUtils::pin_to_core(0,(pthread_t)QThread::currentThreadId());
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    ThreadUtils::assign_to_n_cores(3,(pthread_t)app.thread());
+//    ThreadUtils::pin_to_core(0,(pthread_t)app.thread());
 
     qputenv("QT_QUICK_CONTROLS_STYLE", "material");
     qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION

@@ -16,10 +16,10 @@ Item {
     width: 1024
     height: 668
 
-   Logo{
+    Logo{
         id:logo
-        z:333
-   }
+        parent: bgOverlay
+    }
 
     Pages.Home{
         id:home

@@ -5,15 +5,12 @@ import QtQuick.Particles 2.0
 BasePage {
     id: root
     pageName: "Home"
+    visible: true
     TopMenu {
-            id: iTopMenu
-            x:0
-            y:0
-            clip: true
-            Component.onCompleted:
-            {
-                iTopMenu.x = 0;
-            }
+        x:root.x
+        y:root.y
+        parent: bgOverlay
+        clip: true
         }
     Image{
         id:car

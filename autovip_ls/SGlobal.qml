@@ -2277,6 +2277,15 @@ ListModel {
     SequentialAnimation{
         id:pageSwipe
         running: false
+        onRunningChanged: {
+            if (running){
+                currentPageItm.visible=true;
+
+            }
+            else if (!running){
+                prevPageItm.visible=false;
+            }
+        }
         NumberAnimation {
             target: logoItm
             property: "y"
@@ -2293,7 +2302,6 @@ ListModel {
                 duration: 200
                 easing.type: Easing.InOutQuad
             }
-
             NumberAnimation {
                 target: prevPageItm
                 property: "x"
