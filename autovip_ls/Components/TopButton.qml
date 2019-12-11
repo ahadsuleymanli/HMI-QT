@@ -20,8 +20,6 @@ Rectangle{
     */
     color: "transparent"
     Column{
-        //Layout.maximumHeight: parent.height
-        //Layout.maximumWidth: parent.width
         width: parent.width
         Image {
             id: btnImage
@@ -39,19 +37,17 @@ Rectangle{
             anchors.horizontalCenter: parent.horizontalCenter
         }
     }
-
     MouseArea{
         id:marea
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: -16
+        anchors.leftMargin: -16
+        width: parent.width + 32
+        height:parent.height + 32
         onClicked: root.clicked()
-        onPressed: {
-            //root.color= Qt.rgba(191/255, 63/255, 191/255,0.6);
-            root.pressed();
-        }
-        onReleased:{
-            root.color= "transparent";
-            //root.released();
-        }
+        onPressed: root.pressed();
+        onReleased:root.released();
         cursorShape: Qt.PointingHandCursor
     }
     Component.onCompleted: {

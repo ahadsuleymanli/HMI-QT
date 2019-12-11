@@ -19,6 +19,7 @@ BasePage {
          }
          width: 140
          height: 140
+         running: root.visible
      }
     Item{
         anchors.fill: parent

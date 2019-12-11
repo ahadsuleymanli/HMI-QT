@@ -39,7 +39,7 @@ BasePage {
             from:0
             to:360
             duration:6000
-            running: true
+            running: root.visible
             loops: Animation.Infinite
         }
         Rectangle{

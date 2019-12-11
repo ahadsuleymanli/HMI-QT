@@ -443,5 +443,6 @@
         <file>design/media/MediaPlayer/repeat_all.png</file>
         <file>Pages/Media/MediaPlayer.qml</file>
         <file>Pages/Media/Radio/Radio.qml</file>
+        <file>Components/FpsDisplay.qml</file>
     </qresource>
 </RCC>

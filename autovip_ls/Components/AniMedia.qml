@@ -2,7 +2,7 @@ import QtQuick 2.0
 Item{
     id:root
     property real cscale: 0.4
-
+    property bool running: true
     Image{
         anchors.top: parent.top
         anchors.topMargin: 20
@@ -37,7 +37,7 @@ Item{
         from:0
         to:360
         duration:5000
-        running: true
+        running: root.running
         loops: Animation.Infinite
     }
 }

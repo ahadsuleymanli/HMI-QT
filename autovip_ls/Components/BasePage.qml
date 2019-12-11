@@ -8,6 +8,8 @@ Rectangle {
     x:-1024
     property alias caption: caption.text
     property string pageName: "default"
+    property int contentTopMargin: 132
+    property int contentBottomMargin: 72
     clip:true
     color: "transparent"
     visible: false

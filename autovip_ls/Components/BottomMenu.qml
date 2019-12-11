@@ -18,12 +18,12 @@ Item {
             color: "transparent"
             y:0
 
-            Behavior on y
-            {
-                NumberAnimation{
-                duration:385
-                }
-            }
+//            Behavior on y
+//            {
+//                NumberAnimation{
+//                duration:385
+//                }
+//            }
             Item{
                     id:rowRectangle
                     x:10
@@ -44,7 +44,7 @@ Item {
                         Layout.fillHeight: true
                         bgSource : "qrc:/design/general/System.svg"
                         info:false
-                        onPressed:GSystem.systemOnOff()
+                        onReleased:GSystem.systemOnOff()
                     }
 
                     FooterButton {

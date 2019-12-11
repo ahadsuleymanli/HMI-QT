@@ -3,8 +3,9 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 Item {
-    width: 810
-    height: 600
+    id:root
+//    width: 810
+//    height: 600 //564?
     property alias repeatButton: repeatButton
     property alias progressArea: progressArea
     property alias progressIndicator: progressIndicator
@@ -33,12 +34,13 @@ Item {
     ColumnLayout {
         id: columnLayout
         anchors.fill: parent
-        Item {
-            height: 100
-        }
+//        Item {
+//            height: 104
+//        }
         RowLayout {
             id: rowLayout
             Layout.fillWidth: true
+            Layout.topMargin: 104
             height: childrenRect.height
             Item {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -192,6 +194,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Layout.topMargin: 20
+            Layout.bottomMargin: 24
             height: childrenRect.height
             spacing: 20
             Item {
@@ -339,15 +342,17 @@ Item {
             }
         }
 
-        Item {
-            id: audiolabs
-            Image {
-                id: image
-                fillMode: Image.PreserveAspectCrop
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: -545
-                source: "qrc:/design/media/MediaPlayer/DizaynVIP_Audio_Labs.png"
-            }
+
+    }
+    Item {
+        id: audiolabs
+        anchors.bottom:parent.bottom
+        anchors.left:parent.left
+        height:image.height
+        width:image.width
+        Image {
+            id: image
+            source: "qrc:/design/media/MediaPlayer/DizaynVIP_Audio_Labs.png"
         }
     }
 }

@@ -6,6 +6,7 @@ Item {
     property real cscale:1
     width: 300 * cscale
     height: 300 * cscale
+    property bool running: true
 //    Image{
 //        source:"qrc:/design/controls/ani/circle.svg"
 //        sourceSize.width: 200 * root.cscale
@@ -43,15 +44,15 @@ Item {
 
 //    }
 
-            NumberAnimation {
-                targets: [cw1,cw2,cw3]
-                properties: "rotation"
-                from:0
-                to:360
-                duration:5000
-                running: true
-                loops: Animation.Infinite
-            }
+    NumberAnimation {
+        targets: [cw1,cw2,cw3]
+        properties: "rotation"
+        from:0
+        to:360
+        duration:5000
+        running: root.running
+        loops: Animation.Infinite
+    }
 
 //    AnimatedImage{
 //        source: "qrc:/design/controls/ani/gears.gif"

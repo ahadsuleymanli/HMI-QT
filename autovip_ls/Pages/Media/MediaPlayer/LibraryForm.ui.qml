@@ -3,13 +3,15 @@ import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
 
 Item {
-    width: 810
-    height: 600
+//    width: 810
+//    height: 600
     property alias playlist: playlist
     Rectangle{
         anchors.fill: parent
-        anchors.topMargin: 41
+        anchors.topMargin: 42
         color:"#181818"
+//        color:"#000000"
+//        opacity:0.2
     }
 
     Item{
@@ -18,7 +20,7 @@ Item {
             left: parent.left
             right: parent.right
             top: parent.top
-            topMargin: 41
+            topMargin: 43
         }
         height: 100
         Rectangle{
@@ -92,6 +94,7 @@ Item {
             top: header.bottom
             bottom: parent.bottom
             topMargin: 5
+            bottomMargin: 15
         }
         clip: true
         delegate: Item {

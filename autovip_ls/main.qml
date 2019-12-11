@@ -21,7 +21,11 @@ Window {
     Material.theme: Material.Dark
     Material.accent: Material.Purple
     color: "black"
-
+    FpsDisplay {
+        id: fpsdisplay
+        z:1335
+        visible: SM.demomode
+    }
     Intro{
         x:0
         y:0
@@ -525,6 +529,5 @@ Window {
         GSystem.setInfoverlay(infoverlay);
         console.log(SM.value("main/lang"));
         console.log("Serial Con : "+serial_mng.isConnected());
-
     }
 }

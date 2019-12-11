@@ -29,14 +29,18 @@ Item{
 
     Item{
         width: btnImage.width
+
         anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.top: parent.top
+//        anchors.horizontalCenterOffset: isUnderClick? 2:0
+
         Image {
             id: btnImage
             fillMode: Image.PreserveAspectFit
             antialiasing: true
             smooth: true
+//            scale: isUnderClick?0.95:1
         }
-
         LinearGradient{
             id: extOverlay
             visible: false
@@ -48,27 +52,32 @@ Item{
            visible: false
            anchors.fill: btnImage
            source: btnImage
+//           scale: 0.95
            color: Qt.rgba(191/255, 63/255, 191/255,0.6)
         }
     }
-
-
     MouseArea{
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: -10
+        anchors.leftMargin: -10
+        width: parent.width + 20
+        height:parent.height + 20
+
         onClicked: {
             if(root.info)
             {
-                    GSystem.info.src = btnImage.source;
-                    GSystem.info.message = root.message;
-                    GSystem.info.position = Qt.point(root.x - root.width/2 + infoPositionOffset.x,
-                                                     620 + infoPositionOffset.y)
-                    GSystem.info.start();
+                GSystem.info.src = btnImage.source;
+                GSystem.info.message = root.message;
+                GSystem.info.position = Qt.point(root.x - root.width/2 + infoPositionOffset.x,
+                                                 620 + infoPositionOffset.y)
+                GSystem.info.start();
             }
             co.visible = false;
             if(clickKey){ serial_mng.sendKey(clickKey); }
             root.clicked();
         }
-        onPressed: { co.visible = true; if(pressKey){ serial_mng.sendKey(pressKey); } isUnderClick = true; root.pressed();}
+        onPressed: { console.log("w/h: "+width + "/"+height + "," + anchors.leftMargin); co.visible = true; if(pressKey){ serial_mng.sendKey(pressKey); } isUnderClick = true; root.pressed();}
         onReleased:{ co.visible=false; if(releaseKey){serial_mng.sendKey(releaseKey);} isUnderClick = false; toggled = !toggled; root.released();}
         cursorShape: Qt.PointingHandCursor
     }

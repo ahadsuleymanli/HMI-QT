@@ -28,49 +28,50 @@ BasePage {
         id: mainLayout
         anchors{
             fill: parent
-            topMargin: 128
-            bottomMargin: 96
+            topMargin: root.contentTopMargin
+            bottomMargin: root.contentBottomMargin
         }
         spacing: 0
         Item{
             Layout.fillHeight: true
             Layout.fillWidth: true
+
             clip: true
             Image{
                 id: backgroundImage
                 width: parent.width
                 height: parent.height
-                anchors.centerIn: parent
-                visible: false
+//                anchors.centerIn: parent
+                visible: true
                 source: "qrc:/design/media/MediaPlayer/background.png"
 
             }
-            Canvas{
-                id: drawingCanvas
-                anchors.fill: parent
-                onPaint:
-                {
-                    var ctx = getContext("2d")
+//            Canvas{
+//                id: drawingCanvas
+//                anchors.fill: parent
+//                onPaint:
+//                {
+//                    var ctx = getContext("2d")
 
-                    // create a triangle as clip region
-                    ctx.beginPath()
-                    ctx.moveTo(0, 42)
-                    ctx.lineTo(230, 42)
-                    ctx.lineTo(266,0)
-                    ctx.lineTo(drawingCanvas.width,0)
-                    ctx.lineTo(drawingCanvas.width, drawingCanvas.height)
-                    ctx.lineTo(0, drawingCanvas.height)
-                    ctx.lineTo(0, 42)
-                    ctx.closePath()
-                    // translate coordinate system
-                    ctx.clip()  // create clip from the path
-                    // draw image with clip applied
-                    ctx.drawImage('qrc:/design/media/MediaPlayer/background.png', -30, -240)
-                    // draw stroke around path
-                    // restore previous context
-                    ctx.restore()
-                }
-            }
+//                    // create a triangle as clip region
+//                    ctx.beginPath()
+//                    ctx.moveTo(0, 42)
+//                    ctx.lineTo(230, 42)
+//                    ctx.lineTo(266,0)
+//                    ctx.lineTo(drawingCanvas.width,0)
+//                    ctx.lineTo(drawingCanvas.width, drawingCanvas.height)
+//                    ctx.lineTo(0, drawingCanvas.height)
+//                    ctx.lineTo(0, 42)
+//                    ctx.closePath()
+//                    // translate coordinate system
+//                    ctx.clip()  // create clip from the path
+//                    // draw image with clip applied
+//                    ctx.drawImage('qrc:/design/media/MediaPlayer/background.png', -30, -240)
+//                    // draw stroke around path
+//                    // restore previous context
+//                    ctx.restore()
+//                }
+//            }
             Loader{
                 id: formLoader
                 anchors.fill: parent

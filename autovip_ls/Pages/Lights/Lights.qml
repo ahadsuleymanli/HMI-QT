@@ -381,9 +381,7 @@ BasePage {
             width: 250
             height: 250
             border.width: 0
-            antialiasing: true
             color:ceilColor
-
         }
         Image{
             id:imagem
@@ -414,7 +412,6 @@ BasePage {
             height:91
             rotation: 0
             color:inSideColor
-            antialiasing: true
             }
         Rectangle{
             id:rb
@@ -424,7 +421,6 @@ BasePage {
             height:175
             rotation: 0
             color:inSideColor
-            antialiasing: true
             }
         Rectangle{
             id:lb
@@ -434,7 +430,6 @@ BasePage {
             height:175
             rotation: 0
             color:inSideColor
-            antialiasing: true
             }
          Rectangle{
              id:c1
@@ -444,7 +439,6 @@ BasePage {
              height:82
              color:sideColor
              rotation: 0
-             antialiasing: true
              visible: SM.sidelight()
          }
          Rectangle{
@@ -454,7 +448,6 @@ BasePage {
              width:48
              height:75
              color:sideColor
-             antialiasing: true
              visible: SM.sidelight()
          }
          Rectangle{
@@ -464,7 +457,6 @@ BasePage {
              width:96
              height:50
              color:"black"
-             antialiasing: true
          }
          Rectangle{
              id:c4
@@ -473,7 +465,6 @@ BasePage {
              width:76
              height:43
              color:"black"
-            antialiasing: true
          }
          Glow{
              source:c3

@@ -18,9 +18,9 @@ BasePage {
             top:parent.top
             topMargin: 135
         }
-
         width:110
         height: 110
+        running: root.visible
     }
     Item{
         anchors.fill: parent
