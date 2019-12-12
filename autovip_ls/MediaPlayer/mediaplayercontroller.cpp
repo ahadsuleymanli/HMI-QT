@@ -23,7 +23,6 @@ void MediaPlayerController::process(){
     });
     connect(p_mediaPlayer, &QMediaPlayer::mediaStatusChanged,[=](){
         if(p_mediaPlayer->mediaStatus() == QMediaPlayer::BufferedMedia || p_mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia || p_mediaPlayer->mediaStatus() == QMediaPlayer::EndOfMedia){
-            qDebug()<<"mediastatus: "<<mediaStatus();
             emit playingMediaChanged(playlist()->currentIndex(),playingTitle(),playingYear(),playingArtist(),playingCover());
         }
     });
@@ -31,7 +30,7 @@ void MediaPlayerController::process(){
 }
 void MediaPlayerController::init(){
     if (trackList){
-        trackList->connectUsbMounter();
+        trackList->connections();
     }
     else{
         QTimer::singleShot(500,this,[this]{ qDebug()<<"m_trackList was not ready trying again..."; init(); });
@@ -73,7 +72,7 @@ QString MediaPlayerController::playingCover()
 }
 
 void MediaPlayerController::playTrack(int index) {
-    qDebug()<<"play called in: "<<QThread::currentThreadId();
+//    qDebug()<<"play called in: "<<QThread::currentThreadId();
     if (!p_mediaPlayer->playlist()) return;
     if (index == playlist()->currentIndex())
         playPause();
@@ -83,15 +82,16 @@ void MediaPlayerController::playTrack(int index) {
 
 }
 void MediaPlayerController::playPause(){
-    qDebug()<<"playpause called from: "<<QThread::currentThreadId();
+//    qDebug()<<"playpause called from: "<<QThread::currentThreadId();
     if (!p_mediaPlayer->playlist()) return;
     if (p_mediaPlayer->state() == QMediaPlayer::PlayingState){
         delayedFunctions->delayedPause();
-        emit stateChanged(QMediaPlayer::PausedState);
+//        emit stateChanged(QMediaPlayer::PausedState);
     }
     else{
-        emit stateChanged(QMediaPlayer::PlayingState);
-        p_mediaPlayer->QMediaPlayer::play();
+//        emit stateChanged(QMediaPlayer::PlayingState);
+        delayedFunctions->play();
+
     }
 }
 void MediaPlayerController::pause(){
@@ -113,7 +113,7 @@ void MediaPlayerController::previous()
    delayedFunctions->delayedPrevious();
 }
 
-void MediaPlayerController::setLoopHelper(){
+void MediaPlayerController::setPlayModeHelper(){
     if (loopState==2){
         p_mediaPlayer->playlist()->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
     }
@@ -131,7 +131,7 @@ void MediaPlayerController::setLoopHelper(){
 void MediaPlayerController::setShuffle(){
     if(!p_mediaPlayer->playlist()) return;
     shuffleEnabled = !shuffleEnabled;
-    setLoopHelper();
+    setPlayModeHelper();
     emit playModeChanged(getShuffle(),getLoop());
 }
 void MediaPlayerController::setLoop(){
@@ -142,7 +142,7 @@ void MediaPlayerController::setLoop(){
         loopState = 2;
     else if (loopState == 2)
         loopState = 0;
-    setLoopHelper();
+    setPlayModeHelper();
     emit playModeChanged(getShuffle(),getLoop());
 }
 bool MediaPlayerController::getShuffle(){

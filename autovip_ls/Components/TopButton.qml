@@ -41,10 +41,10 @@ Rectangle{
         id:marea
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.topMargin: -16
+        anchors.topMargin: -20
         anchors.leftMargin: -16
         width: parent.width + 32
-        height:parent.height + 32
+        height:parent.height + 40
         onClicked: root.clicked()
         onPressed: root.pressed();
         onReleased:root.released();

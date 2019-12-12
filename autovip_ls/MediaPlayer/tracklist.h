@@ -15,6 +15,13 @@ struct TrackContent{
     QVariant trackName="";
     QVariant artistName="";
     QString image;
+    TrackContent(){}
+    TrackContent(int index, QVariant path,QVariant trackName,QVariant artistName,QString image){
+        this->index=index; this->path=path; this->trackName=trackName; this->artistName=artistName; this->image=image;
+    }
+    TrackContent(TrackContent *tc){
+        this->index=tc->index; this->path=tc->path; this->trackName=tc->trackName; this->artistName=tc->artistName; this->image=tc->image;
+    }
 };
 class TrackListModel : public QAbstractListModel{
     Q_OBJECT
@@ -56,7 +63,14 @@ public:
     }
     void copyObject(TrackListModel *x){
         this->_mediaCount=x->m_mediaList->mediaCount();
-        this->m_trackContents = x->m_trackContents;
+        this->m_trackContents.clear();
+        try {
+            QVectorIterator<TrackContent> tcIterator(x->m_trackContents);
+            while (tcIterator.hasNext()) {
+                this->m_trackContents.push_back(TrackContent(tcIterator.next()));
+            }
+        } catch (...) {qDebug()<<"exception in TrackListModel copyObject";}
+
     }
 
 };
@@ -71,7 +85,7 @@ class TrackList : public QObject
     QMediaPlaylist *m_mediaList;
 public:
     explicit TrackList(QMediaPlayer *m_player, QObject *parent = Q_NULLPTR);
-    void connectUsbMounter();
+    void connections();
 
 signals:
     void loadingList();

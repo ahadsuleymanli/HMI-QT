@@ -444,5 +444,8 @@
         <file>Pages/Media/MediaPlayer.qml</file>
         <file>Pages/Media/Radio/Radio.qml</file>
         <file>Components/FpsDisplay.qml</file>
+        <file>design/general/background.gif</file>
+        <file>design/general/background_test.gif</file>
+        <file>design/general/background_anim_bg.png</file>
     </qresource>
 </RCC>

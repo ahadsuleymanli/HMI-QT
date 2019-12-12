@@ -22,7 +22,7 @@ public:
     MediaPlayerController(QObject *parent = nullptr);
     void process();
     void init();
-    void setLoopHelper();
+    void setPlayModeHelper();
     QString playingTitle();
     QString playingYear();
     QString playingArtist();
@@ -41,6 +41,7 @@ public slots:
     void playTrack(int index);
     void setVolume(int volume);
     TrackList* getTrackList(){return trackList;}
+    void setUserSettings(bool shuffleEnabled, int loopState){this->shuffleEnabled=shuffleEnabled; this->loopState=loopState;setPlayModeHelper();}
 signals:
     void playingMediaChanged(int index, QString playingTitle,QString playingYear,QString playingArtist,QString playingCover);
     void playModeChanged(bool shuffle,int loop);
@@ -62,52 +63,78 @@ private:
             pauseTimer.setInterval(250);
             pauseTimer.setSingleShot(true);
             pauseTimer.stop();
-            delayedPlayTimer.setInterval(50);
+            delayedPlayTimer.setInterval(100);
             delayedPlayTimer.setSingleShot(true);
             delayedPlayTimer.stop();
-            delayedPreviousTimer.setInterval(50);
+            delayedPreviousTimer.setInterval(100);
             delayedPreviousTimer.setSingleShot(true);
             delayedPreviousTimer.stop();
-            delayedNextTimer.setInterval(50);
+            delayedNextTimer.setInterval(100);
             delayedNextTimer.setSingleShot(true);
             delayedNextTimer.stop();
-            unmuteTimer.setInterval(75);
+            unmuteTimer.setInterval(25);
             unmuteTimer.setSingleShot(true);
             unmuteTimer.stop();
             connect(&pauseTimer,&QTimer::timeout,this,[this](){parentMPC->QMediaPlayer::pause(); parentMPC->setMuted(false);});
-            connect(&delayedPreviousTimer,&QTimer::timeout,this,[this](){if(parentMPC->state()==QMediaPlayer::PlayingState) {playScheduled=true;parentMPC->stop();} parentMPC->playlist()->previous();});
-            connect(&delayedNextTimer,&QTimer::timeout,this,[this](){if(parentMPC->state()==QMediaPlayer::PlayingState) {playScheduled=true;parentMPC->stop();} parentMPC->playlist()->next();});
+            connect(&delayedPreviousTimer,&QTimer::timeout,this,[this](){
+//                if(parentMPC->state()==QMediaPlayer::PlayingState) {
+//                    playScheduled=true;
+//                    parentMPC->stop();
+//                }
+                parentMPC->playlist()->previous();
+                unmuteTimer.start();
+            });
+            connect(&delayedNextTimer,&QTimer::timeout,this,[this](){
+//                if(parentMPC->state()==QMediaPlayer::PlayingState) {
+//                    playScheduled=true;
+//                    parentMPC->stop();
+//                }
+                parentMPC->playlist()->next();
+                unmuteTimer.start();
+            });
             connect(&delayedPlayTimer,&QTimer::timeout,this,[this](){
                 if(parentMPC->state()==QMediaPlayer::PlayingState)
                     parentMPC->stop();
                 playScheduled=true;
                 parentMPC->playlist()->setCurrentIndex(scheduledTrack);
+                unmuteTimer.start();
             });
-            connect(&unmuteTimer,&QTimer::timeout,this,[this](){parentMPC->setMuted(false);});
-            connect(parentMPC, &QMediaPlayer::mediaStatusChanged,[=](){
-                if(parentMPC->mediaStatus() == QMediaPlayer::LoadedMedia /*|| parentMPC->mediaStatus() == QMediaPlayer::LoadedMedia*/){
-                    if (playScheduled){
-                        parentMPC->play();
-//                        unmuteTimer.start();
-                    }
+            connect(&unmuteTimer,&QTimer::timeout,this,[this](){
+                if (playScheduled){
+                    playScheduled=false;
+                    parentMPC->play();
                 }
-                else if(parentMPC->mediaStatus() == QMediaPlayer::BufferedMedia){
-                    if (playScheduled){
-                        playScheduled=false;
-                        parentMPC->play();
-                        parentMPC->setMuted(false);
-                    }
-                }
+                parentMPC->setMuted(false);
             });
+//            connect(parentMPC, &QMediaPlayer::mediaStatusChanged,[=](){
+//                if(parentMPC->mediaStatus() == QMediaPlayer::LoadedMedia /*|| parentMPC->mediaStatus() == QMediaPlayer::LoadedMedia*/){
+//                    if (playScheduled){
+//                        parentMPC->play();
+////                        unmuteTimer.start();
+//                    }
+//                }
+//                else if(parentMPC->mediaStatus() == QMediaPlayer::BufferedMedia){
+//                    if (playScheduled){
+//                        playScheduled=false;
+//                        parentMPC->play();
+//                        parentMPC->setMuted(false);
+//                    }
+//                }
+//            });
         }
         void stopTimers(){
-            delayedPlayTimer.stop(); delayedPreviousTimer.stop(); delayedNextTimer.stop();
+            delayedPlayTimer.stop(); delayedPreviousTimer.stop(); delayedNextTimer.stop();unmuteTimer.stop();
         }
         void delayedPause(){
             pauseTimer.stop();
             stopTimers();
             parentMPC->setMuted(true);
             pauseTimer.start();
+        }
+        void play(){
+            if (!(delayedNextTimer.isActive()||delayedPreviousTimer.isActive()||delayedNextTimer.isActive())){
+                parentMPC->QMediaPlayer::play();
+            }
         }
         void delayedPlayTrack(int track){
             stopTimers();

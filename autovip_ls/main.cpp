@@ -31,7 +31,7 @@ bool changeCD()
 
 int main(int argc, char *argv[])
 {
-    ThreadUtils::pin_to_core(0,(pthread_t)QThread::currentThreadId());
+    ThreadUtils::assign_to_n_cores(2,(pthread_t)QThread::currentThreadId());
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);

@@ -23,7 +23,14 @@ BasePage {
         var durSec = Math.floor(mPlayerBackend.duration / 1000 - durMin * 60)
         return durMin + ":" + (durSec < 10 ? "0" + durSec : durSec);
     }
-
+    Component.onCompleted: {
+        if (SM.bganim()){
+            backgroundImage.visible=false
+        }else{
+            backgroundImage.visible=true
+            backgroundImage.source ="qrc:/design/media/MediaPlayer/background.png"
+        }
+    }
     RowLayout{
         id: mainLayout
         anchors{
@@ -42,8 +49,6 @@ BasePage {
                 width: parent.width
                 height: parent.height
 //                anchors.centerIn: parent
-                visible: true
-                source: "qrc:/design/media/MediaPlayer/background.png"
 
             }
 //            Canvas{

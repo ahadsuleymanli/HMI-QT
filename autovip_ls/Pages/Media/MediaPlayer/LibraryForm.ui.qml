@@ -9,9 +9,7 @@ Item {
     Rectangle{
         anchors.fill: parent
         anchors.topMargin: 42
-        color:"#181818"
-//        color:"#000000"
-//        opacity:0.2
+        color:"#cc181818"
     }
 
     Item{

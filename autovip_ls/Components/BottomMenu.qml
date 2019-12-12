@@ -233,7 +233,8 @@ Item {
                 anchors.left: rowRectangle.right
                 y:-25
                 anchors.leftMargin: 230
-                service:GSystem.voice_recognition.state
+//                service:GSystem.voice_service.state
+//                service:GSystem.voice_recognition.state
             }
             /*
             FooterButton {

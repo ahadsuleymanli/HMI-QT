@@ -5,6 +5,7 @@ Rectangle {
     width: 1024
     height: 768
     color: "#0f0f0f"
+    signal introDone()
     MediaPlayer {
         id: player
         source: "file:///"+workingDirPath+"/intro.mp4"
@@ -19,7 +20,7 @@ Rectangle {
      Timer {
         id:timer
         interval: 4500; running: false; repeat: false
-        onTriggered: hideme.running=true;
+        onTriggered: {introDone(); hideme.running=true;}
     }
     VideoOutput {
         anchors.fill: parent
@@ -45,6 +46,7 @@ Rectangle {
             player.play();
             timer.running = true;
         }else{
+            introDone();
             root.visible = false;
         }
     }

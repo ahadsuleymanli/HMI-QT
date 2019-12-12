@@ -27,6 +27,7 @@ Window {
         visible: SM.demomode
     }
     Intro{
+        id: introItem
         x:0
         y:0
         z:1334
@@ -41,50 +42,50 @@ Window {
            GSystem.changePage(page,false);
        }
     }
-
+    Connections{
+        target: introItem
+        onIntroDone: bgAnimPlay()
+    }
+    function bgSelect(){
+        console.log("bganim value"+SM.value("graphics/bganim"));
+        if (SM.bganim()){
+            bganim.source="qrc:/design/general/background.gif"
+            bganim.visible=true
+        }
+        else{
+            bgimage.source="qrc:/design/general/background.png"
+            bgimage.visible=true
+        }
+    }
+    function bgAnimPlay(){
+        if (bganim.visible)
+            bganim.playing=true
+    }
     Rectangle{
         x:0
         y:0
         width:parent.width
         height:parent.height
-//        AnimatedImage {
-//            x:0
-//            y:0
-//            source: "qrc:/design/general/background.gif"
-//            speed: 1
-//            width:parent.width
-//            height:parent.height
-////            cache: false
-//        }
-
+        AnimatedImage {
+            id:bganim
+            x:0
+            y:132
+            width: parent.width
+            height: parent.height-132-72
+//            asynchronous: false
+            speed: 1
+            cache: true
+            playing: false
+            visible: false
+        }
         Image{
+            id:bgimage
             x:0
             y:0
             width:parent.width
             height:parent.height
-            source: "qrc:/design/general/background.png"
+            visible: false
         }
-
-//        MediaPlayer {
-//            id:player
-//            source: "file:///"+workingDirPath+"/background.mp4"
-////            onStopped: play()
-//            autoPlay: true
-//            loops: Animation.Infinite
-//            }
-
-//        VideoOutput {
-////            anchors.fill: parent
-//            x:0
-//            y:0
-//            width:1230
-//            height:920
-//            source: player
-//        }
-//        Component.onCompleted: {
-//                player.play();
-//        }
-
         Body{
             id: bodyPart
             x:0
@@ -522,6 +523,7 @@ Window {
          ///////////////////////////// UPDATER OVERLAY BİTİŞİ
 
     Component.onCompleted: {
+        root.bgSelect();
         GSystem.phistory = ["Home"];
         GSystem.state = "Home"
         GSystem.setInfo(info);

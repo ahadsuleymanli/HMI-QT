@@ -45,10 +45,13 @@ public:
         else
             volume = sm_volume.toInt();
     }
+    void applyUserSettings(){
+        setUserSettings(shuffle,loop);
+    }
     void facadeConnections(MediaPlayerController*mediaPlayerController){
         this->mediaPlayerController=mediaPlayerController;
         mediaPlayerController->setVolume(volume);
-        qDebug()<<"facade connection called from: "<<QThread::currentThreadId();
+//        qDebug()<<"facade connection called from: "<<QThread::currentThreadId();
         connect(mediaPlayerController, &MediaPlayerController::playingMediaChanged,this,&MediaPlayerFacade::getPlayingMediaChanged);
         connect(mediaPlayerController, &MediaPlayerController::playModeChanged,this,&MediaPlayerFacade::getPlayModeChanged);
         connect(mediaPlayerController, &MediaPlayerController::stateChanged,this,&MediaPlayerFacade::getStateChanged);
@@ -64,9 +67,9 @@ public:
         connect(this, &MediaPlayerFacade::setPositionCalled,mediaPlayerController,&MediaPlayerController::setPosition);
         connect(this, &MediaPlayerFacade::signalPlayTrack,mediaPlayerController,&MediaPlayerController::playTrack);
         connect(this, &MediaPlayerFacade::pause,mediaPlayerController,&MediaPlayerController::pause);
+        connect(this, &MediaPlayerFacade::setUserSettings,mediaPlayerController,&MediaPlayerController::setUserSettings);
     }
     Q_INVOKABLE TrackListModel* trackList() {
-        qDebug()<<"tracklist called";
         return trackListModel; }
     Q_INVOKABLE void playTrack(int index) {
         qDebug()<<"play emitted from: "<<QThread::currentThreadId();
@@ -107,7 +110,7 @@ public slots:
     void trackListModelUpdated(TrackListModel *p){
         trackListModel->copyObject(p);
 //        this->trackListModel=p;
-        qDebug()<<"tracklist copy is "<<trackListModel;
+//        qDebug()<<"tracklist copy is "<<trackListModel;
         emit trackListModel->layoutChanged();
     }
 
@@ -125,6 +128,7 @@ signals:
     void setPositionCalled(qint64 position);
     void signalPlayTrack(int index);
     void pause();
+    void setUserSettings(bool shuffleEnabled, int loopState);
 };
 
 

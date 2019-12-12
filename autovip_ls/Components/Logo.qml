@@ -10,7 +10,12 @@ Image{
             height: 130
             source : "qrc:/design/general/logo.png"
             MouseArea{
-                anchors.fill: parent
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.topMargin: -20
+                anchors.leftMargin: -20
+                width: parent.width + 40
+                height:parent.height + 40
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
                     console.log("logo click");
