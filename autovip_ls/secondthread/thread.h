@@ -29,9 +29,9 @@ public:
     void run(){
         ThreadUtils::stick_this_thread_to_core(3);
         QThread::currentThread()->setPriority(QThread::HighPriority);
-        mediaPlayerController = new MediaPlayerController(this);
-        mPlayerFacade->facadeConnections(mediaPlayerController);
-        mediaPlayerController->process();
+//        mediaPlayerController = new MediaPlayerController(this);
+//        mPlayerFacade->facadeConnections(mediaPlayerController);
+//        mediaPlayerController->process();
 
         QThread::exec();
     }

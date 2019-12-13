@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QThread>
 #include "mediaplayercontroller.h"
+#include "mpdclient.h"
 #include "settingsmanager.h"
 class MediaPlayerFacade: public QObject
 {
@@ -31,6 +32,8 @@ class MediaPlayerFacade: public QObject
     MediaPlayerController *mediaPlayerController;
     SettingsManager *sm = &SettingsManager::instance();
     TrackListModel *trackListModel;
+    MpdClient mdpClient;
+    UsbMounter usbMounter;
     int volume;
 
 public:
@@ -44,6 +47,14 @@ public:
         }
         else
             volume = sm_volume.toInt();
+
+        connect(&usbMounter,&UsbMounter::usbMounted,[=](){
+            mdpClient.start();
+        });
+//        connect(&usbMounter,&UsbMounter::usbUnMounted,this,&TrackList::emptyTracklist);
+        emit usbMounter.readyToCheck(false);
+
+
     }
     void applyUserSettings(){
         setUserSettings(shuffle,loop);
