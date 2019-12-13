@@ -29,11 +29,6 @@ MpdClient::MpdClient(QObject *parent) : QObject(parent)
 {
     conn = NULL;
     status = NULL;
-    connect(this, &MpdClient::playingSong, [=](const mpd_Song* new_song){
-        QString musicTitle = new_song->title;
-        QString artist = new_song->artist;
-        qDebug()<<"new song"<<musicTitle<<", "<<artist;
-    });
 }
 
 bool MpdClient::start()

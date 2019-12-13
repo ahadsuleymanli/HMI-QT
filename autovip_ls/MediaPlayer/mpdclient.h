@@ -5,7 +5,7 @@
 #include <QList>
 #include "libmpdclient-0.13.0/libmpdclient.h"
 #include <iostream>
-
+typedef QList<mpd_Song*> mpd_Song_List;
 
 class MpdClient : public QObject
 {
@@ -14,6 +14,7 @@ public:
     explicit MpdClient(QObject *parent = nullptr);
     bool start();
     const mpd_Song* currentSong() const;
+    QList<mpd_Song*> getPlaylist(){return playlist;}
 public slots:
     void update();
 signals:

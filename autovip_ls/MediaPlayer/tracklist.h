@@ -60,6 +60,7 @@ public:
     }
     void pushBackToTrackContents(TrackContent *tc){
         m_trackContents.push_back(*tc);
+        _mediaCount++;
     }
     void copyObject(TrackListModel *x){
         this->_mediaCount=x->m_mediaList->mediaCount();

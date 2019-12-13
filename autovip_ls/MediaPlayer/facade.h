@@ -5,6 +5,7 @@
 #include "mediaplayercontroller.h"
 #include "mpdclient.h"
 #include "settingsmanager.h"
+#include "libmpdclient-0.13.0/libmpdclient.h"
 class MediaPlayerFacade: public QObject
 {
     Q_OBJECT
@@ -40,24 +41,42 @@ public:
 
     MediaPlayerFacade(QObject *parent = nullptr){
         trackListModel = new TrackListModel(this);
-        QVariant sm_volume=sm->value("media/volume");
-        if (!sm_volume.isValid()){
-            sm->getSettings()->setValue("media/volume",70);
-            volume = 70;
-        }
-        else
-            volume = sm_volume.toInt();
-
-        connect(&usbMounter,&UsbMounter::usbMounted,[=](){
-            mdpClient.start();
+        mdpClient.start();
+//        connect(&usbMounter,&UsbMounter::usbMounted,[=](){
+//        });
+        connect(&mdpClient, &MpdClient::playingSong, [=](const mpd_Song* new_song){
+//            QString musicTitle = new_song->title;
+//            QString artist = new_song->artist;
+//            qDebug()<<"playing: "<<musicTitle<<", "<<artist;
         });
-//        connect(&usbMounter,&UsbMounter::usbUnMounted,this,&TrackList::emptyTracklist);
+        connect(&mdpClient, &MpdClient::changedSong, [=](const mpd_Song* new_song){
+            QString musicTitle = new_song->title;
+            QString artist = new_song->artist;
+            qDebug()<<"song changed? wtf is this?"<<musicTitle<<", "<<artist;
+            mpd_Song_List lst = mdpClient.getPlaylist();
+            qDebug()<<"tracks: ";
+            foreach(auto &x,lst){
+                TrackContent *tc;
+                tc->trackName=x->title;
+                trackListModel->pushBackToTrackContents(tc);
+                qDebug()<<x->title;
+            }
+
+
+        });
+        QList<mpd_Song*> lst = mdpClient.getPlaylist();
+        if (lst.length()){
+            qDebug()<<"list length: "<<lst.length();
+            foreach(auto &x,lst){
+                TrackContent tc;
+                tc.trackName=x->title;
+                trackListModel->pushBackToTrackContents(&tc);
+                qDebug()<<x->title;
+            }
+        }
         emit usbMounter.readyToCheck(false);
 
 
-    }
-    void applyUserSettings(){
-        setUserSettings(shuffle,loop);
     }
     void facadeConnections(MediaPlayerController*mediaPlayerController){
         this->mediaPlayerController=mediaPlayerController;
@@ -78,7 +97,6 @@ public:
         connect(this, &MediaPlayerFacade::setPositionCalled,mediaPlayerController,&MediaPlayerController::setPosition);
         connect(this, &MediaPlayerFacade::signalPlayTrack,mediaPlayerController,&MediaPlayerController::playTrack);
         connect(this, &MediaPlayerFacade::pause,mediaPlayerController,&MediaPlayerController::pause);
-        connect(this, &MediaPlayerFacade::setUserSettings,mediaPlayerController,&MediaPlayerController::setUserSettings);
     }
     Q_INVOKABLE TrackListModel* trackList() {
         return trackListModel; }
@@ -139,7 +157,6 @@ signals:
     void setPositionCalled(qint64 position);
     void signalPlayTrack(int index);
     void pause();
-    void setUserSettings(bool shuffleEnabled, int loopState);
 };
 
 
