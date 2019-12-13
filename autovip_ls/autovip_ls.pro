@@ -22,7 +22,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+DEPENDPATH += . libmpdclient-0.13.0
+INCLUDEPATH += . libmpdclient-0.13.0
+
 SOURCES += \
+    MediaPlayer/libmpdclient-0.13.0/libmpdclient.c \
+    MediaPlayer/mpdclient.cpp \
     secondthread/datawriter.cpp \
     LightsMenu/colorcomponents.cpp \
     MediaPlayer/mediaplayercontroller.cpp \
@@ -65,6 +70,8 @@ SOURCES += \
     voiceprotohandler.cpp
 
 HEADERS += \
+    MediaPlayer/libmpdclient-0.13.0/libmpdclient.h \
+    MediaPlayer/mpdclient.h \
     secondthread/datawriter.h \
     secondthread/thread.h \
     secondthread/threadutils.h \
@@ -193,7 +200,10 @@ message("HOST" $${QMAKE_HOST.arch})
 message("TARGET ARCH" $${QMAKE_TARGET.arch})
 message("PLATFORM" $${PLATFORM})
 
-DISTFILES +=
+DISTFILES += \
+    MediaPlayer/libmpdclient-0.13.0/COPYING \
+    MediaPlayer/libmpdclient-0.13.0/README \
+    MediaPlayer/libmpdclient-0.13.0/TODO
 
 target.path = /home/root/
 INSTALLS += target

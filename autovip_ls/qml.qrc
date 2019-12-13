@@ -447,5 +447,6 @@
         <file>design/general/background.gif</file>
         <file>design/general/background_test.gif</file>
         <file>design/general/background_anim_bg.png</file>
+        <file>design/general/intro.mp4</file>
     </qresource>
 </RCC>

@@ -51,6 +51,7 @@ Window {
         if (SM.bganim()){
             bganim.source="qrc:/design/general/background.gif"
             bganim.visible=true
+//            bganim.playing=true
         }
         else{
             bgimage.source="qrc:/design/general/background.png"
@@ -72,7 +73,6 @@ Window {
             y:132
             width: parent.width
             height: parent.height-132-72
-//            asynchronous: false
             speed: 1
             cache: true
             playing: false

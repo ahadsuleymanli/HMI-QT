@@ -8,19 +8,19 @@ Rectangle {
     signal introDone()
     MediaPlayer {
         id: player
-        source: "file:///"+workingDirPath+"/intro.mp4"
+        source: "qrc:/design/general/intro.mp4"
         onStopped:{
             root.visible = false;
             if(serial_mng.isConnected())
             {
-                    serial_mng.sendKey("main/system_request");
+                serial_mng.sendKey("main/system_request");
             }
         }
     }
      Timer {
         id:timer
-        interval: 4500; running: false; repeat: false
-        onTriggered: {introDone(); hideme.running=true;}
+        interval: 4250; running: false; repeat: false
+        onTriggered: {hideme.running=true;}
     }
     VideoOutput {
         anchors.fill: parent
@@ -29,7 +29,6 @@ Rectangle {
         width:1024
         height:768
         source: player
-
     }
 
     NumberAnimation {
@@ -39,6 +38,13 @@ Rectangle {
         duration: 750
         to:0
         running: false
+        onRunningChanged: {
+            if (!running){
+                introDone();
+                player.stop();
+                player.deleteLater();
+            }
+        }
     }
     Component.onCompleted: {
         if(SM.intro)
