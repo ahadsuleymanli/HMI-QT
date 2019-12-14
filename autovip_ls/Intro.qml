@@ -42,7 +42,6 @@ Rectangle {
             if (!running){
                 introDone();
                 player.stop();
-                player.deleteLater();
             }
         }
     }
