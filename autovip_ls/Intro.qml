@@ -8,7 +8,7 @@ Rectangle {
     signal introDone()
     MediaPlayer {
         id: player
-        source: "qrc:/design/general/intro.mp4"
+        source: "file:///"+workingDirPath+"/intro.mp4"
         onStopped:{
             root.visible = false;
             if(serial_mng.isConnected())
@@ -42,7 +42,6 @@ Rectangle {
             if (!running){
                 introDone();
                 player.stop();
-                player.deleteLater();
             }
         }
     }

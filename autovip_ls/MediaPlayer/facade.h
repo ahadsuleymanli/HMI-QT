@@ -50,30 +50,28 @@ public:
 //            qDebug()<<"playing: "<<musicTitle<<", "<<artist;
         });
         connect(&mdpClient, &MpdClient::changedSong, [=](const mpd_Song* new_song){
+            if (new_song){
             QString musicTitle = new_song->title;
             QString artist = new_song->artist;
             qDebug()<<"song changed? wtf is this?"<<musicTitle<<", "<<artist;
-            mpd_Song_List lst = mdpClient.getPlaylist();
-            qDebug()<<"tracks: ";
-            foreach(auto &x,lst){
-                TrackContent *tc;
-                tc->trackName=x->title;
-                trackListModel->pushBackToTrackContents(tc);
-                qDebug()<<x->title;
             }
-
-
-        });
-        QList<mpd_Song*> lst = mdpClient.getPlaylist();
-        if (lst.length()){
-            qDebug()<<"list length: "<<lst.length();
+            mpd_Song_List lst = mdpClient.getPlaylist();
+            trackListModel->getTrackContents()->clear();
+            qDebug()<<"tracks: ";
             foreach(auto &x,lst){
                 TrackContent tc;
                 tc.trackName=x->title;
                 trackListModel->pushBackToTrackContents(&tc);
-                qDebug()<<x->title;
             }
-        }
+            emit trackListModel->layoutChanged();
+        });
+//        QList<mpd_Song*> lst = mdpClient.getPlaylist();
+//        qDebug()<<"list length: "<<lst.length();
+//        foreach(auto &x,lst){
+//            TrackContent tc;
+//            tc.trackName=x->title;
+//            trackListModel->pushBackToTrackContents(&tc);
+//        }
         emit usbMounter.readyToCheck(false);
 
 
@@ -101,7 +99,6 @@ public:
     Q_INVOKABLE TrackListModel* trackList() {
         return trackListModel; }
     Q_INVOKABLE void playTrack(int index) {
-        qDebug()<<"play emitted from: "<<QThread::currentThreadId();
         emit signalPlayTrack(index);
     }
     void setPosition(qint64 position){this->position=position; emit setPositionCalled(position);}
