@@ -33,7 +33,7 @@ class MediaPlayerFacade: public QObject
     MediaPlayerController *mediaPlayerController;
     SettingsManager *sm = &SettingsManager::instance();
     TrackListModel *trackListModel;
-    MpdClient mdpClient;
+    MpdClient mpdClient;
     UsbMounter usbMounter;
     int volume;
 
@@ -41,21 +41,21 @@ public:
 
     MediaPlayerFacade(QObject *parent = nullptr){
         trackListModel = new TrackListModel(this);
-        mdpClient.start();
+        mpdClient.start();
 //        connect(&usbMounter,&UsbMounter::usbMounted,[=](){
 //        });
-        connect(&mdpClient, &MpdClient::playingSong, [=](const mpd_Song* new_song){
+        connect(&mpdClient, &MpdClient::playingSong, [=](const mpd_Song* new_song){
 //            QString musicTitle = new_song->title;
 //            QString artist = new_song->artist;
 //            qDebug()<<"playing: "<<musicTitle<<", "<<artist;
         });
-        connect(&mdpClient, &MpdClient::changedSong, [=](const mpd_Song* new_song){
+        connect(&mpdClient, &MpdClient::changedSong, [=](const mpd_Song* new_song){
             if (new_song){
             QString musicTitle = new_song->title;
             QString artist = new_song->artist;
             qDebug()<<"song changed? wtf is this?"<<musicTitle<<", "<<artist;
             }
-            mpd_Song_List lst = mdpClient.getPlaylist();
+            mpd_Song_List lst = mpdClient.getPlaylist();
             trackListModel->getTrackContents()->clear();
             qDebug()<<"tracks: ";
             foreach(auto &x,lst){
@@ -65,14 +65,16 @@ public:
             }
             emit trackListModel->layoutChanged();
         });
-//        QList<mpd_Song*> lst = mdpClient.getPlaylist();
-//        qDebug()<<"list length: "<<lst.length();
-//        foreach(auto &x,lst){
-//            TrackContent tc;
-//            tc.trackName=x->title;
-//            trackListModel->pushBackToTrackContents(&tc);
-//        }
+        QList<mpd_Song*> lst = mpdClient.getPlaylist();
+        qDebug()<<"list length: "<<lst.length();
+        foreach(auto &x,lst){
+            TrackContent tc;
+            tc.trackName=x->title;
+            trackListModel->pushBackToTrackContents(&tc);
+        }
         emit usbMounter.readyToCheck(false);
+        connect(&usbMounter, &UsbMounter::usbMounted,&mpdClient,&MpdClient::update);
+        connect(&usbMounter, &UsbMounter::usbUnMounted,&mpdClient,&MpdClient::update);
 
 
     }
