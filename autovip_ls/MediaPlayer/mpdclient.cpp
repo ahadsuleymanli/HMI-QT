@@ -27,45 +27,108 @@ static const mpd_Song *NULL_SONG = &_NULL_SONG;
 
 MpdClient::MpdClient(QObject *parent) : QObject(parent)
 {
-    conn = NULL;
-    status = NULL;
+    conn = nullptr;
+    status = nullptr;
 }
 
 bool MpdClient::start()
 {   qDebug()<<"starting mdpclient";
     char *host = getenv("MPD_HOST");
     char *port = getenv("MPD_PORT");
-
-    if (host == NULL)
+    qDebug()<<"getenv finished";
+    if (host == nullptr)
         host = "localhost";
-    if (port == NULL)
+    if (port == nullptr)
         port = "6600";
 
     conn = mpd_newConnection(host, atoi(port), 10);
-
+    qDebug()<<"conn created";
+    if (!conn){
+        qDebug()<<"conn is null";
+    }
     if (conn->error) {
         error(conn->errorStr);
-
+        qDebug()<<"Mpdcliend connection error";
         return false;
     }
+    mpd_finishCommand(conn);
 
+    updateTimer = new QTimer(this);
+    updateTimer->setInterval(1000);
+    connect(updateTimer, SIGNAL(timeout()), this, SLOT(update()));
     update();
-
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(1000);
+    updateTimer->start();
 
     return true;
 }
+void MpdClient::playIndex(int idx){
+    if (idx >= playlist.size()){
+        return;
+    }
+    if (idx==status->song)
+        playPause();
+    else{
+        mpd_sendPlayCommand(conn,idx);
+        update();
+    }
+}
+void MpdClient::next(){
+    if (status->state==1){
+        mpd_sendPlayCommand2(conn);
+        mpd_finishCommand(conn);
+    }
+    mpd_sendNextCommand(conn);
+    mpd_finishCommand(conn);
+    if (status->state!=2)
+        mpd_sendStopCommand(conn);
+    update();
+}
+void MpdClient::prev(){
+    if (status->state==1){
+        mpd_sendPlayCommand2(conn);
+        mpd_finishCommand(conn);
+    }
+    mpd_sendPrevCommand(conn);
+    mpd_finishCommand(conn);
+    if (status->state!=2)
+        mpd_sendStopCommand(conn);
+    update();
+}
+void MpdClient::playPause(){
+    if (status->state==2)
+        mpd_sendPauseCommand(conn,1);
+    else
+        mpd_sendPlayCommand2(conn);
+    update();
 
+}
+void MpdClient::seekCurrent(int time){
+    mpd_sendSeekCurCommand(conn,time);
+    update();
+}
 void MpdClient::update()
 {
+    if (updateTimer)
+        updateTimer->stop();
     mpd_Status *old = status;
-
     mpd_sendStatusCommand(conn);
 
     status = mpd_getStatus(conn);
-    assert(status);
+
+    if (!status) {
+        status = old;
+        if (updateTimer){
+            updateTimer->setInterval(10);
+            updateTimer->start();
+        }
+        qDebug()<<"no status";
+        return;
+    }else{
+        if (updateTimer){
+            updateTimer->setInterval(1000);
+            updateTimer->start();
+        }
+    }
     mpd_finishCommand(conn);
 
     if (!(old && old->playlist == status->playlist)) {
@@ -74,11 +137,13 @@ void MpdClient::update()
         else
             updatePlaylist(-1);
 
-        if (currentSong())
-            emit(playingSong(currentSong()));
+//        if (currentSong())
+//            emit(playingSong(currentSong(),status));
     }
-    else if (old->song == status->song && currentSong())
-        emit(playingSong(currentSong()));
+//    else if (old->song == status->song && currentSong())
+//        emit(playingSong(currentSong(),status));
+    if (currentSong())
+        emit(playingSong(currentSong(),status));
 
 }
 
@@ -105,7 +170,7 @@ void MpdClient::updatePlaylist(long long version)
             playlist[song->pos] = song;
         }
 
-        emit(changedSong(song));
+        emit changedSong(song);
     }
 
     mpd_finishCommand(conn);
@@ -114,14 +179,14 @@ void MpdClient::updatePlaylist(long long version)
     for (int i = playlist.size() - 1; i >= status->playlistLength; i--) {
         mpd_freeSong(playlist[i]);
         playlist.removeAt(i);
-        emit(changedSong(NULL));
+        emit changedSong(NULL);
     }
 
 }
 
 const mpd_Song* MpdClient::currentSong() const
 {
-    assert(status);
+    if (!status) return NULL_SONG;
     if (status->song >= playlist.size())
         return NULL_SONG;
     else

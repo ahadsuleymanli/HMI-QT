@@ -13,7 +13,7 @@ HomeForm {
     infoArtist.text : (mPlayerBackend.playingArtist === "" ? "unknown" : mPlayerBackend.playingArtist)
     coverImage.source: (mPlayerBackend.playingCover === "" ? "qrc:/design/media/MediaPlayer/melody.png":
                                                              mPlayerBackend.playingCover)
-    playPauseImage.source:(mPlayerBackend.state === 1 ? "qrc:/design/media/MediaPlayer/pause.png":
+    playPauseImage.source:(mPlayerBackend.state === 2 ? "qrc:/design/media/MediaPlayer/pause.png":
                                                                 "qrc:/design/media/MediaPlayer/2.png")
     repeatImage.source: (mPlayerBackend.loop===2 ? "qrc:/design/media/MediaPlayer/repeat_1.png": mPlayerBackend.loop===1 ? "qrc:/design/media/MediaPlayer/repeat_all.png": "qrc:/design/media/MediaPlayer/repeat.png")
 
@@ -22,7 +22,7 @@ HomeForm {
 
 
     progressArea.onMouseXChanged:{
-        var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-50)
+        var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-1)
         mPlayerBackend.position = pos
     }
 

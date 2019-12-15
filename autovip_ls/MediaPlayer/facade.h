@@ -17,7 +17,8 @@ class MediaPlayerFacade: public QObject
     Q_PROPERTY(QString playingCover MEMBER playingCover NOTIFY playingMediaChanged)
     Q_PROPERTY(bool shuffle MEMBER shuffle NOTIFY playModeChanged)
     Q_PROPERTY(int loop MEMBER loop NOTIFY playModeChanged)
-    Q_PROPERTY(QMediaPlayer::State state MEMBER state NOTIFY stateChanged)
+//    Q_PROPERTY(QMediaPlayer::State state MEMBER state NOTIFY stateChanged)
+    Q_PROPERTY(int state MEMBER state NOTIFY stateChanged)
     Q_PROPERTY(qint64 duration MEMBER duration NOTIFY durationChanged)
     Q_PROPERTY(qint64 position MEMBER position WRITE setPosition NOTIFY positionChanged)
 
@@ -27,7 +28,8 @@ class MediaPlayerFacade: public QObject
     QString playingCover;
     bool shuffle = false;
     int loop = 0;
-    QMediaPlayer::State state = QMediaPlayer::StoppedState;
+//    QMediaPlayer::State state = QMediaPlayer::StoppedState;
+    int state = 0;
     qint64 duration = 0;
     qint64 position = 0;
     MediaPlayerController *mediaPlayerController;
@@ -41,40 +43,72 @@ public:
 
     MediaPlayerFacade(QObject *parent = nullptr){
         trackListModel = new TrackListModel(this);
-        mpdClient.start();
-//        connect(&usbMounter,&UsbMounter::usbMounted,[=](){
-//        });
-        connect(&mpdClient, &MpdClient::playingSong, [=](const mpd_Song* new_song){
-//            QString musicTitle = new_song->title;
-//            QString artist = new_song->artist;
-//            qDebug()<<"playing: "<<musicTitle<<", "<<artist;
+        connect(&mpdClient, &MpdClient::playingSong, [=](const mpd_Song* currentSong,const mpd_Status* status){
+            if (currentSong->title)
+                playingTitle=currentSong->title;
+            else
+                playingTitle=currentSong->file;
+            playingYear=currentSong->date;
+            playingArtist=currentSong->artist;
+            duration=status->totalTime;
+            position=status->elapsedTime;
+            state=status->state;
+            shuffle=bool(status->random);
+            loop=status->repeat;
+            emit playModeChanged();
+            emit stateChanged();
+            emit durationChanged();
+            emit positionChanged();
+            playingMediaChanged();
         });
         connect(&mpdClient, &MpdClient::changedSong, [=](const mpd_Song* new_song){
             if (new_song){
-            QString musicTitle = new_song->title;
-            QString artist = new_song->artist;
-            qDebug()<<"song changed? wtf is this?"<<musicTitle<<", "<<artist;
-            }
-            mpd_Song_List lst = mpdClient.getPlaylist();
-            trackListModel->getTrackContents()->clear();
-            qDebug()<<"tracks: ";
-            foreach(auto &x,lst){
                 TrackContent tc;
-                tc.trackName=x->title;
+                if (new_song->title)
+                    tc.trackName=new_song->title;
+                else
+                    tc.trackName=new_song->file;
+                tc.artistName=new_song->artist;
                 trackListModel->pushBackToTrackContents(&tc);
+            }
+            else{
+                qDebug()<<"rebuilding tracklist";
+                QList<mpd_Song*> lst = mpdClient.getPlaylist();
+                trackListModel->clear();
+                foreach(auto &x,lst){
+                    TrackContent tc;
+                    if (x->title)
+                        tc.trackName=x->title;
+                    else
+                        tc.trackName=x->file;
+                    tc.artistName=x->artist;
+                    trackListModel->pushBackToTrackContents(&tc);
+                }
             }
             emit trackListModel->layoutChanged();
         });
         QList<mpd_Song*> lst = mpdClient.getPlaylist();
-        qDebug()<<"list length: "<<lst.length();
         foreach(auto &x,lst){
             TrackContent tc;
-            tc.trackName=x->title;
+            if (x->title)
+                tc.trackName=x->title;
+            else
+                tc.trackName=x->file;
+            tc.artistName=x->artist;
             trackListModel->pushBackToTrackContents(&tc);
         }
-        emit usbMounter.readyToCheck(false);
-        connect(&usbMounter, &UsbMounter::usbMounted,&mpdClient,&MpdClient::update);
-        connect(&usbMounter, &UsbMounter::usbUnMounted,&mpdClient,&MpdClient::update);
+
+        connect(this, &MediaPlayerFacade::playPause,&mpdClient,&MpdClient::playPause);
+        connect(this, &MediaPlayerFacade::next,&mpdClient,&MpdClient::next);
+        connect(this, &MediaPlayerFacade::previous,&mpdClient,&MpdClient::prev);
+        connect(this, &MediaPlayerFacade::signalPlayTrack,&mpdClient,&MpdClient::playIndex);
+        connect(this, &MediaPlayerFacade::setPositionCalled,&mpdClient,&MpdClient::seekCurrent);
+        connect(this, &MediaPlayerFacade::setLoop,&mpdClient,&MpdClient::toggleRepeat);
+        connect(this, &MediaPlayerFacade::setShuffle,&mpdClient,&MpdClient::toggleRandom);
+        mpdClient.start();
+        mpdClient.addFilesToPlaylist();
+        connect(&usbMounter, &UsbMounter::usbMounted,&mpdClient,&MpdClient::addFilesToPlaylist);
+        connect(&usbMounter, &UsbMounter::usbUnMounted,&mpdClient,&MpdClient::addFilesToPlaylist);
 
 
     }

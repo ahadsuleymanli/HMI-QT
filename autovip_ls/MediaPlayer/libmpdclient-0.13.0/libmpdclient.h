@@ -480,7 +480,8 @@ void mpd_sendClearCommand(mpd_Connection * connection);
 
 /* use this to start playing at the beginning, useful when in random mode */
 #define MPD_PLAY_AT_BEGINNING	-1
-
+void mpd_sendPlayCommand2(mpd_Connection * connection);
+void mpd_sendPauseCommand2(mpd_Connection * connection);
 void mpd_sendPlayCommand(mpd_Connection * connection, int songNum);
 
 void mpd_sendPlayIdCommand(mpd_Connection * connection, int songNum);
@@ -502,6 +503,8 @@ void mpd_sendSwapCommand(mpd_Connection * connection, int song1, int song2);
 void mpd_sendSwapIdCommand(mpd_Connection * connection, int song1, int song2);
 
 void mpd_sendSeekCommand(mpd_Connection * connection, int song, int time);
+
+void mpd_sendSeekCurCommand(mpd_Connection * connection, int time);
 
 void mpd_sendSeekIdCommand(mpd_Connection * connection, int song, int time);
 

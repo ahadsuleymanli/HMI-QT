@@ -1465,7 +1465,12 @@ void mpd_sendPlayIdCommand(mpd_Connection * connection, int id) {
 void mpd_sendStopCommand(mpd_Connection * connection) {
 	mpd_executeCommand(connection,"stop\n");
 }
-
+void mpd_sendPlayCommand2(mpd_Connection * connection) {
+    mpd_executeCommand(connection,"play\n");
+}
+void mpd_sendPauseCommand2(mpd_Connection * connection) {
+    mpd_executeCommand(connection,"pause\n");
+}
 void mpd_sendPauseCommand(mpd_Connection * connection, int pauseMode) {
 	int len = strlen("pause")+2+INTLEN+3;
 	char *string = malloc(len);
@@ -1516,6 +1521,14 @@ void mpd_sendSeekCommand(mpd_Connection * connection, int song, int time) {
 	snprintf(string, len, "seek \"%i\" \"%i\"\n", song, time);
 	mpd_sendInfoCommand(connection,string);
 	free(string);
+}
+
+void mpd_sendSeekCurCommand(mpd_Connection * connection, int time) {
+    int len = strlen("seekcur")+2+INTLEN+3;
+    char *string = malloc(len);
+    snprintf(string, len, "seekcur \"%i\"\n", time);
+    mpd_sendInfoCommand(connection,string);
+    free(string);
 }
 
 void mpd_sendSeekIdCommand(mpd_Connection * connection, int id, int time) {
