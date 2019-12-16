@@ -17,7 +17,6 @@ class SecondThread : public QThread
     MediaPlayerController *mediaPlayerController;
     MediaPlayerFacade *mPlayerFacade;
     CronJobs *cronjobs;
-    QThread *dpmsThread;
 public:
     SecondThread(ClockSetter *clockSetter,MediaPlayerFacade *mPlayerFacade, QObject* parent = nullptr) : QThread(parent) {
         dataWriterWorker = new DataWriterWorker();
