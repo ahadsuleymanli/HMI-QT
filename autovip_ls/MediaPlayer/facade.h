@@ -43,6 +43,13 @@ public:
 
     MediaPlayerFacade(QObject *parent = nullptr){
         trackListModel = new TrackListModel(this);
+        bool mpdStarted = mpdClient.start();
+        if (mpdStarted){
+            qDebug()<<"mpd started";
+            mpdConnections();
+        }
+    }
+    void mpdConnections(){
         connect(&mpdClient, &MpdClient::playingSong, [=](const mpd_Song* currentSong,const mpd_Status* status){
             if (currentSong->title)
                 playingTitle=currentSong->title;
@@ -105,13 +112,11 @@ public:
         connect(this, &MediaPlayerFacade::setPositionCalled,&mpdClient,&MpdClient::seekCurrent);
         connect(this, &MediaPlayerFacade::setLoop,&mpdClient,&MpdClient::toggleRepeat);
         connect(this, &MediaPlayerFacade::setShuffle,&mpdClient,&MpdClient::toggleRandom);
-        mpdClient.start();
         mpdClient.addFilesToPlaylist();
         connect(&usbMounter, &UsbMounter::usbMounted,&mpdClient,&MpdClient::addFilesToPlaylist);
         connect(&usbMounter, &UsbMounter::usbUnMounted,&mpdClient,&MpdClient::addFilesToPlaylist);
-
-
     }
+
     void facadeConnections(MediaPlayerController*mediaPlayerController){
         this->mediaPlayerController=mediaPlayerController;
         mediaPlayerController->setVolume(volume);

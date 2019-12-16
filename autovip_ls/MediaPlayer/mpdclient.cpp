@@ -45,6 +45,7 @@ bool MpdClient::start()
     qDebug()<<"conn created";
     if (!conn){
         qDebug()<<"conn is null";
+        return false;
     }
     if (conn->error) {
         error(conn->errorStr);

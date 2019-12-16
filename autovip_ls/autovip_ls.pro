@@ -62,7 +62,6 @@ SOURCES += \
     logger/filelogger.cpp \
     logger/logger.cpp \
     logger/logmessage.cpp \
-    cronjobs.cpp \
     clocksetter.cpp \
     updatecheck.cpp \
     voicerecognitionservice.cpp \
@@ -72,6 +71,7 @@ SOURCES += \
 HEADERS += \
     MediaPlayer/libmpdclient-0.13.0/libmpdclient.h \
     MediaPlayer/mpdclient.h \
+    secondthread/cronjobs.h \
     secondthread/datawriter.h \
     secondthread/thread.h \
     secondthread/threadutils.h \
@@ -116,7 +116,6 @@ HEADERS += \
     logger/logger.h \
     logger/logglobal.h \
     logger/logmessage.h \
-    cronjobs.h \
     clocksetter.h \
     updatecheck.h \
     voicerecognitionservice.h \

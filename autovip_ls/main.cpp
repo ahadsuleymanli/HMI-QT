@@ -7,7 +7,6 @@
 #include <QObject>
 #include <initializemng.h>
 #include "mediaplayermng.h"
-#include <cronjobs.h>
 #include <QDebug>
 #include "clocksetter.h"
 #include <QDir>
@@ -73,7 +72,6 @@ int main(int argc, char *argv[])
     else {
         qDebug()<<"main.cpp: initializemng succeeded";
     }
-
 
     return app.exec();
 }
