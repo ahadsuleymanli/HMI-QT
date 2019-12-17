@@ -3,8 +3,6 @@ import QtQuick.Layouts 1.1
 import ck.gmachine 1.0
 
 Rectangle {
-    id : clock
-    property alias running: timer.running
     property date date
 
     antialiasing: true
@@ -13,16 +11,6 @@ Rectangle {
     height: spinnerLayout.height
 
     color : "transparent"
-
-    Timer {
-        id : timer
-        interval: 500; running: true; repeat: true
-        onTriggered: function() {
-              date = csetter.getAdjustedTime();
-//              console.log(date);
-//            date = new Date;
-        }
-    }
 
     RowLayout {
         id : spinnerLayout
@@ -33,7 +21,6 @@ Rectangle {
             color:"#CFD1D2"
             font.family: GSystem.centurygothic.name
             font.pixelSize: 44
-//            text: date
             text:date.toLocaleTimeString(Qt.locale(),"hh:mm")
         }
         //Rectangle { color : "white"; width: 2; height: 50 }

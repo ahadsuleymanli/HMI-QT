@@ -59,7 +59,10 @@ bool MpdClient::start()
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(update()));
     update();
     updateTimer->start();
-
+    usbMounter = new UsbMounter(this);
+    connect(usbMounter, &UsbMounter::usbMounted,this,&MpdClient::addFilesToPlaylist);
+    connect(usbMounter, &UsbMounter::usbUnMounted,this,&MpdClient::deletePlaylist);
+    emit usbMounter->readyToCheck(false);
     return true;
 }
 void MpdClient::playIndex(int idx){
@@ -162,7 +165,10 @@ void MpdClient::updatePlaylist(long long version)
         mpd_Song *song = mpd_songDup(entity->info.song);
         mpd_freeInfoEntity(entity);
 
-        assert(song->pos <= playlist.size());
+        if (!(song->pos <= playlist.size())){
+            qDebug()<<"err: song->pos <= playlist.size()";
+            return;
+        }
 
         if (song->pos == playlist.size())
             playlist += song;
@@ -180,8 +186,10 @@ void MpdClient::updatePlaylist(long long version)
     for (int i = playlist.size() - 1; i >= status->playlistLength; i--) {
         mpd_freeSong(playlist[i]);
         playlist.removeAt(i);
-        emit changedSong(NULL);
+//        emit changedSong(NULL);
     }
+
+    emit changedPlaylist(&playlist);
 
 }
 

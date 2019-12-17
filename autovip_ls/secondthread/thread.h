@@ -16,7 +16,7 @@ class SecondThread : public QThread
     DataWriterWorker *dataWriterWorker;
     MediaPlayerController *mediaPlayerController;
     MediaPlayerFacade *mPlayerFacade;
-    CronJobs *cronjobs;
+    MpdClient *mpdClient;
 public:
     SecondThread(ClockSetter *clockSetter,MediaPlayerFacade *mPlayerFacade, QObject* parent = nullptr) : QThread(parent) {
         dataWriterWorker = new DataWriterWorker();
@@ -24,9 +24,9 @@ public:
         dataWriterWorker->moveToThread(this);
         this->mPlayerFacade=mPlayerFacade;
 
-        cronjobs = new CronJobs();
-        cronjobs->moveToThread(this);
-        connect(this, SIGNAL(started()), cronjobs, SLOT(process()));
+
+//        cronjobs->moveToThread(this);
+//        connect(this, SIGNAL(started()), cronjobs, SLOT(process()));
 
         connect(clockSetter,&ClockSetter::timeIsSet,dataWriterWorker,&DataWriterWorker::startTimeLogging);
         connect(this, SIGNAL(started()), dataWriterWorker, SLOT(process()));
@@ -35,10 +35,12 @@ public:
     }
     void run(){
         ThreadUtils::stick_this_thread_to_core(3);
-//        mediaPlayerController = new MediaPlayerController(this);
-//        mPlayerFacade->facadeConnections(mediaPlayerController);
-//        mediaPlayerController->process();
-
+        mpdClient = new MpdClient;
+        bool mpdStarted = mpdClient->start();
+        if (mpdStarted){
+            qDebug()<<"mpd started";
+            mPlayerFacade->mpdConnections(mpdClient);
+        }
         QThread::exec();
     }
 

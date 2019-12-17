@@ -15,11 +15,12 @@ Rectangle {
             {
                 serial_mng.sendKey("main/system_request");
             }
+            source=""
         }
     }
      Timer {
         id:timer
-        interval: 4250; running: false; repeat: false
+        interval: 4500; running: false; repeat: false
         onTriggered: {hideme.running=true;}
     }
     VideoOutput {
@@ -41,7 +42,6 @@ Rectangle {
         onRunningChanged: {
             if (!running){
                 introDone();
-                player.stop();
             }
         }
     }

@@ -35,22 +35,17 @@ class MediaPlayerFacade: public QObject
     MediaPlayerController *mediaPlayerController;
     SettingsManager *sm = &SettingsManager::instance();
     TrackListModel *trackListModel;
-    MpdClient mpdClient;
-    UsbMounter usbMounter;
+    MpdClient *mpdClient;
+
     int volume;
 
 public:
-
-    MediaPlayerFacade(QObject *parent = nullptr){
+    MediaPlayerFacade(QObject *parent = nullptr): QObject(parent){
         trackListModel = new TrackListModel(this);
-        bool mpdStarted = mpdClient.start();
-        if (mpdStarted){
-            qDebug()<<"mpd started";
-            mpdConnections();
-        }
+        connect(this, &MediaPlayerFacade::trackListLayoutChanged,this,[=](){emit trackListModel->layoutChanged();});
     }
-    void mpdConnections(){
-        connect(&mpdClient, &MpdClient::playingSong, [=](const mpd_Song* currentSong,const mpd_Status* status){
+    void mpdConnections(MpdClient *mpdClient){
+        connect(mpdClient, &MpdClient::playingSong, [=](const mpd_Song* currentSong,const mpd_Status* status){
             if (currentSong->title)
                 playingTitle=currentSong->title;
             else
@@ -66,35 +61,36 @@ public:
             emit stateChanged();
             emit durationChanged();
             emit positionChanged();
-            playingMediaChanged();
+            emit playingMediaChanged();
         });
-        connect(&mpdClient, &MpdClient::changedSong, [=](const mpd_Song* new_song){
-            if (new_song){
+//        connect(mpdClient, &MpdClient::changedSong, [=](const mpd_Song* new_song){
+//            if (new_song){
+//                TrackContent tc;
+//                if (new_song->title)
+//                    tc.trackName=new_song->title;
+//                else
+//                    tc.trackName=new_song->file;
+//                tc.artistName=new_song->artist;
+//                trackListModel->pushBackToTrackContents(&tc);
+//            }
+//            emit trackListModel->layoutChanged();
+//        });
+        connect(mpdClient, &MpdClient::changedPlaylist, [=](const QList<mpd_Song*> *playlist){
+            qDebug()<<"rebuilding tracklist";
+            trackListModel->clear();
+            foreach(auto &x,*playlist){
                 TrackContent tc;
-                if (new_song->title)
-                    tc.trackName=new_song->title;
+                if (x->title)
+                    tc.trackName=x->title;
                 else
-                    tc.trackName=new_song->file;
-                tc.artistName=new_song->artist;
+                    tc.trackName=x->file;
+                tc.artistName=x->artist;
                 trackListModel->pushBackToTrackContents(&tc);
             }
-            else{
-                qDebug()<<"rebuilding tracklist";
-                QList<mpd_Song*> lst = mpdClient.getPlaylist();
-                trackListModel->clear();
-                foreach(auto &x,lst){
-                    TrackContent tc;
-                    if (x->title)
-                        tc.trackName=x->title;
-                    else
-                        tc.trackName=x->file;
-                    tc.artistName=x->artist;
-                    trackListModel->pushBackToTrackContents(&tc);
-                }
-            }
-            emit trackListModel->layoutChanged();
+            emit trackListLayoutChanged();
         });
-        QList<mpd_Song*> lst = mpdClient.getPlaylist();
+
+        QList<mpd_Song*> lst = mpdClient->getPlaylist();
         foreach(auto &x,lst){
             TrackContent tc;
             if (x->title)
@@ -104,17 +100,14 @@ public:
             tc.artistName=x->artist;
             trackListModel->pushBackToTrackContents(&tc);
         }
-
-        connect(this, &MediaPlayerFacade::playPause,&mpdClient,&MpdClient::playPause);
-        connect(this, &MediaPlayerFacade::next,&mpdClient,&MpdClient::next);
-        connect(this, &MediaPlayerFacade::previous,&mpdClient,&MpdClient::prev);
-        connect(this, &MediaPlayerFacade::signalPlayTrack,&mpdClient,&MpdClient::playIndex);
-        connect(this, &MediaPlayerFacade::setPositionCalled,&mpdClient,&MpdClient::seekCurrent);
-        connect(this, &MediaPlayerFacade::setLoop,&mpdClient,&MpdClient::toggleRepeat);
-        connect(this, &MediaPlayerFacade::setShuffle,&mpdClient,&MpdClient::toggleRandom);
-        mpdClient.addFilesToPlaylist();
-        connect(&usbMounter, &UsbMounter::usbMounted,&mpdClient,&MpdClient::addFilesToPlaylist);
-        connect(&usbMounter, &UsbMounter::usbUnMounted,&mpdClient,&MpdClient::addFilesToPlaylist);
+        emit trackListLayoutChanged();
+        connect(this, &MediaPlayerFacade::playPause,mpdClient,&MpdClient::playPause);
+        connect(this, &MediaPlayerFacade::next,mpdClient,&MpdClient::next);
+        connect(this, &MediaPlayerFacade::previous,mpdClient,&MpdClient::prev);
+        connect(this, &MediaPlayerFacade::signalPlayTrack,mpdClient,&MpdClient::playIndex);
+        connect(this, &MediaPlayerFacade::setPositionCalled,mpdClient,&MpdClient::seekCurrent);
+        connect(this, &MediaPlayerFacade::setLoop,mpdClient,&MpdClient::toggleRepeat);
+        connect(this, &MediaPlayerFacade::setShuffle,mpdClient,&MpdClient::toggleRandom);
     }
 
     void facadeConnections(MediaPlayerController*mediaPlayerController){
@@ -195,6 +188,7 @@ signals:
     void setPositionCalled(qint64 position);
     void signalPlayTrack(int index);
     void pause();
+    void trackListLayoutChanged();
 };
 
 

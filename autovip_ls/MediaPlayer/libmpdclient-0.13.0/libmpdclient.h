@@ -457,6 +457,8 @@ void mpd_sendListCommand(mpd_Connection * connection, int table,
 
 /* SIMPLE COMMANDS */
 
+//void mpd_sendAddAllCommand(mpd_Connection * connection);
+
 void mpd_sendAddCommand(mpd_Connection * connection, const char * file);
 
 int mpd_sendAddIdCommand(mpd_Connection *connection, const char *file);

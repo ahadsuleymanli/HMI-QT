@@ -17,7 +17,6 @@ class CronJobs : public QObject
 public:
     explicit CronJobs(QObject *parent=nullptr) : QObject(parent){}
 public slots:
-    // TODO: check if this prevents the hangups. if it does, move this functionality to a boost thread with a system() call
     void process(){
         #if !(defined(__arm__) or defined(__aarch64__))
             return;
@@ -26,7 +25,9 @@ public slots:
         this->timer = new QTimer(this);
         this->timer->setInterval(timeout);
         connect(timer,&QTimer::timeout,this,[=](){
-            disable_dpms->startDetached("/bin/sh", QStringList()<< "-c"<<"xset -dpms && xset dpms 4");
+//            disable_dpms->startDetached("/bin/sh", QStringList()<< "-c"<<"xset -dpms && xset dpms 4");
+            system("xset -dpms && xset dpms 4");
+//            disable_dpms->start("xset -dpms && xset dpms 4");
         });
         this->timer->start();
     }

@@ -3,7 +3,9 @@
 
 #include <QObject>
 #include <QList>
+#include <QMediaObject>
 #include "libmpdclient-0.13.0/libmpdclient.h"
+#include "usbmounter.h"
 #include <iostream>
 #include <QDebug>
 typedef QList<mpd_Song*> mpd_Song_List;
@@ -16,6 +18,9 @@ public:
     bool start();
     const mpd_Song* currentSong() const;
     QList<mpd_Song*> getPlaylist(){return playlist;}
+    void getMediaMetadata(){
+
+    }
 public slots:
     void playIndex(int idx);
     void playPause();
@@ -38,18 +43,30 @@ public slots:
     }
     void update();
     void addFilesToPlaylist(){
+        qDebug()<<"add to playlist";
         mpd_sendUpdateCommand(conn,"");
         mpd_finishCommand(conn);
         mpd_sendClearCommand(conn);
         mpd_finishCommand(conn);
-        mpd_sendAddCommand(conn,"/");
+        QTimer::singleShot(150,this,[=]{
+            mpd_sendAddCommand(conn,"/");
+            mpd_finishCommand(conn);
+            update(); });
+
+    }
+    void deletePlaylist(){
+        qDebug()<<"delete playlist";
+        mpd_sendStopCommand(conn);
         mpd_finishCommand(conn);
-        qDebug()<<"re-made the playlist";
-        update();
+        mpd_sendUpdateCommand(conn,"");
+        mpd_finishCommand(conn);
+        mpd_sendClearCommand(conn);
+        mpd_finishCommand(conn);
     }
 signals:
     void playingSong(const mpd_Song *new_song, const mpd_Status *status);
     void changedSong(const mpd_Song *new_song);
+    void changedPlaylist(const QList<mpd_Song*> *playlist);
 
 private:
     void updatePlaylist(long long version);
@@ -58,8 +75,9 @@ private:
     mpd_Status *status;
     QTimer *updateTimer;
     QList<mpd_Song*> playlist;
+    UsbMounter *usbMounter;
 };
 
-extern MpdClient *mpdclient;
+//extern MpdClient *mpdclient;
 
 #endif // MPDCLIENT_H

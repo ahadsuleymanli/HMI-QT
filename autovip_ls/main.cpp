@@ -42,37 +42,38 @@ int main(int argc, char *argv[])
     changeCD();
     enableStackTraceDump();
 
-    QQmlApplicationEngine engine;
+    QQmlApplicationEngine *engine= new QQmlApplicationEngine(&app);
     SettingsManager *sm = &SettingsManager::instance();
-    Translator mTrans(&app);
-    InitializeMng imng;
-    SerialMng smng;
-    FileLogger flogger(sm->getSettings(),10000,&app);
-    ClockSetter csetter;
+    Translator *mTrans = new Translator(&app);
+    InitializeMng* imng = new InitializeMng(&app);
+    SerialMng *smng = new SerialMng(&app);
+//    FileLogger *flogger = new FileLogger(sm->getSettings(),10000,&app);
+    ClockSetter *csetter = new ClockSetter(&app);
     qDebug()<<"main called from: "<<QThread::currentThreadId();
-    MediaPlayerFacade mPlayerFacade(&app);
-    SecondThread secondthread(&csetter, &mPlayerFacade);
-    csetter.start();
+    MediaPlayerFacade *mPlayerFacade = new MediaPlayerFacade(&app);
+    SecondThread secondthread(csetter, mPlayerFacade);
+    csetter->start();
 
-    NvidiaConnManager nvidiaConnManager(1234, &smng, sm, &app);
+    NvidiaConnManager *nvidiaConnManager = new NvidiaConnManager(1234, smng, sm, &app);
 
-    imng.setMediaPlayerController(&mPlayerFacade);
-    imng.setClockSetter(&csetter);
-    imng.setTranslator(&mTrans);
-    imng.setSettingsManager(sm);
-    imng.setEngine(&engine);
-    imng.setSerialMng(&smng);
-    imng.setNvidiaConnManager(&nvidiaConnManager);
+    imng->setMediaPlayerController(mPlayerFacade);
+    imng->setClockSetter(csetter);
+    imng->setTranslator(mTrans);
+    imng->setSettingsManager(sm);
+    imng->setEngine(engine);
+    imng->setSerialMng(smng);
+    imng->setNvidiaConnManager(nvidiaConnManager);
 
     qDebug()<<"initiating imng";
-    if(imng.init() == false){
+    if(imng->init() == false){
         qDebug()<<"main.cpp: initializemng failed";
          return -1;
     }
     else {
         qDebug()<<"main.cpp: initializemng succeeded";
     }
-
+//    CronJobs *cronjobs = new CronJobs();
+//    cronjobs->process();
     return app.exec();
 }
 

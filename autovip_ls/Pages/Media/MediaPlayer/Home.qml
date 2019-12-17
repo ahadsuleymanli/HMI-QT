@@ -4,8 +4,18 @@ HomeForm {
 
     durationText.text : audioDurationStr
     currentPositionText.text: audioPositionStr
+    property bool progressAreaPressed: false
+    function adjustedProgressAreaMouseX(){
+        if (progressArea.mouseX<0)
+            return 0;
+        else if (progressArea.mouseX>progressArea.width)
+            return progressArea.width;
+        else
+            return progressArea.mouseX;
+    }
 
-    progressCurrent.width: (mPlayerBackend.duration>0?mPlayerBackend.position/mPlayerBackend.duration:0) * progressBackground.width
+    progressCurrent.width: progressAreaPressed? adjustedProgressAreaMouseX()
+                             :(mPlayerBackend.duration>0?mPlayerBackend.position/mPlayerBackend.duration:0) * progressBackground.width
 
     infoLayout.visible: (infoTitle.text === "" ? false : true)
     infoTitle.text: mPlayerBackend.playingTitle
@@ -20,10 +30,12 @@ HomeForm {
     shuffleImageToggled: mPlayerBackend.shuffle
     repeatImageToggled: mPlayerBackend.loop > 0
 
-
-    progressArea.onMouseXChanged:{
-        var pos = Math.min(mPlayerBackend.duration*(progressArea.mouseX/progressArea.width),mPlayerBackend.duration-1)
-        mPlayerBackend.position = pos
+    progressArea.onReleased: {
+        mPlayerBackend.position = mPlayerBackend.duration*(adjustedProgressAreaMouseX()/progressArea.width)
+        progressAreaPressed = false;
+    }
+    progressArea.onPressed: {
+        progressAreaPressed = true;
     }
 
     shuffleButton.onReleased: {

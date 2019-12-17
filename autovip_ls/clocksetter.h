@@ -16,7 +16,7 @@ class ClockSetter : public QObject
     int dayDiff;
     int monthDiff;
     int yearDiff;
-    QTimer timeLagDetectorTimer;
+    QTimer *timeLagDetectorTimer;
 
     class DateTime{
         public:
