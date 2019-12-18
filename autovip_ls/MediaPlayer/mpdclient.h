@@ -32,13 +32,20 @@ public slots:
             mpd_sendRandomCommand(conn,0);
         else
             mpd_sendRandomCommand(conn,1);
+        mpd_finishCommand(conn);
         update();
     }
     void toggleRepeat(){
-        if (status->repeat)
-            mpd_sendRepeatCommand(conn,0);
-        else
+        if (!status->repeat && !status->single)
             mpd_sendRepeatCommand(conn,1);
+        else if (status->repeat && !status->single)
+            mpd_sendSingleModeCommand(conn,1);
+        else{
+            mpd_sendSingleModeCommand(conn,0);
+            mpd_finishCommand(conn);
+            mpd_sendRepeatCommand(conn,0);
+        }
+        mpd_finishCommand(conn);
         update();
     }
     void update();
@@ -50,9 +57,10 @@ public slots:
         mpd_finishCommand(conn);
         update();
         updateTimer->stop();
+        mpd_finishCommand(conn);
         mpd_sendAddCommand(conn,"/");
         mpd_finishCommand(conn);
-        resetUpdateTimer();
+        resetUpdateTimer(3000);
 
     }
     void deletePlaylist(){
@@ -63,9 +71,10 @@ public slots:
         mpd_finishCommand(conn);
         update();
         updateTimer->stop();
+        mpd_finishCommand(conn);
         mpd_sendClearCommand(conn);
         mpd_finishCommand(conn);
-        resetUpdateTimer();
+        resetUpdateTimer(1000);
     }
 signals:
     void playingSong(const mpd_Song *new_song, const mpd_Status *status);
@@ -74,7 +83,7 @@ signals:
 
 private:
     void updatePlaylist(long long version);
-    void resetUpdateTimer(){updateTimer->setInterval(1000);updateTimer->start();};
+    void resetUpdateTimer(int duration){updateTimer->setInterval(duration);updateTimer->start();};
     mpd_Connection *conn;
     mpd_Status *status;
     QTimer *updateTimer;

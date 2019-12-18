@@ -125,7 +125,6 @@ void MpdClient::update()
             updateTimer->setInterval(10);
             updateTimer->start();
         }
-        qDebug()<<"no status";
         return;
     }else{
         if (updateTimer){
@@ -146,6 +145,8 @@ void MpdClient::update()
     }
 //    else if (old->song == status->song && currentSong())
 //        emit(playingSong(currentSong(),status));
+    if (old)
+        mpd_freeStatus(old);
     if (currentSong())
         emit(playingSong(currentSong(),status));
 

@@ -14,7 +14,6 @@
 class SecondThread : public QThread
 {
     DataWriterWorker *dataWriterWorker;
-    MediaPlayerController *mediaPlayerController;
     MediaPlayerFacade *mPlayerFacade;
     MpdClient *mpdClient;
 public:

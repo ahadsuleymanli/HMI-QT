@@ -13,7 +13,6 @@
 #include <logger/filelogger.h>
 #include <clocksetter.h>
 #include <voicerecognitionservice.h>
-#include "MediaPlayer/mediaplayercontroller.h"
 #include "MediaPlayer/facade.h"
 
 class InitializeMng: public QObject

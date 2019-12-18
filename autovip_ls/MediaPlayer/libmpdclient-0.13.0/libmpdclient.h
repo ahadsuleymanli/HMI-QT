@@ -202,6 +202,7 @@ typedef struct mpd_Status {
 	int updatingDb;
 	/* error */
 	char * error;
+    int single;
 } mpd_Status;
 
 void mpd_sendStatusCommand(mpd_Connection * connection);
@@ -511,6 +512,8 @@ void mpd_sendSeekCurCommand(mpd_Connection * connection, int time);
 void mpd_sendSeekIdCommand(mpd_Connection * connection, int song, int time);
 
 void mpd_sendRepeatCommand(mpd_Connection * connection, int repeatMode);
+
+void mpd_sendSingleModeCommand(mpd_Connection * connection, int singleMode);
 
 void mpd_sendRandomCommand(mpd_Connection * connection, int randomMode);
 

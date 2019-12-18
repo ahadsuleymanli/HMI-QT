@@ -11,7 +11,6 @@
 #include "clocksetter.h"
 #include <QDir>
 #include <nvidiaconnmanager.h>
-#include "MediaPlayer/mediaplayercontroller.h"
 #include "MediaPlayer/facade.h"
 #include <QAudioDeviceInfo>
 #include <QProcess>
@@ -40,7 +39,7 @@ int main(int argc, char *argv[])
     qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
 //    qputenv("QSG_INFO", "1"); // INFO
     changeCD();
-    enableStackTraceDump();
+//    enableStackTraceDump();
 
     QQmlApplicationEngine *engine= new QQmlApplicationEngine(&app);
     SettingsManager *sm = &SettingsManager::instance();

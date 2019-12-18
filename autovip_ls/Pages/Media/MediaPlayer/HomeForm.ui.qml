@@ -58,6 +58,7 @@ Item {
                 id: infoLayout
                 //                width: childrenRect.width
                 //                height: childrenRect.height
+                Layout.maximumWidth: 370
                 Layout.leftMargin: 20
                 Layout.topMargin: 40
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -82,6 +83,7 @@ Item {
                         id: infoYear
                         color: "#959595"
                         text: ""
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         font.pixelSize: 20
                     }
                 }
@@ -210,8 +212,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/design/media/MediaPlayer/shuffle.png"
                     MouseArea {
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.topMargin: -12
+                        anchors.leftMargin: -12
+                        width: parent.width + 24
+                        height:parent.height + 24
                         id: shuffleButton
-                        anchors.fill: parent
                     }
                 }
                 ColorOverlay {
@@ -315,8 +322,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/design/media/MediaPlayer/repeat.png"
                     MouseArea {
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.topMargin: -12
+                        anchors.leftMargin: -12
+                        width: parent.width + 24
+                        height:parent.height + 24
                         id: repeatButton
-                        anchors.fill: parent
                     }
                 }
                 ColorOverlay {

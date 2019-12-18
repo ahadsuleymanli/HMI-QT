@@ -7,7 +7,7 @@
 #include <QThread>
 #include "tracklist.h"
 
-
+//Not user right now
 class MediaPlayerController: public QMediaPlayer
 {
 
