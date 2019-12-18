@@ -57,8 +57,8 @@ bool MpdClient::start()
     updateTimer = new QTimer(this);
     updateTimer->setInterval(1000);
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(update()));
-    update();
     updateTimer->start();
+    update();
     usbMounter = new UsbMounter(this);
     connect(usbMounter, &UsbMounter::usbMounted,this,&MpdClient::addFilesToPlaylist);
     connect(usbMounter, &UsbMounter::usbUnMounted,this,&MpdClient::deletePlaylist);

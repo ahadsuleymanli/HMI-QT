@@ -48,10 +48,11 @@ public slots:
         mpd_finishCommand(conn);
         mpd_sendClearCommand(conn);
         mpd_finishCommand(conn);
-        QTimer::singleShot(150,this,[=]{
-            mpd_sendAddCommand(conn,"/");
-            mpd_finishCommand(conn);
-            update(); });
+        update();
+        updateTimer->stop();
+        mpd_sendAddCommand(conn,"/");
+        mpd_finishCommand(conn);
+        resetUpdateTimer();
 
     }
     void deletePlaylist(){
@@ -60,8 +61,11 @@ public slots:
         mpd_finishCommand(conn);
         mpd_sendUpdateCommand(conn,"");
         mpd_finishCommand(conn);
+        update();
+        updateTimer->stop();
         mpd_sendClearCommand(conn);
         mpd_finishCommand(conn);
+        resetUpdateTimer();
     }
 signals:
     void playingSong(const mpd_Song *new_song, const mpd_Status *status);
@@ -70,7 +74,7 @@ signals:
 
 private:
     void updatePlaylist(long long version);
-
+    void resetUpdateTimer(){updateTimer->setInterval(1000);updateTimer->start();};
     mpd_Connection *conn;
     mpd_Status *status;
     QTimer *updateTimer;
