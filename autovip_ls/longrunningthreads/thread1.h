@@ -1,34 +1,34 @@
-#ifndef THREAD_H
-#define THREAD_H
+#ifndef THREAD1_H
+#define THREAD1_H
 
 #include <QDateTime>
 #include <QObject>
 #include <QThread>
 #include <clocksetter.h>
 #include <QDebug>
-#include <secondthread/datawriter.h>
+#include <longrunningthreads/datawriter.h>
 #include <MediaPlayer/facade.h>
-#include <secondthread/threadutils.h>
-#include <secondthread/cronjobs.h>
+#include <longrunningthreads/threadutils.h>
+#include <longrunningthreads/cronjobs.h>
 
-class SecondThread : public QThread
+class LongRunningThread : public QThread
 {
     DataWriterWorker *dataWriterWorker;
     MediaPlayerFacade *mPlayerFacade;
     MpdClient *mpdClient;
+    QTimer *heartbeatTimer;
 public:
-    SecondThread(ClockSetter *clockSetter,MediaPlayerFacade *mPlayerFacade, QObject* parent = nullptr) : QThread(parent) {
+    LongRunningThread(ClockSetter *clockSetter,MediaPlayerFacade *mPlayerFacade, QObject* parent = nullptr) : QThread(parent) {
         dataWriterWorker = new DataWriterWorker();
+        this->mPlayerFacade=mPlayerFacade;
         clockSetter->setLastPowerOffTime(dataWriterWorker->getLastPowerOffTime());
         dataWriterWorker->moveToThread(this);
-        this->mPlayerFacade=mPlayerFacade;
 
-
-//        cronjobs->moveToThread(this);
-//        connect(this, SIGNAL(started()), cronjobs, SLOT(process()));
-
+        heartbeatTimer = new QTimer(nullptr);
+        heartbeatTimer->start(2000);
+        connect(heartbeatTimer,&QTimer::timeout,dataWriterWorker,&DataWriterWorker::heartBeat,Qt::QueuedConnection);
         connect(clockSetter,&ClockSetter::timeIsSet,dataWriterWorker,&DataWriterWorker::startTimeLogging);
-        connect(this, SIGNAL(started()), dataWriterWorker, SLOT(process()));
+        connect(this, SIGNAL(started()), dataWriterWorker, SLOT(connections()));
         connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
         this->start();
     }
@@ -44,6 +44,6 @@ public:
     }
 
 };
-#endif // THREAD_H
+#endif // THREAD1_H
 
 

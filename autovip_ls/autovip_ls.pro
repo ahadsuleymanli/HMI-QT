@@ -28,7 +28,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     MediaPlayer/libmpdclient-0.13.0/libmpdclient.c \
     MediaPlayer/mpdclient.cpp \
-    secondthread/datawriter.cpp \
+    longrunningthreads/datawriter.cpp \
     LightsMenu/colorcomponents.cpp \
     MediaPlayer/mediaplayercontroller.cpp \
     MediaPlayer/tracklist.cpp \
@@ -71,10 +71,10 @@ SOURCES += \
 HEADERS += \
     MediaPlayer/libmpdclient-0.13.0/libmpdclient.h \
     MediaPlayer/mpdclient.h \
-    secondthread/cronjobs.h \
-    secondthread/datawriter.h \
-    secondthread/thread.h \
-    secondthread/threadutils.h \
+    longrunningthreads/cronjobs.h \
+    longrunningthreads/datawriter.h \
+    longrunningthreads/thread1.h \
+    longrunningthreads/threadutils.h \
     LightsMenu/colorcomponents.h \
     LightsMenu/leftToggleMenuModel.h \
     MediaPlayer/facade.h \

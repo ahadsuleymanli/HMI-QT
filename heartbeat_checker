@@ -1,0 +1,27 @@
+#!/bin/bash
+cd "/home/linaro/autovip"
+LOG_PATH=logs/stderr
+
+ts=$(stat -c '%Y' data.ini)
+sleep 5
+current_ts=$(stat -c '%Y' data.ini)
+while ((current_ts == ts))
+do
+	echo "heartbeat_checker: waiting for the program to start.">>$LOG_PATH
+	sleep 5
+	current_ts=$(stat -c '%Y' data.ini)
+done
+current_time=$(date "+%Y.%m.%d-%H.%M.%S")
+echo "heartbeat_checker: started listening to heartbeat. $current_time">>$LOG_PATH
+while :
+do
+	ts=$(stat -c '%Y' data.ini)
+	sleep 15
+	current_ts=$(stat -c '%Y' data.ini)
+	if ((current_ts == ts)); then
+		current_time=$(date "+%Y.%m.%d-%H.%M.%S")
+		echo "heartbeat_checker: detected no heartbeat, restarting the service. $current_time">>$LOG_PATH
+		service dizaynvip restart		
+		break
+	fi
+done

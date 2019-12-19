@@ -214,10 +214,10 @@ Item {
                     MouseArea {
                         anchors.top: parent.top
                         anchors.left: parent.left
-                        anchors.topMargin: -12
-                        anchors.leftMargin: -12
-                        width: parent.width + 24
-                        height:parent.height + 24
+                        anchors.topMargin: -16
+                        anchors.leftMargin: -16
+                        width: parent.width + 32
+                        height:parent.height + 32
                         id: shuffleButton
                     }
                 }
@@ -324,10 +324,10 @@ Item {
                     MouseArea {
                         anchors.top: parent.top
                         anchors.left: parent.left
-                        anchors.topMargin: -12
-                        anchors.leftMargin: -12
-                        width: parent.width + 24
-                        height:parent.height + 24
+                        anchors.topMargin: -16
+                        anchors.leftMargin: -16
+                        width: parent.width + 32
+                        height:parent.height + 32
                         id: repeatButton
                     }
                 }

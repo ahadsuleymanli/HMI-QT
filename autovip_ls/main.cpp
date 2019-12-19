@@ -15,8 +15,8 @@
 #include <QAudioDeviceInfo>
 #include <QProcess>
 #include "tools/logstacktrace.h"
-#include "secondthread/thread.h"
-#include "secondthread/threadutils.h"
+#include "longrunningthreads/thread1.h"
+#include "longrunningthreads/threadutils.h"
 
 bool changeCD()
 {
@@ -29,7 +29,8 @@ bool changeCD()
 
 int main(int argc, char *argv[])
 {
-    ThreadUtils::assign_to_n_cores(2,(pthread_t)QThread::currentThreadId());
+//    ThreadUtils::assign_to_n_cores(3,(pthread_t)QThread::currentThreadId());
+    ThreadUtils::pin_to_core(2,(pthread_t)QThread::currentThreadId());
     //qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
@@ -46,11 +47,11 @@ int main(int argc, char *argv[])
     Translator *mTrans = new Translator(&app);
     InitializeMng* imng = new InitializeMng(&app);
     SerialMng *smng = new SerialMng(&app);
-//    FileLogger *flogger = new FileLogger(sm->getSettings(),10000,&app);
+    FileLogger *flogger = new FileLogger(sm->getSettings(),10000,&app);
     ClockSetter *csetter = new ClockSetter(&app);
     qDebug()<<"main called from: "<<QThread::currentThreadId();
     MediaPlayerFacade *mPlayerFacade = new MediaPlayerFacade(&app);
-    SecondThread secondthread(csetter, mPlayerFacade);
+    LongRunningThread longrunningThread1(csetter, mPlayerFacade);
     csetter->start();
 
     NvidiaConnManager *nvidiaConnManager = new NvidiaConnManager(1234, smng, sm, &app);
@@ -71,8 +72,6 @@ int main(int argc, char *argv[])
     else {
         qDebug()<<"main.cpp: initializemng succeeded";
     }
-//    CronJobs *cronjobs = new CronJobs();
-//    cronjobs->process();
     return app.exec();
 }
 
