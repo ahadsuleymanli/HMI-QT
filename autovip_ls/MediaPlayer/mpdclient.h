@@ -2,16 +2,95 @@
 #define MPDCLIENT_H
 
 #include <QObject>
+#include <QList>
+#include <QMediaObject>
+#include "libmpdclient-0.13.0/libmpdclient.h"
+#include "usbmounter.h"
+#include <iostream>
+#include <QDebug>
+typedef QList<mpd_Song*> mpd_Song_List;
 
 class MpdClient : public QObject
 {
     Q_OBJECT
 public:
     explicit MpdClient(QObject *parent = nullptr);
+    bool start();
+    const mpd_Song* currentSong() const;
+    QList<mpd_Song*> getPlaylist(){return playlist;}
+    void getMediaMetadata(){
 
-signals:
-
+    }
 public slots:
+    void playIndex(int idx);
+    void playPause();
+    void next();
+    void prev();
+    void seekCurrent(int time);
+    void toggleRandom(){
+        if (status->random)
+            mpd_sendRandomCommand(conn,0);
+        else
+            mpd_sendRandomCommand(conn,1);
+        mpd_finishCommand(conn);
+        update();
+    }
+    void toggleRepeat(){
+        if (!status->repeat && !status->single)
+            mpd_sendRepeatCommand(conn,1);
+        else if (status->repeat && !status->single)
+            mpd_sendSingleModeCommand(conn,1);
+        else{
+            mpd_sendSingleModeCommand(conn,0);
+            mpd_finishCommand(conn);
+            mpd_sendRepeatCommand(conn,0);
+        }
+        mpd_finishCommand(conn);
+        update();
+    }
+    void update();
+    void addFilesToPlaylist(){
+        qDebug()<<"add to playlist";
+        mpd_sendUpdateCommand(conn,"");
+        mpd_finishCommand(conn);
+        mpd_sendClearCommand(conn);
+        mpd_finishCommand(conn);
+        update();
+        updateTimer->stop();
+        mpd_finishCommand(conn);
+        mpd_sendAddCommand(conn,"/");
+        mpd_finishCommand(conn);
+        resetUpdateTimer(3000);
+
+    }
+    void deletePlaylist(){
+        qDebug()<<"delete playlist";
+        mpd_sendStopCommand(conn);
+        mpd_finishCommand(conn);
+        mpd_sendUpdateCommand(conn,"");
+        mpd_finishCommand(conn);
+        update();
+        updateTimer->stop();
+        mpd_finishCommand(conn);
+        mpd_sendClearCommand(conn);
+        mpd_finishCommand(conn);
+        resetUpdateTimer(1000);
+    }
+signals:
+    void playingSong(const mpd_Song *new_song, const mpd_Status *status);
+    void changedSong(const mpd_Song *new_song);
+    void changedPlaylist(const QList<mpd_Song*> *playlist);
+
+private:
+    void updatePlaylist(long long version);
+    void resetUpdateTimer(int duration){updateTimer->setInterval(duration);updateTimer->start();};
+    mpd_Connection *conn;
+    mpd_Status *status;
+    QTimer *updateTimer;
+    QList<mpd_Song*> playlist;
+    UsbMounter *usbMounter;
 };
+
+//extern MpdClient *mpdclient;
 
 #endif // MPDCLIENT_H

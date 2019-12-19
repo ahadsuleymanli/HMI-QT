@@ -11,8 +11,8 @@ class UsbMounter: public QObject
 {
      Q_OBJECT
     QFileSystemWatcher devWatcher;
-    QProcess* chkproc = new QProcess();
-    QProcess* mountProcess = new QProcess();
+    QProcess* chkproc;
+    QProcess* mountProcess;
     QTimer devChangeTimer;
     QStringList mountedPaths = {};
     QString prev_blkid = "";

@@ -44,17 +44,17 @@ Rectangle {
     }
 
     Timer {
-        interval: 100
+        interval: 50
         repeat: true
         running: root.visible
         onTriggered: {
-            fps = frameCounter*10;
+            fps = frameCounter*20;
             frameCounterAvg += fps;
             if (!(fps>root.fpsAvg))
                 root.dippingFps = fps;
             counter++;
             frameCounter = 0;
-            if (counter >= 12) {
+            if (counter >= 24) {
                 root.fpsAvg = frameCounterAvg/(counter)
                 frameCounterAvg = 0;
                 counter = 0;

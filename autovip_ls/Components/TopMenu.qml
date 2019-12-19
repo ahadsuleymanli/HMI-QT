@@ -7,15 +7,22 @@ Image {
         y : 0
         width: 1024
         height: 160
+        Timer {
+            id : timer
+            interval: 250; running: true; repeat: true
+            onTriggered: function() {
+                topMenuDate.date = topMenuClock.date = csetter.getAdjustedTime();
+            }
+        }
         DDate{
-            id:topDate
+            id:topMenuDate
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 30
             anchors.rightMargin: 29
         }
-
         DigitalClock {
+            id:topMenuClock
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 63

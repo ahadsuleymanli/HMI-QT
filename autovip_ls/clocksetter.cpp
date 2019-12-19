@@ -9,6 +9,7 @@ const int LAG_CHECK_TIME = 60;
 ClockSetter::ClockSetter(QObject *parent) :
     QObject (parent)
 {
+    timeLagDetectorTimer = new QTimer(this);
     this->minDiff = sm->value("timedate/mindiff").toInt();
     this->hourDiff = sm->value("timedate/hourdiff").toInt();
     this->dayDiff = sm->value("timedate/daydiff").toInt();
@@ -45,8 +46,8 @@ void ClockSetter::start(){
         qDebug()<<"hwTimeOffsetIsZero, setting offsets using current time";
         updateHwClockOffset();
     }
-    this->timeLagDetectorTimer.setInterval(LAG_CHECK_TIME*1000);
-    connect(&timeLagDetectorTimer,&QTimer::timeout,this,[=](){
+    this->timeLagDetectorTimer->setInterval(LAG_CHECK_TIME*1000);
+    connect(timeLagDetectorTimer,&QTimer::timeout,this,[=](){
         QDateTime current = QDateTime::currentDateTimeUtc();
         qint64 lag = lastCheckedTime.secsTo(current);
         lastCheckedTime = current;
@@ -55,7 +56,7 @@ void ClockSetter::start(){
             updateHwClockOffset(true);
         }
     });
-    timeLagDetectorTimer.stop();
+    timeLagDetectorTimer->stop();
 }
 
 void ClockSetter::parseSystemTimes(QString queryString, DateTime *sysTime, DateTime *rtc, DateTime *offset){
@@ -165,7 +166,7 @@ void ClockSetter::setLocalTimeFromOffset(){
         [=](int exitCode, QProcess::ExitStatus exitStatus){
         ntpReSetter->start("/bin/sh", QStringList() << "-c" << "timedatectl set-ntp true");
         lastCheckedTime=QDateTime::currentDateTimeUtc();
-        timeLagDetectorTimer.start();
+        timeLagDetectorTimer->start();
         emit timeIsSet();
         timeSetter->deleteLater();
     });

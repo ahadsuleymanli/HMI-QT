@@ -47,7 +47,6 @@ Window {
         onIntroDone: bgAnimPlay()
     }
     function bgSelect(){
-        console.log("bganim value"+SM.value("graphics/bganim"));
         if (SM.bganim()){
             bganim.source="qrc:/design/general/background.gif"
             bganim.visible=true

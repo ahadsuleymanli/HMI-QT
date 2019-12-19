@@ -14,13 +14,13 @@ BasePage {
 
     property string audioPositionStr: {
         var pos = mPlayerBackend.position
-        var posMin = Math.floor(pos / 60000)
-        var posSec = Math.floor(pos / 1000 - posMin * 60)
+        var posMin = Math.floor(pos / 60)
+        var posSec = Math.floor(pos / 1 - posMin * 60)
         return posMin + ":" + (posSec < 10 ? "0" + posSec : posSec);
     }
     property string audioDurationStr: {
-        var durMin = Math.floor(mPlayerBackend.duration / 60000)
-        var durSec = Math.floor(mPlayerBackend.duration / 1000 - durMin * 60)
+        var durMin = Math.floor(mPlayerBackend.duration / 60)
+        var durSec = Math.floor(mPlayerBackend.duration / 1 - durMin * 60)
         return durMin + ":" + (durSec < 10 ? "0" + durSec : durSec);
     }
     Component.onCompleted: {

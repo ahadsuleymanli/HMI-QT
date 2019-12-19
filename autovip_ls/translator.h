@@ -13,7 +13,7 @@ class Translator : public QObject
     Q_PROPERTY(QString emptyString READ getEmptyString NOTIFY languageChanged)
 
 public:
-    Translator(QGuiApplication* app) { mApp = app; }
+    Translator(QGuiApplication* app): QObject(app) { mApp = app; }
 
     QString getEmptyString() { return ""; }
 

@@ -1,8 +1,8 @@
 pragma Singleton
 import QtQuick 2.0
 import "scripts/mainfuncs.js" as MainMdl
-import "scripts/simplex-noise.js" as SimplexMdl
-import "scripts/ether.js" as Ether
+//import "scripts/simplex-noise.js" as SimplexMdl
+//import "scripts/ether.js" as Ether
 import QtWebSockets 1.0
 import VRService 1.0
 import QtQml 2.0
@@ -481,11 +481,11 @@ Item {
         return -1;
     }
 
-    function initAnim(a,b)
-    {
-        Ether.setup(a,b);
-        aniInited = true;
-    }
+//    function initAnim(a,b)
+//    {
+//        Ether.setup(a,b);
+//        aniInited = true;
+//    }
     function isContextReady(a,b)
     {
         var acon = a.getContext("2d");
@@ -496,10 +496,10 @@ Item {
         }
         return false;
     }
-    function drawAnim()
-    {
-        Ether.draw();
-    }
+//    function drawAnim()
+//    {
+//        Ether.draw();
+//    }
     function randRect(item)
     {
             var ctx = item.getContext("2d");

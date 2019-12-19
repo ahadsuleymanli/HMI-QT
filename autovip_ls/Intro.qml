@@ -8,18 +8,19 @@ Rectangle {
     signal introDone()
     MediaPlayer {
         id: player
-        source: "qrc:/design/general/intro.mp4"
+        source: "file:///"+workingDirPath+"/intro.mp4"
         onStopped:{
             root.visible = false;
             if(serial_mng.isConnected())
             {
                 serial_mng.sendKey("main/system_request");
             }
+            source=""
         }
     }
      Timer {
         id:timer
-        interval: 4250; running: false; repeat: false
+        interval: 4500; running: false; repeat: false
         onTriggered: {hideme.running=true;}
     }
     VideoOutput {
@@ -41,7 +42,6 @@ Rectangle {
         onRunningChanged: {
             if (!running){
                 introDone();
-                player.stop();
             }
         }
     }

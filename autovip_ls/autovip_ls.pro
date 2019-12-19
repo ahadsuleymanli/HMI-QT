@@ -22,13 +22,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-DEPENDPATH += . libmpdclient-0.13.0
-INCLUDEPATH += . libmpdclient-0.13.0
+#DEPENDPATH += . libmpdclient-0.13.0
+#INCLUDEPATH += . libmpdclient-0.13.0
 
 SOURCES += \
     MediaPlayer/libmpdclient-0.13.0/libmpdclient.c \
     MediaPlayer/mpdclient.cpp \
-    secondthread/datawriter.cpp \
+    longrunningthreads/datawriter.cpp \
     LightsMenu/colorcomponents.cpp \
     MediaPlayer/mediaplayercontroller.cpp \
     MediaPlayer/tracklist.cpp \
@@ -62,7 +62,6 @@ SOURCES += \
     logger/filelogger.cpp \
     logger/logger.cpp \
     logger/logmessage.cpp \
-    cronjobs.cpp \
     clocksetter.cpp \
     updatecheck.cpp \
     voicerecognitionservice.cpp \
@@ -72,9 +71,10 @@ SOURCES += \
 HEADERS += \
     MediaPlayer/libmpdclient-0.13.0/libmpdclient.h \
     MediaPlayer/mpdclient.h \
-    secondthread/datawriter.h \
-    secondthread/thread.h \
-    secondthread/threadutils.h \
+    longrunningthreads/cronjobs.h \
+    longrunningthreads/datawriter.h \
+    longrunningthreads/thread1.h \
+    longrunningthreads/threadutils.h \
     LightsMenu/colorcomponents.h \
     LightsMenu/leftToggleMenuModel.h \
     MediaPlayer/facade.h \
@@ -116,7 +116,6 @@ HEADERS += \
     logger/logger.h \
     logger/logglobal.h \
     logger/logmessage.h \
-    cronjobs.h \
     clocksetter.h \
     updatecheck.h \
     voicerecognitionservice.h \

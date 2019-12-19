@@ -202,6 +202,7 @@ typedef struct mpd_Status {
 	int updatingDb;
 	/* error */
 	char * error;
+    int single;
 } mpd_Status;
 
 void mpd_sendStatusCommand(mpd_Connection * connection);
@@ -457,6 +458,8 @@ void mpd_sendListCommand(mpd_Connection * connection, int table,
 
 /* SIMPLE COMMANDS */
 
+//void mpd_sendAddAllCommand(mpd_Connection * connection);
+
 void mpd_sendAddCommand(mpd_Connection * connection, const char * file);
 
 int mpd_sendAddIdCommand(mpd_Connection *connection, const char *file);
@@ -480,7 +483,8 @@ void mpd_sendClearCommand(mpd_Connection * connection);
 
 /* use this to start playing at the beginning, useful when in random mode */
 #define MPD_PLAY_AT_BEGINNING	-1
-
+void mpd_sendPlayCommand2(mpd_Connection * connection);
+void mpd_sendPauseCommand2(mpd_Connection * connection);
 void mpd_sendPlayCommand(mpd_Connection * connection, int songNum);
 
 void mpd_sendPlayIdCommand(mpd_Connection * connection, int songNum);
@@ -503,9 +507,13 @@ void mpd_sendSwapIdCommand(mpd_Connection * connection, int song1, int song2);
 
 void mpd_sendSeekCommand(mpd_Connection * connection, int song, int time);
 
+void mpd_sendSeekCurCommand(mpd_Connection * connection, int time);
+
 void mpd_sendSeekIdCommand(mpd_Connection * connection, int song, int time);
 
 void mpd_sendRepeatCommand(mpd_Connection * connection, int repeatMode);
+
+void mpd_sendSingleModeCommand(mpd_Connection * connection, int singleMode);
 
 void mpd_sendRandomCommand(mpd_Connection * connection, int randomMode);
 

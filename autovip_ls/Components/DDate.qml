@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.1
 import ck.gmachine 1.0
 
 Rectangle {
-    id : ddate
     property date date
 
     antialiasing: true
@@ -12,15 +11,6 @@ Rectangle {
     height: spinnerLayout.height
 
     color : "transparent"
-
-    Timer {
-        id : timer
-        interval: 500; running: true; repeat: true
-        onTriggered: function() {
-            ddate.date = csetter.getAdjustedTime();
-        }
-    }
-
     RowLayout {
         id : spinnerLayout
         spacing: 2
@@ -31,7 +21,7 @@ Rectangle {
             color:"#CFD1D2"
             font.family: GSystem.centurygothic.name
             font.pixelSize: 26
-            text: ddate.date.toLocaleDateString(Qt.locale(),"dd MMM yyyy")
+            text: date.toLocaleDateString(Qt.locale(),"dd MMM yyyy")
         }
         //Rectangle { color : "white"; width: 2; height: 50 }
         //Spinner { max: 60; value: date.getMinutes(); }

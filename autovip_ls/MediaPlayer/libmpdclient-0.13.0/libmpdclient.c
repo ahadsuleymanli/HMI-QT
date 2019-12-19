@@ -686,6 +686,7 @@ mpd_Status * mpd_getStatus(mpd_Connection * connection) {
 	status->crossfade = -1;
 	status->error = NULL;
 	status->updatingDb = 0;
+    status->single = 0;
 
 	if(connection->error) {
 		free(status);
@@ -702,6 +703,9 @@ mpd_Status * mpd_getStatus(mpd_Connection * connection) {
 		else if(strcmp(re->name,"random")==0) {
 			status->random = atoi(re->value);
 		}
+        else if(strcmp(re->name,"single")==0) {
+            status->single = atoi(re->value);
+        }
 		else if(strcmp(re->name,"playlist")==0) {
 			status->playlist = strtol(re->value,NULL,10);
 		}
@@ -1465,7 +1469,12 @@ void mpd_sendPlayIdCommand(mpd_Connection * connection, int id) {
 void mpd_sendStopCommand(mpd_Connection * connection) {
 	mpd_executeCommand(connection,"stop\n");
 }
-
+void mpd_sendPlayCommand2(mpd_Connection * connection) {
+    mpd_executeCommand(connection,"play\n");
+}
+void mpd_sendPauseCommand2(mpd_Connection * connection) {
+    mpd_executeCommand(connection,"pause\n");
+}
 void mpd_sendPauseCommand(mpd_Connection * connection, int pauseMode) {
 	int len = strlen("pause")+2+INTLEN+3;
 	char *string = malloc(len);
@@ -1518,6 +1527,14 @@ void mpd_sendSeekCommand(mpd_Connection * connection, int song, int time) {
 	free(string);
 }
 
+void mpd_sendSeekCurCommand(mpd_Connection * connection, int time) {
+    int len = strlen("seekcur")+2+INTLEN+3;
+    char *string = malloc(len);
+    snprintf(string, len, "seekcur \"%i\"\n", time);
+    mpd_sendInfoCommand(connection,string);
+    free(string);
+}
+
 void mpd_sendSeekIdCommand(mpd_Connection * connection, int id, int time) {
 	int len = strlen("seekid")+2+INTLEN+3+INTLEN+3;
 	char *string = malloc(len);
@@ -1559,6 +1576,13 @@ void mpd_sendRepeatCommand(mpd_Connection * connection, int repeatMode) {
 	snprintf(string, len, "repeat \"%i\"\n", repeatMode);
 	mpd_executeCommand(connection,string);
 	free(string);
+}
+void mpd_sendSingleModeCommand(mpd_Connection * connection, int singleMode) {
+    int len = strlen("single")+2+INTLEN+3;
+    char *string = malloc(len);
+    snprintf(string, len, "single \"%i\"\n", singleMode);
+    mpd_executeCommand(connection,string);
+    free(string);
 }
 
 void mpd_sendRandomCommand(mpd_Connection * connection, int randomMode) {
