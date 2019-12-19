@@ -585,8 +585,6 @@ Item {
             ,
                 "Radio"
             ,
-                "RadioManual"
-            ,
                 "Tables"
             ,
                 "Refrigerator"

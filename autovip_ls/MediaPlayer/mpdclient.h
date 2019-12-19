@@ -49,8 +49,11 @@ public slots:
         update();
     }
     void update();
+
+//https://www.musicpd.org/doc/html/protocol.html try a command_list_begin
     void addFilesToPlaylist(){
         qDebug()<<"add to playlist";
+        mpd_sendCommandListBegin(conn);
         mpd_sendUpdateCommand(conn,"");
         mpd_finishCommand(conn);
         mpd_sendClearCommand(conn);

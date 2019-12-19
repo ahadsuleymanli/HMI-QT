@@ -5,6 +5,8 @@ import "Pages/Seat" as SeatPages
 import "Pages/Curtains" as CurtainPages
 import "Pages/Controls" as ControlPages
 import "Pages/Media" as MediaPages
+import "Pages/Media/Radio" as MediaPagesRadio
+import "Pages/Media/MediaPlayer" as MediaPagesMediaPlayer
 import "Pages/Settings" as SettingsPages
 import "Pages/Lights" as LightPages
 import "Components"
@@ -43,13 +45,10 @@ Item {
         id:lights
     }
 
-    MediaPages.Radio{
+    MediaPagesRadio.Radio{
         id:radio
     }
 
-    MediaPages.RadioManual{
-        id:radiomanual
-    }
     MediaPages.DVDPlayer{
         id:dvdplayer
     }
@@ -205,7 +204,7 @@ Item {
     MediaPages.PcHdmi{
         id:pchdmi
     }
-    MediaPages.MediaPlayer{
+    MediaPagesMediaPlayer.MediaPlayer{
         id:mediaplayer
     }
 
@@ -297,7 +296,6 @@ Item {
         GSystem.addPageItem("Media",media);
         GSystem.addPageItem("Lights",lights);
         GSystem.addPageItem("Radio",radio);
-        GSystem.addPageItem("RadioManual",radiomanual);
         GSystem.addPageItem("Tables",tables);
         GSystem.addPageItem("Refrigerator",refrigerator);
         GSystem.addPageItem("SafeBox",safebox);

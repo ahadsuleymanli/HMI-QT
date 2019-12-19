@@ -4,12 +4,12 @@ import QtQuick.Layouts 1.3
 import QtMultimedia 5.11
 import QtQuick.Controls.Material 2.3
 import ck.gmachine 1.0
-import "../../Components"
+import "../../../Components"
 import QtGraphicalEffects 1.0
 
 BasePage {
     id:root
-    caption: qsTr("MEDIA") + mytrans.emptyString
+    caption: qsTr("MEDIA PLAYER") + mytrans.emptyString
     pageName: "MediaPlayer"
 
     property string audioPositionStr: {
@@ -80,7 +80,7 @@ BasePage {
             Loader{
                 id: formLoader
                 anchors.fill: parent
-                source:"MediaPlayer/Home.qml"
+                source:"Home.qml"
             }
         }
         Rectangle{
@@ -132,7 +132,7 @@ BasePage {
                     MouseArea{
                         id: homeArea
                         anchors.fill: parent
-                        onClicked: formLoader.source = "MediaPlayer/Home.qml"
+                        onClicked: formLoader.source = "Home.qml"
                     }
                 }
                 RowLayout{
@@ -198,7 +198,7 @@ BasePage {
                     MouseArea{
                         id: libraryArea
                         anchors.fill: parent
-                        onClicked: formLoader.source = "MediaPlayer/Library.qml"
+                        onClicked: formLoader.source = "Library.qml"
                     }
                 }
 

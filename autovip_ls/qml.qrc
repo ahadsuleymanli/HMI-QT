@@ -441,11 +441,13 @@
         <file>design/media/MediaPlayer/repeat_1.png</file>
         <file>design/media/MediaPlayer/DizaynVIP_Audio_Labs.png</file>
         <file>design/media/MediaPlayer/repeat_all.png</file>
-        <file>Pages/Media/MediaPlayer.qml</file>
+        <file>Pages/Media/MediaPlayer/MediaPlayer.qml</file>
         <file>Pages/Media/Radio/Radio.qml</file>
         <file>Components/FpsDisplay.qml</file>
         <file>design/general/background.gif</file>
         <file>design/general/background_test.gif</file>
         <file>design/general/background_anim_bg.png</file>
+        <file>Pages/Media/Radio/Buttons.qml</file>
+        <file>design/radio/reference_1.png</file>
     </qresource>
 </RCC>
