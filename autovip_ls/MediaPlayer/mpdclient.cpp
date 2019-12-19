@@ -83,8 +83,12 @@ void MpdClient::next(){
     }
     mpd_sendNextCommand(conn);
     mpd_finishCommand(conn);
-    if (status->state!=2)
-        mpd_sendStopCommand(conn);
+    if (status->state!=2){
+        mpd_sendPauseCommand(conn,1);
+        mpd_finishCommand(conn);
+        mpd_sendSeekCurCommand(conn,0);
+        mpd_finishCommand(conn);
+    }
     update();
 }
 void MpdClient::prev(){
@@ -94,8 +98,12 @@ void MpdClient::prev(){
     }
     mpd_sendPrevCommand(conn);
     mpd_finishCommand(conn);
-    if (status->state!=2)
-        mpd_sendStopCommand(conn);
+    if (status->state!=2){
+        mpd_sendPauseCommand(conn,1);
+        mpd_finishCommand(conn);
+        mpd_sendSeekCurCommand(conn,0);
+        mpd_finishCommand(conn);
+    }
     update();
 }
 void MpdClient::playPause(){
@@ -107,6 +115,10 @@ void MpdClient::playPause(){
 
 }
 void MpdClient::seekCurrent(int time){
+    if (status->state!=2 && status->state!=3){
+        mpd_sendPauseCommand(conn,1);
+        mpd_finishCommand(conn);
+    }
     mpd_sendSeekCurCommand(conn,time);
     update();
 }
@@ -189,7 +201,13 @@ void MpdClient::updatePlaylist(long long version)
         playlist.removeAt(i);
 //        emit changedSong(NULL);
     }
-
+    if (status->state!=2 && status->state!=3){
+        mpd_sendPlayCommand2(conn);
+        mpd_finishCommand(conn);
+        mpd_sendPauseCommand(conn,1);
+        mpd_finishCommand(conn);
+        mpd_sendSeekCurCommand(conn,0);
+    }
     emit changedPlaylist(&playlist);
 
 }
