@@ -53,7 +53,6 @@ public slots:
 //https://www.musicpd.org/doc/html/protocol.html try a command_list_begin
     void addFilesToPlaylist(){
         qDebug()<<"add to playlist";
-        mpd_sendCommandListBegin(conn);
         mpd_sendUpdateCommand(conn,"");
         mpd_finishCommand(conn);
         mpd_sendClearCommand(conn);
@@ -91,7 +90,7 @@ private:
     mpd_Status *status;
     QTimer *updateTimer;
     QList<mpd_Song*> playlist;
-    UsbMounter *usbMounter;
+    UsbMounter *usbMounter = nullptr;
 };
 
 //extern MpdClient *mpdclient;

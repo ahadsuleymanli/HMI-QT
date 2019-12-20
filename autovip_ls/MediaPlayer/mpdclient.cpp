@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <QTimer>
 #include <QDebug>
+#include <QThread>
 #define error(str) \
     std::cerr << __FILE__ ":" << __LINE__ << ": " << str << std::endl
 static const mpd_Song _NULL_SONG = {
@@ -32,7 +33,9 @@ MpdClient::MpdClient(QObject *parent) : QObject(parent)
 }
 
 bool MpdClient::start()
-{   qDebug()<<"starting mdpclient";
+{
+    if (usbMounter == nullptr)
+        usbMounter = new UsbMounter(this);
     char *host = getenv("MPD_HOST");
     char *port = getenv("MPD_PORT");
     qDebug()<<"getenv finished";
@@ -40,7 +43,6 @@ bool MpdClient::start()
         host = "localhost";
     if (port == nullptr)
         port = "6600";
-
     conn = mpd_newConnection(host, atoi(port), 10);
     qDebug()<<"conn created";
     if (!conn){
@@ -49,7 +51,7 @@ bool MpdClient::start()
     }
     if (conn->error) {
         error(conn->errorStr);
-        qDebug()<<"Mpdcliend connection error";
+        qDebug()<<"mpdc connection error";
         return false;
     }
     mpd_finishCommand(conn);
@@ -59,9 +61,9 @@ bool MpdClient::start()
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(update()));
     updateTimer->start();
     update();
-    usbMounter = new UsbMounter(this);
     connect(usbMounter, &UsbMounter::usbMounted,this,&MpdClient::addFilesToPlaylist);
     connect(usbMounter, &UsbMounter::usbUnMounted,this,&MpdClient::deletePlaylist);
+
     emit usbMounter->readyToCheck(false);
     return true;
 }

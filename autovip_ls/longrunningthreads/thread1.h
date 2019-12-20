@@ -34,10 +34,10 @@ public:
     }
     void run(){
         ThreadUtils::stick_this_thread_to_core(3);
-        mpdClient = new MpdClient;
+        mpdClient = new MpdClient(this);
         bool mpdStarted = mpdClient->start();
         if (mpdStarted){
-            qDebug()<<"mpd started";
+            qDebug()<<"mpdc started";
             mPlayerFacade->mpdConnections(mpdClient);
         }
         QThread::exec();

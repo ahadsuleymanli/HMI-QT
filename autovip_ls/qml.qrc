@@ -449,5 +449,42 @@
         <file>design/general/background_anim_bg.png</file>
         <file>Pages/Media/Radio/Buttons.qml</file>
         <file>design/radio/reference_1.png</file>
+        <file>design/media/Radio/0.png</file>
+        <file>design/media/Radio/1.png</file>
+        <file>design/media/Radio/2.png</file>
+        <file>design/media/Radio/3.png</file>
+        <file>design/media/Radio/4.png</file>
+        <file>design/media/Radio/5.png</file>
+        <file>design/media/Radio/6.png</file>
+        <file>design/media/Radio/7.png</file>
+        <file>design/media/Radio/8.png</file>
+        <file>design/media/Radio/9.png</file>
+        <file>design/media/Radio/a.png</file>
+        <file>design/media/Radio/am.png</file>
+        <file>design/media/Radio/b.png</file>
+        <file>design/media/Radio/background.png</file>
+        <file>design/media/Radio/button.png</file>
+        <file>design/media/Radio/c.png</file>
+        <file>design/media/Radio/d.png</file>
+        <file>design/media/Radio/dab.png</file>
+        <file>design/media/Radio/enter.png</file>
+        <file>design/media/Radio/equalizer.png</file>
+        <file>design/media/Radio/fav.png</file>
+        <file>design/media/Radio/fm.png</file>
+        <file>design/media/Radio/frequency.png</file>
+        <file>design/media/Radio/frequency2.png</file>
+        <file>design/media/Radio/line.png</file>
+        <file>design/media/Radio/Pause.png</file>
+        <file>design/media/Radio/point.png</file>
+        <file>design/media/Radio/Power.png</file>
+        <file>design/media/Radio/Power2.png</file>
+        <file>design/media/Radio/presets.png</file>
+        <file>design/media/Radio/radio.png</file>
+        <file>design/media/Radio/slider.png</file>
+        <file>design/media/Radio/presets_bg.png</file>
+        <file>Pages/Media/Radio/Button.qml</file>
+        <file>design/media/Radio/button_.png</file>
+        <file>Pages/Media/Radio/NumpadButton.qml</file>
+        <file>design/media/Radio/button_pressed.png</file>
     </qresource>
 </RCC>
