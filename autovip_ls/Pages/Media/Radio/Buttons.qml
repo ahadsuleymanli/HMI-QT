@@ -5,10 +5,10 @@ import QtGraphicalEffects 1.0
 import "../Radio"
 Item {
     id: root
-    y:227
-    x:0
-    height: parent.height - 227 - 8
-    width: parent.width
+//    y:227
+//    x:0
+//    height: parent.height - 227 - 8
+//    width: parent.width
     property int btnLongTextSize: 18
     GridLayout {
         id: numpad
@@ -38,7 +38,7 @@ Item {
         width: 275
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 8
-        property int btnWidth: 86
+        property int btnWidth: 72 //86
         property int btnHeight: 72
         RowLayout{
             height: centerBtns.btnHeight
@@ -63,42 +63,39 @@ Item {
             Button{width: centerBtns.btnWidth;height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/b.png"}
         }
     }
+
     ColumnLayout {
         id: rightColumn
         x:844
-        height: 280
+
+        height: 280 + 8
         width: 122
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 2
-        Item{height: 60; width: 120;}
-        Item{height: 60; width: 120;}
-        Item{height: 60; width: 120;}
-        Button{text.text: "PRESETS" ;text.font.pixelSize:root.btnLongTextSize;}
+        Item {height: 60; width: 120;
+            Button{id:fmButton;text.text: "FM";text.font.pixelSize:root.btnLongTextSize;}
+        }
+        Item {height: 60; width: 120;
+            Button{id:amButton;height: 60; width: 120; text.text: "AM";text.font.pixelSize:root.btnLongTextSize;}
+        }
+        Item {height: 60; width: 120;
+            Button{id:dabButton;height: 60; width: 120; text.text: "DAB";text.font.pixelSize:root.btnLongTextSize;}
+        }
+        Item {height: 60; width: 120;
+            Button{text.text: "PRESETS" ;text.font.pixelSize:root.btnLongTextSize;}
+        }
+
+
+
+
     }
 
 
-    RowLayout{
-        visible: false
-        id: buttonsRowLayout
-        y:227
-        x:0
-        height: parent.height - 227 - 8
-    //            width: children.width
-        width: parent.width
-    //            Layout.leftMargin: 50
-    //            Layout.rightMargin: 50
-    //            anchors.horizontalCenter: parent.horizontalCenter
-        Rectangle {
-
-            x:100
-    //                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-    //                anchors.centerIn: parent
-            width: 395
-            height: 227
-            color: "#550000ff"
-    //                visible: false
-        }
-        spacing: 6
+    Component.onCompleted: {
+        fmButton.setInactive()
+        amButton.setInactive()
+        dabButton.setInactive()
+        //enable disable buttons here
     }
 
 }

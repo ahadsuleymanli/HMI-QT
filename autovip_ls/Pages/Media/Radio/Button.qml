@@ -6,13 +6,20 @@ Item {
     property alias mouseArea: mouseArea
     property alias image: image
     property bool pressed: false
+    property bool inactive: false
     height: 60
     width: 120
+    function setInactive(){
+//        root.enabled=false
+        levelAdjust.maximumOutput= "#ffcccccc"
+        text.color="#ffa9a9a9"
+    }
     Image{
         id:image
         anchors.fill: parent
         source: "qrc:/design/media/Radio/button_.png"
         LevelAdjust {
+            id:levelAdjust
             anchors.fill: image
             source: image
             minimumOutput: "#00000000"
