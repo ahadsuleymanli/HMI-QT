@@ -8,9 +8,11 @@ import "../Radio"
 
 BasePage {
     caption: qsTr("RADIO") + mytrans.emptyString
+    property real minFrequency:87.5
+    property real maxFrequency:108.0
     pageName: "Radio"
     Component.onCompleted: {
-        console.log(radioReference.height + ", " + radioReference.width)
+
     }
     Item {
         id: raioArea
@@ -18,25 +20,6 @@ BasePage {
         y: contentTopMargin
         height: parent.height - y - contentBottomMargin
         width: parent.width
-//        MouseArea{
-//            id: testMA
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            width: parent.width
-//            height: parent.height
-//            opacity: 0.5
-//            onPressed: radioReference.visible=true
-//            onReleased: radioReference.visible=false
-//        }
-//        Image{
-//            id: radioReference
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            width: parent.width
-//            height: parent.height
-//            source:"qrc:/design/media/Radio/radio.png"
-//            opacity: 0.3
-//            visible: false
-//            z:100
-//        }
         Image{
             id: bg
             anchors.horizontalCenter: parent.horizontalCenter
@@ -50,6 +33,15 @@ BasePage {
             y:8
             height: 210
             width: 1004
+            signal numpadEnterPressed()
+            onNumpadEnterPressed: {
+                frequencySlider.frequency=frequencyText.getFreqText()
+                frequencyText.wholePartAnimation.stop()
+                frequencyText.fractionPartAnimation.stop()
+                buttons.pointPressed=false
+                buttons.numpadNumWhole=0
+                buttons.numpadNumFraction=0
+            }
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -61,33 +53,9 @@ BasePage {
                 anchors.leftMargin: 21
                 anchors.rightMargin: 21
             }
-            Text{
-                id:frequencyText
-                text:frequencySlider.currentFreq
-                font.pixelSize: 50
-                font.family:GSystem.centurygothic.name
-                color: "white"
-                style: Text.Raised;
-                styleColor: "#ffffd700"
-                antialiasing: true
-                smooth: true
-                anchors.right: parent.horizontalCenter
-                anchors.rightMargin: -50//-46
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -2
-                Text{
-                    text:"MHz"
-                    font.pixelSize: 20
-                    font.family:GSystem.centurygothic.name
-                    color: "white"
-                    style: Text.Raised;
-                    styleColor: "#ffffd700"
-                    antialiasing: true
-                    smooth: true
-                    anchors.left: parent.right
-                    anchors.top: parent.verticalCenter
-                    anchors.topMargin: -2
-                }
+            FrequencyText{
+                id: frequencyText
+                anchors.fill: parent
             }
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -104,13 +72,13 @@ BasePage {
                 source: "qrc:/design/media/Radio/line.png"
             }
         }
-
         Buttons{
             id:buttons
             y:227
             x:0
             height: parent.height - 227 - 8
             width: parent.width
+
         }
     }
 

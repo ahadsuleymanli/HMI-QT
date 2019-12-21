@@ -5,10 +5,24 @@ Button {
     text.text: number
     mouseArea.onPressed: {
         pressed=true;
-        numpad.numPadInput(number)
+        numpad.numPadInput(number);
+        if (!pointPressed){
+            frequencyText.wholePartCO.visible=true
+            frequencyText.wholePartAnimation.pause()
+        }
+        else{
+            frequencyText.fractionPartCO.visible=true
+            frequencyText.fractionPartAnimation.pause()
+        }
     }
     mouseArea.onReleased: {
         pressed=false;
+        frequencyText.wholePartCO.visible=false
+        frequencyText.fractionPartCO.visible=false
+        if (frequencyText.fractionPartAnimation.paused)
+            frequencyText.fractionPartAnimation.restart()
+        if (frequencyText.wholePartAnimation.paused)
+            frequencyText.wholePartAnimation.restart()
     }
 
 }

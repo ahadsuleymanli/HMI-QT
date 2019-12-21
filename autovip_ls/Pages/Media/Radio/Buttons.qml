@@ -5,15 +5,10 @@ import QtGraphicalEffects 1.0
 import "../Radio"
 Item {
     id: root
-//    y:227
-//    x:0
-//    height: parent.height - 227 - 8
-//    width: parent.width
     readonly property int btnLongTextSize: 18
     property int numpadNumWhole: 0
     property int numpadNumFraction: 0
     property bool pointPressed: false
-    signal numpadEnterPressed
     GridLayout {
         id: numpad
         x:42 - 4
@@ -25,19 +20,25 @@ Item {
         function numPadInput(num){
             if (pointPressed){
                 root.numpadNumFraction=num;
+                frequencyText.fractionPartAnimation.restart()
+            }else{
+                frequencyText.fractionPartAnimation.stop()
+                frequencyText.wholePartAnimation.restart()
+                if (root.numpadNumWhole==0){
+                    root.numpadNumWhole=num;
+                }
+                else if (root.numpadNumWhole<10){
+                    root.numpadNumWhole*=10;
+                    root.numpadNumWhole+=num;
+                }
+                else if (root.numpadNumWhole<100){
+                    root.numpadNumWhole*=10;
+                    root.numpadNumWhole+=num;
+                    if (root.numpadNumWhole>maxFrequency)
+                        root.numpadNumWhole=maxFrequency
+                }
             }
-            else if (root.numpadNumWhole==0){
-                root.numpadNumWhole=num;
-            }
-            else if (root.numpadNumWhole<10){
-                root.numpadNumWhole*=10;
-                root.numpadNumWhole+=num;
-            }
-            else if (root.numpadNumWhole<100){
-                root.numpadNumWhole*=10;
-                root.numpadNumWhole+=num;
-            }
-            console.log(numpadNumWhole + "." + numpadNumFraction)
+
         }
         NumpadButton{number: 1}
         NumpadButton{number: 2}
@@ -52,10 +53,17 @@ Item {
             mouseArea.onPressed: {
                 pressed=true;
                 pointPressed=true
+                frequencyText.wholePartAnimation.stop()
+                frequencyText.fractionPartAnimation.restart()
             }
         }
         NumpadButton{number: 0}
-        Button{text.text: "ENTER"; text.font.pixelSize:root.btnLongTextSize}
+        Button{text.text: "ENTER"; text.font.pixelSize:root.btnLongTextSize;
+            mouseArea.onPressed: {
+            pressed=true;
+            display.numpadEnterPressed()
+            }
+        }
     }
     ColumnLayout {
         id: centerBtns
@@ -70,9 +78,17 @@ Item {
             height: centerBtns.btnHeight
             Layout.alignment:Qt.AlignHCenter
             Layout.fillWidth: children
-            Button{width: centerBtns.btnWidth;height: centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/c.png"}
+            Button{width: centerBtns.btnWidth;height: centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/c.png"
+                mouseArea.onPressed: {pressed=true;frequencySlider.increment(-0.1);}
+                mouseArea.onPressAndHold: {pressed=true;frequencySlider.autoIncrement(-0.2);}
+                mouseArea.onReleased: {pressed=false;frequencySlider.autoIncrement(0);}
+            }
             Item{width: centerBtns.btnWidth;height: centerBtns.btnHeight;}
-            Button{width: centerBtns.btnWidth;height: centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/d.png"}
+            Button{width: centerBtns.btnWidth;height: centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/d.png"
+                mouseArea.onPressed: {pressed=true;frequencySlider.increment(0.1);}
+                mouseArea.onPressAndHold: {pressed=true;frequencySlider.autoIncrement(0.2);}
+                mouseArea.onReleased: {pressed=false;frequencySlider.autoIncrement(0);}
+            }
         }
         RowLayout{
             height: centerBtns.btnHeight
