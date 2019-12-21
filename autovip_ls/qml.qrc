@@ -486,5 +486,6 @@
         <file>design/media/Radio/button_.png</file>
         <file>Pages/Media/Radio/NumpadButton.qml</file>
         <file>design/media/Radio/button_pressed.png</file>
+        <file>Pages/Media/Radio/FrequencySlider.qml</file>
     </qresource>
 </RCC>

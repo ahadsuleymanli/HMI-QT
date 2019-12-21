@@ -1,6 +1,6 @@
-import QtQuick 2.0
+import QtQuick 2.11
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.3
+import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 import QtQuick.Extras 1.4
 import "../../../Components"
@@ -52,14 +52,18 @@ BasePage {
             width: 1004
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: parent.height
-                width: parent.width
+                anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/design/media/Radio/equalizer.png"
             }
-
+            FrequencySlider {
+                id: frequencySlider
+                anchors.fill: parent
+                anchors.leftMargin: 21
+                anchors.rightMargin: 21
+            }
             Text{
                 id:frequencyText
-                text:"99.1"
+                text:frequencySlider.currentFreq
                 font.pixelSize: 50
                 font.family:GSystem.centurygothic.name
                 color: "white"
@@ -102,6 +106,7 @@ BasePage {
         }
 
         Buttons{
+            id:buttons
             y:227
             x:0
             height: parent.height - 227 - 8

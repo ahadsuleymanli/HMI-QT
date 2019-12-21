@@ -9,7 +9,11 @@ Item {
 //    x:0
 //    height: parent.height - 227 - 8
 //    width: parent.width
-    property int btnLongTextSize: 18
+    readonly property int btnLongTextSize: 18
+    property int numpadNumWhole: 0
+    property int numpadNumFraction: 0
+    property bool pointPressed: false
+    signal numpadEnterPressed
     GridLayout {
         id: numpad
         x:42 - 4
@@ -18,17 +22,39 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 2
         columns: 3
-        NumpadButton{text.text: "1"}
-        NumpadButton{text.text: "2"}
-        NumpadButton{text.text: "3"}
-        NumpadButton{text.text: "4"}
-        NumpadButton{text.text: "5"}
-        NumpadButton{text.text: "6"}
-        NumpadButton{text.text: "7"}
-        NumpadButton{text.text: "8"}
-        NumpadButton{text.text: "9"}
-        NumpadButton{text.text: "."}
-        NumpadButton{text.text: "0"}
+        function numPadInput(num){
+            if (pointPressed){
+                root.numpadNumFraction=num;
+            }
+            else if (root.numpadNumWhole==0){
+                root.numpadNumWhole=num;
+            }
+            else if (root.numpadNumWhole<10){
+                root.numpadNumWhole*=10;
+                root.numpadNumWhole+=num;
+            }
+            else if (root.numpadNumWhole<100){
+                root.numpadNumWhole*=10;
+                root.numpadNumWhole+=num;
+            }
+            console.log(numpadNumWhole + "." + numpadNumFraction)
+        }
+        NumpadButton{number: 1}
+        NumpadButton{number: 2}
+        NumpadButton{number: 3}
+        NumpadButton{number: 4}
+        NumpadButton{number: 5}
+        NumpadButton{number: 6}
+        NumpadButton{number: 7}
+        NumpadButton{number: 8}
+        NumpadButton{number: 9}
+        Button{text.text: ".";
+            mouseArea.onPressed: {
+                pressed=true;
+                pointPressed=true
+            }
+        }
+        NumpadButton{number: 0}
         Button{text.text: "ENTER"; text.font.pixelSize:root.btnLongTextSize}
     }
     ColumnLayout {
