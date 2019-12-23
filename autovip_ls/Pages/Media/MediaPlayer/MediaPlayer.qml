@@ -31,6 +31,10 @@ BasePage {
             backgroundImage.source ="qrc:/design/media/MediaPlayer/background.png"
         }
     }
+    function init()
+    {
+        serial_mng.radioPlaying = false;
+    }
     RowLayout{
         id: mainLayout
         anchors{

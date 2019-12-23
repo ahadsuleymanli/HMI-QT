@@ -7,12 +7,27 @@ import "../../../Components"
 import "../Radio"
 
 BasePage {
+    id:root
     caption: qsTr("RADIO") + mytrans.emptyString
+    pageName: "Radio"
     property real minFrequency:87.5
     property real maxFrequency:108.0
-    pageName: "Radio"
-    Component.onCompleted: {
+    property int serialDelay: -1
 
+    Component.onCompleted: {
+        serial_mng.setRadioAudioAllowed(false);
+    }
+    function init()
+    {
+        mPlayerBackend.pause();
+        serial_mng.radioPlaying = true;
+    }
+    function resetFrequencyEditing(){
+        frequencyText.wholePartAnimation.stop()
+        frequencyText.fractionPartAnimation.stop()
+        buttons.pointPressed=false
+        buttons.numpadNumWhole=0
+        buttons.numpadNumFraction=0
     }
     Item {
         id: raioArea
@@ -27,6 +42,11 @@ BasePage {
             height: parent.height
             source:"qrc:/design/media/Radio/background.png"
         }
+        MouseArea{
+            id:emptyMousearea
+            anchors.fill: parent
+            onPressed: root.resetFrequencyEditing()
+        }
         Item {
             id:display
             x:10
@@ -35,12 +55,8 @@ BasePage {
             width: 1004
             signal numpadEnterPressed()
             onNumpadEnterPressed: {
-                frequencySlider.frequency=frequencyText.getFreqText()
-                frequencyText.wholePartAnimation.stop()
-                frequencyText.fractionPartAnimation.stop()
-                buttons.pointPressed=false
-                buttons.numpadNumWhole=0
-                buttons.numpadNumFraction=0
+                frequencySlider.setFrequency(frequencyText.getFreqText())
+                root.resetFrequencyEditing()
             }
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter

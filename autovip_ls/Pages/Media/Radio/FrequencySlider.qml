@@ -9,10 +9,17 @@ Item {
             root.frequency=minFrequency
         else if (frequency>maxFrequency)
             root.frequency=maxFrequency
-        else
+        else{
             root.frequency=frequency
-
+        }
+        var formattedFreq=Math.round(root.frequency*10)
+        serial_mng.radioFrequency_uint=formattedFreq;
     }
+    Connections{
+        target:serial_mng
+        onRadioFrequencyChanged:frequency=serial_mng.radioFrequency_uint/10
+    }
+
     function increment(amount){
         root.setFrequency(frequency+amount)
     }

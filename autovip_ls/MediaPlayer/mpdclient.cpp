@@ -116,6 +116,16 @@ void MpdClient::playPause(){
     update();
 
 }
+void MpdClient::pause(){
+    if (status->state==2){
+        mpd_sendPauseCommand(conn,1);
+        update();
+        mpd_finishCommand(conn);
+        if (status->state==2){
+            mpd_sendPauseCommand(conn,1);
+        }
+    }
+}
 void MpdClient::seekCurrent(int time){
     if (status->state!=2 && status->state!=3){
         mpd_sendPauseCommand(conn,1);

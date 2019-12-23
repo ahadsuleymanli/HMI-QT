@@ -9,6 +9,16 @@ Item {
     property int numpadNumWhole: 0
     property int numpadNumFraction: 0
     property bool pointPressed: false
+    MouseArea{
+        id:numpadEmptyMousearea
+        anchors.top: numpad.top
+        anchors.left: numpad.left
+        anchors.topMargin: -20
+        anchors.leftMargin: - 40
+        width: numpad.width + 60
+        height:numpad.height + 60
+//        Rectangle{anchors.fill: parent;color: "red";opacity: 0.5;}
+    }
     GridLayout {
         id: numpad
         x:42 - 4
@@ -79,59 +89,84 @@ Item {
             Layout.alignment:Qt.AlignHCenter
             Layout.fillWidth: children
             Button{width: centerBtns.btnWidth;height: centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/c.png"
-                mouseArea.onPressed: {pressed=true;frequencySlider.increment(-0.1);}
-                mouseArea.onPressAndHold: {pressed=true;frequencySlider.autoIncrement(-0.2);}
-                mouseArea.onReleased: {pressed=false;frequencySlider.autoIncrement(0);}
+                mouseArea.onPressed: {pressed=true;/*frequencySlider.increment(-0.1);*/resetFrequencyEditing();
+                    serial_mng.sendKey("radio/channel_preceding",true,serialDelay);
+                }
+//                mouseArea.onPressAndHold: {pressedelayd=true;frequencySlider.autoIncrement(-0.2);}
+                mouseArea.onReleased: {pressed=false;/*frequencySlider.autoIncrement(0);*/}
             }
             Item{width: centerBtns.btnWidth;height: centerBtns.btnHeight;}
             Button{width: centerBtns.btnWidth;height: centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/d.png"
-                mouseArea.onPressed: {pressed=true;frequencySlider.increment(0.1);}
-                mouseArea.onPressAndHold: {pressed=true;frequencySlider.autoIncrement(0.2);}
-                mouseArea.onReleased: {pressed=false;frequencySlider.autoIncrement(0);}
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();
+                    serial_mng.sendKey("radio/channel_next",true,serialDelay);
+                }
+//                mouseArea.onPressAndHold: {pressed=true;frequencySlider.autoIncrement(0.2);}
+                mouseArea.onReleased: {pressed=false;/*frequencySlider.autoIncrement(0);*/}
             }
         }
         RowLayout{
             height: centerBtns.btnHeight
             Layout.fillWidth: children
             Layout.alignment:Qt.AlignHCenter
-            Button{width: centerBtns.btnWidth;height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/fav.png"}
+            Button{width: centerBtns.btnWidth;height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/fav.png"
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
+                mouseArea.onReleased: {pressed=false;}
+            }
         }
         RowLayout{
             height: centerBtns.btnHeight
             Layout.alignment:Qt.AlignHCenter
             Layout.fillWidth: children
-            Button{width: centerBtns.btnWidth; height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/a.png"}
+            Button{width: centerBtns.btnWidth; height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/a.png"
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
+                mouseArea.onReleased: {pressed=false;}
+            }
             Item{width: centerBtns.btnWidth;height:centerBtns.btnHeight;}
-            Button{width: centerBtns.btnWidth;height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/b.png"}
+            Button{width: centerBtns.btnWidth;height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/b.png"
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
+                mouseArea.onReleased: {pressed=false;}
+            }
         }
     }
 
     ColumnLayout {
         id: rightColumn
         x:844
-
         height: 280 + 8
         width: 122
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 2
+
         Item {height: 60; width: 120;
-            Button{id:fmButton;text.text: "FM";text.font.pixelSize:root.btnLongTextSize;}
+            Button{id:fmButton;text.text: "FM";text.font.pixelSize:root.btnLongTextSize;visible: false}
         }
         Item {height: 60; width: 120;
-            Button{id:amButton;height: 60; width: 120; text.text: "AM";text.font.pixelSize:root.btnLongTextSize;}
+            Button{id:amButton;height: 60; width: 120; text.text: "AM";text.font.pixelSize:root.btnLongTextSize; visible: false;}
         }
         Item {height: 60; width: 120;
-            Button{id:dabButton;height: 60; width: 120; text.text: "DAB";text.font.pixelSize:root.btnLongTextSize;}
+            Button{id:dabButton;height: 60; width: 120; text.text: "DAB";text.font.pixelSize:root.btnLongTextSize; visible: false;}
         }
         Item {height: 60; width: 120;
-            Button{text.text: "PRESETS" ;text.font.pixelSize:root.btnLongTextSize;}
+            Button{text.text: "PRESETS" ;text.font.pixelSize:root.btnLongTextSize;
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
+                mouseArea.onReleased: {pressed=false;}
+            }
         }
-
-
-
-
     }
-
+    Item {
+        id: powerBtn
+        x:844
+        height: 280 + 8
+        width: 122
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 2
+        Item {height: 72; width: 72;anchors.top: parent.top;anchors.right: parent.right;
+            Button{id:onOffButton;height: parent.height; width: parent.width;image.source:"qrc:/design/media/Radio/Power.png";/*text.text: serial_mng.radioPlaying?"OFF":"ON";text.font.pixelSize:root.btnLongTextSize;*/
+                mouseArea.onPressed: {pressed=true;serial_mng.radioPlaying=!serial_mng.radioPlaying;}
+                mouseArea.onReleased: {pressed=false;}
+            }
+        }
+    }
 
     Component.onCompleted: {
         fmButton.setInactive()

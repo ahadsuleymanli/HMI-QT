@@ -98,6 +98,7 @@ public:
             trackListModel->pushBackToTrackContents(&tc);
         }
         emit trackListLayoutChanged();
+        connect(this, &MediaPlayerFacade::pause,mpdClient,&MpdClient::pause);
         connect(this, &MediaPlayerFacade::playPause,mpdClient,&MpdClient::playPause);
         connect(this, &MediaPlayerFacade::next,mpdClient,&MpdClient::next);
         connect(this, &MediaPlayerFacade::previous,mpdClient,&MpdClient::prev);

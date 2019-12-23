@@ -54,6 +54,8 @@ class SerialMng : public QObject
 
     QString m_fb_sound_control;
 
+    QString radio_feedback;
+
     QString m_fb_ceiling_light;
     QString m_fb_side_light;
     QString m_fb_inside_light;
@@ -69,6 +71,8 @@ class SerialMng : public QObject
     QColor m_sidecolor;
     int m_volume = 30;
     uint m_soundSource = 0;
+    uint radioFrequency_uint= 875;
+    bool radioPlaying = false;
 
     QTime m_lastsend;
     int m_last_arranged_cmd = 0;
@@ -108,6 +112,8 @@ class SerialMng : public QObject
 
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(uint soundSource READ soundSource WRITE setSoundSource NOTIFY soundSourceChanged)
+    Q_PROPERTY(uint radioFrequency_uint MEMBER radioFrequency_uint WRITE setRadioFrequency NOTIFY radioFrequencyChanged)
+    Q_PROPERTY(bool radioPlaying MEMBER radioPlaying WRITE setRadioPlaying NOTIFY radioPlayingChanged)
 
 public:
     explicit SerialMng(QObject *parent = nullptr);
@@ -145,6 +151,7 @@ public:
 
     void setVolume(int vol);
     void setSoundSource(uint source);
+    void setRadioFrequency(uint frequency);
     void setHeat(uint p_h);
     void setCool(uint p_c);
     void setMassageon(bool p_o);
@@ -154,12 +161,11 @@ public:
     void setInsidecolor(QColor p_color);
     void setSidecolor(QColor p_color);
 
-
-
     void setActemp(uint p_temp);
     void setAcfan(uint p_fan);
     void setAcon(bool p_on);
 
+    void setRadioPlaying(bool);
 
     Q_INVOKABLE SeatState firstseat();
     Q_INVOKABLE SeatState secondseat();
@@ -183,7 +189,6 @@ public:
     void setACDeg(int val);
     void setACOpen(bool val);
 
-
     void parseFeedback(QString response);
     //feedback parsers
     bool parserAircondition(QString p_response);
@@ -197,6 +202,7 @@ public:
     bool parserInsideLight(QString p_response);
     bool parserCeilingLight(QString p_response);
     bool parserSoundControl(QString p_response);
+    bool parserRadioControl(QString p_response);
 
 public: //invokables
     Q_INVOKABLE void write(const QByteArray &writeData);
@@ -225,6 +231,8 @@ signals:
     void sidecolorChanged(QColor);
     void ceilingcolorChanged(QColor);
     void volumeChanged(int);
+    void radioFrequencyChanged();
+    void radioPlayingChanged();
     void soundSourceChanged(uint);
     void runFunction(QString);
 

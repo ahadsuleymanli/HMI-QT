@@ -24,6 +24,7 @@ public:
 public slots:
     void playIndex(int idx);
     void playPause();
+    void pause();
     void next();
     void prev();
     void seekCurrent(int time);

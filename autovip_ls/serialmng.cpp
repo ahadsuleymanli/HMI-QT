@@ -29,9 +29,8 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
    m_fbstart = m_proto->value("feedbacks/start_code").toString();
    m_fbend = m_proto->value("feedbacks/end_code").toString();
    m_fb_aircondition = m_proto->value("feedbacks/aircondition").toString();
-
    m_fb_sound_control = m_proto->value("feedbacks/sound_control").toString();
-
+   radio_feedback = m_proto->value("radio/feedback").toString();
    m_fb_ceiling_light = m_proto->value("feedbacks/ceiling_light").toString();
    m_fb_side_light = m_proto->value("feedbacks/side_light").toString();
    m_fb_inside_light = m_proto->value("feedbacks/inside_light").toString();
@@ -352,6 +351,26 @@ void SerialMng::setSoundSource(uint source)
     emit soundSourceChanged(m_soundSource);
 }
 
+void SerialMng::setRadioFrequency(uint frequency)
+{
+    if(frequency == radioFrequency_uint) return;
+    radioFrequency_uint = frequency;
+    sendKey("radio/set_frequency",false,-1,QString::number(frequency));
+    emit radioFrequencyChanged();
+}
+void SerialMng::setRadioPlaying(bool radioPlaying)
+{
+    if(this->radioPlaying != radioPlaying){
+        this->radioPlaying = radioPlaying;
+        if (radioPlaying)
+            this->sendKey("radio/audio_on");
+        else
+            this->sendKey("radio/audio_off");
+        emit radioPlayingChanged();
+    }
+
+}
+
 void SerialMng::setHeat(uint p_h)
 {
     if(p_h == m_heat) return;
@@ -605,6 +624,8 @@ void SerialMng::parseFeedback(QString response)
     found = parserCeilingLight(response);
     if(found) { return; }
     found = parserSoundControl(response);
+    if(found) { return; }
+    found = parserRadioControl(response);
     if(found) { return; }
 }
 
@@ -907,7 +928,34 @@ bool SerialMng::parserSoundControl(QString p_response)
     }
     return false;
 }
-
+bool SerialMng::parserRadioControl(QString p_response)
+{//80/volume/freq_part1/freq_part2
+    if(p_response.startsWith(radio_feedback))
+    {
+        uint frequency_part1=0, frequency_part2 = 0;
+        uint radioFrequency_uint = 0;
+        QStringList parts = p_response.split("/");
+        bool ok;
+        if(parts.length()!=4){
+            return false;
+        }
+        frequency_part1 = parts[2].toUInt(&ok);
+        if(!ok){
+            return false;
+        }
+        frequency_part2 = parts[3].toUInt(&ok);
+        if(!ok){
+            return false;
+        }
+        radioFrequency_uint=frequency_part1+frequency_part2*256;
+        if (this->radioFrequency_uint!=radioFrequency_uint){
+            this->radioFrequency_uint=radioFrequency_uint;
+            radioFrequencyChanged();
+        }
+        return true;
+    }
+    return false;
+}
 
 
 void SerialMng::write(const QByteArray &writeData)
