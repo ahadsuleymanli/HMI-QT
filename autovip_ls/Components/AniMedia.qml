@@ -8,7 +8,7 @@ Item{
         anchors.topMargin: 20
         sourceSize.width : parent.width
         sourceSize.height : parent.height * 208/295
-        source:"qrc:/design/media/ani/camera.svg"
+        source:"qrc:/design/media/ani/camera.png"
     }
 
     Image{
@@ -17,7 +17,7 @@ Item{
         anchors.leftMargin: 20
         sourceSize.width : parent.width / 2.5
         sourceSize.height : parent.width / 2.5
-        source:"qrc:/design/media/ani/cark.svg"
+        source:"qrc:/design/media/ani/cark.png"
         smooth: true
     }
     Image{
@@ -29,7 +29,7 @@ Item{
         sourceSize.width : parent.width / 3
         sourceSize.height : parent.width / 3
         smooth: true
-        source:"qrc:/design/media/ani/cark.svg"
+        source:"qrc:/design/media/ani/cark.png"
     }
     NumberAnimation {
         targets: [cw1,cw2]

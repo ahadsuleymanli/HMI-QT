@@ -51,8 +51,8 @@ BasePage {
             id: head
             x:195
             y:20
-            width:73
-            height:67
+            sourceSize.width:73
+            sourceSize.height:67
             opacity: 0
             MouseArea{
                 anchors.fill: parent
@@ -67,8 +67,8 @@ BasePage {
             x:117
             y:87
             opacity: 0
-            width:160
-            height:185
+//            width:160
+//            height:185
             MouseArea{
                 anchors.fill: parent
                 onClicked: selectPart("SeatBack")
@@ -83,8 +83,8 @@ BasePage {
             id: seat
             x:28
             y:232
-            width:230
-            height:85
+            sourceSize.width:230
+            sourceSize.height:85
             opacity: 0
             MouseArea {
                 anchors.fill: parent
@@ -98,8 +98,8 @@ BasePage {
                 id: feat
                 x:25
                 y:279
-                width:96
-                height:120
+                sourceSize.width:96
+                sourceSize.height:120
                 opacity: 0
                 MouseArea
                 {

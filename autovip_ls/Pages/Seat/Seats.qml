@@ -28,7 +28,7 @@ BasePage {
 //        anchors.centerIn: parent
         anchors.verticalCenter: parent.verticalCenter
         x:250
-        width:700
+        sourceSize.width:700
         source:"qrc:/design/seats/topview/seats.png"
         fillMode: Image.PreserveAspectFit
             Image{

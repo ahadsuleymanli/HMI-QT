@@ -488,5 +488,10 @@
         <file>design/media/Radio/button_pressed.png</file>
         <file>Pages/Media/Radio/FrequencySlider.qml</file>
         <file>Pages/Media/Radio/FrequencyText.qml</file>
+        <file>design/media/ani/camera.png</file>
+        <file>design/media/ani/cark.png</file>
+        <file>design/controls/ani/buyuk.png</file>
+        <file>design/controls/ani/kucuk.png</file>
+        <file>design/controls/ani/orta.png</file>
     </qresource>
 </RCC>

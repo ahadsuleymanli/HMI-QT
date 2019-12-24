@@ -37,7 +37,9 @@ int main(int argc, char *argv[])
 //    ThreadUtils::pin_to_core(0,(pthread_t)app.thread());
 
     qputenv("QT_QUICK_CONTROLS_STYLE", "material");
-    qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
+    #if (!defined(__arm__) && !defined(__aarch64__))
+        qputenv("QSG_RENDER_LOOP", "basic"); // PC ANIMATION
+    #endif
 //    qputenv("QSG_INFO", "1"); // INFO
     changeCD();
 //    enableStackTraceDump();

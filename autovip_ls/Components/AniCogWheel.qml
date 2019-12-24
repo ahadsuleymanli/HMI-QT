@@ -22,28 +22,30 @@ Item {
             id:cw2
             sourceSize.width:  root.width * 0.4
             sourceSize.height: root.height * 0.4
-            source:"qrc:/design/controls/ani/orta.svg"
+            source:"qrc:/design/controls/ani/orta.png"
         }
         ColumnLayout{
             Image{
                 id:cw1
                 sourceSize.width: root.width * 0.6
                 sourceSize.height: root.height * 0.6
-                source:"qrc:/design/controls/ani/buyuk.svg"
+                source:"qrc:/design/controls/ani/buyuk.png"
                 fillMode: Image.PreserveAspectFit
             }
             Image{
                 id:cw3
                 sourceSize.width:  root.width * 0.3
                 sourceSize.height: root.height * 0.3
-                source:"qrc:/design/controls/ani/kucuk.svg"
+                source:"qrc:/design/controls/ani/kucuk.png"
             }
         }
     }
 
 
 //    }
-
+    Component.onCompleted: {
+        console.log("cog anim sizes: "+cw1.sourceSize.width + " " +cw2.sourceSize.width + " " +cw3.sourceSize.width)
+    }
     NumberAnimation {
         targets: [cw1,cw2,cw3]
         properties: "rotation"
