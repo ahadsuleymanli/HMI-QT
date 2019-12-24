@@ -66,27 +66,13 @@ BasePage {
             FrequencySlider {
                 id: frequencySlider
                 anchors.fill: parent
-                anchors.leftMargin: 21
-                anchors.rightMargin: 21
+
             }
             FrequencyText{
                 id: frequencyText
                 anchors.fill: parent
             }
-            Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                height: 22
-                width: parent.width - 48
-                source: "qrc:/design/media/Radio/frequency2.png"
-            }
-            Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: -1
-                height: 43
-                source: "qrc:/design/media/Radio/line.png"
-            }
+
         }
         Buttons{
             id:buttons

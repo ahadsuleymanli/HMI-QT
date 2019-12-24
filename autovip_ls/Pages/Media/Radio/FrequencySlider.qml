@@ -39,21 +39,48 @@ Item {
         interval: 50; running: false; repeat: true; triggeredOnStart: true;
         onTriggered: root.increment(root.autoSliderIncrement)
     }
-
+    Image {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        height: 22
+        width: parent.width - 48
+        z:10
+        source: "qrc:/design/media/Radio/frequency2.png"
+    }
+    Image {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -1
+        height: 43
+        z:10
+        source: "qrc:/design/media/Radio/line.png"
+    }
     ListModel{
         id:frequencyList
 
     }
-
+//    property real minFrequency:87.5
+//    property real maxFrequency:108.0
     ListView {
 //            Rectangle{
 //                anchors.fill: parent
 //                color: "#55ff00ff"
 //            }
+        property int itemWidth: 20
+        readonly property int  margin: parent.width/2 - itemWidth/2;
+        property int index: 0
+        rightMargin: margin
+        leftMargin: margin
         id: frequencySlider
         onMovementEnded: {
-            console.log("ended");
-            console.log(flick.contentX);
+//            console.log(parent.width/2 - itemWidth/2);
+//            console.log(frequencySlider.contentWidth);
+//            console.log(frequencySlider.contentX);
+        }
+        onContentXChanged: {
+            var index;
+            index = (frequencySlider.contentX+margin)/itemWidth
+            console.log(index);
         }
         anchors{
             left: parent.left
@@ -66,10 +93,10 @@ Item {
         model: frequencyList
         orientation: ListView.Horizontal
         clip: true
-
+        spacing:0
         delegate: Item {
             id: frequencyTick
-            width: 20
+            width: frequencySlider.itemWidth
             height: frequencySlider.height
                 Text {
                     property real frequency_: frequency
@@ -92,10 +119,13 @@ Item {
         }
     }
     Component.onCompleted: {
-        for (var i=minFrequency*10;i<=maxFrequency*10;i++){
+        var i=minFrequency*10
+        var count = 0;
+        for (;i<=maxFrequency*10;i++){
+            count ++;
             frequencyList.append({frequency: (i/10).toFixed(1), frequencyToShow: ((i/10) - Math.floor((i/10))>0)?"":((i/10).toFixed(1)).toString()})
         }
-
+        console.log("last freq" + i/10 + " count: " + count);
 
     }
 
