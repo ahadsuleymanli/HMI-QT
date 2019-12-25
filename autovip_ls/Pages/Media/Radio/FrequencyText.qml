@@ -28,7 +28,6 @@ Item{
             realValue=maxFrequency
         else if (realValue<minFrequency)
             realValue=minFrequency;
-        console.log(realValue.toFixed(1))
         return realValue;
     }
     Text {

@@ -18,10 +18,15 @@ Item {
         }
         var formattedFreq=Math.round(root.frequency*10)
         serial_mng.radioFrequency_uint=formattedFreq;
+        frequencySlider.updateSliderPos();
     }
     Connections{
         target:serial_mng
-        onRadioFrequencyChanged:frequency=serial_mng.radioFrequency_uint/10
+        onRadioFrequencyChanged:{
+            frequency=serial_mng.radioFrequency_uint/10;
+            frequencySlider.updateSliderPos();
+        }
+
     }
 
     function increment(amount){
@@ -72,23 +77,61 @@ Item {
         rightMargin: margin
         leftMargin: margin
         id: frequencySlider
+        opacity: 1
         onMovementEnded: {
-//            console.log(parent.width/2 - itemWidth/2);
-//            console.log(frequencySlider.contentWidth);
-//            console.log(frequencySlider.contentX);
+            frequencySlider.contentX=index*itemWidth-margin;
+//            if (opacity>0 && showAnimation.running==false){
+//                showAnimation.stop();
+//                hideAnimation.start();
+//            }
+        }
+        onMovementStarted: {
+//            if (opacity<1 && showAnimation.running==false){
+//                hideAnimation.stop();
+//                showAnimation.start();
+//            }
         }
         onContentXChanged: {
             var index;
-            index = (frequencySlider.contentX+margin)/itemWidth
-            console.log(index);
+            index = Math.round((frequencySlider.contentX+margin)/itemWidth)
+            if (frequencySlider.index!==index){
+                frequencySlider.index=index;
+                root.setFrequency(minFrequency+index/10)
+            }
         }
+        function updateSliderPos(){
+            if (!frequencySlider.moving){
+                frequencySlider.contentX = (root.frequency-minFrequency)*10*itemWidth-margin;
+            }
+        }
+        NumberAnimation {
+            id:hideAnimation
+            target: frequencySlider;
+            running: false
+            property: "opacity";
+            duration: 400;
+            from:frequencySlider.opacity;
+            to:0.4;
+            easing.type:Easing.InOutQuad
+        }
+        NumberAnimation {
+            id:showAnimation
+            target: frequencySlider;
+            running: false
+            property: "opacity";
+            duration: 400;
+            from:frequencySlider.opacity;
+            to:1;
+            easing.type:Easing.InOutQuad
+        }
+
         anchors{
             left: parent.left
             right: parent.right
             top: parent.top
             bottom: parent.bottom
-            topMargin: 100
-            bottomMargin: 15
+//            topMargin: 100
+//            bottomMargin: 15
         }
         model: frequencyList
         orientation: ListView.Horizontal
@@ -96,36 +139,43 @@ Item {
         spacing:0
         delegate: Item {
             id: frequencyTick
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.topMargin: 100
+            anchors.bottomMargin: 15
             width: frequencySlider.itemWidth
             height: frequencySlider.height
-                Text {
-                    property real frequency_: frequency
-                    anchors.top: parent.top
-                    id:frequencyText
-                    text: frequencyToShow
-                    color: "#fbfbfb"
-                    font.pixelSize: 16
-                    font.bold: true
+            Text {
+                property real frequency_: frequency
+                anchors.verticalCenter: parent.top
+                    anchors.verticalCenterOffset: 12
+                anchors.horizontalCenter: parent.horizontalCenter
+                id:frequencyText
+                text: frequencyToShow
+                opacity: (frequencySlider.index-5>index || frequencySlider.index+5<index )?1:(Math.abs(frequencySlider.index-index)>1)?(Math.abs(frequencySlider.index-index)/10):0
+                color: "#fbfbfb"
+                font.pixelSize: (frequencySlider.index-5>index || frequencySlider.index+5<index )?18:((5-Math.abs(frequencySlider.index-index))+2)*9
+                font.family:GSystem.centurygothic.name
+                font.bold: true
+                onXChanged: {}
+            }
+            Rectangle{
+                anchors{
+                    horizontalCenter: frequencyTick.horizontalCenter
+                    bottom: parent.bottom
                 }
-                Rectangle{
-                    anchors{
-                        horizontalCenter: frequencyTick.horizontalCenter
-                        bottom: parent.bottom
-                    }
-                    width: 2
-                    height: 10
-                    color: "white"
-                }
+                width: 2
+                height: 10
+                color: "white"
+            }
         }
     }
     Component.onCompleted: {
-        var i=minFrequency*10
-        var count = 0;
-        for (;i<=maxFrequency*10;i++){
-            count ++;
+        for (var i=minFrequency*10;i<=maxFrequency*10;i++){
             frequencyList.append({frequency: (i/10).toFixed(1), frequencyToShow: ((i/10) - Math.floor((i/10))>0)?"":((i/10).toFixed(1)).toString()})
         }
-        console.log("last freq" + i/10 + " count: " + count);
+        frequencySlider.updateSliderPos();
+
 
     }
 
