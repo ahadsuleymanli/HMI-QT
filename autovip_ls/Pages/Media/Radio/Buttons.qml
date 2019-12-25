@@ -27,10 +27,12 @@ Item {
         visible: false
         anchors{
             top:parent.top
+            topMargin: -9
+            bottomMargin: -8
             bottom: parent.bottom
             left: parent.left
             right: numpad.right
-            leftMargin: 12
+
         }
 
 

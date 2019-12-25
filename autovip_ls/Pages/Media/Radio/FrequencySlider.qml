@@ -167,11 +167,10 @@ Item {
 //                }
                 Component.onCompleted: {
                     if (frequency - Math.floor(frequency)>0){
-//                        if ((frequency!=minFrequency && frequency!=maxFrequency))
-                        {
-                            text="";
-                            distance = 0
-                        }
+                        text="";
+                        distance = 0
+                        visible=false;
+
                     }
                 }
             }
