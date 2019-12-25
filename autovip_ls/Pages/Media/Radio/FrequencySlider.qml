@@ -141,7 +141,7 @@ Item {
             id: frequencyTick
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            anchors.topMargin: 100
+            anchors.topMargin: 140
             anchors.bottomMargin: 15
             width: frequencySlider.itemWidth
             height: frequencySlider.height
@@ -158,19 +158,19 @@ Item {
                 font.pixelSize: 18
                 font.family:GSystem.centurygothic.name
                 font.bold: true
-                onDistanceChanged: {
-                    if (distance===-1){
-                        opacity=1;
-                        font.pixelSize=18;
-                    }else if (distance<previousDistance){
-                        opacity=(distance>1)?(distance/10):0
-                        font.pixelSize=((5-distance)+2)*9
-                    }else{
-                        opacity=(distance>1)?(distance/10):0
-                        font.pixelSize=18
-                    }
-                    previousDistance=distance
-                }
+//                onDistanceChanged: {
+//                    if (distance===-1){
+//                        opacity=1;
+//                        font.pixelSize=18;
+//                    }else if (distance<previousDistance){
+//                        opacity=(distance>1)?(distance/10):0
+//                        font.pixelSize=((5-distance)+2)*9
+//                    }else{
+//                        opacity=(distance>1)?(distance/10):0
+//                        font.pixelSize=18
+//                    }
+//                    previousDistance=distance
+//                }
                 Component.onCompleted: {
                     if (frequency - Math.floor(frequency)>0){
 //                        if ((frequency!=minFrequency && frequency!=maxFrequency))
