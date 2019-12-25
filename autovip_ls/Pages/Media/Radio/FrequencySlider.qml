@@ -146,18 +146,40 @@ Item {
             width: frequencySlider.itemWidth
             height: frequencySlider.height
             Text {
-                property real frequency_: frequency
                 anchors.verticalCenter: parent.top
-                    anchors.verticalCenterOffset: 12
+                anchors.verticalCenterOffset: 12
                 anchors.horizontalCenter: parent.horizontalCenter
+                property int distance: (frequencySlider.index-5>index || frequencySlider.index+5<index )?-1:Math.abs(frequencySlider.index-index)
+                property int previousDistance: -1
                 id:frequencyText
-                text: frequencyToShow
-                opacity: (frequencySlider.index-5>index || frequencySlider.index+5<index )?1:(Math.abs(frequencySlider.index-index)>1)?(Math.abs(frequencySlider.index-index)/10):0
+                text: frequency
+                opacity: 1
                 color: "#fbfbfb"
-                font.pixelSize: (frequencySlider.index-5>index || frequencySlider.index+5<index )?18:((5-Math.abs(frequencySlider.index-index))+2)*9
+                font.pixelSize: 18
                 font.family:GSystem.centurygothic.name
                 font.bold: true
-                onXChanged: {}
+                onDistanceChanged: {
+                    if (distance===-1){
+                        opacity=1;
+                        font.pixelSize=18;
+                    }else if (distance<previousDistance){
+                        opacity=(distance>1)?(distance/10):0
+                        font.pixelSize=((5-distance)+2)*9
+                    }else{
+                        opacity=(distance>1)?(distance/10):0
+                        font.pixelSize=18
+                    }
+                    previousDistance=distance
+                }
+                Component.onCompleted: {
+                    if (frequency - Math.floor(frequency)>0){
+//                        if ((frequency!=minFrequency && frequency!=maxFrequency))
+                        {
+                            text="";
+                            distance = 0
+                        }
+                    }
+                }
             }
             Rectangle{
                 anchors{
@@ -172,7 +194,7 @@ Item {
     }
     Component.onCompleted: {
         for (var i=minFrequency*10;i<=maxFrequency*10;i++){
-            frequencyList.append({frequency: (i/10).toFixed(1), frequencyToShow: ((i/10) - Math.floor((i/10))>0)?"":((i/10).toFixed(1)).toString()})
+            frequencyList.append({frequency: (i/10).toFixed(1)})
         }
         frequencySlider.updateSliderPos();
 
