@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
+import ck.gmachine 1.0
 Item {
     id: root
     property alias text: text
@@ -42,7 +43,7 @@ Item {
         id:text
         text:""
         font.pixelSize: 34
-        font.family:GSystem.centurygothic.name
+//        font.family:GSystem.centurygothic.name
         color: "white"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter

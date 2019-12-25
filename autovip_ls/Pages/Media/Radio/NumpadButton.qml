@@ -6,23 +6,21 @@ Button {
     mouseArea.onPressed: {
         pressed=true;
         numpad.numPadInput(number);
-        if (!pointPressed){
+        if (!numpadPointPressed){
             frequencyText.wholePartCO.visible=true
-            frequencyText.wholePartAnimation.pause()
+            frequencyText.textAnimation.pause()
         }
         else{
             frequencyText.fractionPartCO.visible=true
-            frequencyText.fractionPartAnimation.pause()
+            frequencyText.textAnimation.pause()
         }
     }
     mouseArea.onReleased: {
         pressed=false;
         frequencyText.wholePartCO.visible=false
         frequencyText.fractionPartCO.visible=false
-        if (frequencyText.fractionPartAnimation.paused)
-            frequencyText.fractionPartAnimation.restart()
-        if (frequencyText.wholePartAnimation.paused)
-            frequencyText.wholePartAnimation.restart()
+        if (frequencyText.textAnimation.paused)
+            frequencyText.textAnimation.restart()
     }
 
 }

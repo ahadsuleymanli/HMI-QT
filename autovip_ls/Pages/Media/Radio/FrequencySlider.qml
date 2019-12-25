@@ -2,8 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 //import QtQuick.Extras 1.4
 import QtQuick.Layouts 1.1
-
 import QtGraphicalEffects 1.0
+import ck.gmachine 1.0
 Item {
     id:root
     property real frequency: 88.1
@@ -26,7 +26,6 @@ Item {
             frequency=serial_mng.radioFrequency_uint/10;
             frequencySlider.updateSliderPos();
         }
-
     }
 
     function increment(amount){
@@ -62,15 +61,9 @@ Item {
     }
     ListModel{
         id:frequencyList
-
     }
-//    property real minFrequency:87.5
-//    property real maxFrequency:108.0
+
     ListView {
-//            Rectangle{
-//                anchors.fill: parent
-//                color: "#55ff00ff"
-//            }
         property int itemWidth: 20
         readonly property int  margin: parent.width/2 - itemWidth/2;
         property int index: 0
@@ -86,6 +79,7 @@ Item {
 //            }
         }
         onMovementStarted: {
+            resetFrequencyEditing();
 //            if (opacity<1 && showAnimation.running==false){
 //                hideAnimation.stop();
 //                showAnimation.start();
@@ -156,7 +150,7 @@ Item {
                 opacity: 1
                 color: "#fbfbfb"
                 font.pixelSize: 18
-                font.family:GSystem.centurygothic.name
+//                font.family:GSystem.centurygothic.name
                 font.bold: true
 //                onDistanceChanged: {
 //                    if (distance===-1){

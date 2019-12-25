@@ -5,19 +5,35 @@ import QtGraphicalEffects 1.0
 import "../Radio"
 Item {
     id: root
+//    property alias numpad: numpad
+    property alias numpadEmptyMousearea: numpadEmptyMousearea
     readonly property int btnLongTextSize: 18
-    property int numpadNumWhole: 0
-    property int numpadNumFraction: 0
-    property bool pointPressed: false
+    property int numpadNumWhole: -1
+    property int numpadNumFraction: -1
+    property bool numpadPointPressed: false
+
     MouseArea{
         id:numpadEmptyMousearea
         anchors.top: numpad.top
         anchors.left: numpad.left
-        anchors.topMargin: -20
+        anchors.topMargin: -30
         anchors.leftMargin: - 40
         width: numpad.width + 60
-        height:numpad.height + 60
+        height:numpad.height + 70
 //        Rectangle{anchors.fill: parent;color: "red";opacity: 0.5;}
+    }
+    FavoritesPane{
+        id:favoritesPane
+        visible: false
+        anchors{
+            top:parent.top
+            bottom: parent.bottom
+            left: parent.left
+            right: numpad.right
+            leftMargin: 12
+        }
+
+
     }
     GridLayout {
         id: numpad
@@ -28,13 +44,12 @@ Item {
         anchors.verticalCenterOffset: 2
         columns: 3
         function numPadInput(num){
-            if (pointPressed){
+            if (numpadPointPressed){
                 root.numpadNumFraction=num;
-                frequencyText.fractionPartAnimation.restart()
+                frequencyText.textAnimation.restart()
             }else{
-                frequencyText.fractionPartAnimation.stop()
-                frequencyText.wholePartAnimation.restart()
-                if (root.numpadNumWhole==0){
+                frequencyText.textAnimation.restart()
+                if (root.numpadNumWhole==-1){
                     root.numpadNumWhole=num;
                 }
                 else if (root.numpadNumWhole<10){
@@ -62,9 +77,8 @@ Item {
         Button{text.text: ".";
             mouseArea.onPressed: {
                 pressed=true;
-                pointPressed=true
-                frequencyText.wholePartAnimation.stop()
-                frequencyText.fractionPartAnimation.restart()
+                numpadPointPressed=true
+                frequencyText.textAnimation.restart()
             }
         }
         NumpadButton{number: 0}
@@ -149,7 +163,7 @@ Item {
         Item {height: 60; width: 120;
             Button{text.text: "PRESETS" ;text.font.pixelSize:root.btnLongTextSize;
                 mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
-                mouseArea.onReleased: {pressed=false;}
+                mouseArea.onReleased: {pressed=false;favoritesPane.visible=!favoritesPane.visible;numpad.visible=!numpad.visible;}
             }
         }
     }
@@ -162,7 +176,7 @@ Item {
         anchors.verticalCenterOffset: 2
         Item {height: 72; width: 72;anchors.top: parent.top;anchors.right: parent.right;
             Button{id:onOffButton;height: parent.height; width: parent.width;image.source:"qrc:/design/media/Radio/Power.png";/*text.text: serial_mng.radioPlaying?"OFF":"ON";text.font.pixelSize:root.btnLongTextSize;*/
-                mouseArea.onPressed: {pressed=true;serial_mng.radioPlaying=!serial_mng.radioPlaying;}
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();serial_mng.radioPlaying=!serial_mng.radioPlaying;}
                 mouseArea.onReleased: {pressed=false;}
             }
         }

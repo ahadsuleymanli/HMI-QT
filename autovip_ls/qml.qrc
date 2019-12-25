@@ -493,5 +493,6 @@
         <file>design/controls/ani/buyuk.png</file>
         <file>design/controls/ani/kucuk.png</file>
         <file>design/controls/ani/orta.png</file>
+        <file>Pages/Media/Radio/FavoritesPane.qml</file>
     </qresource>
 </RCC>

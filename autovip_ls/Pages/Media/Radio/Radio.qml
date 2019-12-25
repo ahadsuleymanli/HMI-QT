@@ -5,6 +5,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Extras 1.4
 import "../../../Components"
 import "../Radio"
+import ck.gmachine 1.0
 
 BasePage {
     id:root
@@ -23,11 +24,10 @@ BasePage {
         serial_mng.radioPlaying = true;
     }
     function resetFrequencyEditing(){
-        frequencyText.wholePartAnimation.stop()
-        frequencyText.fractionPartAnimation.stop()
-        buttons.pointPressed=false
-        buttons.numpadNumWhole=0
-        buttons.numpadNumFraction=0
+        frequencyText.textAnimation.stop()
+        buttons.numpadPointPressed=false
+        buttons.numpadNumWhole=-1
+        buttons.numpadNumFraction=-1
     }
     Item {
         id: raioArea
@@ -46,6 +46,13 @@ BasePage {
             id:emptyMousearea
             anchors.fill: parent
             onPressed: root.resetFrequencyEditing()
+        }
+        Buttons{
+            id:buttons
+            y:227
+            x:0
+            height: parent.height - 227 - 8
+            width: parent.width
         }
         Item {
             id:display
@@ -74,14 +81,7 @@ BasePage {
             }
 
         }
-        Buttons{
-            id:buttons
-            y:227
-            x:0
-            height: parent.height - 227 - 8
-            width: parent.width
 
-        }
     }
 
 }
