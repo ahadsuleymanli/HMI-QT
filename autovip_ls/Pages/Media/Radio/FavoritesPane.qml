@@ -6,6 +6,29 @@ import QtGraphicalEffects 1.0
 Item {
 //    opacity: 0.8
     id:root
+    property int currentPreset: -1
+    function presetsNotClicked(){
+        if (presetsModel.count>0 && currentPreset === -1){
+            frequencySlider.setFrequency(parseFloat((presetsModel.get(0).frequency)) )
+            currentPreset = 0;
+            return true;
+        }else
+            return false;
+    }
+    function nextPreset(){
+        if (!presetsNotClicked()&& presetsModel.count>currentPreset+1){
+            currentPreset++;
+            var freq = presetsModel.get(currentPreset).frequency;
+            frequencySlider.setFrequency(parseFloat(freq) )
+        }
+    }
+    function previousPreset(){
+        if (!presetsNotClicked()&& presetsModel.count>currentPreset-1&&currentPreset>0){
+            currentPreset--;
+            var freq = presetsModel.get(currentPreset).frequency;
+            frequencySlider.setFrequency(parseFloat(freq) )
+        }
+    }
     Image {
         anchors.fill: parent
         source: "qrc:/design/media/Radio/favoritespane.png"
@@ -75,11 +98,14 @@ Item {
                 MouseArea{
                     id: unFavoriteMouserea
                     anchors.fill: favoriteButton
-                    onPressed: {favoriteButton.pressedAndHeld=false}
-                    onReleased: {favoriteButton.pressedAndHeld=false}
+                    onPressed: {}
+                    onReleased: {}
+                    onClicked: {
+                        SM.datafileRemoveRadioStation(frequency);
+                        favoritesUpdated();
+                    }
                     onPressAndHold: {
-                        favoriteButton.pressedAndHeld=true;
-                        SM.datafileRemoveRadioStation(frequencyText.text);
+                        SM.datafileRemoveRadioStation(frequency);
                         favoritesUpdated();
                     }
                 }
@@ -91,12 +117,12 @@ Item {
                     maximumOutput: "#ffffffff"
                     visible: (unFavoriteMouserea.pressed)?true:false
                 }
-                ColorOverlay {
-                    anchors.fill: favoriteButton
-                    source: favoriteButton
-                    color: "#80ffffff"
-                    visible: unFavoriteMouserea.pressed && favoriteButton.pressedAndHeld?true:false
-                }
+//                ColorOverlay {
+//                    anchors.fill: favoriteButton
+//                    source: favoriteButton
+//                    color: "#80ffffff"
+//                    visible: unFavoriteMouserea.pressed && favoriteButton.pressedAndHeld?true:false
+//                }
             }
         }
         Component.onCompleted: {
@@ -112,7 +138,6 @@ Item {
     }
     function updateFavoritesList(){
         var stations = SM.datafileGetRadioStations();
-        console.log("stations updated: "+stations);
         presetsModel.clear();
         for (var i = 0 ;i<stations.length; i++){
             presetsModel.append({frequency:stations[i]});

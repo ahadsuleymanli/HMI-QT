@@ -533,7 +533,6 @@ QSettings *SettingsManager::getDatafile()
 QStringList SettingsManager::datafileGetRadioStations(){
     datafile->beginGroup("RadioStations");
     const QStringList radioStations = datafile->childKeys();
-    qDebug()<<radioStations;
     datafile->endGroup();
     return radioStations;
 }

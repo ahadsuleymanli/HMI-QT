@@ -135,12 +135,12 @@ Item {
             Layout.alignment:Qt.AlignHCenter
             Layout.fillWidth: children
             Button{width: centerBtns.btnWidth; height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/a.png"
-                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();favoritesPane.previousPreset();}
                 mouseArea.onReleased: {pressed=false;}
             }
             Item{width: centerBtns.btnWidth;height:centerBtns.btnHeight;}
             Button{width: centerBtns.btnWidth;height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/b.png"
-                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
+                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();favoritesPane.nextPreset();}
                 mouseArea.onReleased: {pressed=false;}
             }
         }
