@@ -383,16 +383,13 @@ Item {
         }
                     );
      }
-     if(SM.safebox)
-     {
+     if(SM.safebox){
         controlsModel.append(
         {
         name: qsTr("Safe Box"),
         st: "SafeBox",
         bg: "qrc:/design/controls/leftmenu/safebox.png"
-        }
-                    );
-
+        });
      }
     if(SM.aircondition){
         controlsModel.append(
@@ -440,14 +437,18 @@ Item {
                     }
                     );
     }
-     if(SM.smokefan)
-        controlsModel.append(
-                   {
+    if(SM.sunroof)
+        controlsModel.append({
         name: qsTr("Roof"),
         st: "Roof",
         bg: "qrc:/design/controls/leftmenu/roof.png"
-                    }
-                    );
+    });
+    if(SM.pinProtectedSafe())
+       controlsModel.append({
+       name: qsTr("Pin Protected Safe"),
+       st: "PinProtectedSafe",
+       bg: "qrc:/design/controls/leftmenu/pinprotectedsafe.png"
+     });
 
     }
     function seat2com(seatno)
@@ -591,6 +592,8 @@ Item {
             ,
                 "SafeBox"
             ,
+                "PinProtectedSafe"
+            ,
                 "AirConditioner"
             ,
                 "SmokeFan"
@@ -723,83 +726,11 @@ Item {
                 id: oneSeatRightModel
             }
 
-ListModel {
-    id: controlsModel
-    ListElement {
-       name: QT_TR_NOOP("Tables")
-       st: "Tables"
-       bg: "qrc:/design/controls/leftmenu/tables.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Curtains")
-        st: "Curtains"
-        bg: "qrc:/design/controls/leftmenu/curtains.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Refrigerator")
-        st: "Refrigerator"
-        bg: "qrc:/design/controls/leftmenu/refrigerator.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Safe Box")
-        st: "SafeBox"
-        bg: "qrc:/design/controls/leftmenu/safebox.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Air Condition")
-        st: "AirConditioner"
-        bg: "qrc:/design/controls/leftmenu/airconditioner.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Smoke Fan")
-        st: "SmokeFan"
-        bg: "qrc:/design/controls/leftmenu/smokefan.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Windows")
-        st: "Windows"
-        bg: "qrc:/design/controls/leftmenu/windows.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Bar")
-        st: "Bar"
-        bg: "qrc:/design/controls/leftmenu/bar.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Espresso")
-        st: "Espresso"
-        bg: "qrc:/design/controls/leftmenu/espresso.png"
-    }
-    ListElement {
-        name: QT_TR_NOOP("Roof")
-        st: "Roof"
-        bg: "qrc:/design/controls/leftmenu/roof.png"
-    }
-}
-    ListView {
-        model: controlsModel
-        delegate: Text {
-            text: qsTr(model.name) + mytrans.emptyString
-        }
-    }
+ListModel {id: controlsModel}
+
 
 ListModel{
     id: lightsModel
-//    ListElement{
-//        name:QT_TR_NOOP("Ceiling Light")
-//        target:1
-//        selected:false
-//    }
-//    ListElement{
-//        name:QT_TR_NOOP("Inside Light")
-//        target:2
-//        selected:false
-//    }
-//    ListElement{
-//        name:QT_TR_NOOP("Side Light")
-//        target:3
-//        selected:false
-//    }
 }
 
 ListModel {

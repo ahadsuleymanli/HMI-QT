@@ -496,5 +496,10 @@
         <file>Pages/Media/Radio/FavoritesPane.qml</file>
         <file>design/media/Radio/favoritespane.png</file>
         <file>design/media/Radio/unfav.png</file>
+        <file>design/controls/leftmenu/pinprotectedsafe.png</file>
+        <file>Pages/Controls/PinProtectedSafe.qml</file>
+        <file>Components/Numpad/Numpad.qml</file>
+        <file>Components/Numpad/NumpadButton.qml</file>
+        <file>Components/Numpad/Button.qml</file>
     </qresource>
 </RCC>

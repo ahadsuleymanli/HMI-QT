@@ -69,14 +69,15 @@ Item {
                 color: mouseArea.pressed?"#ff1c1c1c":"#ff383838"
                 radius: 10
                 antialiasing: true
+                MouseArea{
+                    id: mouseArea
+                    anchors.fill: presetRectangle
+                    onPressed: {}
+                    onReleased: {}
+                    onClicked: {frequencySlider.setFrequency(parseFloat(frequency));root.currentPreset=index;}
+                }
             }
-            MouseArea{
-                id: mouseArea
-                anchors.fill: presetRectangle
-                onPressed: {}
-                onReleased: {}
-                onClicked: {frequencySlider.setFrequency(parseFloat(frequency))}
-            }
+
             Text {
                 id: frequencyText
                 anchors.left: parent.left

@@ -97,8 +97,12 @@ bool SettingsManager::slboolean()
 
 bool SettingsManager::sunroof()
 {
-
     return this->general->value("main/sunroof",false).toBool();
+}
+
+bool SettingsManager::pinProtectedSafe()
+{
+    return this->general->value("main/pin_protected_safe",false).toBool();
 }
 
 bool SettingsManager::espresso()

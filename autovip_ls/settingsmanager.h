@@ -83,6 +83,7 @@ public:
     bool radio();
     bool slboolean();
     bool sunroof();
+    Q_INVOKABLE bool pinProtectedSafe();
     bool espresso();
     bool windows();
     bool aircondition();

@@ -30,13 +30,6 @@ BasePage {
             }
         }
 
-//        Repeater {
-//            model:tmodel
-//            Text {
-//                text: name
-//            }
-//        }
-
         Image{
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter:  parent.horizontalCenter
@@ -45,5 +38,5 @@ BasePage {
             source:"qrc:/design/controls/safebox.svg"
         }
 
-        }
+    }
 }

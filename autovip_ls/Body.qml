@@ -61,10 +61,8 @@ Item {
         id:refrigerator
     }
 
-    ControlPages.SafeBox{
-        id:safebox
-    }
-
+    ControlPages.SafeBox{id:safebox}
+    ControlPages.PinProtectedSafe{id:pinProtectedSafe}
 
     ControlPages.AirConditioner{
         id:airconditioner
@@ -299,6 +297,7 @@ Item {
         GSystem.addPageItem("Tables",tables);
         GSystem.addPageItem("Refrigerator",refrigerator);
         GSystem.addPageItem("SafeBox",safebox);
+        GSystem.addPageItem("PinProtectedSafe",pinProtectedSafe);
         GSystem.addPageItem("AirConditioner",airconditioner);
         GSystem.addPageItem("SmokeFan",smokefan);
         GSystem.addPageItem("Curtains",curtains);
