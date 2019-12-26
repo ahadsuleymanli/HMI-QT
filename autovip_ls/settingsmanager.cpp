@@ -5,20 +5,25 @@
 #include <QDebug>
 #include <QProcess>
 
+// TODO: allow a QStringList of setting file paths be entered to this function and parallelize the waitForFinished part;
+void SettingsManager::deleteLockFile(QString path){
+    QProcess *removeProcess = new QProcess();
+    connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
+    removeProcess->start("sudo rm "+path+".lock");
+    removeProcess->waitForFinished(1000);
+}
+
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {
-    QString setfile = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
-    QString protofile = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
-    QProcess *removeProcess1 = new QProcess();
-    QProcess *removeProcess2 = new QProcess();
-    connect(removeProcess1, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess1, SLOT(deleteLater()));
-    connect(removeProcess2, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess2, SLOT(deleteLater()));
-    removeProcess1->start("sudo rm "+setfile+".lock");
-    removeProcess2->start("sudo rm "+protofile+".lock");
-    removeProcess1->waitForFinished(1000);
-    removeProcess2->waitForFinished(1000);
-    this->general = new QSettings(setfile,QSettings::IniFormat);
-    this->m_proto = new QSettings(protofile,QSettings::IniFormat);
+    QString setfilePath = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
+    QString protofilePath = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
+    QString datafilePath = QString("%1/%2").arg(QDir::currentPath()).arg("data.ini");
+    deleteLockFile(setfilePath);
+    deleteLockFile(protofilePath);
+    deleteLockFile(datafilePath);
+    this->general = new QSettings(setfilePath,QSettings::IniFormat);
+    this->m_proto = new QSettings(protofilePath,QSettings::IniFormat);
+    this->datafile = new QSettings(datafilePath,QSettings::IniFormat);
 }
 
 void SettingsManager::resetSettings()
@@ -519,6 +524,26 @@ QSettings *SettingsManager::getSettings()
 {
     return this->general;
 }
+
+//-Datafile--------------------------------------------------
+QSettings *SettingsManager::getDatafile()
+{
+    return this->datafile;
+}
+QStringList SettingsManager::datafileGetRadioStations(){
+    datafile->beginGroup("RadioStations");
+    const QStringList radioStations = datafile->childKeys();
+    qDebug()<<radioStations;
+    datafile->endGroup();
+    return radioStations;
+}
+void SettingsManager::datafileRemoveRadioStation(QString radioFrequency){
+    datafile->remove("RadioStations/"+radioFrequency);
+}
+void SettingsManager::datafileAddRadioStation(QString radioFrequency){
+    datafile->setValue("RadioStations/"+radioFrequency,"");
+}
+//-----------------------------------------------------------
 
 bool SettingsManager::autoUpdate()
 {

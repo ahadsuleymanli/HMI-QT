@@ -1,9 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 
 Item {
 //    opacity: 0.8
+    id:root
     Image {
         anchors.fill: parent
         source: "qrc:/design/media/Radio/favoritespane.png"
@@ -13,65 +15,111 @@ Item {
         cellWidth: width/2
         cellHeight: 52
         anchors.fill: parent
-        anchors.leftMargin: 12
-        anchors.topMargin: 9+4+10
-        anchors.rightMargin: 12
-        topMargin: 2
+        anchors.leftMargin: 12 + 10
+        anchors.topMargin: 9+4
+        anchors.rightMargin: 12 + 5
+        anchors.bottomMargin: 10
+        topMargin: 12
         clip: true
         model: presetsModel
         delegate: Item {
             id:delegateItem
             height: 50
             width: parent.width/2
-            Rectangle{
-                anchors.bottom: parent.top
-                anchors.left: parent.left
-                width: parent.width - 2
-                height: 2
-//                color: "#ffff8888"
-                color: "#884c4c4c"
-//                color: "white"
-
+            Rectangle {
+                anchors.fill: presetRectangle
+                anchors.topMargin: 3
+                anchors.leftMargin: 3
+                anchors.bottomMargin: -3
+                anchors.rightMargin: -3
+                radius: 10
+                color: "#60000000"
             }
             Rectangle{
-                anchors.top: parent.bottom
-                anchors.left: parent.left
-                width: parent.width - 2
-                height: 2
-//                color: "#ffff8888"
-                color: "#884c4c4c"
-//                color: "white"
-            }
-//            Rectangle{
-//                anchors.verticalCenter: parent.verticalCenter
-//                anchors.left: parent.left
-//                anchors.top:parent.top
-//                width: parent.width - 2
-////                color: "#ff4c4c4c"
-//                gradient: Gradient{
-//                    GradientStop { position: 0.0; color: "#ff4c4c4c" }
-//                    GradientStop { position: 1.0; color: "#44272727" }
-//                }
-//            }
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
+                id:presetRectangle
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.top:parent.top
+                width: parent.width - 2
+                border.color: "#ff0c0c0c"
+                border.width: 2
+                color: mouseArea.pressed?"#ff1c1c1c":"#ff383838"
+                radius: 10
+                antialiasing: true
+            }
+            MouseArea{
+                id: mouseArea
+                anchors.fill: presetRectangle
+                onPressed: {}
+                onReleased: {}
+                onClicked: {frequencySlider.setFrequency(parseFloat(frequency))}
+            }
+            Text {
                 id: frequencyText
-                color: "white"
-                text: frequency.toFixed(1)
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 10
+                font.pixelSize: 18
+                color: "#ffd3d3d3"
+//                text: frequency.toFixed(1)
+                text: frequency
+            }
+            Image {
+                id: favoriteButton
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                property bool pressedAndHeld: false
+                height: 50
+                width: 50
+                source: "qrc:/design/media/Radio/unfav.png"
+                MouseArea{
+                    id: unFavoriteMouserea
+                    anchors.fill: favoriteButton
+                    onPressed: {favoriteButton.pressedAndHeld=false}
+                    onReleased: {favoriteButton.pressedAndHeld=false}
+                    onPressAndHold: {
+                        favoriteButton.pressedAndHeld=true;
+                        SM.datafileRemoveRadioStation(frequencyText.text);
+                        favoritesUpdated();
+                    }
+                }
+                LevelAdjust {
+                    id:levelAdjust
+                    anchors.fill: favoriteButton
+                    source: favoriteButton
+                    minimumOutput: "#00444444"
+                    maximumOutput: "#ffffffff"
+                    visible: (unFavoriteMouserea.pressed)?true:false
+                }
+                ColorOverlay {
+                    anchors.fill: favoriteButton
+                    source: favoriteButton
+                    color: "#80ffffff"
+                    visible: unFavoriteMouserea.pressed && favoriteButton.pressedAndHeld?true:false
+                }
             }
         }
         Component.onCompleted: {
-
         }
     }
     ListModel{
         id:presetsModel
     }
-    Component.onCompleted: {
-        for (var i = 0 ;i<5; i++){
-            presetsModel.append({frequency:87.5+i/10})
+    signal favoritesUpdated
+    Connections {
+        target: root
+        onFavoritesUpdated: updateFavoritesList();
+    }
+    function updateFavoritesList(){
+        var stations = SM.datafileGetRadioStations();
+        console.log("stations updated: "+stations);
+        presetsModel.clear();
+        for (var i = 0 ;i<stations.length; i++){
+            presetsModel.append({frequency:stations[i]});
         }
+    }
+    Component.onCompleted: {
+        updateFavoritesList();
     }
 
 }

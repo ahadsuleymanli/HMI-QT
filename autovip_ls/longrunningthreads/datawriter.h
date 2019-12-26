@@ -17,16 +17,10 @@ class DataWriterWorker : public QObject
     QString lastPowerofftime;
     QString datafilePath;
     bool timeIsSet = false;
-    void deleteLockFile(QString path){
-        QProcess *removeProcess = new QProcess();
-        connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
-        removeProcess->start("sudo rm "+path+".lock");
-        removeProcess->waitForFinished(1000);
-    }
 public:
     explicit DataWriterWorker(QObject *parent = nullptr){
         this->datafilePath = QString("%1/%2").arg(QDir::currentPath()).arg("data.ini");
-        deleteLockFile(datafilePath);
+//        deleteLockFile(datafilePath);
         lastPowerofftime = QSettings(datafilePath,QSettings::IniFormat).value("timedate/powerofftime").toString();
     }
     QString getLastPowerOffTime(){
@@ -39,7 +33,7 @@ public slots:
         timeIsSet = true;
     }
     void connections(){
-        deleteLockFile(datafilePath);
+//        deleteLockFile(datafilePath);
         this->datafile = new QSettings(datafilePath,QSettings::IniFormat,this);
         connect(this,&DataWriterWorker::heartBeat,this,&DataWriterWorker::writeCurrentTime);
     }

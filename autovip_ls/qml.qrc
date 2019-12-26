@@ -495,5 +495,6 @@
         <file>design/controls/ani/orta.png</file>
         <file>Pages/Media/Radio/FavoritesPane.qml</file>
         <file>design/media/Radio/favoritespane.png</file>
+        <file>design/media/Radio/unfav.png</file>
     </qresource>
 </RCC>

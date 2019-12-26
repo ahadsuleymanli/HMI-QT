@@ -23,6 +23,7 @@ class SettingsManager : public QObject
     Q_OBJECT
     QSettings * general = nullptr;
     QSettings * m_proto = nullptr;
+    QSettings * datafile = nullptr;
     Q_PROPERTY(int lang READ lang WRITE setLang NOTIFY langChanged)
     Q_PROPERTY(QString mediaPlayerURL READ mediaPlayerURL WRITE setMediaPlayerURL NOTIFY mediaPlayerURLChanged)
     Q_PROPERTY(QString portname READ portname WRITE setPortname NOTIFY portnameChanged)
@@ -57,7 +58,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool autoUpdate READ autoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
     Q_PROPERTY(QString version READ version)
 //    Q_PROPERTY(QString lastdownloadedversion READ lastdownloadedversion)
-
+    void deleteLockFile(QString path);
     SettingsManager(QObject *parent = nullptr);
 public:
     SettingsManager(SettingsManager const&) = delete;
@@ -108,6 +109,10 @@ Q_INVOKABLE uint mediaplayertype();
     QString portname();
     void setPortname(QString p_pn);
     QSettings* getSettings();
+    QSettings* getDatafile();
+    Q_INVOKABLE QStringList datafileGetRadioStations();
+    Q_INVOKABLE void datafileRemoveRadioStation(QString);
+    Q_INVOKABLE void datafileAddRadioStation(QString);
 
     bool autoUpdate();
     void setAutoUpdate(bool enabled = true);

@@ -127,6 +127,7 @@ Item {
             Button{width: centerBtns.btnWidth;height:centerBtns.btnHeight;image.source:"qrc:/design/media/Radio/fav.png"
                 mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
                 mouseArea.onReleased: {pressed=false;}
+                mouseArea.onClicked: {SM.datafileAddRadioStation(frequencySlider.frequency.toFixed(1));favoritesPane.favoritesUpdated();}
             }
         }
         RowLayout{
