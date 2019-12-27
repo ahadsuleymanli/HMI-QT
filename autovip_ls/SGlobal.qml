@@ -245,7 +245,7 @@ Item {
     function createMediaModel()
     {
         mediaModel.clear();
-        if(true)
+        if(SM.musicPlayer()===true)
         {
         mediaModel.append(
                     {

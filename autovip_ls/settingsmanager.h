@@ -140,6 +140,8 @@ Q_INVOKABLE  bool seatDrawer(int seat_no);
 Q_INVOKABLE  bool seatFootrest(int seat_no);
 Q_INVOKABLE  bool saveLightMemory(int p_unit,int type,QString p_color);
 Q_INVOKABLE  QString getLightMemory(int p_unit,int type);
+Q_INVOKABLE  bool musicPlayer(){return general->value("main/musicplayer").toBool();}
+
 
 signals:
     void langChanged(int);
