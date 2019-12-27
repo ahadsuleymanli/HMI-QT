@@ -558,6 +558,7 @@ QString SettingsManager::datafileGetSafePin(){
 }
 void SettingsManager::datafileSetSafePin(QString newPin){
     datafile->setValue("Security/safe_pin",newPin);
+    emit safePinChanged();
 }
 //-----------------------------------------------------------
 

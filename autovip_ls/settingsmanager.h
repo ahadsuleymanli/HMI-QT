@@ -54,6 +54,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool curtains READ curtains)
     Q_PROPERTY(bool demomode READ demomode)
     Q_PROPERTY(bool intro READ intro)
+    Q_PROPERTY(QString safePin READ datafileGetSafePin NOTIFY safePinChanged)
 
     Q_PROPERTY(bool autoUpdate READ autoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
     Q_PROPERTY(QString version READ version)
@@ -114,7 +115,7 @@ Q_INVOKABLE uint mediaplayertype();
     Q_INVOKABLE QStringList datafileGetRadioStations();
     Q_INVOKABLE void datafileRemoveRadioStation(QString);
     Q_INVOKABLE void datafileAddRadioStation(QString);
-    Q_INVOKABLE QString datafileGetSafePin();
+    QString datafileGetSafePin();
     Q_INVOKABLE void datafileSetSafePin(QString);
 
 
@@ -149,6 +150,7 @@ signals:
     void mediaplayertypeChanged(uint);
     void autoUpdateChanged(bool);
     void settingsChanged(bool);
+    void safePinChanged();
 public slots:
 };
 

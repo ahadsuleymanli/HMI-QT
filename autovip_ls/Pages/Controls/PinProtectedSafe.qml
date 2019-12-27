@@ -47,7 +47,6 @@ BasePage {
         anchors.topMargin: contentTopMargin
         anchors.bottomMargin: contentBottomMargin
         color: "#88000000"
-        property string correctPin: ""
         Rectangle{
             id:passwordPromptArea
             anchors.centerIn: parent
@@ -71,7 +70,7 @@ BasePage {
                     id: numpad
                     onNumpadPressed: pinTextField.enterPin(key);
                     onEnterPressed: {
-                        if (pinTextField.text===authScreen.correctPin){
+                        if (pinTextField.text===SM.safePin){
                             pinTextField.text = "";
                             authScreen.visible=false;
                         }else{
@@ -187,7 +186,7 @@ BasePage {
 
                 }
                 extraBtn2.mouseArea.onPressed: {
-                    if (oldPinField.text===authScreen.correctPin){
+                    if (oldPinField.text===SM.safePin){
                         if (newPinField.text.length<4){
                             passwordChangeNotification.notifyFailure(qsTr("Pin has to be at least 4 characters long!"));
                         }
@@ -267,7 +266,7 @@ BasePage {
 
         }
         Component.onCompleted: {
-            authScreen.correctPin = SM.datafileGetSafePin();
+
         }
     }
     function init(){
