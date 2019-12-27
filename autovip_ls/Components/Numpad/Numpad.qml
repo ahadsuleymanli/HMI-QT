@@ -9,6 +9,7 @@ Rectangle{
     signal numpadPressed (var key)
     signal enterPressed
     property alias keysGrid: keysGrid
+    property alias enterButton: enterButton
     property alias extraBtn0: extraBtn0
     property alias extraBtn1: extraBtn1
     property alias extraBtn2: extraBtn2
@@ -31,7 +32,7 @@ Rectangle{
         NumpadButton{number: 8}
         NumpadButton{number: 9}
         NumpadButton{number: 0}
-        Button{text.text: "ENTER"; text.font.pixelSize:18;mouseArea.onPressed: enterPressed();}
+        Button{id:enterButton; text.text: "ENTER"; text.font.pixelSize:18;mouseArea.onPressed: enterPressed();}
         Button{id:extraBtn0; visible: false; text.font.pixelSize:18;}
         Button{id:extraBtn1; visible: false; text.font.pixelSize:18;}
         Button{id:extraBtn2; visible: false; text.font.pixelSize:18;}

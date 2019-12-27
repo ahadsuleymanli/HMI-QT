@@ -16,7 +16,7 @@ BasePage {
     property int serialDelay: -1
 
     Component.onCompleted: {
-        serial_mng.setRadioAudioAllowed(false);
+        serial_mng.radioPlaying = false;
     }
     function init()
     {
