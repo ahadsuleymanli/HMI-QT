@@ -19,5 +19,6 @@ if (( filesize > MAXSIZE )); then
 fi
 current_time=$(date "+%Y.%m.%d-%H.%M.%S")
 echo "starting the program $current_time">>$DUMP_PATH
-./heartbeat_checker & pid1="$!" ;
-./autovip_ls 2>>$DUMP_PATH; kill $pid1
+#./heartbeat_checker & pid1="$!" ;
+#./autovip_ls 2>>$DUMP_PATH; kill $pid1
+./autovip_ls 2>>$DUMP_PATH

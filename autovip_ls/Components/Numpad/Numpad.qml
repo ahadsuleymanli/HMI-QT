@@ -9,7 +9,11 @@ Rectangle{
     signal numpadPressed (var key)
     signal enterPressed
     property alias keysGrid: keysGrid
-    height: 263
+    property alias extraBtn0: extraBtn0
+    property alias extraBtn1: extraBtn1
+    property alias extraBtn2: extraBtn2
+    property alias extraBtn3: extraBtn3
+    height: 263 + 72
     width: 378
     GridLayout {
         id:keysGrid
@@ -28,9 +32,10 @@ Rectangle{
         NumpadButton{number: 9}
         NumpadButton{number: 0}
         Button{text.text: "ENTER"; text.font.pixelSize:18;mouseArea.onPressed: enterPressed();}
-        Component.onCompleted: {
-//            console.log(height + " w: " + width)
-        }
+        Button{id:extraBtn0; visible: false; text.font.pixelSize:18;}
+        Button{id:extraBtn1; visible: false; text.font.pixelSize:18;}
+        Button{id:extraBtn2; visible: false; text.font.pixelSize:18;}
+        Button{id:extraBtn3; visible: false; text.font.pixelSize:18;}
     }
 }
 

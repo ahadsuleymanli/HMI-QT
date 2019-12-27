@@ -114,6 +114,9 @@ Q_INVOKABLE uint mediaplayertype();
     Q_INVOKABLE QStringList datafileGetRadioStations();
     Q_INVOKABLE void datafileRemoveRadioStation(QString);
     Q_INVOKABLE void datafileAddRadioStation(QString);
+    Q_INVOKABLE QString datafileGetSafePin();
+    Q_INVOKABLE void datafileSetSafePin(QString);
+
 
     bool autoUpdate();
     void setAutoUpdate(bool enabled = true);

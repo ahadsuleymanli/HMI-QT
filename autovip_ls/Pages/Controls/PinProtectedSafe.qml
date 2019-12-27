@@ -15,7 +15,11 @@ BasePage {
         y:0
         width:parent.width
         height:parent.height
-        LeftTextMenu{id: leftMenu; model: tmodel}
+        LeftTextMenu{
+            id: leftMenu;
+            model: tmodel
+            onClicked: if (index===1){authScreen.visible=true;}
+        }
         ListModel{
             id: tmodel
             ListElement{
@@ -34,7 +38,7 @@ BasePage {
             fillMode: Image.PreserveAspectFit
             source:"qrc:/design/controls/safebox.svg"
         }
-        }
+    }
 
     Rectangle {
         id: authScreen
@@ -43,34 +47,111 @@ BasePage {
         anchors.topMargin: contentTopMargin
         anchors.bottomMargin: contentBottomMargin
         color: "#88000000"
+        property string correctPin: ""
         Rectangle{
             id:passwordPromptArea
             anchors.centerIn: parent
-            height: 380
+            height: 380 + 80
             width: 500
             color: "#ff383838"
             border.color: "#88ff3838"
             border.width: 4
-            ColumnLayout{
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottomMargin: 20
-                TextField {
-                    Layout.alignment: Qt.AlignHCenter
-                    id:pinTextField
-                    placeholderText: qsTr("pin")
-                }
-                RowLayout{
+            visible: !passwordChangeArea.visible
 
+            ColumnLayout{
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 20
+                anchors.bottomMargin: 20
+                PasswordField{
+                    id:pinTextField
+                    Layout.alignment: Qt.AlignHCenter
                 }
                 Numpad{
                     id: numpad
-                    onNumpadPressed: pinTextField.text = key;
-//                    height: 275
-//                    width: 390
+                    onNumpadPressed: pinTextField.enterPin(key);
+                    onEnterPressed: {
+                        if (pinTextField.text===authScreen.correctPin){
+                            pinTextField.text = "";
+                            authScreen.visible=false;
+                        }else{
+                            pinTextField.wrongPinAnimation.start();
+                        }
+                    }
+                    Component.onCompleted: {
+                        extraBtn0.visible=true;
+                        extraBtn0.text.text=qsTr("Del");
+                        extraBtn1.visible=true;
+                        extraBtn1.opacity = 0;
+                        extraBtn2.visible=true;
+                        extraBtn2.text.text=qsTr("Change Pin");
+                    }
+                    extraBtn0.mouseArea.onPressed: {
+                        pinTextField.backspace();
+                    }
+                    extraBtn2.mouseArea.onPressed: {
+                        passwordChangeArea.visible=true;
+                    }
                 }
             }
+        }
+        Rectangle{
+            id:passwordChangeArea
+            anchors.centerIn: parent
+            height: 380
+            width: 500
+            color: "#aa383838"
+            border.color: "#88ff3838"
+            border.width: 4
+            visible: false
+            ColumnLayout{
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 20
+                RowLayout{
+                    Layout.alignment: Qt.AlignTop
+                    PasswordField{
+                        Rectangle{
+                            anchors.fill: parent
+                            color: "#ff333333"
+                            z:-1
+                        }
+                        id:currentPinField
+                    }
+                    PasswordField{
+                        id:newPinField
+                        Rectangle{
+                            anchors.fill: parent
+                            color: "#ff333333"
+                            z:-1
+                        }
+                    }
+                    PasswordField{
+                        id:newPinFieldRepeat
+                    }
+                }
 
+
+
+            }
+            RowLayout{
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottomMargin: 20
+                Button{
+                    text.text: qsTr("change");
+                    mouseArea.onPressed: {
+                    }
+                }
+                Button{text.text: qsTr("back");mouseArea.onPressed: passwordChangeArea.visible=false;}
+            }
+        }
+        Component.onCompleted: {
+            authScreen.correctPin = SM.datafileGetSafePin();
         }
     }
+    function init(){
+        pinTextField.text = "";
+    }
+
 }

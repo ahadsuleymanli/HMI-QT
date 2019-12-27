@@ -501,5 +501,6 @@
         <file>Components/Numpad/Numpad.qml</file>
         <file>Components/Numpad/NumpadButton.qml</file>
         <file>Components/Numpad/Button.qml</file>
+        <file>Components/Numpad/PasswordField.qml</file>
     </qresource>
 </RCC>

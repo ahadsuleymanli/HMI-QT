@@ -546,6 +546,19 @@ void SettingsManager::datafileRemoveRadioStation(QString radioFrequency){
 void SettingsManager::datafileAddRadioStation(QString radioFrequency){
     datafile->setValue("RadioStations/"+radioFrequency,"");
 }
+QString SettingsManager::datafileGetSafePin(){
+    datafile->beginGroup("Security");
+    QString pin;
+    if (datafile->childKeys().contains("safe_pin"))
+        pin=datafile->value("safe_pin").toString();
+    else
+        pin="1111";
+    datafile->endGroup();
+    return pin;
+}
+void SettingsManager::datafileSetSafePin(QString newPin){
+    datafile->setValue("Security/safe_pin",newPin);
+}
 //-----------------------------------------------------------
 
 bool SettingsManager::autoUpdate()
