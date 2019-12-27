@@ -70,7 +70,7 @@ class SerialMng : public QObject
     QColor m_insidecolor;
     QColor m_sidecolor;
     int m_volume = 30;
-    uint m_soundSource = 0;
+    uint m_soundSource = 3;
     uint radioFrequency_uint= 875;
     bool radioPlaying = false;
 

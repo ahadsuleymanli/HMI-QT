@@ -164,7 +164,7 @@ Item {
             Button{id:dabButton;height: 60; width: 120; text.text: "DAB";text.font.pixelSize:root.btnLongTextSize; visible: false;}
         }
         Item {height: 60; width: 120;
-            Button{text.text: "PRESETS" ;text.font.pixelSize:root.btnLongTextSize;
+            Button{text.text: qsTr("PRESETS") ;text.font.pixelSize:root.btnLongTextSize;
                 mouseArea.onPressed: {pressed=true;resetFrequencyEditing();}
                 mouseArea.onReleased: {pressed=false;favoritesPane.visible=!favoritesPane.visible;numpad.visible=!numpad.visible;}
             }

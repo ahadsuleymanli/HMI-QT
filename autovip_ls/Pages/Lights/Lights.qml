@@ -546,6 +546,7 @@ BasePage {
                    ceilColorComponent.color = ceilColor;
                    insideColorComponent.color = sideColor;
                    sideColorComponent.color = sideColor;
+                   console.log("size"+ height, + " " + width)
 //                   if(!Qt.colorEqual(ceil,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
 //                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
 //                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
@@ -590,9 +591,6 @@ BasePage {
                    ceilColorComponent.color = ceilColor;
                    insideColorComponent.color = sideColor;
                    sideColorComponent.color = sideColor;
-//                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
                }
                onHolded: {
                    SM.saveLightMemory(3,1,root.ceilColor);
@@ -606,12 +604,12 @@ BasePage {
 
         RowLayout{
            spacing: 10
-           id:rl2
+           id:bottomButtonsRow
            x:284
            LightButton{
                Layout.preferredHeight: 30
                Layout.preferredWidth: 310
-               text:qsTr("Left Reading Light") + mytrans.emptyString
+               text:qsTr("Sol Tavan Okuma Lambası") + mytrans.emptyString
                onReleased: {
                    if (c3.color == "#fff6a6")
                    {
@@ -625,34 +623,11 @@ BasePage {
                    }
                }
            }
-//           LightButton{
-//               id:transbtn
-//               property var ison: false
-//               Layout.preferredHeight: 30
-//               Layout.preferredWidth: 203
-//               text:qsTr("Transition Mode") + mytrans.emptyString
-//               onReleased: {
-//                       if (ison==true)
-//                       {
-//                           transitme.running=false;
-//                           transitme2.running=false;
-//                           transitme3.running=false;
-//                           transitme4.running=false;
-//                           transitme5.running=false;
-//                           transitme6.running=false;
-//                           ison=false;
-//                       }else
-//                       {
-//                           transitme.start();
-//                           console.log("Transition mode started.")
-//                           ison=true;
-//                       }
-//                    }
-//               }
+
            LightButton{
                Layout.preferredHeight: 30
                Layout.preferredWidth: 310
-               text:qsTr("Right Reading Light") + mytrans.emptyString
+               text:qsTr("Sağ Tavan Okuma Lambası") + mytrans.emptyString
                onReleased: {
                        if (c4.color == "#fff6a6")
                        {
@@ -671,154 +646,49 @@ BasePage {
 
         }
 
-        //    COLOUR TRANSITION CHEAT SHEET
-        //    r     g     b
-        //    255   0     0     d
-        //    255   255   0     d
-        //    0     255   0     d
-        //    0     255   255   d
-        //    0     0     255   d
-        //    255   0     255   d
-        //    255   0     0     d
+    }
+//    Rectangle{
+//        anchors.fill: readingLigtsRow
+//        anchors.leftMargin: -4
+//        anchors.rightMargin: -20
+//        anchors.topMargin: -2
+//        anchors.bottomMargin: -4
+//        color: "#44aa6c39"
+//    }
+    ColumnLayout{
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: contentBottomMargin + 20
+        anchors.leftMargin: 12
+        id:readingLigtsRow
+        spacing: 10
+        Text {
+            text: qsTr("Table Reading Lights")
+            font.styleName: StyleItalic
+            height: 30
+            color: "white"
+            font.pixelSize: 18
+        }
+        LightButton{
+            height: 30
+            width: 150
+            text:qsTr("Left Table") + mytrans.emptyString
+            onReleased: {
+                serial_mng.sendKey("lights/seatthree_reading_light");
 
-//            Timer{
-//                property var g: 0
-//                property var fps: 30
-//                id:transitme
-//                interval: 200;
-//                running: false;
-//                repeat: true
-//                onTriggered: function(){
-//                    sideColor=Qt.rgba(255/255, g/255, 0/255,1);
-//                    ceilColor=Qt.rgba(255/255, g/255, 0/255,1);
-//                    inSideColor=Qt.rgba(255/255, g/255, 0/255,1);
-//                    sendSideColor(sideColor);
-//                    sendCeilColor(ceilColor);
-//                    sendInsideColor(inSideColor);
-//                    if(g!=255){
-//                        g=g+transitme.fps/10;
-//                    }else{
-//                        transitme.stop();
-//                        transitme2.start();
-//                    }
-//                }
-//            }
-//            Timer{
-//                property var r: 255
-//                id:transitme2
-//                interval: transitme.interval;
-//                running: false;
-//                repeat: true
-//                onTriggered: function(){
-//                    sideColor=Qt.rgba(r/255, 255/255, 0/255,1);
-//                    ceilColor=Qt.rgba(r/255, 255/255, 0/255,1);
-//                    inSideColor=Qt.rgba(r/255, 255/255, 0/255,1);
-//                    sendSideColor(sideColor);
-//                    sendCeilColor(ceilColor);
-//                    sendInsideColor(inSideColor);
-//                    if(r!=0){
-//                        r=r-transitme.fps/10;
-//                    }else{
-//                        transitme2.stop();
-//                        transitme3.start();
-//                    }
-//                }
-//            }
-//            Timer{
-//                property var b: 0
-//                id:transitme3
-//                interval: transitme.interval;
-//                running: false;
-//                repeat: true
-//                onTriggered: function(){
-//                    sideColor=Qt.rgba(0/255, 255/255, b/255,1);
-//                    ceilColor=Qt.rgba(0/255, 255/255, b/255,1);
-//                    inSideColor=Qt.rgba(0/255, 255/255, b/255,1);
-//                    sendSideColor(sideColor);
-//                    sendCeilColor(ceilColor);
-//                    sendInsideColor(inSideColor);
-//                    if(b!=255){
-//                        b=b+transitme.fps/10;
-//                    }else{
-//                        transitme3.stop();
-//                        transitme4.start();
-//                    }
-//                }
-//            }
-//            Timer{
-//                property var g: 255
-//                id:transitme4
-//                interval: transitme.interval;
-//                running: false;
-//                repeat: true
-//                onTriggered: function(){
-//                    sideColor=Qt.rgba(0/255, g/255, 255/255,1);
-//                    ceilColor=Qt.rgba(0/255, g/255, 255/255,1);
-//                    inSideColor=Qt.rgba(0/255, g/255, 255/255,1);
-//                    sendSideColor(sideColor);
-//                    sendCeilColor(ceilColor);
-//                    sendInsideColor(inSideColor);
-//                    if(g!=0){
-//                        g=g-transitme.fps/10;
-//                    }else{
-//                        transitme4.stop();
-//                        transitme5.start();
-//                    }
-//                }
-//            }
-//            Timer{
-//                property var r: 0
-//                id:transitme5
-//                interval: transitme.interval;
-//                running: false;
-//                repeat: true
-//                onTriggered: function(){
-//                    sideColor=Qt.rgba(r/255, 0/255, 255/255,1);
-//                    ceilColor=Qt.rgba(r/255, 0/255, 255/255,1);
-//                    inSideColor=Qt.rgba(r/255, 0/255, 255/255,1);
-//                    sendSideColor(sideColor);
-//                    sendCeilColor(ceilColor);
-//                    sendInsideColor(inSideColor);
-//                    if(r!=255){
-//                        r=r+transitme.fps/10;
-//                    }else{
-//                        transitme5.stop();
-//                        transitme6.start();
-//                    }
-//                }
-//            }
-//            Timer{
-//                property var b: 255
-//                id:transitme6
-//                interval: transitme.interval;
-//                running: false;
-//                repeat: true
-//                onTriggered: function(){
-//                    sideColor=Qt.rgba(255/255, 0/255, b/255,1);
-//                    ceilColor=Qt.rgba(255/255, 0/255, b/255,1);
-//                    inSideColor=Qt.rgba(255/255, 0/255, b/255,1);
-//                    sendSideColor(sideColor);
-//                    sendCeilColor(ceilColor);
-//                    sendInsideColor(inSideColor);
-//                    if(b!=0){
-//                        b=b-transitme.fps/10;
-//                    }else{
-//                        transitme6.stop();
-//                        transitme.start();
-//                        transitme.g=0;
-//                        transitme2.r=255;
-//                        transitme3.b=0;
-//                        transitme4.g=255;
-//                        transitme5.r=0;
-//                        transitme6.b=255;
-//                    }
-//                }
-//            }
+            }
+        }
+        LightButton{
+            height: 30
+            width: 150
+            text:qsTr("Right Table") + mytrans.emptyString
+            onReleased: {
+                serial_mng.sendKey("lights/seatfour_reading_light");
 
-
+            }
+        }
 
     }
-
 
     Component.onCompleted: {
         root.delay = serial_mng.getLightsDelay();

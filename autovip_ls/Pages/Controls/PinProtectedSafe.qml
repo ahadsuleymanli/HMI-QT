@@ -1,13 +1,18 @@
 import QtQuick 2.4
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 import ck.gmachine 1.0
 import "../../Components"
 import "../../Components/Numpad"
 BasePage {
     id:root
-    caption: qsTr("Pin Protected Safe") + mytrans.emptyString
+    caption: qsTr("Dosya Bölmesi") + mytrans.emptyString
     pageName: "PinProtectedSafe"
+    function init(){
+        pinTextField.text = "";
+        authScreen.visible=true;
+    }
     Image{
         id:safeBox
         enabled: !authScreen.visible
@@ -18,25 +23,51 @@ BasePage {
         LeftTextMenu{
             id: leftMenu;
             model: tmodel
-            onClicked: if (index===1){authScreen.visible=true;}
+//            onClicked: if (index===1){authScreen.visible=true;}
         }
         ListModel{
             id: tmodel
             ListElement{
                 name: qsTr("Open")
                 beforecode:"controls/espresso_open"
+                releasecode:"controls/espresso_stop"
             }
             ListElement{
                 name: qsTr("Close")
                 beforecode:"controls/espresso_close"
+                releasecode:"controls/espresso_stop"
             }
         }
         Image{
+            id:safeboxImg
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter:  parent.horizontalCenter
-            height: 329
+            sourceSize.height: 329
             fillMode: Image.PreserveAspectFit
-            source:"qrc:/design/controls/safebox.svg"
+            source:"qrc:/design/controls/dosyabolumu.png"
+        }
+        Image {
+            id: lockImage
+            anchors.right: parent.right
+            anchors.rightMargin: 200
+            anchors.verticalCenter: parent.verticalCenter
+            sourceSize.height: 120
+            source: "qrc:/design/controls/lock_icon"
+            Rectangle{
+                color: lockMousearea.pressed?"#ffff3333":"#44333333"
+                anchors.fill: parent
+                anchors.margins: -2
+                radius: 8
+                border.color: "#88ff3838"
+                border.width: 2
+                z:-1
+            }
+            MouseArea{
+                id:lockMousearea
+                anchors.fill: parent
+                anchors.margins: -20
+                onReleased: authScreen.visible=true;
+            }
         }
     }
 
@@ -269,8 +300,6 @@ BasePage {
 
         }
     }
-    function init(){
-        pinTextField.text = "";
-    }
+
 
 }

@@ -502,5 +502,10 @@
         <file>Components/Numpad/NumpadButton.qml</file>
         <file>Components/Numpad/Button.qml</file>
         <file>Components/Numpad/PasswordField.qml</file>
+        <file>design/controls/lock_icon.png</file>
+        <file>design/general/radio.png</file>
+        <file>design/controls/dosyabolumu.png</file>
+        <file>design/controls/elektriklidolap.png</file>
+        <file>design/controls/leftmenu/elektriklidopal.png</file>
     </qresource>
 </RCC>

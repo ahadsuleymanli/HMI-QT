@@ -105,7 +105,7 @@ bool InitializeMng::init()
     this->serial_mng->setActype(settings_mng->value("main/actype").toInt());
     this->serial_mng->openSerialPort();
     serial_mng->setDemomode(settings_mng->demomode());
-
+    serial_mng->sendKey("controls/bluetooth_source",true,100);
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
     qDebug()<<"initializemng.cpp: main.qml is loadded"<<endl;
     if (engine->rootObjects().isEmpty())

@@ -141,6 +141,7 @@ BasePage {
             }
         }
         Rectangle{
+            visible: false
             id:dvdplayer
             width:180
             height:50

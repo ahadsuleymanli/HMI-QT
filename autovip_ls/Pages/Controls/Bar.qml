@@ -6,7 +6,7 @@ import "../../Components"
 
 BasePage {
     id:root
-    caption: qsTr("BAR") + mytrans.emptyString
+    caption: qsTr("ELEKTRIKLI DOLAP") + mytrans.emptyString
     pageName: "Bar"
     Image{
         x:0
@@ -32,19 +32,13 @@ BasePage {
             }
         }
 
-//        Repeater {
-//            model:tmodel
-//            Text {
-//                text: name
-//            }
-//        }
 
         Image{
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             height: 329
             fillMode: Image.PreserveAspectFit
-            source:"qrc:/design/controls/bar.svg"
+            source:"qrc:/design/controls/elektriklidolap.png"
         }
 
         }

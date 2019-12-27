@@ -228,19 +228,19 @@
     </message>
     <message>
         <source>First Curtain</source>
-        <translation type="vanished">Birinci Perde</translation>
+        <translation>Birinci Perde</translation>
     </message>
     <message>
         <source>Second Curtain</source>
-        <translation type="vanished">İkinci Perde</translation>
+        <translation>İkinci Perde</translation>
     </message>
     <message>
         <source>Third Curtain</source>
-        <translation type="vanished">Üçüncü Perde</translation>
+        <translation>Üçüncü Perde</translation>
     </message>
     <message>
         <source>Fourth Curtain</source>
-        <translation type="vanished">Dördüncü Perde</translation>
+        <translation>Dördüncü Perde</translation>
     </message>
     <message>
         <source>Luggage Curtain</source>
@@ -916,6 +916,18 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <translation>Sağ Okuma Işığı</translation>
     </message>
     <message>
+        <source>Table Reading Lights</source>
+        <translation>Masa Okuma Işıkları</translation>
+    </message>
+    <message>
+        <source>Left Table</source>
+        <translation>Sol Masa</translation>
+    </message>
+    <message>
+        <source>Right Table</source>
+        <translation>Sağ Masa</translation>
+    </message>
+    <message>
         <source>Transition Mode</source>
         <translation type="vanished">Geçiş Modu</translation>
     </message>
@@ -1074,7 +1086,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>OneSeat</name>
     <message>
         <source>Head</source>
-        <translation type="vanished">Kafa</translation>
+        <translation>Kafalık</translation>
     </message>
     <message>
         <source>↑</source>
@@ -1325,7 +1337,11 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <name>Roof</name>
     <message>
         <source>ROOF</source>
-        <translation>TAVAN</translation>
+        <translation>TAVAN CAMI</translation>
+    </message>
+    <message>
+        <source>Pin Protected Safe</source>
+        <translation>Dosya bölmesi</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1472,7 +1488,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Roof</source>
-        <translation>Tavan</translation>
+        <translation>Tavan Camı</translation>
     </message>
     <message>
         <source>Back</source>
@@ -3681,6 +3697,14 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <message>
         <source>Media Player</source>
         <translation>Medya Oynatıcı</translation>
+    </message>
+    <message>
+        <source>MEDIA PLAYER</source>
+        <translation>MEDYA OYNATICI</translation>
+    </message>
+    <message>
+        <source>PRESETS</source>
+        <translation>İSTASYONLAR</translation>
     </message>
     <message>
         <source>Satallite</source>

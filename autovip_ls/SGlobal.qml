@@ -245,7 +245,7 @@ Item {
     function createMediaModel()
     {
         mediaModel.clear();
-        if(SM.mediaplayertype === 1)
+        if(true)
         {
         mediaModel.append(
                     {
@@ -421,9 +421,9 @@ Item {
      {
         controlsModel.append(
                     {
-        name: qsTr("Bar"),
+        name: qsTr("Elektrikli Dolap"),
         st: "Bar",
-        bg: "qrc:/design/controls/leftmenu/bar.png"
+        bg: "qrc:/design/controls/leftmenu/elektriklidopal.png"
                     }
                     );
      }
@@ -445,7 +445,7 @@ Item {
     });
     if(SM.pinProtectedSafe())
        controlsModel.append({
-       name: qsTr("Pin Protected Safe"),
+       name: qsTr("Dosya Bölmesi"),
        st: "PinProtectedSafe",
        bg: "qrc:/design/controls/leftmenu/pinprotectedsafe.png"
      });
