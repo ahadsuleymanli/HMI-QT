@@ -6,7 +6,6 @@ SerialScheduler::SerialScheduler(SerialMng *parent): QObject(parent){
     waitTimer->setInterval(105);
     waitTimer->setSingleShot(true);
     waitTimer->stop();
-    connect(this,SIGNAL(canSendAnotherKey(QSring,QSring)),this,SLOT(sendKey(QSring,QSring)));
     connect(waitTimer, &QTimer::timeout, this, [this](){
         if (lastKey!=""){
             sendKey(this->lastKey,this->lastKeyParameter);
