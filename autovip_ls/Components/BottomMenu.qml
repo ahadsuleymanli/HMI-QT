@@ -17,13 +17,6 @@ Item {
             height: 140
             color: "transparent"
             y:0
-
-//            Behavior on y
-//            {
-//                NumberAnimation{
-//                duration:385
-//                }
-//            }
             Item{
                     id:rowRectangle
                     x:10
@@ -119,19 +112,19 @@ Item {
                         property real popupWidth: childrenRect.width
                         model: ListModel {
                             id: model
-//                            ListElement { name: "AUX"; command: "controls/aux_source"; is_visible:false}
+                            ListElement { name: qsTr("RADIO"); command: "controls/aux_source";}
                             ListElement { name: "TV"; command: "controls/optic_source" }
-                            ListElement { name: qsTr("RADYO"); command: "controls/highlevel_source" }
+                            ListElement { name: qsTr("MUSIC PLAYER"); command: "controls/highlevel_source" }
                             ListElement { name: "BLUETOOTH"; command: "controls/bluetooth_source" }
                         }
                         indicator: Image{
                             width: 56
                             height: 46
-                            property var images: ["qrc:/design/general/audiosource_aux.png",
+                            property var images: ["qrc:/design/general/audiosource_radio.png",
                                 "qrc:/design/general/audiosource_tv.png",
-                                "qrc:/design/general/radio.png",
+                                "qrc:/design/general/audiosource_music.png",
                                 "qrc:/design/general/bluetooth.png"]
-                            source: images[serial_mng.soundSource]
+                            source: serial_mng.soundSource?images[serial_mng.soundSource-1]:images[3]
                         }
 
 

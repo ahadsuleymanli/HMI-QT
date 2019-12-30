@@ -12,6 +12,7 @@ Item {
     property int numpadNumFraction: -1
     property bool numpadPointPressed: false
 
+
     MouseArea{
         id:numpadEmptyMousearea
         anchors.top: numpad.top
@@ -84,7 +85,7 @@ Item {
             }
         }
         NumpadButton{number: 0}
-        Button{text.text: "ENTER"; text.font.pixelSize:root.btnLongTextSize;
+        Button{text.text: qsTr("ENTER"); text.font.pixelSize:root.btnLongTextSize;
             mouseArea.onPressed: {
             pressed=true;
             display.numpadEnterPressed()
@@ -177,9 +178,19 @@ Item {
         width: 122
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 2
+
         Item {height: 72; width: 72;anchors.top: parent.top;anchors.right: parent.right;
-            Button{id:onOffButton;height: parent.height; width: parent.width;image.source:"qrc:/design/media/Radio/Power.png";/*text.text: serial_mng.radioPlaying?"OFF":"ON";text.font.pixelSize:root.btnLongTextSize;*/
-                mouseArea.onPressed: {pressed=true;resetFrequencyEditing();serial_mng.radioPlaying=!serial_mng.radioPlaying;}
+            Button{id:onOffButton;height: parent.height; width: parent.width;image.source:"qrc:/design/media/Radio/Power.png";
+                mouseArea.onPressed: {
+                    pressed=true;
+                    resetFrequencyEditing();
+                    if (serial_mng.soundSource===1)
+                        serial_mng.sendSoundSource(previousSoundSource);
+                    else{
+                        previousSoundSource=serial_mng.soundSource;
+                        serial_mng.sendSoundSource(1);
+                    }
+                }
                 mouseArea.onReleased: {pressed=false;}
             }
         }

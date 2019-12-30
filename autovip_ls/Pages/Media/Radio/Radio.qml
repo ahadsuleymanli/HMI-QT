@@ -14,14 +14,16 @@ BasePage {
     property real minFrequency:87.5
     property real maxFrequency:108.0
     property int serialDelay: -1
+    property int previousSoundSource: 2
 
     Component.onCompleted: {
-        serial_mng.radioPlaying = false;
     }
     function init()
     {
         mPlayerBackend.pause();
-        serial_mng.radioPlaying = true;
+        if (serial_mng.soundSource!==1)
+            previousSoundSource=serial_mng.soundSource;
+        serial_mng.sendSoundSource(1);
     }
     function resetFrequencyEditing(){
         frequencyText.textAnimation.stop()

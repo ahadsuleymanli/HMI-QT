@@ -443,11 +443,11 @@ Item {
         st: "Roof",
         bg: "qrc:/design/controls/leftmenu/roof.png"
     });
-    if(SM.pinProtectedSafe())
+    if(SM.safeLocker())
        controlsModel.append({
-       name: qsTr("Dosya Bölmesi"),
-       st: "PinProtectedSafe",
-       bg: "qrc:/design/controls/leftmenu/pinprotectedsafe.png"
+       name: qsTr("Safelocker"),
+       st: "SafeLocker",
+       bg: "qrc:/design/controls/leftmenu/safelocker.png"
      });
 
     }
@@ -592,7 +592,7 @@ Item {
             ,
                 "SafeBox"
             ,
-                "PinProtectedSafe"
+                "SafeLocker"
             ,
                 "AirConditioner"
             ,

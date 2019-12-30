@@ -100,20 +100,20 @@ bool SettingsManager::sunroof()
     return this->general->value("main/sunroof",false).toBool();
 }
 
-bool SettingsManager::pinProtectedSafe()
+bool SettingsManager::safeLocker()
 {
-    return this->general->value("main/pin_protected_safe",false).toBool();
+    return this->general->value("main/safelocker",false).toBool();
 }
 
 bool SettingsManager::espresso()
 {
 
-    return this->general->value("main/espresso",true).toBool();
+    return this->general->value("main/espresso",false).toBool();
 }
 
 bool SettingsManager::windows()
 {
-    return this->general->value("main/windows",true).toBool();
+    return this->general->value("main/windows",false).toBool();
 }
 
 bool SettingsManager::aircondition()
@@ -124,28 +124,28 @@ bool SettingsManager::aircondition()
 bool SettingsManager::bar()
 {
 
-    return this->general->value("main/bar",true).toBool();
+    return this->general->value("main/bar",false).toBool();
 }
 
 bool SettingsManager::ceilingscreen()
 {
-    return this->general->value("main/ceilingscreen",true).toBool();
+    return this->general->value("main/ceilingscreen",false).toBool();
 }
 
 bool SettingsManager::safebox()
 {
 
-    return this->general->value("main/safebox",true).toBool();
+    return this->general->value("main/safebox",false).toBool();
 }
 
 bool SettingsManager::dvdplayer()
 {
-    return this->general->value("main/dvdplayer",true).toBool();
+    return this->general->value("main/dvdplayer",false).toBool();
 }
 
 bool SettingsManager::curtains()
 {
-    return this->general->value("main/curtains",true).toBool();
+    return this->general->value("main/curtains",false).toBool();
 }
 
 bool SettingsManager::demomode()
@@ -451,6 +451,18 @@ bool SettingsManager::seatFootrest(int seat_no)
    }
    return false;
 }
+
+QStringList SEAT_GROUP_NAMES = { "seatone", "seattwo", "seatthree", "seatfour" };
+
+bool SettingsManager::seatReadingLight(int seat_no)
+{
+    if ( seat_no>0 && seat_no-1<SEAT_GROUP_NAMES.size())
+        return general->value(SEAT_GROUP_NAMES[seat_no-1] + "/readinglight",false).toBool();
+    else
+        return false;
+}
+
+
 
 bool SettingsManager::saveLightMemory(int p_unit, int p_type, QString p_color)
 {

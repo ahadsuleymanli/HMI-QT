@@ -656,12 +656,13 @@ BasePage {
 //        color: "#44aa6c39"
 //    }
     ColumnLayout{
+        id:readingLigtsRow
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.bottomMargin: contentBottomMargin + 20
         anchors.leftMargin: 12
-        id:readingLigtsRow
         spacing: 10
+        visible: false
         Text {
             text: qsTr("Table Reading Lights")
             font.styleName: StyleItalic
@@ -670,24 +671,25 @@ BasePage {
             font.pixelSize: 18
         }
         LightButton{
+            id:leftReadingLight
             height: 30
             width: 150
             text:qsTr("Left Table") + mytrans.emptyString
+            visible: false
             onReleased: {
                 serial_mng.sendKey("lights/seatthree_reading_light");
-
             }
         }
         LightButton{
+            id:rightReadingLight
             height: 30
             width: 150
             text:qsTr("Right Table") + mytrans.emptyString
+            visible: false
             onReleased: {
                 serial_mng.sendKey("lights/seatfour_reading_light");
-
             }
         }
-
     }
 
     Component.onCompleted: {
@@ -695,5 +697,12 @@ BasePage {
         GSystem.createLightsModel(ceilColorComponent,sideColorComponent,insideColorComponent);
         leftMenu.model=GSystem.lightsModel;
         changeSelection(1);
+        if (SM.seatReadingLight(3)||SM.seatReadingLight(4)){
+            readingLigtsRow.visible=true;
+            if (SM.seatReadingLight(3))
+                leftReadingLight.visible=true;
+            if (SM.seatReadingLight(4))
+                rightReadingLight.visible=true;
+        }
     }
 }

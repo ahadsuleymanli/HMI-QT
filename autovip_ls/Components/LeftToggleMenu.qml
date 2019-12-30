@@ -101,7 +101,7 @@ Rectangle {
                 Column{
                      LeftTextButton{
                          id:onOffBtn
-                         text : GSystem.offText
+                         text : (onOffBtn.lightsOff_)?GSystem.offText:GSystem.onText
                          width:75
                          height:75
                          property bool lightsOff_: true
@@ -109,9 +109,8 @@ Rectangle {
                              target: model.object
                              onLightsOffChanged:{
                                 onOffBtn.lightsOff_ = model.object.lightsOff;
-//                                console.log("signal worked " + onOffBtn.lightsOff_);
 //                                onOffBtn.bgcolor = (onOffBtn.lightsOff_)?GSystem.leftTextMenuItemColor:GSystem.toggleBrightColor
-                                onOffBtn.text = (onOffBtn.lightsOff_)?GSystem.offText:GSystem.onText
+//                                 onOffBtn.text = (onOffBtn.lightsOff_)?GSystem.offText:GSystem.onText
 
                              }
                          }

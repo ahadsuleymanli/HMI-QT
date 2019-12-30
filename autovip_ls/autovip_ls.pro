@@ -37,6 +37,7 @@ SOURCES += \
         nvidiaconnmanager.cpp \
         main.cpp \
     restarter.cpp \
+    serialmessagescheduler.cpp \
         settingsmanager.cpp \
         translator.cpp \
         mediaplayermng.cpp \
@@ -84,6 +85,7 @@ HEADERS += \
     iterativevaluechanger.h \
     nvidiaconnmanager.h \
     restarter.h \
+    serialmessagescheduler.h \
         settingsmanager.h \
     tools/logstacktrace.h \
         translator.h \

@@ -147,8 +147,6 @@
         <file>Pages/Controls/AirConditioner.qml</file>
         <file>Pages/Lights/Lights.qml</file>
         <file>Pages/Media/Media.qml</file>
-        <file>Pages/Media/Radio.qml</file>
-        <file>Pages/Media/RadioManual.qml</file>
         <file>Pages/Media/Cameras.qml</file>
         <file>Pages/Media/FrontCamera.qml</file>
         <file>Pages/Media/RearCamera.qml</file>
@@ -496,16 +494,17 @@
         <file>Pages/Media/Radio/FavoritesPane.qml</file>
         <file>design/media/Radio/favoritespane.png</file>
         <file>design/media/Radio/unfav.png</file>
-        <file>design/controls/leftmenu/pinprotectedsafe.png</file>
-        <file>Pages/Controls/PinProtectedSafe.qml</file>
+        <file>Pages/Controls/SafeLocker.qml</file>
         <file>Components/Numpad/Numpad.qml</file>
         <file>Components/Numpad/NumpadButton.qml</file>
         <file>Components/Numpad/Button.qml</file>
         <file>Components/Numpad/PasswordField.qml</file>
         <file>design/controls/lock_icon.png</file>
-        <file>design/general/radio.png</file>
         <file>design/controls/dosyabolumu.png</file>
         <file>design/controls/elektriklidolap.png</file>
         <file>design/controls/leftmenu/elektriklidopal.png</file>
+        <file>design/general/audiosource_music.png</file>
+        <file>design/general/audiosource_radio.png</file>
+        <file>design/controls/leftmenu/safelocker.png</file>
     </qresource>
 </RCC>

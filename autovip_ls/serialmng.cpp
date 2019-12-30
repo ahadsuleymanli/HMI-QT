@@ -3,7 +3,7 @@
 #include <QDir>
 #include <iostream>
 using namespace voice;
-
+#include "serialmessagescheduler.h"
 SerialMng::SerialMng(QObject *parent) : QObject(parent)
 {
 
@@ -82,6 +82,7 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
    }
 
    m_lastsend = QTime::currentTime();
+   serialScheduler = new SerialScheduler(this);
 }
 
 bool SerialMng::isConnected()
@@ -344,32 +345,16 @@ void SerialMng::setVolume(int vol)
     emit volumeChanged(m_volume);
 }
 
-void SerialMng::setSoundSource(uint source)
-{
-    if(m_soundSource == source) return;
-    m_soundSource = source;
-    emit soundSourceChanged(m_soundSource);
-}
 
 void SerialMng::setRadioFrequency(uint frequency)
 {
     if(frequency == radioFrequency_uint) return;
     radioFrequency_uint = frequency;
-    sendKey("radio/set_frequency",false,-1,QString::number(frequency));
+    serialScheduler->sendKey("radio/set_frequency",QString::number(frequency));
+//    sendKey("radio/set_frequency",false,-1,QString::number(frequency));
     emit radioFrequencyChanged();
 }
-void SerialMng::setRadioPlaying(bool radioPlaying)
-{
-    if(this->radioPlaying != radioPlaying){
-        this->radioPlaying = radioPlaying;
-        if (radioPlaying)
-            this->sendKey("radio/audio_on");
-        else
-            this->sendKey("radio/audio_off");
-        emit radioPlayingChanged();
-    }
 
-}
 
 void SerialMng::setHeat(uint p_h)
 {
@@ -922,12 +907,36 @@ bool SerialMng::parserSoundControl(QString p_response)
         {
             return false;
         }
-        if (source > 0)
-            setSoundSource(source-1);
+        if (source > 0 && source < 5 && m_soundSource != source){
+            m_soundSource = source;
+            emit soundSourceChanged(m_soundSource);
+        }
         return true;
     }
     return false;
 }
+void SerialMng::sendSoundSource(uint source)
+{
+    qDebug()<<m_soundSource;
+    if (source==m_soundSource)
+        return;
+    switch(source)
+    {
+        case 1:
+            sendKey("controls/aux_source",true,100);
+        break;
+        case 2:
+            sendKey("controls/optic_source",true,100);
+        break;
+        case 3:
+            sendKey("controls/highlevel_source",true,100);
+        break;
+        case 4:
+            sendKey("controls/bluetooth_source",true,100);
+        break;
+    }
+}
+
 bool SerialMng::parserRadioControl(QString p_response)
 {//80/volume/freq_part1/freq_part2
     if(p_response.startsWith(radio_feedback))
@@ -949,8 +958,10 @@ bool SerialMng::parserRadioControl(QString p_response)
         }
         radioFrequency_uint=frequency_part1+frequency_part2*256;
         if (this->radioFrequency_uint!=radioFrequency_uint){
-            this->radioFrequency_uint=radioFrequency_uint;
-            radioFrequencyChanged();
+            if (!(serialScheduler->queueHasntEnded())){
+                this->radioFrequency_uint=radioFrequency_uint;
+                radioFrequencyChanged();
+            }
         }
         return true;
     }

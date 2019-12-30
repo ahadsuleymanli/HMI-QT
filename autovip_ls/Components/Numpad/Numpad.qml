@@ -32,7 +32,7 @@ Rectangle{
         NumpadButton{number: 8}
         NumpadButton{number: 9}
         NumpadButton{number: 0}
-        Button{id:enterButton; text.text: "ENTER"; text.font.pixelSize:18;mouseArea.onPressed: enterPressed();}
+        Button{id:enterButton; text.text: qsTr("ENTER"); text.font.pixelSize:18;mouseArea.onPressed: enterPressed();}
         Button{id:extraBtn0; visible: false; text.font.pixelSize:18;}
         Button{id:extraBtn1; visible: false; text.font.pixelSize:18;}
         Button{id:extraBtn2; visible: false; text.font.pixelSize:18;}

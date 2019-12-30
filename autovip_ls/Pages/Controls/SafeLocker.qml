@@ -7,8 +7,8 @@ import "../../Components"
 import "../../Components/Numpad"
 BasePage {
     id:root
-    caption: qsTr("Dosya Bölmesi") + mytrans.emptyString
-    pageName: "PinProtectedSafe"
+    caption: qsTr("SAFELOCKER") + mytrans.emptyString
+    pageName: "SafeLocker"
     function init(){
         pinTextField.text = "";
         authScreen.visible=true;
@@ -23,7 +23,6 @@ BasePage {
         LeftTextMenu{
             id: leftMenu;
             model: tmodel
-//            onClicked: if (index===1){authScreen.visible=true;}
         }
         ListModel{
             id: tmodel
@@ -227,10 +226,10 @@ BasePage {
                             passwordChangeArea.visible=false;
                         }
                         else{
-                            passwordChangeNotification.notifyFailure(qsTr("New Pins do not match."));
+                            passwordChangeNotification.notifyFailure(qsTr("New Pins do not match!"));
                         }
                     }else{
-                        passwordChangeNotification.notifyFailure(qsTr("Old Pin was not entered correctly."));
+                        passwordChangeNotification.notifyFailure(qsTr("Old Pin was not entered correctly!"));
                     }
                     oldPinField.text = "";
                     newPinField.text = "";

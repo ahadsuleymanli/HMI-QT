@@ -12,6 +12,7 @@
 #include <QTimer>
 #include <QColor>
 #include <voiceprotohandler.h>
+
 struct SeatState {
     Q_GADGET
     Q_PROPERTY(uint cool MEMBER m_cool)
@@ -24,9 +25,13 @@ public:
     uint m_massageon = 0;
     uint m_massagemode = 0;
 };
+
+class SerialScheduler;
+
 class SerialMng : public QObject
 {
     Q_OBJECT
+    SerialScheduler* serialScheduler;
     bool m_connected = false;
     QSerialPort * m_serial = nullptr;
     QString portName = "";
@@ -70,9 +75,8 @@ class SerialMng : public QObject
     QColor m_insidecolor;
     QColor m_sidecolor;
     int m_volume = 30;
-    uint m_soundSource = 3;
+    uint m_soundSource = 0;
     uint radioFrequency_uint= 875;
-    bool radioPlaying = false;
 
     QTime m_lastsend;
     int m_last_arranged_cmd = 0;
@@ -111,9 +115,8 @@ class SerialMng : public QObject
     Q_PROPERTY(QColor insidecolor READ insidecolor WRITE setInsidecolor NOTIFY insidecolorChanged)
 
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
-    Q_PROPERTY(uint soundSource READ soundSource WRITE setSoundSource NOTIFY soundSourceChanged)
+    Q_PROPERTY(uint soundSource READ soundSource NOTIFY soundSourceChanged)
     Q_PROPERTY(uint radioFrequency_uint MEMBER radioFrequency_uint WRITE setRadioFrequency NOTIFY radioFrequencyChanged)
-    Q_PROPERTY(bool radioPlaying MEMBER radioPlaying WRITE setRadioPlaying NOTIFY radioPlayingChanged)
 
 public:
     explicit SerialMng(QObject *parent = nullptr);
@@ -150,7 +153,6 @@ public:
     void setSystemstate(int p_state);
 
     void setVolume(int vol);
-    void setSoundSource(uint source);
     void setRadioFrequency(uint frequency);
     void setHeat(uint p_h);
     void setCool(uint p_c);
@@ -165,7 +167,6 @@ public:
     void setAcfan(uint p_fan);
     void setAcon(bool p_on);
 
-    void setRadioPlaying(bool);
 
     Q_INVOKABLE SeatState firstseat();
     Q_INVOKABLE SeatState secondseat();
@@ -208,6 +209,7 @@ public: //invokables
     Q_INVOKABLE void write(const QByteArray &writeData);
     Q_INVOKABLE bool isConnected();
     Q_INVOKABLE bool sendVoiceCommandById(int id);
+    Q_INVOKABLE void sendSoundSource(uint source);
 signals:
 
     void connectionChanged(bool);
@@ -232,7 +234,6 @@ signals:
     void ceilingcolorChanged(QColor);
     void volumeChanged(int);
     void radioFrequencyChanged();
-    void radioPlayingChanged();
     void soundSourceChanged(uint);
     void runFunction(QString);
 

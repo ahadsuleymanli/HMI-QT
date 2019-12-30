@@ -888,24 +888,20 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <translation type="vanished">Yan Aydınlatma</translation>
     </message>
     <message>
-        <source>Inside Light</source>
-        <translation type="vanished">İç Aydınlatma</translation>
-    </message>
-    <message>
         <source>Close All</source>
         <translation>Hepsini Kapat</translation>
     </message>
     <message>
         <source>Memory 1</source>
-        <translation type="vanished">Hafıza 1</translation>
+        <translation>Hafıza 1</translation>
     </message>
     <message>
         <source>Memory 2</source>
-        <translation type="vanished">Hafıza 2</translation>
+        <translation>Hafıza 2</translation>
     </message>
     <message>
         <source>Memory 3</source>
-        <translation type="vanished">Hafıza 3</translation>
+        <translation>Hafıza 3</translation>
     </message>
     <message>
         <source>Left Reading Light</source>
@@ -1037,10 +1033,64 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
 </context>
 <context>
+    <name>Numpad</name>
+    <message>
+        <source>ENTER</source>
+        <translation>TAMAM</translation>
+    </message>
+</context>
+<context>
+    <name>SafeLocker</name>
+    <message>
+        <source>SAFELOCKER</source>
+        <translation>DOSYA BÖLMESİ</translation>
+    </message>
+    <message>
+        <source>Del</source>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <source>Change Pin</source>
+        <translation>Şifreyi Değiş</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Uygula</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <source>Old Pin</source>
+        <translation>Kayıtlı Şifre</translation>
+    </message>
+    <message>
+        <source>New Pin</source>
+        <translation>Yeni Şifre</translation>
+    </message>
+    <message>
+        <source>Pin has to be at least 4 characters long!</source>
+        <translation>Şifre en azı 4 karakterden oluşmalı!</translation>
+    </message>
+    <message>
+        <source>Pin has been successfully changed!</source>
+        <translation>Şifre başarıyla değiştirildi!</translation>
+    </message>
+    <message>
+        <source>New Pins do not match!</source>
+        <translation>Yeni şifreler birbirleriyle uyuşmadı!</translation>
+    </message>
+    <message>
+        <source>Old Pin was not entered correctly!</source>
+        <translation>Kayıtlı şifreyi doğru girmediniz!</translation>
+    </message>
+</context>
+<context>
     <name>MediaPlayer</name>
     <message>
-        <source>MEDIA</source>
-        <translation>MEDYA</translation>
+        <source>MEDIA PLAYER</source>
+        <translation>MEDYA OYNATICI</translation>
     </message>
     <message>
         <source>Home</source>
@@ -1056,7 +1106,7 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
     <message>
         <source>Playlist</source>
-        <translation type="unfinished">Listelerim</translation>
+        <translation>Listelerim</translation>
     </message>
     <message>
         <source>My Library</source>
@@ -1168,43 +1218,32 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
 </context>
 <context>
-    <name>RadBtnMenu</name>
+    <name>BottomMenu</name>
     <message>
-        <source>PRESETS</source>
-        <translation>FAVORİ</translation>
+        <source>RADIO</source>
+        <translation>RADYO</translation>
     </message>
     <message>
-        <source>MANUAL SEARCH</source>
-        <translation>ÖZEL ARAMA</translation>
+        <source>MUSIC PLAYER</source>
+        <translation>MEDYA OYNATICI</translation>
+    </message>
+</context>
+<context>
+    <name>Buttons</name>
+    <message>
+        <source>PRESETS</source>
+        <translation>FAVORİLER</translation>
+    </message>
+    <message>
+        <source>ENTER</source>
+        <translation>TAMAM</translation>
     </message>
 </context>
 <context>
     <name>Radio</name>
     <message>
-        <source>RADIO FM</source>
+        <source>RADIO</source>
         <translation>RADYO</translation>
-    </message>
-</context>
-<context>
-    <name>RadioManual</name>
-    <message>
-        <source>MANUAL RADIO</source>
-        <translation>MANUEL RADYO</translation>
-    </message>
-</context>
-<context>
-    <name>RadioModMenu</name>
-    <message>
-        <source>DAB</source>
-        <translation>DAB</translation>
-    </message>
-    <message>
-        <source>FM</source>
-        <translation>FM</translation>
-    </message>
-    <message>
-        <source>AM</source>
-        <translation>AM</translation>
     </message>
 </context>
 <context>
@@ -1355,6 +1394,14 @@ için sistemin yeniden başlatılması gerekir.</translation>
 <context>
     <name>SGlobal</name>
     <message>
+        <source>on</source>
+        <translation>açık</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>kapalı</translation>
+    </message>
+    <message>
         <source>FIRST</source>
         <translation>BİRİNCİ</translation>
     </message>
@@ -1481,6 +1528,10 @@ için sistemin yeniden başlatılması gerekir.</translation>
     <message>
         <source>Bar</source>
         <translation>Bar</translation>
+    </message>
+    <message>
+        <source>Safelocker</source>
+        <translation>Dosya Bölmesi</translation>
     </message>
     <message>
         <source>Espresso</source>

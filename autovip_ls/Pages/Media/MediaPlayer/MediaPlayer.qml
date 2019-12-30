@@ -33,7 +33,7 @@ BasePage {
     }
     function init()
     {
-        serial_mng.radioPlaying = false;
+        serial_mng.sendSoundSource(3);
     }
     RowLayout{
         id: mainLayout
