@@ -70,6 +70,7 @@ public:
     }
     void resetSettings();
     int lang();
+    QString localeCode();
     uint actype();
     uint tvtype();
     uint espressoopentime();

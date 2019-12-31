@@ -80,8 +80,13 @@ Rectangle{
         TumblerColumn {
             id: monthColumn
             width: characterMetrics.width * 3 + tumbler.delegateTextMargins
-            model: [qsTr("Jan"), qsTr("Feb"), qsTr("Mar"), qsTr("Apr"), qsTr("May"), qsTr("Jun"), qsTr("Jul"), qsTr("Aug"), qsTr("Sep"), qsTr("Oct"), qsTr("Nov"), qsTr("Dec")]
-            //onCurrentIndexChanged: dayColumn.updateModel()
+            property variant monthsArray
+            monthsArray:[]
+            Component.onCompleted: {
+                for (var i = 0 ;i<12; i++)
+                    monthsArray.push(Qt.locale().monthName(i,Locale.ShortFormat))
+                model = monthsArray
+            }
         }
         TumblerColumn {
             id:yearColumn
@@ -218,8 +223,10 @@ Rectangle{
         TumblerColumn {
             id: region
             width:150
-            model: ["Turkey","China"]
+            model: [Qt.locale("tr_TR").nativeCountryName,Qt.locale("zh_CN").nativeCountryName]
             }
+
+
         }
         Rectangle {
             id: regionRect

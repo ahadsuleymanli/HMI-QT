@@ -15,7 +15,7 @@ Rectangle {
         id : spinnerLayout
         spacing: 2
 
-        //Spinner { max: 24; value: date.getHours(); }
+//        Spinner { max: 24; value: date.getHours(); }
         Text {
             id:mDate
             color:"#CFD1D2"
@@ -23,9 +23,9 @@ Rectangle {
             font.pixelSize: 26
             text: date.toLocaleDateString(Qt.locale(),"dd MMM yyyy")
         }
-        //Rectangle { color : "white"; width: 2; height: 50 }
-        //Spinner { max: 60; value: date.getMinutes(); }
-        //Rectangle { color : "white"; width: 2; height: 50 }
-        //Spinner { max: 60; value: date.getSeconds(); }
+//        Rectangle { color : "white"; width: 2; height: 50 }
+//        Spinner { max: 60; value: date.getMinutes(); }
+//        Rectangle { color : "white"; width: 2; height: 50 }
+//        Spinner { max: 60; value: date.getSeconds(); }
     }
 }

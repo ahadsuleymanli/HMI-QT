@@ -1046,6 +1046,14 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <translation>DOSYA BÖLMESİ</translation>
     </message>
     <message>
+        <source>Open</source>
+        <translation>Aç</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Kapa</translation>
+    </message>
+    <message>
         <source>Del</source>
         <translation>Sil</translation>
     </message>

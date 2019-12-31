@@ -38,7 +38,11 @@ void SettingsManager::resetSettings()
 
 int SettingsManager::lang()
 {
-    return this->general->value("main/lang",Langs::ENG).toInt();
+   return this->general->value("main/lang",Langs::ENG).toInt();
+}
+
+QString SettingsManager::localeCode(){
+    return QLocale(static_cast<QLocale::Language>(this->general->value("main/lang",Langs::ENG).toInt())).name();
 }
 
 uint SettingsManager::actype()
