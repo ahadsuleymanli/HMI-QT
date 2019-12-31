@@ -223,10 +223,9 @@ Rectangle{
         TumblerColumn {
             id: region
             width:150
-            model: [Qt.locale("tr_TR").nativeCountryName,Qt.locale("zh_CN").nativeCountryName]
+            property variant regions: ["Turkey","China"]
+            model:[qsTr(regions[0]),qsTr(regions[1])]
             }
-
-
         }
         Rectangle {
             id: regionRect
@@ -250,7 +249,7 @@ Rectangle{
             anchors.fill:parent
             onClicked: {
                 console.log("Setting date and time");
-                var regionName = region.model[tumblerRegion.getColumn(0).currentIndex]
+                var regionName = region.regions[tumblerRegion.getColumn(0).currentIndex]
                 csetter.setRegion(regionName)
 //                root.refresh()
             }
