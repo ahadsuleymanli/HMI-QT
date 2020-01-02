@@ -112,11 +112,23 @@ Item {
                         property real popupWidth: childrenRect.width
                         model: ListModel {
                             id: model
-                            ListElement { name: qsTr("RADIO"); command: "controls/aux_source";}
-                            ListElement { name: "TV"; command: "controls/optic_source" }
-                            ListElement { name: qsTr("MUSIC PLAYER"); command: "controls/highlevel_source" }
-                            ListElement { name: "BLUETOOTH"; command: "controls/bluetooth_source" }
+                            Component.onCompleted: {
+                                if (SM.ampInput()){
+//                                    model.append( { name: qsTr("RADIO"), command: "controls/aux_source"})
+                                    model.append({ name: "TV", command: "controls/optic_source" })
+                                    model.append({ name: qsTr("MEDIA"), command: "controls/highlevel_source" })
+                                    model.append({ name: "BLUETOOTH", command: "controls/bluetooth_source" })
+                                }
+                                else{
+                                    model.append( { name: qsTr("RADIO"), command: "controls/aux_source"})
+                                    model.append({ name: "TV", command: "controls/optic_source" })
+                                    model.append({ name: qsTr("MUSIC PLAYER"), command: "controls/highlevel_source" })
+                                    model.append({ name: "BLUETOOTH", command: "controls/bluetooth_source" })
+                                }
+
+                            }
                         }
+
                         indicator: Image{
                             width: 56
                             height: 46

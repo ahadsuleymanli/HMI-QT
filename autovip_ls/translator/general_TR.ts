@@ -1242,6 +1242,10 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <source>MUSIC PLAYER</source>
         <translation>MEDYA OYNATICI</translation>
     </message>
+    <message>
+        <source>MEDIA</source>
+        <translation>MEDYA</translation>
+    </message>
 </context>
 <context>
     <name>Buttons</name>
