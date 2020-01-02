@@ -278,8 +278,6 @@ BasePage {
         onLightsToggle: function (index){
             var target = getColorRegionItem(index+1);
             var val = target.toggleOnOff();
-//            sSlider.color =
-
         }
         onClicked: function(ind)
         {
@@ -364,7 +362,7 @@ BasePage {
             GradientStop { position: 5/6; color: "yellow" }
             GradientStop { position: 6/6; color: "red" }
         }
-        onMouseYChanged: { targetColorItem.hue = Math.max(0.0, Math.min(1.0 - mouseY / height, 1.0)); targetColorItem.value = 1; }
+        onMouseYChanged: { targetColorItem.hue = Math.max(0.0, Math.min(1.0 - mouseY / height, 1.0)); targetColorItem.saturation = 1; }
     }
 
     Item{
@@ -502,12 +500,12 @@ BasePage {
         anchors.top: parent.top
         anchors.topMargin: 570
         orientation: Qt.Horizontal
-        value: 1.0 - targetColorItem.saturation
+        value: 1.0 - targetColorItem.value
         gradient: Gradient {
-                GradientStop { position: 0.0; color: Qt.hsla(targetColorItem.hue, 1.0, 0.5, 1.0) }
-                GradientStop { position: 1.0; color: "white"}
+                GradientStop { position: 0.0; color: Qt.hsla(targetColorItem.hue, targetColorItem.saturation, targetColorItem.saturation===0?1.0:0.5, 1.0) }
+                GradientStop { position: 1.0; color: "#ff333333"}
         }
-        onMouseXChanged: targetColorItem.saturation = Math.max(0.0, Math.min(1.0 - mouseX / width, 1.0));
+        onMouseXChanged: targetColorItem.value = Math.max(0.0, Math.min(1.0 - mouseX / width, 1.0));
     }
     ColumnLayout{
         spacing: 10
@@ -524,16 +522,18 @@ BasePage {
            anchors.right: parent.right
            id:rl1
            LightButton{
-               Layout.preferredHeight: 30
-               Layout.preferredWidth: 150
-               text:qsTr("Close All") + mytrans.emptyString
-               onClicked: {
-                   root.closeAll();
-//                   GSystem.createLightsModel();
-//                   leftMenu.model=GSystem.lightsModel;
-               }
-               enabled: false
-               visible: false
+                Layout.preferredHeight: 30
+                Layout.preferredWidth: 150
+                text:qsTr("White") + mytrans.emptyString
+//                toggled: targetColorItem.saturation===1
+                onClicked: {
+                    if (targetColorItem.saturation===1){
+                        targetColorItem.saturation=0;
+                    }
+                    else{
+                        targetColorItem.saturation=1;
+                    }
+                }
            }
            LightButton{
                Layout.preferredHeight: 30

@@ -924,8 +924,8 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <translation>Sağ Masa</translation>
     </message>
     <message>
-        <source>Transition Mode</source>
-        <translation type="vanished">Geçiş Modu</translation>
+        <source>White</source>
+        <translation>Beyaz Işık</translation>
     </message>
     <message>
         <source>Open</source>

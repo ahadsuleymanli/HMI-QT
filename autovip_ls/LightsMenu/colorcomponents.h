@@ -41,7 +41,7 @@ public:
 	void setHue(qreal hue);
 
 	qreal saturation() const;
-	void setSaturation(qreal saturation);
+    void setSaturation(qreal saturation);
 
 	qreal value() const;
 	void setValue(qreal value);

@@ -4,9 +4,10 @@ import ck.gmachine 1.0
 Rectangle{
             id:root
             property alias text: caption.text
+            property bool toggled: false
             color:Qt.rgba(0, 0, 0,0.4)
             border.width: 1
-            border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
+            border.color:toggled?GSystem.leftTextMenuItemPressedColor:Qt.rgba(0/255, 108/255, 128/255,0.6)
             signal clicked;
             signal released;
             signal pressed;
