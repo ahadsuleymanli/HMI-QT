@@ -951,17 +951,33 @@ void SerialMng::sendSoundSource(uint source)
     }
 }
 
+void SerialMng::sendRadioOff(){
+    if (radioVolume!=0)
+        sendKey("radio/audio_off");
+}
+
+void SerialMng::sendRadioOn(){
+    if (radioVolume!=15)
+        sendKey("radio/audio_on");
+}
+
 bool SerialMng::parserRadioControl(QString p_response)
-{//80/volume/freq_part1/freq_part2
+{
     if(p_response.startsWith(radio_feedback))
     {
         uint frequency_part1=0, frequency_part2 = 0;
         uint radioFrequency_uint = 0;
+        uint radioVolume = 0;
         QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=4){
             return false;
         }
+        radioVolume = parts[1].toUInt(&ok);
+        if(!ok){
+            return false;
+        }
+        this->radioVolume = radioVolume;
         frequency_part1 = parts[2].toUInt(&ok);
         if(!ok){
             return false;

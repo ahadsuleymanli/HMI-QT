@@ -185,7 +185,10 @@ bool SettingsManager::amp()
 {
     return this->general->value("media/amp",false).toBool();
 }
-
+bool SettingsManager::ampInput()
+{
+    return this->general->value("media/ampinput",false).toInt()==2?true:false;
+}
 void SettingsManager::setActype(uint type)
 {
     this->general->value("main/actype",type);

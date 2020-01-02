@@ -184,11 +184,18 @@ Item {
                 mouseArea.onPressed: {
                     pressed=true;
                     resetFrequencyEditing();
-                    if (serial_mng.soundSource===1)
-                        serial_mng.sendSoundSource(previousSoundSource);
-                    else{
-                        previousSoundSource=serial_mng.soundSource;
-                        serial_mng.sendSoundSource(1);
+                    if (SM.ampInput()){
+                        if (serial_mng.radioVolume===0)
+                            serial_mng.sendRadioOn();
+                        else
+                            serial_mng.sendRadioOff();
+                    }else{
+                        if (serial_mng.soundSource===radioSoundSource)
+                            serial_mng.sendSoundSource(previousSoundSource);
+                        else{
+                            previousSoundSource=serial_mng.soundSource;
+                            serial_mng.sendSoundSource(radioSoundSource);
+                        }
                     }
                 }
                 mouseArea.onReleased: {pressed=false;}

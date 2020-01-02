@@ -15,15 +15,22 @@ BasePage {
     property real maxFrequency:108.0
     property int serialDelay: -1
     property int previousSoundSource: 2
-
+    property int radioSoundSource
     Component.onCompleted: {
+        radioSoundSource=1;
     }
     function init()
     {
         mPlayerBackend.pause();
-        if (serial_mng.soundSource!==1)
-            previousSoundSource=serial_mng.soundSource;
-        serial_mng.sendSoundSource(1);
+        if (SM.ampInput()){
+            serial_mng.sendRadioOn();
+        }
+        else{
+            if (serial_mng.soundSource!==radioSoundSource)
+                previousSoundSource=serial_mng.soundSource;
+            serial_mng.sendSoundSource(radioSoundSource);
+        }
+
     }
     function resetFrequencyEditing(){
         frequencyText.textAnimation.stop()

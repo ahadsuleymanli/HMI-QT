@@ -77,6 +77,7 @@ class SerialMng : public QObject
     int m_volume = 30;
     uint m_soundSource = 0;
     uint radioFrequency_uint= 875;
+    uint radioVolume = 5;
 
     QTime m_lastsend;
     int m_last_arranged_cmd = 0;
@@ -117,6 +118,7 @@ class SerialMng : public QObject
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(uint soundSource READ soundSource NOTIFY soundSourceChanged)
     Q_PROPERTY(uint radioFrequency_uint MEMBER radioFrequency_uint WRITE setRadioFrequency NOTIFY radioFrequencyChanged)
+    Q_PROPERTY(uint radioVolume MEMBER radioVolume NOTIFY radioFrequencyChanged)
 
 public:
     explicit SerialMng(QObject *parent = nullptr);
@@ -210,6 +212,8 @@ public: //invokables
     Q_INVOKABLE bool isConnected();
     Q_INVOKABLE bool sendVoiceCommandById(int id);
     Q_INVOKABLE void sendSoundSource(uint source);
+    Q_INVOKABLE void sendRadioOn();
+    Q_INVOKABLE void sendRadioOff();
     Q_INVOKABLE void loadPositionPreset(int seat_no, int saveSlot);
     Q_INVOKABLE void savePositionPreset(int seat_no, int saveSlot);
 signals:

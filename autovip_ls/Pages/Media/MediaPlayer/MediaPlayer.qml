@@ -11,7 +11,7 @@ BasePage {
     id:root
     caption: qsTr("MEDIA PLAYER") + mytrans.emptyString
     pageName: "MediaPlayer"
-
+    property int musicPlayerSoundSource
     property string audioPositionStr: {
         var pos = mPlayerBackend.position
         var posMin = Math.floor(pos / 60)
@@ -30,10 +30,16 @@ BasePage {
             backgroundImage.visible=true
             backgroundImage.source ="qrc:/design/media/MediaPlayer/background.png"
         }
+        musicPlayerSoundSource = 3;
     }
     function init()
     {
-        serial_mng.sendSoundSource(3);
+        if (SM.ampInput()){
+            serial_mng.sendRadioOff();
+        }
+        else
+            serial_mng.sendSoundSource(musicPlayerSoundSource);
+
     }
     RowLayout{
         id: mainLayout
