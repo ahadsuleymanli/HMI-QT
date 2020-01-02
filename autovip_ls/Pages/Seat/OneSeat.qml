@@ -14,6 +14,7 @@ BasePage {
     {
 //        ani.restart();
         GSystem.seatPagePass(); //feedback request
+        seatPresets.reset();
     }
     function end(){
 //        ani.stop();
@@ -147,21 +148,25 @@ BasePage {
 
 
     Rectangle{
-        width: 360
+        width: 275
         height: 360
         color:"transparent"
-        anchors.right: oneseat.left
+        anchors.left: root.left
+        anchors.leftMargin: 42
         anchors.verticalCenter: parent.verticalCenter
 
         ColumnLayout{
             spacing: 20
-            anchors.fill:parent
+            anchors.top: parent.top
+            anchors.left: parent.left
+            id:leftColumn
+            property bool overlayOn: false
 
             Rectangle {
                 id:headbt
+                visible: !leftColumn.overlayOn
                 width:275
                 height:75
-                anchors.horizontalCenter: parent.horizontalCenter
                 color:Qt.rgba(0, 0, 0,0.4)
                 border.width: 1
                 border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -300,7 +305,7 @@ BasePage {
                 id:seatbackbt
                 width:275
                 height:75
-                anchors.horizontalCenter: parent.horizontalCenter
+                visible: !leftColumn.overlayOn
                 color:Qt.rgba(0, 0, 0,0.4)
                 border.width: 1
                 border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -378,12 +383,11 @@ BasePage {
                 }
 
             }
-
             Rectangle {
                 id:seatbt
+                visible: !leftColumn.overlayOn
                 width:275
                 height:75
-                anchors.horizontalCenter: parent.horizontalCenter
                 color:Qt.rgba(0, 0, 0,0.4)
                 border.width: 1
                 border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -461,13 +465,11 @@ BasePage {
 
             }
 
-
             Rectangle {
                 id:thighbt
                 width:275
                 height:75
-                visible: SM.seatThigh(GSystem.selectedSeat) === true
-                anchors.horizontalCenter: parent.horizontalCenter
+                visible: SM.seatThigh(GSystem.selectedSeat) === true && !leftColumn.overlayOn
                 color:Qt.rgba(0, 0, 0,0.4)
                 border.width: 1
                 border.color:Qt.rgba(0/255, 108/255, 128/255,0.6)
@@ -516,6 +518,7 @@ BasePage {
                     id:thighdown
                     width: 75
                     height: 75
+                    Layout.alignment: Qt.AlignTop
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right:parent.right
                     color: "transparent"
@@ -546,13 +549,17 @@ BasePage {
 
             }
 
-
-
+        }
+        SeatPresets{
+            id:seatPresets
+            visible: SM.seatPositionPresets(GSystem.selectedSeat) && !leftColumn.overlayOn
+            overlay.onVisibleChanged: leftColumn.overlayOn=overlay.visible
+            anchors.top: parent.bottom
+            anchors.left: parent.left
+            anchors.topMargin: 20
+            overlaysParent: parent
         }
     }
-
-
-
 //    RightTextMenu{
 //            id:rightMenu
 //            model: GSystem.oneSeatRightModel

@@ -210,8 +210,9 @@ public: //invokables
     Q_INVOKABLE bool isConnected();
     Q_INVOKABLE bool sendVoiceCommandById(int id);
     Q_INVOKABLE void sendSoundSource(uint source);
+    Q_INVOKABLE void loadPositionPreset(int seat_no, int saveSlot);
+    Q_INVOKABLE void savePositionPreset(int seat_no, int saveSlot);
 signals:
-
     void connectionChanged(bool);
     void fandegChanged(int);
     void acdegChanged(int);

@@ -460,14 +460,21 @@ bool SettingsManager::seatFootrest(int seat_no)
 
 QStringList SEAT_GROUP_NAMES = { "seatone", "seattwo", "seatthree", "seatfour" };
 
-bool SettingsManager::seatReadingLight(int seat_no)
-{
+bool SettingsManager::seatReadingLight(int seat_no){
     if ( seat_no>0 && seat_no-1<SEAT_GROUP_NAMES.size())
         return general->value(SEAT_GROUP_NAMES[seat_no-1] + "/readinglight",false).toBool();
     else
         return false;
 }
 
+bool SettingsManager::seatPositionPresets(int seat_no){
+    if (seat_no==3||seat_no==4)
+        return true;
+    if ( seat_no>0 && seat_no-1<SEAT_GROUP_NAMES.size())
+        return general->value(SEAT_GROUP_NAMES[seat_no-1] + "/positionpresets",false).toBool();
+    else
+        return false;
+}
 
 
 bool SettingsManager::saveLightMemory(int p_unit, int p_type, QString p_color)

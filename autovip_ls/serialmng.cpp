@@ -85,6 +85,20 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
    serialScheduler = new SerialScheduler(this);
 }
 
+QStringList PROTO_SEAT_GROUP_NAMES = {"first_seat", "second_seat", "third_seat", "fourth_seat"};
+
+void SerialMng::loadPositionPreset(int seat_no, int saveSlot){
+    if (seat_no>0 && seat_no-1<PROTO_SEAT_GROUP_NAMES.size()){
+        sendKey(PROTO_SEAT_GROUP_NAMES[seat_no-1] + "/mem" + QString::number(saveSlot));
+    }
+}
+
+void SerialMng::savePositionPreset(int seat_no, int saveSlot){
+    if (seat_no>0 && seat_no-1<PROTO_SEAT_GROUP_NAMES.size()){
+        sendKey(PROTO_SEAT_GROUP_NAMES[seat_no-1] + "/mem_m" + QString::number(saveSlot));
+    }
+}
+
 bool SerialMng::isConnected()
 {
     bool st = this->m_serial->isOpen();

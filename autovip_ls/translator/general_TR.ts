@@ -1141,6 +1141,13 @@ için sistemin yeniden başlatılması gerekir.</translation>
     </message>
 </context>
 <context>
+    <name>SeatPresets</name>
+    <message>
+        <source>Seat Presets</source>
+        <translation>Koltuk Hafızası</translation>
+    </message>
+</context>
+<context>
     <name>OneSeat</name>
     <message>
         <source>Head</source>

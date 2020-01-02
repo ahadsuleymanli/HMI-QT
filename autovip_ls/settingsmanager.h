@@ -140,6 +140,7 @@ Q_INVOKABLE  void setTimeDiff(int mindiff, int hourdiff,int daydiff,int monthdif
 Q_INVOKABLE  bool seatDrawer(int seat_no);
 Q_INVOKABLE  bool seatFootrest(int seat_no);
 Q_INVOKABLE  bool seatReadingLight(int seat_no);
+Q_INVOKABLE  bool seatPositionPresets(int seat_no);
 Q_INVOKABLE  bool saveLightMemory(int p_unit,int type,QString p_color);
 Q_INVOKABLE  QString getLightMemory(int p_unit,int type);
 Q_INVOKABLE  bool musicPlayer(){return general->value("main/musicplayer").toBool();}

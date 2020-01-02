@@ -507,5 +507,6 @@
         <file>design/general/audiosource_radio.png</file>
         <file>design/controls/leftmenu/safelocker.png</file>
         <file>Pages/Seat/SeatButton.qml</file>
+        <file>Pages/Seat/SeatPresets.qml</file>
     </qresource>
 </RCC>
