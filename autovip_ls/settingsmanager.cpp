@@ -57,6 +57,11 @@ uint SettingsManager::actype()
     return this->general->value("main/actype",1).toUInt();
 }
 
+bool SettingsManager::acvents()
+{
+    return this->general->value("main/acvents",false).toBool();
+}
+
 uint SettingsManager::tvtype()
 {
     return this->general->value("main/tvtype",6).toUInt();

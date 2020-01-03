@@ -29,6 +29,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(QString portname READ portname WRITE setPortname NOTIFY portnameChanged)
     Q_PROPERTY(int baudrate READ baudrate WRITE setBaudrate NOTIFY baudrateChanged)
     Q_PROPERTY(uint actype READ actype WRITE setActype NOTIFY actypeChanged)
+    Q_PROPERTY(bool acvents READ acvents)
     Q_PROPERTY(uint mediaplayertype READ mediaplayertype WRITE setMediaplayertype NOTIFY mediaplayertypeChanged)
 
     Q_PROPERTY(uint tvtype READ tvtype)
@@ -72,6 +73,7 @@ public:
     int lang();
     QString localeCode();
     uint actype();
+    bool acvents();
     uint tvtype();
     uint espressoopentime();
     uint seatmovementduration();
