@@ -28,7 +28,7 @@ Item{
         Item{
         id:no
         anchors.fill: parent
-        visible:serial_mng.massagemod === 0
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 0
         Text{
             text: qsTr("MASSAGE OFF")  + mytrans.emptyString
             anchors.bottom: parent.bottom
@@ -45,7 +45,7 @@ Item{
         Item{
         id:shoulderthigh
         anchors.fill: parent
-        visible:serial_mng.massagemod === 1
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 1
         Image{
             x:151
             y:85
@@ -75,7 +75,7 @@ Item{
         Item{
         id:waistthigh
         anchors.fill: parent
-        visible:serial_mng.massagemod === 2
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 2
         Image{
             x:131
             y:136
@@ -107,7 +107,7 @@ Item{
         Item{
         id:shoulderwaist
         anchors.fill: parent
-        visible:serial_mng.massagemod === 3
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 3
         Image{
             x:151
             y:85
@@ -138,7 +138,7 @@ Item{
         Item{
         id:pulse
         anchors.fill: parent
-        visible:serial_mng.massagemod === 4
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 4
         Image{
             x:94
             y:128
@@ -163,7 +163,7 @@ Item{
         Item{
         id:smooth
         anchors.fill: parent
-        visible:serial_mng.massagemod === 5
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 5
 
         Image{
             x:75
@@ -211,7 +211,7 @@ Item{
         Item{
         id:shoulder
         anchors.fill: parent
-        visible:serial_mng.massagemod === 6
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 6
         Image{
             x:152
             y:85
@@ -236,7 +236,7 @@ Item{
         Item{
         id:thigh
         anchors.fill: parent
-        visible:serial_mng.massagemod === 7
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 7
         Image{
             x:132
             y:137
@@ -260,7 +260,7 @@ Item{
         Item{
         id:relax
         anchors.fill: parent
-        visible:serial_mng.massagemod === 8
+        visible:serial_mng.massagemod[GSystem.selectedSeat-1] === 8
         Text{
             text: qsTr("RELAX")  + mytrans.emptyString
             anchors.bottom: parent.bottom

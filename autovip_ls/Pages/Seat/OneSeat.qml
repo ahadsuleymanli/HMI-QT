@@ -764,7 +764,7 @@ BasePage {
                                         radius: 5
                                         width:30
                                         height:5
-                                        color:serial_mng.cool>2?"#4ab8f7":"white"
+                                        color:serial_mng.cool[GSystem.selectedSeat-1]>2?"#4ab8f7":"white"
                                             MouseArea{
                                                anchors.fill: parent
                                                cursorShape: Qt.IBeamCursor;
@@ -775,7 +775,7 @@ BasePage {
                                         radius: 5
                                         width:30
                                         height:5
-                                        color:serial_mng.cool>1?"#4ab8f7":"white"
+                                        color:serial_mng.cool[GSystem.selectedSeat-1]>1?"#4ab8f7":"white"
                                             MouseArea{
                                                anchors.fill: parent
                                                cursorShape: Qt.IBeamCursor;
@@ -786,7 +786,7 @@ BasePage {
                                         radius: 5
                                         width:30
                                         height:5
-                                        color:serial_mng.cool>0?"#4ab8f7":"white"
+                                        color:serial_mng.cool[GSystem.selectedSeat-1]>0?"#4ab8f7":"white"
                                             MouseArea{
                                                anchors.fill: parent
                                                cursorShape: Qt.IBeamCursor;
@@ -852,7 +852,7 @@ BasePage {
                                         radius: 5
                                         width:30
                                         height:5
-                                        color:serial_mng.heat>2?"#f92814":"white"
+                                        color:serial_mng.heat[GSystem.selectedSeat-1]>2?"#f92814":"white"
                                             MouseArea{
                                                anchors.fill: parent
                                                cursorShape: Qt.IBeamCursor;
@@ -863,7 +863,7 @@ BasePage {
                                         radius: 5
                                         width:30
                                         height:5
-                                        color:serial_mng.heat>1?"#f92814":"white"
+                                        color:serial_mng.heat[GSystem.selectedSeat-1]>1?"#f92814":"white"
                                             MouseArea{
                                                anchors.fill: parent
                                                cursorShape: Qt.IBeamCursor;
@@ -874,7 +874,7 @@ BasePage {
                                         radius: 5
                                         width:30
                                         height:5
-                                        color:serial_mng.heat>0?"#f92814":"white"
+                                        color:serial_mng.heat[GSystem.selectedSeat-1]>0?"#f92814":"white"
                                             MouseArea{
                                                anchors.fill: parent
                                                cursorShape: Qt.IBeamCursor;
@@ -924,10 +924,10 @@ BasePage {
                         width: 75
                         border.color: Qt.rgba(0/255, 108/255, 128/255,0.6)
                         border.width: 1
-                        color:serial_mng.massageon===0?Qt.rgba(255/255, 0/255, 0/255,0.6):Qt.rgba(0/255, 255/255, 0/255,0.6)
+                        color:serial_mng.massageon[GSystem.selectedSeat-1]===0?Qt.rgba(255/255, 0/255, 0/255,0.6):Qt.rgba(0/255, 255/255, 0/255,0.6)
                         Text{
                             anchors.centerIn: parent
-                            text: (serial_mng.massageon===0?qsTr("OFF") + mytrans.emptyString:qsTr("ON") + mytrans.emptyString)  + mytrans.emptyString
+                            text: (serial_mng.massageon[GSystem.selectedSeat-1]===0?qsTr("OFF") + mytrans.emptyString:qsTr("ON") + mytrans.emptyString)  + mytrans.emptyString
                             font.family: GSystem.myriadproita.name
                             font.italic: true
                             font.pixelSize: 24

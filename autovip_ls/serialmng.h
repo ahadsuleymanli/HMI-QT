@@ -44,10 +44,10 @@ class SerialMng : public QObject
     SeatState m_secondseat;
     SeatState m_thirdseat;
     SeatState m_fourthseat;
-    uint m_heat = 0;
-    uint m_cool = 0;
-    uint m_massageon = false;
-    uint m_massagemod = 0;
+    QList<int> seats_heating = {0,0,0,0};
+    QList<int> seats_cooling = {0,0,0,0};
+    QList<int> seats_massage = {false,false,false,false};
+    QList<int> seats_massageMode = {0,0,0,0};
     QSettings * m_proto;
 
     QString m_lstart;
@@ -106,10 +106,10 @@ class SerialMng : public QObject
     Q_PROPERTY(SeatState secondseat READ secondseat  WRITE setSecondseat NOTIFY secondseatChanged)
     Q_PROPERTY(SeatState thirdseat READ thirdseat  WRITE setThirdseat NOTIFY thirdseatChanged)
     Q_PROPERTY(SeatState fourthseat READ fourthseat  WRITE setFourthseat NOTIFY fourthseatChanged)
-    Q_PROPERTY(uint heat READ heat WRITE setHeat NOTIFY heatChanged)
-    Q_PROPERTY(uint cool READ cool WRITE setCool NOTIFY coolChanged)
-    Q_PROPERTY(uint massageon READ massageon WRITE setMassageon NOTIFY massageonChanged)
-    Q_PROPERTY(uint massagemod READ massagemode WRITE setMassagemod NOTIFY massagemodChanged)
+    Q_PROPERTY(QList<int> heat MEMBER seats_heating NOTIFY heatChanged)
+    Q_PROPERTY(QList<int> cool MEMBER seats_cooling NOTIFY coolChanged)
+    Q_PROPERTY(QList<int> massageon MEMBER seats_massage NOTIFY massageonChanged)
+    Q_PROPERTY(QList<int> massagemod MEMBER seats_massageMode NOTIFY massagemodChanged)
     Q_PROPERTY(int systemstate READ systemstate WRITE setSystemstate NOTIFY systemstateChanged)
     Q_PROPERTY(QColor ceilingcolor READ ceilingcolor WRITE setCeilingcolor NOTIFY ceilingcolorChanged)
     Q_PROPERTY(QColor sidecolor READ sidecolor WRITE setSidecolor NOTIFY sidecolorChanged)
@@ -140,11 +140,6 @@ public:
     int systemstate();
     bool acopen();
 
-    uint heat();
-    uint cool();
-    bool massageon();
-    uint massagemode();
-
     QColor ceilingcolor();
     QColor insidecolor();
     QColor sidecolor();
@@ -156,10 +151,6 @@ public:
 
     void setVolume(int vol);
     void setRadioFrequency(uint frequency);
-    void setHeat(uint p_h);
-    void setCool(uint p_c);
-    void setMassageon(bool p_o);
-    void setMassagemod(uint p_mm);
 
     void setCeilingcolor(QColor p_color);
     void setInsidecolor(QColor p_color);
@@ -168,7 +159,6 @@ public:
     void setActemp(uint p_temp);
     void setAcfan(uint p_fan);
     void setAcon(bool p_on);
-
 
     Q_INVOKABLE SeatState firstseat();
     Q_INVOKABLE SeatState secondseat();

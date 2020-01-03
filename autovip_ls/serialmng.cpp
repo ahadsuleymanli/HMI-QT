@@ -300,26 +300,6 @@ bool SerialMng::acopen()
     return this->m_acopen;
 }
 
-uint SerialMng::heat()
-{
-   return m_heat;
-}
-
-uint SerialMng::cool()
-{
-   return m_cool;
-}
-
-bool SerialMng::massageon()
-{
-   return m_massageon;
-}
-
-uint SerialMng::massagemode()
-{
-    return m_massagemod;
-}
-
 QColor SerialMng::ceilingcolor()
 {
    return m_ceilingcolor;
@@ -367,38 +347,6 @@ void SerialMng::setRadioFrequency(uint frequency)
     serialScheduler->sendKey("radio/set_frequency",QString::number(frequency));
 //    sendKey("radio/set_frequency",false,-1,QString::number(frequency));
     emit radioFrequencyChanged();
-}
-
-
-void SerialMng::setHeat(uint p_h)
-{
-    if(p_h == m_heat) return;
-            m_heat = p_h;
-            emit heatChanged(m_heat);
-}
-
-void SerialMng::setCool(uint p_c)
-{
-    if(p_c == m_cool) return;
-    m_cool = p_c;
-    emit coolChanged(p_c);
-
-}
-
-void SerialMng::setMassageon(bool p_o)
-{
-    if(p_o == m_massageon) return;
-    m_massageon = p_o;
-    emit massageonChanged(p_o);
-
-}
-
-void SerialMng::setMassagemod(uint p_mm)
-{
-    if(p_mm == m_massagemod) return;
-    m_massagemod = p_mm;
-    emit massagemodChanged(p_mm);
-
 }
 
 void SerialMng::setCeilingcolor(QColor p_color)
@@ -699,21 +647,21 @@ bool SerialMng::parserSeats(QString p_response)
                 .arg(m_proto->value("third_seat").toString())
                 .arg(m_proto->value("fourth_seat").toString())
                 );
+    int seatIndexes[4] = {m_proto->value("first_seat").toInt(),m_proto->value("second_seat").toInt(),m_proto->value("third_seat").toInt(),m_proto->value("fourth_seat").toInt()};
     m_proto->endGroup();
     QRegularExpressionMatch mt = reg.match(p_response);
     if(mt.hasMatch())
     {
-        SeatState tst;
-        tst.m_cool = mt.captured(4).toUInt();
-        tst.m_heat = mt.captured(5).toUInt();
-        tst.m_massagemode = mt.captured(3).toUInt();
-        tst.m_massageon = mt.captured(2).toUInt();
-
-        uint seatno = mt.captured(1).toUInt();
-        setCool(tst.m_cool);
-        setHeat(tst.m_heat);
-        setMassageon(tst.m_massageon == 0?false:true);
-        setMassagemod(tst.m_massagemode);
+        int seatno = mt.captured(1).toInt();
+        int index = std::distance(seatIndexes, std::find(seatIndexes, seatIndexes + 4, seatno));
+        seats_massage[index]= mt.captured(2).toUInt()==0?false:true;
+        seats_massageMode[index]= mt.captured(3).toUInt();
+        seats_cooling[index]= mt.captured(4).toUInt();
+        seats_heating[index]= mt.captured(5).toUInt();
+        emit massageonChanged(0);
+        emit massagemodChanged(0);
+        emit coolChanged(0);
+        emit heatChanged(0);
         return true;
     }
     return false;

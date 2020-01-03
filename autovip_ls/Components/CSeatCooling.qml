@@ -35,7 +35,7 @@ Item {
                                 radius: 5
                                 width:75
                                 height:25
-                                color:serial_mng.cool>2?"#4ab8f7":"white"
+                                color:serial_mng.cool[GSystem.selectedSeat-1]>2?"#4ab8f7":"white"
                                     MouseArea{
                                        anchors.fill: parent
                                        cursorShape: Qt.IBeamCursor;
@@ -46,7 +46,7 @@ Item {
                                 radius: 5
                                 width:75
                                 height:25
-                                color:serial_mng.cool>1?"#4ab8f7":"white"
+                                color:serial_mng.cool[GSystem.selectedSeat-1]>1?"#4ab8f7":"white"
                                     MouseArea{
                                        anchors.fill: parent
                                        cursorShape: Qt.IBeamCursor;
@@ -57,7 +57,7 @@ Item {
                                 radius: 5
                                 width:75
                                 height:25
-                                color:serial_mng.cool>0?"#4ab8f7":"white"
+                                color:serial_mng.cool[GSystem.selectedSeat-1]>0?"#4ab8f7":"white"
                                     MouseArea{
                                        anchors.fill: parent
                                        cursorShape: Qt.IBeamCursor;
