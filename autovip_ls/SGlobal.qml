@@ -2406,15 +2406,17 @@ ListModel {
     }
         Connections{
             target:serial_mng
-//            onRunFunction:function(fname){
-//                if(typeof root[fname] == "function")
-//                {
-//                    root[fname]();
-//                }
-//            }
-//            onConnectionChanged:function(st)
-//            {
-//            }
+            //@disable-check M16
+            onRunFunction:function(fname){
+                if(typeof root[fname] == "function")
+                {
+                    root[fname]();
+                }
+            }
+            //@disable-check M16
+            onConnectionChanged:function(st)
+            {
+            }
             //@disable-check M16
             onSystemstateChanged:function(st)
             {

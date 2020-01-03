@@ -508,5 +508,6 @@
         <file>design/controls/leftmenu/safelocker.png</file>
         <file>Pages/Seat/SeatButton.qml</file>
         <file>Pages/Seat/SeatPresets.qml</file>
+        <file>design/home/vw.png</file>
     </qresource>
 </RCC>

@@ -15,9 +15,16 @@ BasePage {
     Image{
         id:car
         source: "qrc:/design/home/car.png"
+        height: 461
+        width: 737
         anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 35
+        Component.onCompleted: {
+            console.log("carsize " + height + " " + width)
+            if (SM.carModel()===2)
+                car.source="qrc:/design/home/vw.png";
+        }
     }
     RightInfoBar{
         id: rightInfoBar

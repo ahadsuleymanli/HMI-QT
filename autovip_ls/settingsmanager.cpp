@@ -47,6 +47,11 @@ QString SettingsManager::localeCode(){
     return QLocale(static_cast<QLocale::Language>(this->general->value("main/lang",Langs::ENG).toInt())).name();
 }
 
+int SettingsManager::carModel(){
+    qDebug()<<"carmodel"<<this->general->value("main/carmodel",1).toInt();
+    return this->general->value("main/carmodel",1).toInt();
+}
+
 uint SettingsManager::actype()
 {
     return this->general->value("main/actype",1).toUInt();

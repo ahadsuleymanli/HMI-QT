@@ -145,7 +145,7 @@ Q_INVOKABLE  bool saveLightMemory(int p_unit,int type,QString p_color);
 Q_INVOKABLE  QString getLightMemory(int p_unit,int type);
 Q_INVOKABLE  bool musicPlayer(){return general->value("main/musicplayer").toBool();}
 Q_INVOKABLE  bool ampInput();
-
+Q_INVOKABLE  int carModel();
 signals:
     void langChanged(int);
     void mediaPlayerURLChanged(QString);
