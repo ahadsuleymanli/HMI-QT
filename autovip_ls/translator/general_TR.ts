@@ -250,6 +250,14 @@
 <context>
     <name>Curtains</name>
     <message>
+        <source>Close all curtains</source>
+        <translation>Tüm perdeleri kapat</translation>
+    </message>
+    <message>
+        <source>Open all curtains</source>
+        <translation>Tüm perdeleri aç</translation>
+    </message>
+    <message>
         <source>CURTAINS</source>
         <translation>PERDELER</translation>
     </message>

@@ -27,6 +27,7 @@ BasePage {
             model:tmodel
             height: parent.height
 
+
         }
         ListModel{
             id: tmodel
@@ -51,17 +52,51 @@ BasePage {
                 st:"LuggageCurtain"
             }
         }
-//        Repeater {
-//            model:tmodel
-//            Text {
-//                text: name
-//            }
-//        }
 
         Image{
             x:247
             anchors.verticalCenter: parent.verticalCenter
             source:"qrc:/design/controls/curtains.png"
+            RowLayout {
+                anchors.top: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: 13
+                spacing: 20
+                Button{
+                    buttonText.text: qsTr("Close all curtains")
+                    mouseArea.onPressed: {
+                        serial_mng.sendKey("first_seat/curtain_close")
+                        serial_mng.sendKey("second_seat/curtain_close")
+                        serial_mng.sendKey("third_seat/curtain_close")
+                        serial_mng.sendKey("fourth_seat/curtain_close")
+                        serial_mng.sendKey("controls/back_curtain_down")
+                    }
+                    mouseArea.onReleased: {
+                        serial_mng.sendKey("first_seat/curtain_stop")
+                        serial_mng.sendKey("second_seat/curtain_stop")
+                        serial_mng.sendKey("third_seat/curtain_stop")
+                        serial_mng.sendKey("fourth_seat/curtain_stop")
+                        serial_mng.sendKey("controls/back_curtain_stop")
+                    }
+                }
+                Button{
+                    buttonText.text: qsTr("Open all curtains")
+                    mouseArea.onPressed: {
+                        serial_mng.sendKey("first_seat/curtain_open")
+                        serial_mng.sendKey("second_seat/curtain_open")
+                        serial_mng.sendKey("third_seat/curtain_open")
+                        serial_mng.sendKey("fourth_seat/curtain_open")
+                        serial_mng.sendKey("controls/back_curtain_up")
+                    }
+                    mouseArea.onReleased: {
+                        serial_mng.sendKey("first_seat/curtain_stop")
+                        serial_mng.sendKey("second_seat/curtain_stop")
+                        serial_mng.sendKey("third_seat/curtain_stop")
+                        serial_mng.sendKey("fourth_seat/curtain_stop")
+                        serial_mng.sendKey("controls/back_curtain_stop")
+                    }
+                }
+            }
             Image{
                 id:c1
                 x:68
