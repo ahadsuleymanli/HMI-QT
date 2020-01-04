@@ -510,5 +510,6 @@
         <file>Pages/Seat/SeatPresets.qml</file>
         <file>design/home/vw.png</file>
         <file>Components/RotatingFan.qml</file>
+        <file>Components/Button.qml</file>
     </qresource>
 </RCC>

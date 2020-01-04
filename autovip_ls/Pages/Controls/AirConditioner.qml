@@ -106,10 +106,10 @@ Component{
             anchors.centerIn: parent
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenterOffset: 100
-            width: 900 /*560*/
+            anchors.horizontalCenterOffset: 130
+            width: 850 /*560*/
             height: 432
-            clip: true
+//            clip: true
             Image {
                 id: seatsTopView
                 anchors.left: seatsCrop.left
@@ -122,31 +122,87 @@ Component{
             RotatingFan{
                 id:fan1
                 anchors.verticalCenter:seatsTopView.top
-                anchors.verticalCenterOffset: 30
+                anchors.verticalCenterOffset: 20
                 anchors.horizontalCenter:seatsTopView.horizontalCenter
-                anchors.horizontalCenterOffset: -20
+                anchors.horizontalCenterOffset: 20
+                rightButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_1_open");
+                }
+                rightButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_1_stop");
+                }
+                leftButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_1_close");
+                }
+                leftButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_1_stop");
+                }
+                captionText.text: qsTr("Seat 1 AC Vent")
+                bottomCaption: false
 
             }
             RotatingFan{
                 id:fan2
                 anchors.verticalCenter:seatsTopView.bottom
-                anchors.verticalCenterOffset: -120
+                anchors.verticalCenterOffset: -20
                 anchors.horizontalCenter:seatsTopView.horizontalCenter
-                anchors.horizontalCenterOffset: -20
+                anchors.horizontalCenterOffset: 20
+                rightButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_2_open");
+                }
+                rightButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_2_stop");
+                }
+                leftButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_2_close");
+                }
+                leftButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_2_stop");
+                }
+                captionText.text: qsTr("Seat 2 AC Vent")
+                bottomCaption: true
             }
             RotatingFan{
                 id:fan3
                 anchors.verticalCenter:seatsTopView.top
-                anchors.verticalCenterOffset: 30
+                anchors.verticalCenterOffset: 20
                 anchors.horizontalCenter:seatsTopView.left
                 anchors.horizontalCenterOffset: 140
+                rightButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_3_open");
+                }
+                rightButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_3_stop");
+                }
+                leftButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_3_close");
+                }
+                leftButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_3_stop");
+                }
+                captionText.text: qsTr("Seat 3 AC Vent")
+                bottomCaption: false
             }
             RotatingFan{
                 id:fan4
                 anchors.verticalCenter:seatsTopView.bottom
-                anchors.verticalCenterOffset: -120
+                anchors.verticalCenterOffset: -20
                 anchors.horizontalCenter:seatsTopView.left
                 anchors.horizontalCenterOffset: 140
+                rightButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_4_open");
+                }
+                rightButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_4_stop");
+                }
+                leftButton.mouseArea.onPressed: {
+                    serial_mng.sendKey("airconditioner/valve_4_close");
+                }
+                leftButton.mouseArea.onReleased: {
+                    serial_mng.sendKey("airconditioner/valve_4_stop");
+                }
+                captionText.text: qsTr("Seat 4 AC Vent")
+                bottomCaption: true
             }
         }
 

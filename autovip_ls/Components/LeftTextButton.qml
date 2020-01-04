@@ -6,7 +6,7 @@ Rectangle {
     property alias text: caption.text
     property alias area: marea
     property color clickbg: GSystem.leftTextMenuItemPressedColor
-    property color bgcolor: GSystem.leftTextMenuItemColor
+    property color bgcolor: marea.pressed? GSystem.leftTextMenuItemPressedColor: GSystem.leftTextMenuItemColor
     property bool selection: false
 
     width:200

@@ -7,6 +7,33 @@
         <source>AIR CONDITIONER</source>
         <translation>KLİMA</translation>
     </message>
+    <message>
+        <source>Seat 1 AC Vent</source>
+        <translation>1. Koltuk klima menfezi</translation>
+    </message>
+    <message>
+        <source>Seat 2 AC Vent</source>
+        <translation>2. Koltuk klima menfezi</translation>
+    </message>
+    <message>
+        <source>Seat 3 AC Vent</source>
+        <translation>3. Koltuk klima menfezi</translation>
+    </message>
+    <message>
+        <source>Seat 4 AC Vent</source>
+        <translation>4. Koltuk klima menfezi</translation>
+    </message>
+</context>
+<context>
+    <name>RotatingFan</name>
+    <message>
+        <source>open</source>
+        <translation>aç</translation>
+    </message>
+    <message>
+        <source>close</source>
+        <translation>kapa</translation>
+    </message>
 </context>
 <context>
     <name>AppleTv</name>
