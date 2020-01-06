@@ -231,7 +231,7 @@ Item {
         }
     }
 
-    function createLightsModel(ceilColorComponent,sideColorComponent,insideColorComponent){
+    function createLightsModel(ceilColorComponent,sideColorComponent,insideColorComponent,ambientColorComponent){
         lightsModel.clear();
         if (true)
             lightsModel.append({name:qsTr("Ceiling Light"),target:1,selected:false, object:ceilColorComponent});
@@ -239,7 +239,9 @@ Item {
             lightsModel.append({name:qsTr("Inside Light"),target:2,selected:false, object:insideColorComponent});
         if(SM.slboolean === true)
             lightsModel.append({name:qsTr("Side Light"),target:3,selected:false, object:sideColorComponent});
-
+        if(SM.ambientlight()){
+            lightsModel.append({name:qsTr("Ambient Light"),target:3,selected:false, object:ambientColorComponent});
+        }
     }
 
     function createMediaModel()

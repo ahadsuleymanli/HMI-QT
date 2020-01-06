@@ -28,6 +28,22 @@ public:
 
 class SerialScheduler;
 
+class OverridableQSettings: public QSettings{
+    QSettings * overridingQSetting;
+public:
+    OverridableQSettings(const QString &fileName,const QString &overridingFileName, QObject *parent = nullptr):
+        QSettings(fileName,QSettings::IniFormat,parent){
+        overridingQSetting = new QSettings(overridingFileName,QSettings::IniFormat,parent);
+    }
+    QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const{
+        if (overridingQSetting->contains(key)){
+            return overridingQSetting->value(key,defaultValue);
+        }
+        else
+            return this->QSettings::value(key,defaultValue);
+    }
+};
+
 class SerialMng : public QObject
 {
     Q_OBJECT
@@ -48,7 +64,7 @@ class SerialMng : public QObject
     QList<int> seats_cooling = {0,0,0,0};
     QList<int> seats_massage = {false,false,false,false};
     QList<int> seats_massageMode = {0,0,0,0};
-    QSettings * m_proto;
+    OverridableQSettings * m_proto;
 
     QString m_lstart;
     QString m_lend;
@@ -64,6 +80,7 @@ class SerialMng : public QObject
     QString m_fb_ceiling_light;
     QString m_fb_side_light;
     QString m_fb_inside_light;
+    QString m_fb_ambient_light;
 
     QString m_fb_first_seat;
     QString m_fb_second_seat;
@@ -74,6 +91,7 @@ class SerialMng : public QObject
     QColor m_ceilingcolor;
     QColor m_insidecolor;
     QColor m_sidecolor;
+    QColor m_ambientcolor;
     int m_volume = 30;
     uint m_soundSource = 0;
     uint radioFrequency_uint= 875;
@@ -114,6 +132,7 @@ class SerialMng : public QObject
     Q_PROPERTY(QColor ceilingcolor READ ceilingcolor WRITE setCeilingcolor NOTIFY ceilingcolorChanged)
     Q_PROPERTY(QColor sidecolor READ sidecolor WRITE setSidecolor NOTIFY sidecolorChanged)
     Q_PROPERTY(QColor insidecolor READ insidecolor WRITE setInsidecolor NOTIFY insidecolorChanged)
+    Q_PROPERTY(QColor ambientcolor READ ambientcolor WRITE setAmbientcolor NOTIFY ambientcolorChanged)
 
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(uint soundSource READ soundSource NOTIFY soundSourceChanged)
@@ -142,6 +161,7 @@ public:
 
     QColor ceilingcolor();
     QColor insidecolor();
+    QColor ambientcolor();
     QColor sidecolor();
 
     int volume();
@@ -155,6 +175,7 @@ public:
     void setCeilingcolor(QColor p_color);
     void setInsidecolor(QColor p_color);
     void setSidecolor(QColor p_color);
+    void setAmbientcolor(QColor p_color);
 
     void setActemp(uint p_temp);
     void setAcfan(uint p_fan);
@@ -194,6 +215,7 @@ public:
     bool parserSideLight(QString p_response);
     bool parserInsideLight(QString p_response);
     bool parserCeilingLight(QString p_response);
+    bool parserAmbientLight(QString p_response);
     bool parserSoundControl(QString p_response);
     bool parserRadioControl(QString p_response);
 
@@ -224,6 +246,7 @@ signals:
     void massageonChanged(bool);
     void massagemodChanged(uint);
 
+    void ambientcolorChanged(QColor);
     void insidecolorChanged(QColor );
     void sidecolorChanged(QColor);
     void ceilingcolorChanged(QColor);

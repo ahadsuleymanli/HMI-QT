@@ -132,6 +132,7 @@ Q_INVOKABLE  QVariant value(QString key, QVariant defaultValue = QVariant());
 Q_INVOKABLE  bool bganim(){return value("graphics/bganim").toBool();}
 Q_INVOKABLE  bool sidelight();
 Q_INVOKABLE  bool insidelight();
+Q_INVOKABLE  bool ambientlight();
 Q_INVOKABLE  bool readinglight();
 Q_INVOKABLE  bool seatHeating(int seat_no);
 Q_INVOKABLE  bool seatCooling(int seat_no);

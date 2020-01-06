@@ -186,6 +186,11 @@ bool SettingsManager::insidelight()
     return this->general->value("lights/insidelight",true).toBool();
 }
 
+bool SettingsManager::ambientlight()
+{
+    return this->general->value("lights/ambientlight",false).toBool();
+}
+
 bool SettingsManager::readinglight()
 {
     return this->general->value("lights/readinglight",true).toBool();

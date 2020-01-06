@@ -1612,6 +1612,10 @@ için sistemin yeniden başlatılması gerekir.</translation>
         <translation>Yan Aydınlatma</translation>
     </message>
     <message>
+        <source>Ambient Light</source>
+        <translation>Ambiyans Aydınladma</translation>
+    </message>
+    <message>
         <source>First table open</source>
         <translation>Birinci masayı aç</translation>
     </message>

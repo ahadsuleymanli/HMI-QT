@@ -12,6 +12,7 @@ BasePage {
     property color ceilColor: serial_mng.ceilingcolor
     property color sideColor: serial_mng.sidecolor
     property color inSideColor: serial_mng.insidecolor
+    property color ambientColor: serial_mng.ambientcolor
     property ColorComponents targetColorItem: ceilColorComponent
     property int delay: -1
     property int selected: -1
@@ -28,22 +29,25 @@ BasePage {
         onInsidecolorChanged:function(val)
         {
             root.inSideColor = val;
-
+        }
+        onAmbientcolorChanged:function(val)
+        {
+            root.ambientColor = val;
         }
     }
     function init()
     {
         serial_mng.sendKey("lights/ceiling_request",true,delay);
         serial_mng.sendKey("lights/inside_request",true,delay);
-        serial_mng.sendKey("lights/side_request");
-//        GSystem.createLightsModel();
-//        leftMenu.model=GSystem.lightsModel;
+        serial_mng.sendKey("lights/side_request",true,delay);
+        serial_mng.sendKey("lights/ambient_request",true,delay);
     }
     function closeAll()
     {
         ceilColorComponent.toggleOff();
         sideColorComponent.toggleOff();
         insideColorComponent.toggleOff();
+        ambientColorComponent.toggleOff();
 
         if (c3.color != "#000000") {
             c3.color = "#000000";
@@ -65,28 +69,28 @@ BasePage {
                 sideColorComponent.color = "#FFFFFF";
                 insideColorComponent.color = "#FFFFFF";
                 ceilColorComponent.color = "#FFFFFF";
-
+                ambientColorComponent.color = "#FFFFFF";
     }
     function turn_on_lights_red()
     {
                 sideColorComponent.color = "#FF0000";
                 insideColorComponent.color = "#FF0000";
                 ceilColorComponent.color = "#FF0000";
-
+                ambientColorComponent.color = "#FF0000";
     }
     function turn_on_lights_green()
     {
                 sideColorComponent.color = "#00FF00";
                 insideColorComponent.color = "#00FF00";
                 ceilColorComponent.color = "#00FF00";
-
+                ambientColorComponent.color = "#00FF00";
     }
     function turn_on_lights_blue()
     {
                 sideColorComponent.color = "#0000FF";
                 insideColorComponent.color = "#0000FF";
                 ceilColorComponent.color = "#0000FF";
-
+                ambientColorComponent.color = "#0000FF";
     }
 
     function cl_white_lights()
@@ -139,7 +143,6 @@ BasePage {
         insideColorComponent.color = "#000000";
     }
 
-
     function side_white_lights()
     {
         sideColorComponent.color = "#FFFFFF";
@@ -165,7 +168,6 @@ BasePage {
         sideColorComponent.color = "#000000";
     }
 
-
     function showInfo()
     {
             GSystem.info.src = "qrc:/design/general/saved.svg"
@@ -186,21 +188,9 @@ BasePage {
             b: parseInt(result[3], 16)
             } : null;
     }
-    function changeAllColor(r,g,b)
-    {
-        sideColor=Qt.rgba(r/255, g/255, b/255,1);
-        ceilColor=Qt.rgba(r/255, g/255, b/255,1);
-        inSideColor=Qt.rgba(r/255, g/255, b/255,1);
-        sendSideColor(sideColor);
-        sendCeilColor(ceilColor);
-        sendInsideColor(inSideColor);
-        console.log("All color changed to r: " + r + " g: "+ g + " b: " + b);
-    }
-
 
     function sendCeilColor(p_color)
     {
-//        console.log("ceiling color changed : "+p_color);
         var parts = root.hexToRgb(p_color);
         serial_mng.sendKey("lights/ceiling_red",false,root.delay,parts.r);
         serial_mng.sendKey("lights/ceiling_green",false,root.delay,parts.g);
@@ -208,7 +198,6 @@ BasePage {
     }
     function sendSideColor(p_color)
     {
-//        console.log("side color changed : "+p_color);
         var parts = root.hexToRgb(p_color);
         serial_mng.sendKey("lights/side_red",false,root.delay,parts.r);
         serial_mng.sendKey("lights/side_green",false,root.delay,parts.g);
@@ -216,18 +205,24 @@ BasePage {
     }
     function sendInsideColor(p_color)
     {
-//        console.log("inside color changed : "+p_color);
         var parts = root.hexToRgb(p_color);
         serial_mng.sendKey("lights/inside_red",false,root.delay,parts.r);
         serial_mng.sendKey("lights/inside_green",false,root.delay,parts.g);
         serial_mng.sendKey("lights/inside_blue",false,root.delay,parts.b);
     }
-    onCeilColorChanged: function(){
+    function sendAmbientColor(p_color)
+    {
+        var parts = root.hexToRgb(p_color);
+        serial_mng.sendKey("lights/ambient_red",false,root.delay,parts.r);
+        serial_mng.sendKey("lights/ambient_green",false,root.delay,parts.g);
+        serial_mng.sendKey("lights/ambient_blue",false,root.delay,parts.b);
     }
-    onSideColorChanged: function(){
-    }
-    onInSideColorChanged: function(){
-    }
+//    onCeilColorChanged: function(){
+//    }
+//    onSideColorChanged: function(){
+//    }
+//    onInSideColorChanged: function(){
+//    }
     function pickTarged(id){
         switch(id)
         {
@@ -240,6 +235,9 @@ BasePage {
         case 3:
              root.targetColorItem = sideColorComponent
             break;
+        case 4:
+             root.targetColorItem = ambientColorComponent
+            break;
         }
     }
     function getColorRegionId(){
@@ -251,6 +249,8 @@ BasePage {
             return 2;
         case sideColorComponent:
             return 3;
+        case ambientColorComponent:
+            return 4;
         }
     }
     function getColorRegionItem(id){
@@ -262,6 +262,8 @@ BasePage {
             return insideColorComponent;
         case 3:
             return sideColorComponent;
+        case 4:
+            return ambientColorComponent;
         }
     }
     function changeSelection(id)
@@ -336,15 +338,24 @@ BasePage {
         color:"white"
         onColorChanged: {
                   var color = insideColorComponent.toRGBString();
-                  root.sendInsideColor(color)
+                  root.sendInsideColor(color);
                   if(!Qt.colorEqual(color,serial_mng.insidecolor))
                     {
                             serial_mng.insidecolor = color;
                     }
         }
     }
-
-
+    ColorComponents {
+        id:ambientColorComponent
+        saturation: 1.0
+        value: 1.0
+        color:"white"
+        onColorChanged: {
+            var color = ambientColorComponent.toRGBString();
+            root.sendAmbientColor(color);
+            serial_mng.ambientcolor = color;
+        }
+    }
     ColorSlider{
         id: hSlider
         x:274
@@ -449,6 +460,15 @@ BasePage {
              visible: SM.sidelight()
          }
          Rectangle{
+             id:ambientColorRectangle
+             x:550
+             y:300
+             width:48
+             height:75
+             color:ambientColor
+             visible: SM.ambientlight()
+         }
+         Rectangle{
              id:c3
              x:66
              y:153
@@ -546,10 +566,8 @@ BasePage {
                    ceilColorComponent.color = ceilColor;
                    insideColorComponent.color = sideColor;
                    sideColorComponent.color = sideColor;
+//                   ambientColorComponent.color = ambientColor;
                    console.log("size"+ height, + " " + width)
-//                   if(!Qt.colorEqual(ceil,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
                }
                onHolded: {
                    SM.saveLightMemory(1,1,root.ceilColor);
@@ -694,7 +712,7 @@ BasePage {
 
     Component.onCompleted: {
         root.delay = serial_mng.getLightsDelay();
-        GSystem.createLightsModel(ceilColorComponent,sideColorComponent,insideColorComponent);
+        GSystem.createLightsModel(ceilColorComponent,sideColorComponent,insideColorComponent,ambientColorComponent);
         leftMenu.model=GSystem.lightsModel;
         changeSelection(1);
         if (SM.seatReadingLight(3)||SM.seatReadingLight(4)){

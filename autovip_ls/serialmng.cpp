@@ -14,9 +14,9 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
 //   connect(m_serial, &QSerialPort::errorOccurred, this, &SerialMng::handleError);
 //   connect(m_serial, &QSerialPort::close,this,&SerialMng::handleClose);
 
-   QString protofile = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
-
-   m_proto = new QSettings(protofile,QSettings::IniFormat);
+   QString pathToProto = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
+   QString pathToProtoOverride = QString("%1/%2").arg(QDir::currentPath()).arg("proto_override.ini");
+   m_proto = new OverridableQSettings(pathToProto,pathToProtoOverride,this);
    m_voicehandler = new VoiceProtoHandler(m_proto,this);
    connect(m_voicehandler,&VoiceProtoHandler::needDelay,this,&SerialMng::needDelay);
    connect(m_voicehandler,&VoiceProtoHandler::runFunction,this,&SerialMng::runFunction);
@@ -34,7 +34,7 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
    m_fb_ceiling_light = m_proto->value("feedbacks/ceiling_light").toString();
    m_fb_side_light = m_proto->value("feedbacks/side_light").toString();
    m_fb_inside_light = m_proto->value("feedbacks/inside_light").toString();
-
+   m_fb_ambient_light = m_proto->value("feedbacks/ambient_light").toString();
    m_fb_first_seat = m_proto->value("feedbacks/first_seat").toString();
    m_fb_second_seat = m_proto->value("feedbacks/second_seat").toString();
    m_fb_third_seat = m_proto->value("feedbacks/third_seat").toString();
@@ -310,6 +310,11 @@ QColor SerialMng::insidecolor()
    return m_insidecolor;
 }
 
+QColor SerialMng::ambientcolor()
+{
+   return m_ambientcolor;
+}
+
 QColor SerialMng::sidecolor()
 {
     return m_sidecolor;
@@ -365,6 +370,15 @@ void SerialMng::setInsidecolor(QColor p_color)
     {
        m_insidecolor = p_color;
        emit insidecolorChanged(p_color);
+    }
+
+}
+void SerialMng::setAmbientcolor(QColor p_color)
+{
+    if(p_color != m_ambientcolor)
+    {
+       m_ambientcolor = p_color;
+       emit ambientcolorChanged(p_color);
     }
 
 }
@@ -570,6 +584,8 @@ void SerialMng::parseFeedback(QString response)
     if(found) { return; }
     found = parserCeilingLight(response);
     if(found) { return; }
+    found = parserAmbientLight(response);
+    if(found) { return; }
     found = parserSoundControl(response);
     if(found) { return; }
     found = parserRadioControl(response);
@@ -579,6 +595,7 @@ void SerialMng::parseFeedback(QString response)
 bool SerialMng::parserAircondition(QString p_response)
 {
     bool found = false;
+    if (m_fb_aircondition=="") return false;
     found = p_response.startsWith(m_fb_aircondition);
     if(found)
     {
@@ -688,6 +705,7 @@ bool SerialMng::parserFourthSeat(QString p_response)
 bool SerialMng::parserSystem(QString p_response)
 {
     bool found = false;
+    if (m_fb_system=="") return false;
     found = p_response.startsWith(m_fb_system);
     if(found)
     {
@@ -710,6 +728,7 @@ bool SerialMng::parserSystem(QString p_response)
 bool SerialMng::parserSideLight(QString p_response)
 {
     bool found = false;
+    if (m_fb_side_light=="") return false;
     found = p_response.startsWith(m_fb_side_light);
     QColor vsidecolor;
     if(found)
@@ -755,6 +774,7 @@ bool SerialMng::parserSideLight(QString p_response)
 bool SerialMng::parserInsideLight(QString p_response)
 {
     bool found = false;
+    if (m_fb_inside_light=="") return false;
     found = p_response.startsWith(m_fb_inside_light);
     QColor newcolor;
     if(found)
@@ -800,6 +820,7 @@ bool SerialMng::parserInsideLight(QString p_response)
 bool SerialMng::parserCeilingLight(QString p_response)
 {
     bool found = false;
+    if (m_fb_ceiling_light=="") return false;
     found = p_response.startsWith(m_fb_ceiling_light);
     QColor newcolor;
     if(found)
@@ -836,6 +857,53 @@ bool SerialMng::parserCeilingLight(QString p_response)
             return false;
         }
         setCeilingcolor(newcolor);
+        return true;
+    }
+
+    return false;
+
+}
+
+bool SerialMng::parserAmbientLight(QString p_response)
+{
+    bool found = false;
+    if (m_fb_ambient_light=="") return false;
+    found = p_response.startsWith(m_fb_ambient_light);
+    QColor newcolor;
+    if(found)
+    {
+        QStringList parts = p_response.split("/");
+        bool ok;
+        if(parts.length()!=4)
+        {
+            //error
+            return false;
+        }
+        int red = parts[1].toInt(&ok);
+        if(ok)
+        {
+           newcolor.setRed(red);
+        }else{
+            //error
+            return false;
+        }
+        int green = parts[2].toInt(&ok);
+        if(ok)
+        {
+            newcolor.setGreen(green);
+        }else{
+           //error
+            return false;
+        }
+        int blue = parts[3].toInt(&ok);
+        if(ok)
+        {
+            newcolor.setBlue(blue);
+        }else{
+            //error
+            return false;
+        }
+        setAmbientcolor(newcolor);
         return true;
     }
 
@@ -911,6 +979,7 @@ void SerialMng::sendRadioOn(){
 
 bool SerialMng::parserRadioControl(QString p_response)
 {
+    if (radio_feedback=="") return false;
     if(p_response.startsWith(radio_feedback))
     {
         uint frequency_part1=0, frequency_part2 = 0;
