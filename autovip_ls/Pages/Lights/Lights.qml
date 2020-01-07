@@ -523,14 +523,7 @@ BasePage {
         }
 
     }
-//    Rectangle{
-//        anchors.fill: readingLigtsRow
-//        anchors.leftMargin: -4
-//        anchors.rightMargin: -20
-//        anchors.topMargin: -2
-//        anchors.bottomMargin: -4
-//        color: "#44aa6c39"
-//    }
+
     ColumnLayout{
         id:readingLigtsRow
         anchors.left: parent.left
@@ -539,13 +532,21 @@ BasePage {
         anchors.leftMargin: 12
         spacing: 10
         visible: false
-        Text {
-            text: qsTr("Table Reading Lights")
-            font.styleName: StyleItalic
+        Item{
             height: 30
-            color: "white"
-            font.pixelSize: 18
+            width: 150
+            Text {
+                text: qsTr("Table Reading Lights")
+                font.styleName: StyleItalic
+                color: "white"
+                height: 20
+                font.italic: true
+                font.pixelSize: 18
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: -10
+            }
         }
+
         LightButton{
             id:leftReadingLightButton
             height: 30

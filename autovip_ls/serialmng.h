@@ -216,6 +216,7 @@ public:
     bool parserInsideLight(QString p_response);
     bool parserCeilingLight(QString p_response);
     bool parserAmbientLight(QString p_response);
+    bool parserStarLight(QString p_response);
     bool parserSoundControl(QString p_response);
     bool parserRadioControl(QString p_response);
 

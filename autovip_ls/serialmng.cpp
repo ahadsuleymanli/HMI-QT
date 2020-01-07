@@ -906,9 +906,52 @@ bool SerialMng::parserAmbientLight(QString p_response)
         setAmbientcolor(newcolor);
         return true;
     }
-
     return false;
+}
 
+bool SerialMng::parserStarLight(QString p_response)
+{
+//    bool found = false;
+//    if (m_fb_ambient_light=="") return false;
+//    found = p_response.startsWith(m_fb_ambient_light);
+//    QColor newcolor;
+//    if(found)
+//    {
+//        QStringList parts = p_response.split("/");
+//        bool ok;
+//        if(parts.length()!=4)
+//        {
+//            //error
+//            return false;
+//        }
+//        int red = parts[1].toInt(&ok);
+//        if(ok)
+//        {
+//           newcolor.setRed(red);
+//        }else{
+//            //error
+//            return false;
+//        }
+//        int green = parts[2].toInt(&ok);
+//        if(ok)
+//        {
+//            newcolor.setGreen(green);
+//        }else{
+//           //error
+//            return false;
+//        }
+//        int blue = parts[3].toInt(&ok);
+//        if(ok)
+//        {
+//            newcolor.setBlue(blue);
+//        }else{
+//            //error
+//            return false;
+//        }
+//        setAmbientcolor(newcolor);
+//        return true;
+//    }
+    return false;
 }
 
 bool SerialMng::parserSoundControl(QString p_response)
