@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import "../../Components"
+import "Interior"
 import ColorComponents 1.0
 import QtGraphicalEffects 1.0
 import ck.gmachine 1.0
@@ -13,6 +14,8 @@ BasePage {
     property color sideColor: serial_mng.sidecolor
     property color inSideColor: serial_mng.insidecolor
     property color ambientColor: serial_mng.ambientcolor
+    property color leftReadingLight: "black"
+    property color rightReadingLight: "black"
     property ColorComponents targetColorItem: ceilColorComponent
     property int delay: -1
     property int selected: -1
@@ -49,12 +52,12 @@ BasePage {
         insideColorComponent.toggleOff();
         ambientColorComponent.toggleOff();
 
-        if (c3.color != "#000000") {
-            c3.color = "#000000";
+        if (rightReadingLight != "#000000") {
+            rightReadingLight = "#000000";
             serial_mng.sendKey("lights/rightreading_onoff",true,delay);
         }
-        if (c4.color != "#000000"){
-            c4.color = "#000000";
+        if (leftReadingLight != "#000000"){
+            leftReadingLight = "#000000";
             serial_mng.sendKey("lights/leftreading_onoff",true,delay);
         }
 
@@ -192,9 +195,22 @@ BasePage {
     function sendCeilColor(p_color)
     {
         var parts = root.hexToRgb(p_color);
-        serial_mng.sendKey("lights/ceiling_red",false,root.delay,parts.r);
-        serial_mng.sendKey("lights/ceiling_green",false,root.delay,parts.g);
-        serial_mng.sendKey("lights/ceiling_blue",false,root.delay,parts.b);
+        if (SM.starlight() && parts.r === parts.g && parts.r === parts.b){
+            serial_mng.sendKey("lights/ceiling_red",false,root.delay,0);
+            serial_mng.sendKey("lights/ceiling_green",false,root.delay,0);
+            serial_mng.sendKey("lights/ceiling_blue",false,root.delay,0);
+            serial_mng.sendKey("lights/starlight_value",false,root.delay,parts.r);
+        }
+        else{
+            if (SM.starlight()){
+                serial_mng.sendKey("lights/starlight_value",false,root.delay,0);
+            }
+            serial_mng.sendKey("lights/starlight_value",false,root.delay,0);
+            serial_mng.sendKey("lights/ceiling_red",false,root.delay,parts.r);
+            serial_mng.sendKey("lights/ceiling_green",false,root.delay,parts.g);
+            serial_mng.sendKey("lights/ceiling_blue",false,root.delay,parts.b);
+        }
+
     }
     function sendSideColor(p_color)
     {
@@ -217,12 +233,6 @@ BasePage {
         serial_mng.sendKey("lights/ambient_green",false,root.delay,parts.g);
         serial_mng.sendKey("lights/ambient_blue",false,root.delay,parts.b);
     }
-//    onCeilColorChanged: function(){
-//    }
-//    onSideColorChanged: function(){
-//    }
-//    onInSideColorChanged: function(){
-//    }
     function pickTarged(id){
         switch(id)
         {
@@ -376,139 +386,10 @@ BasePage {
         onMouseYChanged: { targetColorItem.hue = Math.max(0.0, Math.min(1.0 - mouseY / height, 1.0)); targetColorItem.saturation = 1; }
     }
 
-    Item{
-        id:cmodel
-        x:366
-        y:200
-        width:620
-        height:500
-        clip: true
-        Rectangle{
-            id:ceil
-            x:175
-            y:30
-            width: 250
-            height: 250
-            border.width: 0
-            color:ceilColor
-        }
-        Image{
-            id:imagem
-            width: 622
-            height: 362
-            anchors.verticalCenterOffset: -69
-            anchors.topMargin: 0
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.left: parent.left
-            smooth: true
-            enabled: true
-            z: 1
-            scale: 1
-            transformOrigin: Item.Center
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
-            source:"qrc:/design/lights/icon-tavan.png"
-            antialiasing: false
-        }
+    Loader {
+      Component.onCompleted: source=SM.carModel()===2?"Interior/Caravelle.qml":"Interior/VClass.qml"
+    }
 
-        Rectangle{
-            id:mb
-            x:132
-            y:271
-            width:350
-            height:91
-            rotation: 0
-            color:inSideColor
-            }
-        Rectangle{
-            id:rb
-            x:565
-            y:187
-            width:55
-            height:175
-            rotation: 0
-            color:inSideColor
-            }
-        Rectangle{
-            id:lb
-            x:0
-            y:187
-            width:44
-            height:175
-            rotation: 0
-            color:inSideColor
-            }
-         Rectangle{
-             id:c1
-             x:50
-             y:259
-             width:45
-             height:82
-             color:sideColor
-             rotation: 0
-             visible: SM.sidelight()
-         }
-         Rectangle{
-             id:c2
-             x:517
-             y:266
-             width:48
-             height:75
-             color:sideColor
-             visible: SM.sidelight()
-         }
-         Rectangle{
-             id:ambientColorRectangle
-             x:550
-             y:300
-             width:48
-             height:75
-             color:ambientColor
-             visible: SM.ambientlight()
-         }
-         Rectangle{
-             id:c3
-             x:66
-             y:153
-             width:96
-             height:50
-             color:"black"
-         }
-         Rectangle{
-             id:c4
-             x:450
-             y:160
-             width:76
-             height:43
-             color:"black"
-         }
-         Glow{
-             source:c3
-             id:gl1
-             anchors.fill: c3
-             color:c3.color
-             radius: 5
-             anchors.rightMargin: 13
-             anchors.bottomMargin: 27
-             anchors.leftMargin: 17
-             anchors.topMargin: 20
-             z: 5
-         }
-         Glow{
-             source:c4
-             id:gl2
-             anchors.fill: c4
-             color:c4.color
-             radius: 5
-             anchors.rightMargin: 0
-             anchors.bottomMargin: 27
-             anchors.leftMargin: 9
-             anchors.topMargin: 13
-             z: 5
-         }
-        }
     }
 
     ColorSlider{
@@ -587,9 +468,6 @@ BasePage {
                    ceilColorComponent.color = ceilColor;
                    insideColorComponent.color = sideColor;
                    sideColorComponent.color = sideColor;
-//                   if(!Qt.colorEqual(root.ceilColor,ceilColor)) { root.ceilColor = ceilColor; }else{ sendCeilColor(ceilColor);}
-//                   if(!Qt.colorEqual(root.inSideColor,inSideColor)) {root.inSideColor = inSideColor;}else{sendInsideColor(inSideColor);}
-//                   if(!Qt.colorEqual(root.sideColor,sideColor)){ root.sideColor = sideColor;}else{ sendSideColor(sideColor);}
                }
                onHolded: {
                    SM.saveLightMemory(2,1,root.ceilColor);
@@ -617,7 +495,6 @@ BasePage {
                    root.showInfo();
                }
            }
-
         }
 
         RowLayout{
@@ -629,16 +506,8 @@ BasePage {
                Layout.preferredWidth: 310
                text:qsTr("Sol Tavan Okuma Lambası") + mytrans.emptyString
                onReleased: {
-                   if (c3.color == "#fff6a6")
-                   {
-                       c3.color = "#000000";
-                       serial_mng.sendKey("lights/rightreading_onoff",true,delay);
-
-                   }else
-                   {
-                       c3.color = "#fff6a6";
-                       serial_mng.sendKey("lights/rightreading_onoff",true,delay);
-                   }
+                   root.rightReadingLight = root.rightReadingLight== "#fff6a6"?"#000000":"#fff6a6";
+                   serial_mng.sendKey("lights/rightreading_onoff",true,delay);
                }
            }
 
@@ -647,21 +516,10 @@ BasePage {
                Layout.preferredWidth: 310
                text:qsTr("Sağ Tavan Okuma Lambası") + mytrans.emptyString
                onReleased: {
-                       if (c4.color == "#fff6a6")
-                       {
-                           c4.color = "#000000";
-                           serial_mng.sendKey("lights/leftreading_onoff",true,delay);
-
-                       }else
-                       {
-                           c4.color = "#fff6a6";
-                           serial_mng.sendKey("lights/leftreading_onoff",true,delay);
-                        }
+                   root.leftReadingLight = root.leftReadingLight== "#fff6a6"?"#000000":"#fff6a6";
+                   serial_mng.sendKey("lights/leftreading_onoff",true,delay);
                     }
                }
-
-
-
         }
 
     }
@@ -689,7 +547,7 @@ BasePage {
             font.pixelSize: 18
         }
         LightButton{
-            id:leftReadingLight
+            id:leftReadingLightButton
             height: 30
             width: 150
             text:qsTr("Left Table") + mytrans.emptyString
@@ -699,7 +557,7 @@ BasePage {
             }
         }
         LightButton{
-            id:rightReadingLight
+            id:rightReadingLightButton
             height: 30
             width: 150
             text:qsTr("Right Table") + mytrans.emptyString
@@ -718,9 +576,9 @@ BasePage {
         if (SM.seatReadingLight(3)||SM.seatReadingLight(4)){
             readingLigtsRow.visible=true;
             if (SM.seatReadingLight(3))
-                leftReadingLight.visible=true;
+                leftReadingLightButton.visible=true;
             if (SM.seatReadingLight(4))
-                rightReadingLight.visible=true;
+                rightReadingLightButton.visible=true;
         }
     }
 }

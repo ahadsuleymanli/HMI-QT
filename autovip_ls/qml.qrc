@@ -511,5 +511,12 @@
         <file>design/home/vw.png</file>
         <file>Components/RotatingFan.qml</file>
         <file>Components/Button.qml</file>
+        <file>Pages/Lights/Interior/Caravelle.qml</file>
+        <file>Pages/Lights/Interior/VClass.qml</file>
+        <file>design/lights/caravelle_bg.png</file>
+        <file>design/lights/caravelle_insidelight.png</file>
+        <file>design/lights/caravelle_sidelight.png</file>
+        <file>design/lights/caravelle_starlight.png</file>
+        <file>design/lights/caravelle_ambientlight.png</file>
     </qresource>
 </RCC>

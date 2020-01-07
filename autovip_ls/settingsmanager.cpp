@@ -191,6 +191,11 @@ bool SettingsManager::ambientlight()
     return this->general->value("lights/ambientlight",false).toBool();
 }
 
+bool SettingsManager::starlight()
+{
+    return this->general->value("lights/starlight",false).toBool();
+}
+
 bool SettingsManager::readinglight()
 {
     return this->general->value("lights/readinglight",true).toBool();
