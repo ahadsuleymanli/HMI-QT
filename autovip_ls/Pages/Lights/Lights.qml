@@ -401,12 +401,12 @@ BasePage {
         anchors.top: parent.top
         anchors.topMargin: 570
         orientation: Qt.Horizontal
-        value: 1.0 - targetColorItem.value
+        value: targetColorItem.value
         gradient: Gradient {
-                GradientStop { position: 0.0; color: Qt.hsla(targetColorItem.hue, targetColorItem.saturation, targetColorItem.saturation===0?1.0:0.5, 1.0) }
-                GradientStop { position: 1.0; color: "#ff333333"}
+                GradientStop { position: 1.0; color: Qt.hsla(targetColorItem.hue, targetColorItem.saturation, targetColorItem.saturation===0?1.0:0.5, 1.0) }
+                GradientStop { position: 0.0; color: "#ff333333"}
         }
-        onMouseXChanged: targetColorItem.value = Math.max(0.0, Math.min(1.0 - mouseX / width, 1.0));
+        onMouseXChanged: targetColorItem.value = Math.max(0.0, Math.min(mouseX / width, 1.0));
     }
     ColumnLayout{
         spacing: 10
@@ -414,9 +414,6 @@ BasePage {
         anchors.top:sSlider.bottom
         x:274
         anchors.topMargin: 5
-
-
-
         RowLayout{
            spacing: 10
            anchors.top: cl1.top

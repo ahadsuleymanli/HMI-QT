@@ -80,16 +80,6 @@ Item {
                     }
 
                     FooterButton {
-                        id:btnVolumeUp
-                        Layout.fillHeight: true
-                        bgSource : "qrc:/design/general/volumeup.svg"
-                        visible: SM.amp
-                        height: GSystem.bottomIconHeight
-                        pressKey: "controls/volume_up"
-                        releaseKey: "controls/volume_up_stop"
-                    }
-
-                    FooterButton {
                         id:btnVolumeDown
                         Layout.fillHeight: true
                         bgSource : "qrc:/design/general/volumedown.svg"
@@ -98,7 +88,16 @@ Item {
                         pressKey: "controls/volume_down"
                         releaseKey: "controls/volume_down_stop"
                         infoPositionOffset: Qt.point(5,0)
+                    }
 
+                    FooterButton {
+                        id:btnVolumeUp
+                        Layout.fillHeight: true
+                        bgSource : "qrc:/design/general/volumeup.svg"
+                        visible: SM.amp
+                        height: GSystem.bottomIconHeight
+                        pressKey: "controls/volume_up"
+                        releaseKey: "controls/volume_up_stop"
                     }
 
                     ComboBox{
