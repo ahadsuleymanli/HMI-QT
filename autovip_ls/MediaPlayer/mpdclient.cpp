@@ -38,6 +38,11 @@ bool MpdClient::start()
         usbMounter = new UsbMounter(this);
     char *host = getenv("MPD_HOST");
     char *port = getenv("MPD_PORT");
+    this->playlistAddScritp = new QProcess();
+    connect(playlistAddScritp, qOverload<int, QProcess::ExitStatus >(&QProcess::finished),
+            [=](){
+        update();
+    });
     qDebug()<<"getenv finished";
     if (host == nullptr)
         host = "localhost";

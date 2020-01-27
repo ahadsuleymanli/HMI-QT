@@ -37,8 +37,11 @@ QString SettingsManager::localeCode(){
 }
 
 int SettingsManager::carModel(){
-    qDebug()<<"carmodel"<<this->general->value("main/carmodel",1).toInt();
     return this->general->value("main/carmodel",1).toInt();
+}
+
+bool SettingsManager::voiceActivationButton(){
+    return this->general->value("assistant/VA_button",false).toBool();
 }
 
 uint SettingsManager::actype()
@@ -76,7 +79,6 @@ bool SettingsManager::playstation()
 
 bool SettingsManager::dockingstation()
 {
-
     return this->general->value("main/dockingstation",false).toBool();
 }
 

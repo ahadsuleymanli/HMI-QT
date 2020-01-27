@@ -13,6 +13,7 @@ typedef QList<mpd_Song*> mpd_Song_List;
 class MpdClient : public QObject
 {
     Q_OBJECT
+    QProcess *playlistAddScritp;
 public:
     explicit MpdClient(QObject *parent = nullptr);
     bool start();
@@ -53,18 +54,24 @@ public slots:
 
 //https://www.musicpd.org/doc/html/protocol.html try a command_list_begin
     void addFilesToPlaylist(){
-        qDebug()<<"add to playlist";
-        mpd_sendUpdateCommand(conn,"");
-        mpd_finishCommand(conn);
-        mpd_sendClearCommand(conn);
-        mpd_finishCommand(conn);
-        update();
-        updateTimer->stop();
-        mpd_finishCommand(conn);
-        mpd_sendAddCommand(conn,"/");
-        mpd_finishCommand(conn);
-        resetUpdateTimer(3000);
-
+        qDebug()<<"add to playlist called";
+        if (playlistAddScritp->state()==QProcess::NotRunning){
+            qDebug()<<"add to playlist is being executed";
+            updateTimer->stop();
+            playlistAddScritp->start("/bin/sh", QStringList() << "-c" << "mpc update && while mpc status | grep -q 'Updating DB'; do   sleep 1; done && mpc --wait clear && mpc --wait add /");
+        }
+//        mpd_sendUpdateCommand(conn,"");
+//        mpd_finishCommand(conn);
+//        mpd_sendClearCommand(conn);
+//        mpd_finishCommand(conn);
+//        mpd_sendUpdateCommand(conn,"");
+//        mpd_finishCommand(conn);
+//        update();
+//        updateTimer->stop();
+//        mpd_finishCommand(conn);
+//        mpd_sendAddCommand(conn,"/");
+//        mpd_finishCommand(conn);
+//        resetUpdateTimer(3000);
     }
     void deletePlaylist(){
         qDebug()<<"delete playlist";

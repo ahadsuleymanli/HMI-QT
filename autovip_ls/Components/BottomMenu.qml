@@ -226,9 +226,12 @@ Item {
                 onClicked: function(){
                         GSystem.infoverlay.come();
                 }
+                Component.onCompleted: visible=SM.voiceActivationButton()?true:false;
+
+
             }
 
-                    }
+        }
 
     }
 
@@ -239,6 +242,7 @@ Item {
                 anchors.leftMargin: 230
 //                service:GSystem.voice_service.state
 //                service:GSystem.voice_recognition.state
+                Component.onCompleted: visible=SM.voiceActivationButton()?true:false;
             }
             /*
             FooterButton {
