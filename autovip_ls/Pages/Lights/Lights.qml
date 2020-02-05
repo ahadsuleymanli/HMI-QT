@@ -314,6 +314,8 @@ BasePage {
         id: ceilColorComponent
         saturation: 1.0
         value: 1.0
+        function setValue(value){this.value=value;}
+        function getValue(){return this.value;}
         color:"white"
         onColorChanged: {
                   var color = ceilColorComponent.toRGBString();
@@ -330,6 +332,8 @@ BasePage {
         id: sideColorComponent
         saturation: 1.0
         value: 1.0
+        function setValue(value){this.value=value;}
+        function getValue(){return this.value;}
         color:"white"
         onColorChanged: {
                   var color = sideColorComponent.toRGBString();
@@ -345,6 +349,8 @@ BasePage {
         id:insideColorComponent
         saturation: 1.0
         value: 1.0
+        function setValue(value){this.value=value;}
+        function getValue(){return this.value;}
         color:"white"
         onColorChanged: {
                   var color = insideColorComponent.toRGBString();
@@ -358,7 +364,9 @@ BasePage {
     ColorComponents {
         id:ambientColorComponent
         saturation: 1.0
-        value: 1.0
+        value: 1.0 / 12.75
+        function setValue(value){this.value=value/12.75;}
+        function getValue(){return this.value*12.75;}
         color:"white"
         onColorChanged: {
             var color = ambientColorComponent.toRGBString();
@@ -401,12 +409,13 @@ BasePage {
         anchors.top: parent.top
         anchors.topMargin: 570
         orientation: Qt.Horizontal
-        value: targetColorItem.value
+        value: targetColorItem.getValue()
         gradient: Gradient {
                 GradientStop { position: 1.0; color: Qt.hsla(targetColorItem.hue, targetColorItem.saturation, targetColorItem.saturation===0?1.0:0.5, 1.0) }
                 GradientStop { position: 0.0; color: "#ff333333"}
         }
-        onMouseXChanged: targetColorItem.value = Math.max(0.0, Math.min(mouseX / width, 1.0));
+        onMouseXChanged: targetColorItem.setValue (Math.max(0.0, Math.min(mouseX / width, 1.0)));
+
     }
     ColumnLayout{
         spacing: 10

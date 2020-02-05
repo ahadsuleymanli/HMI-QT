@@ -91,9 +91,15 @@ BasePage {
                 id: formLoader
                 anchors.fill: parent
                 source:"Home.qml"
+                property string sourceName: "Home.qml"
+                function setSource(source_){
+                    sourceName = source_
+                    source = source_
+                }
             }
         }
         Rectangle{
+            id: menuBar
             Layout.fillHeight: true
             width: 220
             color: "#272727"
@@ -121,12 +127,13 @@ BasePage {
                 spacing: 12
                 Item{
                     Layout.fillWidth: true
-                    height: childrenRect.height
+                    height: row.height
                     RowLayout{
                         id: row
                         width: childrenRect.width
                         height: childrenRect.height
                         Image{
+                            id:homeImage
                             Layout.alignment: Qt.AlignVCenter
                             sourceSize.width: 32
                             sourceSize.height: 32
@@ -138,14 +145,27 @@ BasePage {
                             color: "#a5a5a7"
                             font.pixelSize: 20
                         }
+
+                    }
+                    Rectangle {
+                        id:homeButtonClickEffect
+                        anchors.fill: parent
+                        anchors.leftMargin: -6
+                        radius: 6
+                        z:-1
+                        color:  "#447b8b8b"
+                        visible: homeArea.pressed
                     }
                     MouseArea{
                         id: homeArea
                         anchors.fill: parent
-                        onClicked: formLoader.source = "Home.qml"
+                        anchors.margins: -8
+                        onPressed: {if (formLoader.sourceName=="Home.qml") notAvailableAnimation.start();}
+                        onReleased: formLoader.setSource("Home.qml")
                     }
                 }
                 RowLayout{
+                    opacity: 0
                     Layout.fillWidth: true
                     height: childrenRect.height
                     Image{
@@ -164,6 +184,7 @@ BasePage {
                 RowLayout{
                     Layout.fillWidth: true
                     height: childrenRect.height
+                    opacity: 0
                     Image{
                         Layout.alignment: Qt.AlignVCenter
                         sourceSize.width: 32
@@ -188,8 +209,9 @@ BasePage {
                 }
                 Item{
                     Layout.fillWidth: true
-                    height: childrenRect.height
+                    height: libraryRow.height
                     RowLayout{
+                        id:libraryRow
                         width: childrenRect.width
                         height: childrenRect.height
                         Image{
@@ -205,10 +227,19 @@ BasePage {
                             font.pixelSize: 20
                         }
                     }
+                    Rectangle {
+                        anchors.fill: parent
+                        anchors.leftMargin: -6
+                        z:-1
+                        radius: 6
+                        color: "#447b8b8b"
+                        visible: libraryArea.pressed
+                    }
                     MouseArea{
                         id: libraryArea
                         anchors.fill: parent
-                        onClicked: formLoader.source = "Library.qml"
+                        anchors.margins: -8
+                        onReleased: formLoader.sourceName=="Library.qml"?formLoader.setSource("Home.qml"):formLoader.setSource("Library.qml")
                     }
                 }
 
@@ -216,6 +247,7 @@ BasePage {
                 RowLayout{
                     Layout.fillWidth: true
                     height: childrenRect.height
+                    opacity: 0
                     Image{
                         Layout.alignment: Qt.AlignVCenter
                         sourceSize.width: 32
