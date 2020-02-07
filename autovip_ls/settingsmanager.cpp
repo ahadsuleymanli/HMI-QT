@@ -187,9 +187,9 @@ bool SettingsManager::starlight()
     return this->general->value("lights/starlight",false).toBool();
 }
 
-bool SettingsManager::readinglight()
+bool SettingsManager::ceilingReadingLights()
 {
-    return this->general->value("lights/readinglight",true).toBool();
+    return this->general->value("lights/ceilingReadingLights",false).toBool();
 }
 
 bool SettingsManager::amp()

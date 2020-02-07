@@ -508,8 +508,10 @@ BasePage {
            id:bottomButtonsRow
            x:284
            LightButton{
+               id: leftCeilingReadingLightButton
                Layout.preferredHeight: 30
                Layout.preferredWidth: 310
+               visible: false
                text:qsTr("Sol Tavan Okuma Lambası") + mytrans.emptyString
                onReleased: {
                    root.rightReadingLight = root.rightReadingLight== "#fff6a6"?"#000000":"#fff6a6";
@@ -518,8 +520,10 @@ BasePage {
            }
 
            LightButton{
+               id: rightCeilingReadingLightButton
                Layout.preferredHeight: 30
                Layout.preferredWidth: 310
+               visible: false
                text:qsTr("Sağ Tavan Okuma Lambası") + mytrans.emptyString
                onReleased: {
                    root.leftReadingLight = root.leftReadingLight== "#fff6a6"?"#000000":"#fff6a6";
@@ -587,5 +591,10 @@ BasePage {
             if (SM.seatReadingLight(4))
                 rightReadingLightButton.visible=true;
         }
+        if (SM.ceilingReadingLights()){
+            leftCeilingReadingLightButton.visible=true;
+            rightCeilingReadingLightButton.visible=true;
+        }
+
     }
 }

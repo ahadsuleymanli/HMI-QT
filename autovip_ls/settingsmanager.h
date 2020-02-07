@@ -134,7 +134,7 @@ Q_INVOKABLE  bool sidelight();
 Q_INVOKABLE  bool insidelight();
 Q_INVOKABLE  bool ambientlight();
 Q_INVOKABLE  bool starlight();
-Q_INVOKABLE  bool readinglight();
+Q_INVOKABLE  bool ceilingReadingLights();
 Q_INVOKABLE  bool seatHeating(int seat_no);
 Q_INVOKABLE  bool seatCooling(int seat_no);
 Q_INVOKABLE  bool seatMassage(int seat_no);
