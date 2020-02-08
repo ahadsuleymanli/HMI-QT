@@ -45,10 +45,17 @@ bool NvidiaConnManager::handleEmulatedFeedback(QString feedback){
     bool ok;
     parts[0].toUInt(&ok);
     if (ok || parts[0]=="Ax"){
-        QTextStream(stdout)  << "Emulated feedback: " << feedback<<"\n";
-        this->serial_mng->parseFeedback(feedback);
+        if (feedback.contains("Ax/serial_close"))
+            this->serial_mng->closeSerialPort();
+        else if (feedback.contains("Ax/serial_force_close"))
+            this->serial_mng->forceCloseSerialPort();
+        else{
+            QTextStream(stdout)  << "Emulated feedback: " << feedback<<"\n";
+            this->serial_mng->parseFeedback(feedback);
+        }
         return true;
     }
+
     return false;
 }
 

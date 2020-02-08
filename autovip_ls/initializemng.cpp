@@ -61,7 +61,8 @@ bool InitializeMng::init()
 
     QProcess *removeProcess = new QProcess();
     connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
-    removeProcess->start("sudo rm /var/lock/LCK..ttyMSM1");
+    QString portname = this->settings_mng->value("serial/port_name").toString();
+    removeProcess->start("sudo rm /var/lock/LCK.."+portname);
     bool waitResult = removeProcess->waitForFinished(1000);
     QObject::connect(settings_mng,&SettingsManager::langChanged,translator,&Translator::updateLanguage,Qt::QueuedConnection);
 
@@ -101,7 +102,7 @@ bool InitializeMng::init()
     this->serial_mng->setParity(this->settings_mng->value("serial/parity").toInt());
     this->serial_mng->setStopBits(this->settings_mng->value("serial/stopbits").toInt());
     this->serial_mng->setFlowControl(this->settings_mng->value("serial/flowcontrol").toInt());
-    this->serial_mng->setPortName(this->settings_mng->value("serial/port_name").toString());
+    this->serial_mng->setPortName(portname);
     this->serial_mng->setActype(settings_mng->value("main/actype").toInt());
     this->serial_mng->openSerialPort();
     serial_mng->setDemomode(settings_mng->demomode());

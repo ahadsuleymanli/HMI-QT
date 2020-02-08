@@ -5,11 +5,20 @@
 #include <QDebug>
 #include <QProcess>
 
+void SettingsManager::deleteLockFile(QString path){
+    QProcess *removeProcess = new QProcess();
+    connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
+    removeProcess->start("sudo rm "+path+".lock");
+    removeProcess->waitForFinished(1000);
+}
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {
     QString setfilePath = QString("%1/%2").arg(QDir::currentPath()).arg("settings.ini");
     QString protofilePath = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
     QString datafilePath = QString("%1/%2").arg(QDir::currentPath()).arg("data.ini");
+    deleteLockFile(setfilePath);
+    deleteLockFile(protofilePath);
+    deleteLockFile(datafilePath);
     this->general = new QSettings(setfilePath,QSettings::IniFormat);
     this->m_proto = new QSettings(protofilePath,QSettings::IniFormat);
     this->datafile = new QSettings(datafilePath,QSettings::IniFormat);

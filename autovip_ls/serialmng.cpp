@@ -7,6 +7,7 @@ using namespace voice;
 SerialMng::SerialMng(QObject *parent) : QObject(parent)
 {
 
+
    this->m_serial = new QSerialPort(this);
 
    //connect(m_serial,&QSerialPort::bytesWritten,this,&SerialMng::handleBytesWritten);
@@ -82,7 +83,7 @@ SerialMng::SerialMng(QObject *parent) : QObject(parent)
    }
 
    m_lastsend = QTime::currentTime();
-   serialScheduler = new SerialScheduler(this);
+   serialScheduler = new SerialScheduler(m_serial,this);
 }
 
 QStringList PROTO_SEAT_GROUP_NAMES = {"first_seat", "second_seat", "third_seat", "fourth_seat"};
@@ -119,20 +120,34 @@ bool SerialMng::sendVoiceCommandById(int id)
     return m_voicehandler->sendVoiceCommand(id);
 }
 
+void SerialMng::reopenSerialPort(){
+    serialScheduler->reopenSerial(true);
+}
+
+void SerialMng::forceCloseSerialPort(){
+    m_serial->close();
+}
+
 void SerialMng::openSerialPort()
 {
     if (m_serial->open(QIODevice::ReadWrite)) {
         if(m_connected == false)
         {
+            qDebug()<<"opened serial port.";
             emit connectionChanged(true);
         }
         m_connected = true;
     } else {
         if(m_connected == true )
         {
+            qDebug()<<"serial port was open but got closed for some reason.";
             emit connectionChanged(false);
+            m_connected = false;
         }
-        m_connected = false;
+        else{
+            qDebug()<<"serial port could not be opened.";
+            m_connected = false;
+        }
     }
 
 }
@@ -1083,11 +1098,18 @@ void SerialMng::sendKey(const QString &key,bool wait,int p_delay,QString param)
 {
    QString realCode = m_proto->value(key).toString();
 
-   if(!this->m_serial->isOpen() && key!="main/system_request"){
-        std::cout <<"key: " << key.toStdString()<<" "<<param.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
+   if(!this->m_serial->isOpen() ){
+        if (key!="main/system_request")
+            std::cout <<"key: " << key.toStdString()<<" "<<param.toStdString()<< "  real: " <<realCode.toStdString() << std::endl;
+        if (systemstate()==1){
+//            setSystemstate(0);
+            reopenSerialPort();
+        }
+        else{
+            reopenSerialPort();
+        }
         return;
    }
-   else if (!this->m_serial->isOpen()) return;
 
    bool command_arranged = false;
    if(realCode.isEmpty() || realCode.compare("no") == 0)

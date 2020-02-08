@@ -12,7 +12,7 @@
 #include <QTimer>
 #include <QColor>
 #include <voiceprotohandler.h>
-
+#include <qprocess.h>
 struct SeatState {
     Q_GADGET
     Q_PROPERTY(uint cool MEMBER m_cool)
@@ -141,9 +141,10 @@ class SerialMng : public QObject
 
 public:
     explicit SerialMng(QObject *parent = nullptr);
-
+    void reopenSerialPort();
     void openSerialPort();
     void closeSerialPort();
+    void forceCloseSerialPort();
     bool setPortName(QString str);
     bool setBaudRate(int val);
     bool setDataBits(int val);
