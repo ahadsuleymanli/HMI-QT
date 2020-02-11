@@ -20,14 +20,18 @@ SerialScheduler::SerialScheduler(QSerialPort* serialConn, SerialMng *parent): QO
     reopenSerialTimer->setSingleShot(true);
     reopenSerialTimer->stop();
     continiousSerialCheckTimer = new QTimer(this);
-    continiousSerialCheckTimer->setInterval(300000);
+    continiousSerialCheckTimer->setInterval(60000);
 //    continiousSerialCheckTimer->setInterval(200);
+//    connect(continiousSerialCheckTimer, &QTimer::timeout, this, [this](){
+//        qDebug()<<"scheduled serial check";
+//        if (not this->serialConn->isOpen()){
+//            qDebug()<<"serial appears to be closed";
+//            reopenSerial(true);
+//        }
+//    });
     connect(continiousSerialCheckTimer, &QTimer::timeout, this, [this](){
         qDebug()<<"scheduled serial check";
-        if (not this->serialConn->isOpen()){
-            qDebug()<<"serial appears to be closed";
-            reopenSerial(true);
-        }
+        reopenSerial(true);
     });
     continiousSerialCheckTimer->start();
 }

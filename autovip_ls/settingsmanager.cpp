@@ -626,4 +626,3 @@ QVariant SettingsManager::value(QString key, QVariant defaultValue)
 {
    return this->general->value(key,defaultValue);
 }
-

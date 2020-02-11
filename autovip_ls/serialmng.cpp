@@ -1110,6 +1110,7 @@ void SerialMng::sendKey(const QString &key,bool wait,int p_delay,QString param)
         }
         return;
    }
+   qDebug()<<"sendkey called. serial port status: "<<this->m_serial->isOpen();
 
    bool command_arranged = false;
    if(realCode.isEmpty() || realCode.compare("no") == 0)
@@ -1128,6 +1129,7 @@ void SerialMng::sendKey(const QString &key,bool wait,int p_delay,QString param)
    {
            delay+=diff;
            QTimer::singleShot(diff,this,[=]{ this->write(message.toUtf8()); });
+           qDebug()<<"command arranged...";
            command_arranged= true;
    }
 
