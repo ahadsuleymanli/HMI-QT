@@ -148,6 +148,8 @@ Q_INVOKABLE  bool seatPositionPresets(int seat_no);
 Q_INVOKABLE  bool saveLightMemory(int p_unit,int type,QString p_color);
 Q_INVOKABLE  QString getLightMemory(int p_unit,int type);
 Q_INVOKABLE  bool musicPlayer(){return general->value("main/musicplayer").toBool();}
+Q_INVOKABLE  bool smokefan(){return general->value("main/smokefan").toBool();}
+Q_INVOKABLE  bool remote(){return general->value("main/remote").toBool();}
 Q_INVOKABLE  bool ampInput();
 Q_INVOKABLE  int carModel();
 Q_INVOKABLE  bool voiceActivationButton();

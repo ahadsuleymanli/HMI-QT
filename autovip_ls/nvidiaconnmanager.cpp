@@ -50,7 +50,7 @@ bool NvidiaConnManager::handleEmulatedFeedback(QString feedback){
         else if (feedback.contains("Ax/serial_force_close"))
             this->serial_mng->forceCloseSerialPort();
         else{
-            QTextStream(stdout)  << "Emulated feedback: " << feedback<<"\n";
+            qDebug()  << "Emulated feedback: " << feedback<<"\n";
             this->serial_mng->parseFeedback(feedback);
         }
         return true;

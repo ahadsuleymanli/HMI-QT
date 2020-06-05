@@ -11,6 +11,8 @@ BasePage {
     property int delay: 100
     function init()
     {
+        serial_mng.sendKey("switcher/appletv1");
+        serial_mng.sendKey("switcher/appletv2");
         serial_mng.sendKey("apple_tv/source");
     }
 

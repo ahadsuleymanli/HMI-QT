@@ -68,7 +68,6 @@ int main(int argc, char *argv[])
 
     qDebug()<<"initiating imng";
     if(imng->init() == false){
-        qDebug()<<"main.cpp: initializemng failed";
          return -1;
     }
     else {

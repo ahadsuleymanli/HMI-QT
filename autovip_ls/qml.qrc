@@ -518,5 +518,59 @@
         <file>design/lights/caravelle_sidelight.png</file>
         <file>design/lights/caravelle_starlight.png</file>
         <file>design/lights/caravelle_ambientlight.png</file>
+        <file>Pages/Controls/Remote_ui.qml</file>
+        <file>design/controls/leftmenu/remote.png</file>
+        <file>Pages/Controls/RemoteForm.ui.qml</file>
+        <file>Pages/Controls/Remote.qml</file>
+        <file>design/controls/remote/0.png</file>
+        <file>design/controls/remote/1.png</file>
+        <file>design/controls/remote/2.png</file>
+        <file>design/controls/remote/3.png</file>
+        <file>design/controls/remote/4.png</file>
+        <file>design/controls/remote/5.png</file>
+        <file>design/controls/remote/6.png</file>
+        <file>design/controls/remote/7.png</file>
+        <file>design/controls/remote/8.png</file>
+        <file>design/controls/remote/9.png</file>
+        <file>design/controls/remote/Back.png</file>
+        <file>design/controls/remote/butonBlue.png</file>
+        <file>design/controls/remote/butonGreen.png</file>
+        <file>design/controls/remote/butonRed.png</file>
+        <file>design/controls/remote/butonYellow.png</file>
+        <file>design/controls/remote/Chan+.png</file>
+        <file>design/controls/remote/Chan-.png</file>
+        <file>design/controls/remote/Clear.png</file>
+        <file>design/controls/remote/Enter.png</file>
+        <file>design/controls/remote/Guide.png</file>
+        <file>design/controls/remote/Info.png</file>
+        <file>design/controls/remote/Jump.png</file>
+        <file>design/controls/remote/kumandaGenelGörseli.PNG</file>
+        <file>design/controls/remote/Menu.png</file>
+        <file>design/controls/remote/Mode.png</file>
+        <file>design/controls/remote/Mute.png</file>
+        <file>design/controls/remote/Ok.png</file>
+        <file>design/controls/remote/Opt.png</file>
+        <file>design/controls/remote/Page+.png</file>
+        <file>design/controls/remote/Page-.png</file>
+        <file>design/controls/remote/Record.png</file>
+        <file>design/controls/remote/remoteDown.png</file>
+        <file>design/controls/remote/remoteFastBackward.png</file>
+        <file>design/controls/remote/remoteFastForward.png</file>
+        <file>design/controls/remote/remoteLeft.png</file>
+        <file>design/controls/remote/remoteNext.png</file>
+        <file>design/controls/remote/remotePause.png</file>
+        <file>design/controls/remote/remotePlay.png</file>
+        <file>design/controls/remote/remotePower.png</file>
+        <file>design/controls/remote/remoteReturn.png</file>
+        <file>design/controls/remote/remoteRight.png</file>
+        <file>design/controls/remote/remoteScissor.png</file>
+        <file>design/controls/remote/remoteSling.png</file>
+        <file>design/controls/remote/remoteStop.png</file>
+        <file>design/controls/remote/remoteUp.png</file>
+        <file>design/controls/remote/Tv_Input.png</file>
+        <file>design/controls/remote/Tv_power.png</file>
+        <file>design/controls/remote/Vol+.png</file>
+        <file>design/controls/remote/Vol-.png</file>
+        <file>Pages/Controls/Button.qml</file>
     </qresource>
 </RCC>

@@ -587,34 +587,23 @@ void SerialMng::parseFeedback(QString response)
        response.remove(response.length()-m_fbend.length(),m_fbend.length());
     }
 
-    found = parserSystem(response);
-    if(found) { return; }
-    found = parserAircondition(response);
-    if(found) { return; }
-    found = parserSeats(response);
-    if(found) { return; }
-    found = parserInsideLight(response);
-    if(found) { return; }
-    found = parserSideLight(response);
-    if(found) { return; }
-    found = parserCeilingLight(response);
-    if(found) { return; }
-    found = parserAmbientLight(response);
-    if(found) { return; }
-    found = parserSoundControl(response);
-    if(found) { return; }
-    found = parserRadioControl(response);
-    if(found) { return; }
+    if(parserSystem(response)) {return;}
+    else if(parserAircondition(response)) {return;}
+    else if(parserSeats(response)) {return;}
+    else if(parserInsideLight(response)) { return; }
+    else if(parserSideLight(response)) { return; }
+    else if(parserCeilingLight(response)) { return; }
+    else if(parserAmbientLight(response)) { return; }
+    else if(parserSoundControl(response)) { return; }
+    else if(parserRadioControl(response)) { return; }
 }
 
 bool SerialMng::parserAircondition(QString p_response)
 {
-    bool found = false;
     if (m_fb_aircondition=="") return false;
-    found = p_response.startsWith(m_fb_aircondition);
-    if(found)
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == m_fb_aircondition)
     {
-        QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=4)
         {
@@ -663,14 +652,11 @@ bool SerialMng::parserAircondition(QString p_response)
 
 bool SerialMng::parserFirstSeat(QString p_response)
 {
-
-    bool found = false;
-    return found;
+    return false;
 }
 
 bool SerialMng::parserSeats(QString p_response)
 {
-
     m_proto->beginGroup("feedbacks");
     QRegularExpression reg(
                 QString("(%1|%2|%3|%4)/([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)")
@@ -719,12 +705,10 @@ bool SerialMng::parserFourthSeat(QString p_response)
 
 bool SerialMng::parserSystem(QString p_response)
 {
-    bool found = false;
     if (m_fb_system=="") return false;
-    found = p_response.startsWith(m_fb_system);
-    if(found)
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == m_fb_system)
     {
-        QStringList parts = p_response.split("/");
         if(parts.length() != 2)
         {
             return false;
@@ -742,13 +726,11 @@ bool SerialMng::parserSystem(QString p_response)
 
 bool SerialMng::parserSideLight(QString p_response)
 {
-    bool found = false;
     if (m_fb_side_light=="") return false;
-    found = p_response.startsWith(m_fb_side_light);
     QColor vsidecolor;
-    if(found)
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == m_fb_side_light)
     {
-        QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=4)
         {
@@ -788,13 +770,11 @@ bool SerialMng::parserSideLight(QString p_response)
 
 bool SerialMng::parserInsideLight(QString p_response)
 {
-    bool found = false;
     if (m_fb_inside_light=="") return false;
-    found = p_response.startsWith(m_fb_inside_light);
     QColor newcolor;
-    if(found)
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == m_fb_inside_light)
     {
-        QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=4)
         {
@@ -834,13 +814,11 @@ bool SerialMng::parserInsideLight(QString p_response)
 
 bool SerialMng::parserCeilingLight(QString p_response)
 {
-    bool found = false;
     if (m_fb_ceiling_light=="") return false;
-    found = p_response.startsWith(m_fb_ceiling_light);
     QColor newcolor;
-    if(found)
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == m_fb_ceiling_light)
     {
-        QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=4)
         {
@@ -881,13 +859,11 @@ bool SerialMng::parserCeilingLight(QString p_response)
 
 bool SerialMng::parserAmbientLight(QString p_response)
 {
-    bool found = false;
     if (m_fb_ambient_light=="") return false;
-    found = p_response.startsWith(m_fb_ambient_light);
     QColor newcolor;
-    if(found)
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == m_fb_ambient_light)
     {
-        QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=4)
         {
@@ -926,58 +902,15 @@ bool SerialMng::parserAmbientLight(QString p_response)
 
 bool SerialMng::parserStarLight(QString p_response)
 {
-//    bool found = false;
-//    if (m_fb_ambient_light=="") return false;
-//    found = p_response.startsWith(m_fb_ambient_light);
-//    QColor newcolor;
-//    if(found)
-//    {
-//        QStringList parts = p_response.split("/");
-//        bool ok;
-//        if(parts.length()!=4)
-//        {
-//            //error
-//            return false;
-//        }
-//        int red = parts[1].toInt(&ok);
-//        if(ok)
-//        {
-//           newcolor.setRed(red);
-//        }else{
-//            //error
-//            return false;
-//        }
-//        int green = parts[2].toInt(&ok);
-//        if(ok)
-//        {
-//            newcolor.setGreen(green);
-//        }else{
-//           //error
-//            return false;
-//        }
-//        int blue = parts[3].toInt(&ok);
-//        if(ok)
-//        {
-//            newcolor.setBlue(blue);
-//        }else{
-//            //error
-//            return false;
-//        }
-//        setAmbientcolor(newcolor);
-//        return true;
-//    }
     return false;
 }
 
 bool SerialMng::parserSoundControl(QString p_response)
 {
-    bool found = false;
-    found = p_response.startsWith(m_fb_sound_control);
     uint source=0, volume = 0;
-    if(found)
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == m_fb_sound_control)
     {
-
-        QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=3)
         {
@@ -1038,12 +971,12 @@ void SerialMng::sendRadioOn(){
 bool SerialMng::parserRadioControl(QString p_response)
 {
     if (radio_feedback=="") return false;
-    if(p_response.startsWith(radio_feedback))
+    QStringList parts = p_response.split("/");
+    if(parts.length() && parts[0] == radio_feedback)
     {
         uint frequency_part1=0, frequency_part2 = 0;
         uint radioFrequency_uint = 0;
         uint radioVolume = 0;
-        QStringList parts = p_response.split("/");
         bool ok;
         if(parts.length()!=4){
             return false;

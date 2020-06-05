@@ -78,7 +78,6 @@ bool InitializeMng::init()
 //    this->mp_mng->setURL(mediaurl);
 
     if(!this->settings_mng->init()) {
-        qDebug()<<"ini files not found";
 	    return false;
     }
 

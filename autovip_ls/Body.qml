@@ -32,6 +32,9 @@ Item {
         id:controls
     }
 
+    ControlPages.Remote{
+        id:remote
+    }
 
     SeatPages.Seats{
         id:seats
@@ -288,6 +291,7 @@ Item {
 
     Component.onCompleted: {
         GSystem.logoItm = logo;
+        GSystem.addPageItem("Remote",remote);
         GSystem.addPageItem("Home",home);
         GSystem.addPageItem("Seats",seats);
         GSystem.addPageItem("Controls",controls);

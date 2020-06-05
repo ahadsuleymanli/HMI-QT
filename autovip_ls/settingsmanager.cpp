@@ -4,7 +4,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QProcess>
-
+#include <stdlib.h>
 void SettingsManager::deleteLockFile(QString path){
     QProcess *removeProcess = new QProcess();
     connect(removeProcess, SIGNAL(finished(int,QProcess::ExitStatus)), removeProcess, SLOT(deleteLater()));
@@ -306,7 +306,6 @@ bool SettingsManager::init()
 {
     QString settings_path = QString("%1/settings.ini").arg(QDir::currentPath());
     QString protofile = QString("%1/%2").arg(QDir::currentPath()).arg("proto.ini");
-    qDebug()<<"settings file : " << settings_path;
     QFileInfo check_file(settings_path);
     bool settings_exist = false;
     bool proto_exist = false;
@@ -584,7 +583,19 @@ QSettings *SettingsManager::getDatafile()
 }
 QStringList SettingsManager::datafileGetRadioStations(){
     datafile->beginGroup("RadioStations");
-    const QStringList radioStations = datafile->childKeys();
+    QStringList radioStations = datafile->childKeys();
+    QList<float> numList;
+    foreach(const QString& num, radioStations){
+        bool isNum = false;
+        float n = QString(num).toFloat(&isNum);
+        if(isNum)
+            numList << n;
+    }
+    std::sort(numList.begin(),numList.end());
+    radioStations.clear();
+    foreach(const float& num, numList){
+        radioStations << QString::number(num);
+    }
     datafile->endGroup();
     return radioStations;
 }

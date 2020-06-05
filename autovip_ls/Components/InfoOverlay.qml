@@ -15,8 +15,15 @@ Item {
 
     function come()
     {
-        infofadein.start();
-        root.visible=true
+        if (!root.visible){
+            infofadein.start();
+            root.visible=true
+        }
+        else{
+            infofadeout.start();
+            remover.start();
+        }
+
     }
 
 
@@ -30,15 +37,15 @@ Item {
         z:343
         opacity: 0
         visible: true
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                if(infoverlay.opacity==1){
-                    infofadeout.start();
-                    remover.start();
-                }
-            }
-        }
+//        MouseArea{
+//            anchors.fill: parent
+//            onClicked: {
+//                if(infoverlay.opacity==1){
+//                    infofadeout.start();
+//                    remover.start();
+//                }
+//            }
+//        }
     }
 
     Rectangle{
@@ -83,14 +90,14 @@ Item {
                 }
 
                 itemDelegate: Item {
-                                        Text {
-                                          anchors.verticalCenter: parent.verticalCenter
-                                          anchors.horizontalCenter: parent.horizontalCenter
-                                          color: "white"
-                                          elide: styleData.elideMode
-                                          text: styleData.value
-                                          font.pixelSize: 15
-                                        }
+                    Text {
+                      anchors.verticalCenter: parent.verticalCenter
+                      anchors.horizontalCenter: parent.horizontalCenter
+                      color: "white"
+                      elide: styleData.elideMode
+                      text: styleData.value
+                      font.pixelSize: 15
+                    }
                                  }
 
                 style: TableViewStyle {

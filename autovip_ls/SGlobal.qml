@@ -257,6 +257,15 @@ Item {
                     }
                     );
         }
+        if(SM.remote())
+        {
+            mediaModel.append({
+                         name:qsTr("Streamer"),
+                         st:"Remote",
+                         bg: "qrc:/design/controls/leftmenu/remote.png"
+                        }
+                     );
+        }
         if(SM.mediaplayertype === 2)
         {
         mediaModel.append(
@@ -357,14 +366,15 @@ Item {
     }
     function createControlsModel()
     {
-        controlsModel.clear();
-        controlsModel.append(
-                    {
-                     name:qsTr("Tables"),
-                     st:"Tables",
-                     bg: "qrc:/design/controls/leftmenu/tables.png"
-                    }
-                 );
+    controlsModel.clear();
+    controlsModel.append(
+                {
+                 name:qsTr("Tables"),
+                 st:"Tables",
+                 bg: "qrc:/design/controls/leftmenu/tables.png"
+                }
+             );
+
     if(SM.curtains)
     {
         controlsModel.append(
@@ -402,13 +412,14 @@ Item {
         }
                         );
     }
+    if(SM.smokefan()){
         controlsModel.append(
-    {
+        {
         name: qsTr("Smoke Fan"),
         st: "SmokeFan",
         bg: "qrc:/design/controls/leftmenu/smokefan.png"
+        });
     }
-                    );
 
      if(SM.windows){
         controlsModel.append(
